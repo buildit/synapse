@@ -34,6 +34,7 @@
     "gulp-sourcemaps": "^1.6.0"
   },
   "dependencies": {
+    "browserify": "^13.0.1",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-redux": "^4.4.5",
