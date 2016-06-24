@@ -7,7 +7,7 @@
     "build": "gulp",
     "lint": "eslint src/ test/ *.js",
     "start": "gulp server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --verbose"
   },
   "pre-commit": [
     "lint"
@@ -19,9 +19,26 @@
   "author": "Buildit",
   "license": "MIT",
   "homepage": "https://bitbucket.org/digitalrigbitbucketteam/synapse#readme",
+  "jest": {
+    "moduleFileExtensions": [
+      "jsx",
+      "js",
+      "json",
+      "node"
+    ],
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "testRegex": "test/.*",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react",
+      "<rootDir>/node_modules/react-dom",
+      "<rootDir>/node_modules/react-addons-test-utils",
+      "<rootDir>/node_modules/fbjs"
+    ]
+  },
   "devDependencies": {
     "babel-core": "^6.10.4",
     "babel-eslint": "^6.1.0",
+    "babel-jest": "^13.0.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "del": "^2.2.1",
@@ -36,6 +53,8 @@
     "gulp-less": "^3.1.0",
     "gulp-lesshint": "^1.1.0",
     "gulp-sourcemaps": "^1.6.0",
+    "jest-cli": "^13.0.0",
+    "react-addons-test-utils": "^15.1.0",
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
