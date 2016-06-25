@@ -11,8 +11,4 @@ node {
     stage name: "Build"
     sh "npm install"
     sh "npm run build"
-
-    stage name: "Deploy To AWS"
-    sh "convox login convox.buildit.tools --password PqSKzNqXXbKuuJspbXZBUIRGSAtlER"
-    sh "convox deploy --app synapse"
 }
