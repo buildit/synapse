@@ -16,7 +16,7 @@ gulp.task('clean', () => (
 gulp.task('js', ['clean'], () => (
   browserify({
     extensions: ['.jsx', '.js'],
-    entries: 'src/js/app.jsx',
+    entries: 'src/js/index.js',
   })
   .transform(babelify.configure({ presets: ['es2015', 'react'] }))
   .bundle()

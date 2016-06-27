@@ -1,13 +1,20 @@
 import React from 'react';
 import Button from '../1-atoms/button.jsx';
 import Table from '../2-molecules/table.jsx';
+import { connect } from 'react-redux';
 
-const TableWithButton = ({ buttonText, tableData }) => (
-  <div>
-    <Button label={buttonText} />
-    <Table tableData={tableData} />
-  </div>
-);
+let TableWithButton = ({ dispatch, buttonText, tableData }) => {
+  return (
+    <div>
+      <Button label={ buttonText } onClick={ () => {
+          dispatch({ type: 'LIST_VIEW' });
+        } } />
+      <Table tableData={ tableData } />
+    </div>
+  );
+};
+
+TableWithButton = connect()(TableWithButton);
 
 export default TableWithButton;
 
