@@ -7,10 +7,6 @@ const Table = ({ tableData }) => {
   let bodyRows = [];
   const headerValues = Object.keys(tableData[0]);
 
-  // for (let key in headerValues) {
-  //   headerRow.push(<TableHeaderCell headerValue={key} />);
-  // }
-
   for (let headerValue of headerValues) {
     headerRow.push(<TableHeaderCell headerValue={headerValue} />);
   }
@@ -23,14 +19,6 @@ const Table = ({ tableData }) => {
     }
     bodyRows.push(<tr className="tableBodyRow">{bodyRow}</tr>);
   }
-
-  // for (let index = 1; index < tableData.length; index++) {
-  //   const cellValues = tableData[index];
-  //
-  //   cellValues.forEach(cellValue => {
-  //     bodyRows.push(<TableCell cellValue={cellValue} />);
-  //   });
-  // }
 
   return (
     <table className="table">
