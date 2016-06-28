@@ -2,5 +2,14 @@
   "extends": "airbnb",
   "rules": {
     "indent": ["error", 2]
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
   }
 }
+
+
+

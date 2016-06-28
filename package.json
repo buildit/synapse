@@ -58,9 +58,11 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
+    "babel-preset-stage-2": "^6.11.0",
     "babelify": "^7.3.0",
     "bootstrap": "^3.3.6",
     "browserify": "^13.0.1",
+    "jquery": "^3.0.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-redux": "^4.4.5",
