@@ -27,8 +27,8 @@ let AppComponent = ({ dispatch, appData }) => {
 };
 
 AppComponent.propTypes = {
-  dispatch: React.propTypes.func,
-  appData: React.propTypes.array,
+  dispatch: React.PropTypes.func,
+  appData: React.PropTypes.array,
 };
 
 AppComponent = connect()(AppComponent);
