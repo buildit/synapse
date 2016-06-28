@@ -3,27 +3,32 @@ import TableWithButton from './3-organisms/table-with-button';
 import $ from 'jquery';
 import { connect } from 'react-redux';
 
-let AppComponent = ({dispatch}) => {
+let AppComponent = ({ dispatch, appData }) => {
   $.get('http://localhost:6565/project')
     .done(data => {
       // dispatch action to update data on state
       dispatch({
         type: 'UPDATE_PROJECT_LIST',
         projectList: data,
-      })
+      });
     });
 
-    const projects = [{}]; // set to list on the state/store
+  let projects = [{}];
+  if (appData) {
+    projects = appData.projectList || [{}];
+  }
 
-    return (
-      <div className="index">
-        <h1>Synapse</h1>
-        <TableWithButton buttonText={"New"} tableData={projects} />
-      </div>
-    );
+  return (
+    <div className="index">
+      <h1>Synapse</h1>
+      <TableWithButton buttonText={"New"} tableData={projects} />
+    </div>
+  );
 };
 
-AppComponent.defaultProps = {
+AppComponent.propTypes = {
+  dispatch: React.propTypes.func,
+  appData: React.propTypes.array,
 };
 
 AppComponent = connect()(AppComponent);
