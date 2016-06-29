@@ -10,7 +10,16 @@ let TableWithButton = ({ dispatch, buttonText, tableData }) => {
     <div>
       <Button label={ buttonText } onClick={ () => {
       } } />
-      <Table tableData={ tableData } />
+      <Table
+        tableData={tableData}
+        visibleColumns={[
+          'name',
+          'portfolio',
+          'program',
+          'status',
+          'description',
+        ]}
+      />
     </div>
   );
 };

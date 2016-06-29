@@ -16,15 +16,7 @@ class Main extends Component {
     let projects = [{}];
     if (this.props.appData) {
       if (this.props.appData.projectList) {
-        projects = this.props.appData.projectList.map(project => (
-          {
-            name: project.name,
-            status: project.status,
-            portfolio: project.portfolio,
-            program: project.program,
-            description: project.description,
-          }
-        ));
+        projects = this.props.appData.projectList || [{}];
       }
     }
 

@@ -1,22 +1,30 @@
 import React from 'react';
-import TableCell from '../1-atoms/table-cell.jsx';
-import TableHeaderCell from '../1-atoms/table-header-cell.jsx';
+import TableCell from '../1-atoms/table-cell';
+import TableHeaderCell from '../1-atoms/table-header-cell';
+import Link from '../1-atoms/link';
 
-const Table = ({ tableData }) => {
+const Table = ({ tableData, visibleColumns }) => {
   let headerRow = [];
   let bodyRows = [];
-  const headerValues = Object.keys(tableData[0]);
 
-  for (let headerValue of headerValues) {
+  for (let headerValue of visibleColumns) {
     headerRow.push(<TableHeaderCell key={headerValue} headerValue={headerValue} />);
   }
 
   for (let i = 0; i < tableData.length; i++) {
     let bodyRow = [];
-    for (const key of headerValues) {
+    for (const key of visibleColumns) {
       let cellValue = tableData[i][key];
       bodyRow.push(<TableCell key={i + key} cellValue={cellValue} />);
     }
+    bodyRow.push(<td>
+      <Link
+        label="View"
+        onClick={() => {
+          console.log('Clicked View.', tableData[i].id);
+        }}
+      />
+    </td>);
     bodyRows.push(<tr key={i} className="tableBodyRow">{bodyRow}</tr>);
   }
 
@@ -38,4 +46,5 @@ export default Table;
 
 Table.propTypes = {
   tableData: React.PropTypes.array.isRequired,
+  visibleColumns: React.PropTypes.array.isRequired,
 };
