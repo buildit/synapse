@@ -15,7 +15,17 @@ class Main extends Component {
   render() {
     let projects = [{}];
     if (this.props.appData) {
-      projects = this.props.appData.projectList || [{}];
+      if (this.props.appData.projectList) {
+        projects = this.props.appData.projectList.map(project => (
+          {
+            name: project.name,
+            status: project.status,
+            portfolio: project.portfolio,
+            program: project.program,
+            description: project.description,
+          }
+        ));
+      }
     }
 
     return (
