@@ -23,7 +23,18 @@ class Main extends Component {
     return (
       <div className="index">
         <h1>Synapse</h1>
-        <TableWithButton buttonText={"New"} tableData={projects} />
+        <TableWithButton
+          buttonText={"New"}
+          tableData={projects}
+          visibleColumns={[
+            'name',
+            'portfolio',
+            'program',
+            'status',
+            'description',
+          ]}
+          rowKey={'id'}
+        />
       </div>
     );
   }

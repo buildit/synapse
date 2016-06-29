@@ -3,7 +3,7 @@ import TableCell from '../1-atoms/table-cell';
 import TableHeaderCell from '../1-atoms/table-header-cell';
 import Link from '../1-atoms/link';
 
-const Table = ({ tableData, visibleColumns }) => {
+const Table = ({ tableData, visibleColumns, rowKey }) => {
   let headerRow = [];
   let bodyRows = [];
 
@@ -21,11 +21,11 @@ const Table = ({ tableData, visibleColumns }) => {
       <Link
         label="View"
         onClick={() => {
-          console.log('Clicked View.', tableData[i].id);
+          console.log('Clicked View.', tableData[i][rowKey]);
         }}
       />
     </td>);
-    bodyRows.push(<tr key={i} className="tableBodyRow">{bodyRow}</tr>);
+    bodyRows.push(<tr id={tableData[i][rowKey]} className="tableBodyRow">{bodyRow}</tr>);
   }
 
   return (
@@ -47,4 +47,5 @@ export default Table;
 Table.propTypes = {
   tableData: React.PropTypes.array.isRequired,
   visibleColumns: React.PropTypes.array.isRequired,
+  rowKey: React.PropTypes.string.isRequired,
 };
