@@ -1,7 +1,8 @@
 {
   "extends": "airbnb",
   "rules": {
-    "indent": ["error", 2]
+    "indent": ["error", 2],
+    "no-class-assign": "warn"
   },
   "parserOptions": {
     "ecmaVersion": 6,
@@ -10,6 +11,3 @@
     }
   }
 }
-
-
-

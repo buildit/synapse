@@ -1,36 +1,44 @@
-import React from 'react';
+import React, {
+  Component,
+  PropTypes,
+} from 'react';
 import TableWithButton from './3-organisms/table-with-button';
-import $ from 'jquery';
 import { connect } from 'react-redux';
+import * as actions from '../actions';
+import getProjectListReducer from '../reducers/admin/getProjectList';
 
-let AppComponent = ({ dispatch, appData }) => {
-  $.get('http://localhost:6565/project')
-    .done(data => {
-      // dispatch action to update data on state
-      dispatch({
-        type: 'UPDATE_PROJECT_LIST',
-        projectList: data,
-      });
-    });
-
-  let projects = [{}];
-  if (appData) {
-    projects = appData.projectList || [{}];
+class Main extends Component {
+  componentDidMount() {
+    this.props.fetchProjectList();
   }
 
-  return (
-    <div className="index">
-      <h1>Synapse</h1>
-      <TableWithButton buttonText={"New"} tableData={projects} />
-    </div>
-  );
+  render() {
+    let projects = [{}];
+    if (this.props.appData) {
+      projects = this.props.appData.projectList || [{}];
+    }
+
+    return (
+      <div className="index">
+        <h1>Synapse</h1>
+        <TableWithButton buttonText={"New"} tableData={projects} />
+      </div>
+    );
+  }
+}
+
+Main.propTypes = {
+  appData: PropTypes.array,
+  fetchProjectList: PropTypes.func,
 };
 
-AppComponent.propTypes = {
-  dispatch: React.PropTypes.func,
-  appData: React.PropTypes.array,
-};
+const mapStateToProps = (state) => ({
+  projectList: getProjectListReducer(state, 'placeholder filter'),
+});
 
-AppComponent = connect()(AppComponent);
+Main = connect(
+  mapStateToProps,
+  actions
+)(Main);
 
-export default AppComponent;
+export default Main;

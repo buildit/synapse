@@ -7,6 +7,9 @@ const appDataReducer = (state = initialState, action) => {
       projectList: action.projectList,
     };
   }
+  case 'FETCH_PROJECTS_REQUEST': {
+    return state;
+  }
   default:
     return state;
   }
