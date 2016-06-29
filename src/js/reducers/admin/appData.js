@@ -1,4 +1,4 @@
-const initialState = [];
+const initialState = {};
 
 const appDataReducer = (state = initialState, action) => {
   switch (action.type) {

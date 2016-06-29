@@ -17,12 +17,12 @@ const App = ({ actions, view, appData }) => (
 
 App.propTypes = {
   actions: PropTypes.object.isRequired,
-  view: PropTypes.string.isRequired,
-  appData: PropTypes.array.isRequired,
+  view: PropTypes.object.isRequired,
+  appData: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
-  // console.log(state);
+  console.log(state);
   const props = {
     view: state.view,
     appData: state.appData,

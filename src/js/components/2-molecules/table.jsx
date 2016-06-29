@@ -8,16 +8,16 @@ const Table = ({ tableData }) => {
   const headerValues = Object.keys(tableData[0]);
 
   for (let headerValue of headerValues) {
-    headerRow.push(<TableHeaderCell headerValue={headerValue} />);
+    headerRow.push(<TableHeaderCell key={headerValue} headerValue={headerValue} />);
   }
 
   for (let i = 0; i < tableData.length; i++) {
     let bodyRow = [];
     for (const key of headerValues) {
       let cellValue = tableData[i][key];
-      bodyRow.push(<TableCell cellValue={cellValue} />);
+      bodyRow.push(<TableCell key={i + key} cellValue={cellValue} />);
     }
-    bodyRows.push(<tr className="tableBodyRow">{bodyRow}</tr>);
+    bodyRows.push(<tr key={i} className="tableBodyRow">{bodyRow}</tr>);
   }
 
   return (

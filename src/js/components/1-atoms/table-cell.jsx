@@ -7,5 +7,5 @@ const TableCell = ({ cellValue }) => (
 export default TableCell;
 
 TableCell.propTypes = {
-  cellValue: React.PropTypes.string.isRequired,
+  cellValue: React.PropTypes.string,
 };

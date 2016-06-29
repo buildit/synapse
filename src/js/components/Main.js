@@ -28,7 +28,7 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-  appData: PropTypes.array,
+  appData: PropTypes.object,
   fetchProjectList: PropTypes.func,
 };
 
