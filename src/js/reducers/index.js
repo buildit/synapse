@@ -18,16 +18,7 @@ const appDataReducer = (state = { isFetching: false }, action) => {
   }
 };
 
-export const getProjectListReducer = (state = [], action) => {
-  switch (action.type) {
-  case 'TO_BE_DETERMINED':
-    break;
-  default:
-  }
-  return state;
-};
-
-const viewReducer = (state = { view: 'LIST_VIEW' }, action) => {
+const uiReducer = (state = { view: 'LIST_VIEW', errorMsg: null }, action) => {
   switch (action.type) {
   case 'LIST_VIEW': {
     return state;
@@ -38,9 +29,8 @@ const viewReducer = (state = { view: 'LIST_VIEW' }, action) => {
 };
 
 const reducers = {
-  view: viewReducer,
+  ui: uiReducer,
   appData: appDataReducer,
-  getProjectList: getProjectListReducer,
 };
 
 const combinedReducers = combineReducers(reducers);

@@ -5,7 +5,6 @@ import React, {
 import TableWithButton from './3-organisms/table-with-button';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-import { getProjectListReducer } from '../reducers';
 
 class Main extends Component {
   componentDidMount() {
@@ -58,9 +57,7 @@ Main.propTypes = {
   fetchProjectList: PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({
-  projectList: getProjectListReducer(state, 'placeholder filter'),
-});
+const mapStateToProps = () => ({});
 
 Main = connect(
   mapStateToProps,
