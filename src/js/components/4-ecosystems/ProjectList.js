@@ -2,16 +2,20 @@ import React, {
   Component,
   PropTypes,
 } from 'react';
-import TableWithButton from './3-organisms/table-with-button';
+import TableWithButton from '../3-organisms/table-with-button';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import * as actions from '../../actions';
 
-class Main extends Component {
+class ProjectList extends Component {
   componentDidMount() {
     this.props.fetchProjectList();
   }
 
   render() {
+    const onProjectViewClick = (id) => {
+      this.props.fetchProject(id);
+    };
+
     let projects = [{}];
     if (this.props.appData) {
       if (this.props.appData.projectList) {
@@ -21,7 +25,14 @@ class Main extends Component {
 
     let result;
 
-    if (this.props.appData.isFetching) {
+    if (this.props.ui.errorMessage) {
+      result = (
+        <div>
+          <h1>Synapse</h1>
+          <p>{this.props.ui.errorMessage}</p>
+        </div>
+      );
+    } else if (this.props.appData.isFetching) {
       result = (
         <div className="index">
           <h1>Synapse</h1>
@@ -43,6 +54,7 @@ class Main extends Component {
               'description',
             ]}
             rowKey={'id'}
+            onProjectViewClick={onProjectViewClick}
           />
         </div>
       );
@@ -52,16 +64,18 @@ class Main extends Component {
   }
 }
 
-Main.propTypes = {
+ProjectList.propTypes = {
   appData: PropTypes.object,
+  ui: PropTypes.object,
   fetchProjectList: PropTypes.func,
+  fetchProject: PropTypes.func,
 };
 
 const mapStateToProps = () => ({});
 
-Main = connect(
+ProjectList = connect(
   mapStateToProps,
   actions
-)(Main);
+)(ProjectList);
 
-export default Main;
+export default ProjectList;

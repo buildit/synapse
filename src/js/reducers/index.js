@@ -2,15 +2,42 @@ import { combineReducers } from 'redux';
 
 const appDataReducer = (state = { isFetching: false }, action) => {
   switch (action.type) {
-  case 'UPDATE_PROJECT_LIST': {
-    return {
-      projectList: action.projectList,
-    };
-  }
   case 'FETCH_PROJECTS_REQUEST': {
     return {
       ...state,
       isFetching: true,
+    };
+  }
+  case 'FETCH_PROJECTS_SUCCESS': {
+    return {
+      ...state,
+      projectList: action.projectList,
+      isFetching: false,
+    };
+  }
+  case 'FETCH_PROJECTS_FAILURE': {
+    return {
+      ...state,
+      isFetching: false,
+    };
+  }
+  case 'FETCH_PROJECT_REQUEST': {
+    return {
+      ...state,
+      isFetching: true,
+    };
+  }
+  case 'FETCH_PROJECT_SUCCESS': {
+    return {
+      ...state,
+      project: action.project,
+      isFetching: false,
+    };
+  }
+  case 'FETCH_PROJECT_FAILURE': {
+    return {
+      ...state,
+      isFetching: false,
     };
   }
   default:
@@ -18,14 +45,29 @@ const appDataReducer = (state = { isFetching: false }, action) => {
   }
 };
 
-const uiReducer = (state = { view: 'LIST_VIEW', errorMsg: null }, action) => {
+const uiReducer = (state = { view: 'listView', errorMessage: null }, action) => {
   switch (action.type) {
-  case 'LIST_VIEW': {
-    return state;
+  case 'FETCH_PROJECTS_FAILURE': {
+    return {
+      ...state,
+      errorMessage: action.errorMessage,
+    };
+  }
+  case 'FETCH_PROJECT_FAILURE': {
+    return {
+      ...state,
+      errorMessage: action.errorMessage,
+    };
+  }
+  case 'SWITCH_VIEW': {
+    return {
+      ...state,
+      view: action.view,
+    };
   }
   default:
+    return state;
   }
-  return state;
 };
 
 const reducers = {
@@ -35,4 +77,3 @@ const reducers = {
 
 const combinedReducers = combineReducers(reducers);
 export default combinedReducers;
-

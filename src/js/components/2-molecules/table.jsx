@@ -3,7 +3,7 @@ import TableCell from '../1-atoms/table-cell';
 import TableHeaderCell from '../1-atoms/table-header-cell';
 import Link from '../1-atoms/link';
 
-const Table = ({ tableData, visibleColumns, rowKey }) => {
+const Table = ({ tableData, visibleColumns, rowKey, onProjectViewClick }) => {
   let headerRow = [];
   let bodyRows = [];
 
@@ -21,7 +21,7 @@ const Table = ({ tableData, visibleColumns, rowKey }) => {
       <Link
         label="View"
         onClick={() => {
-          console.log('Clicked View.', tableData[i][rowKey]);
+          onProjectViewClick(tableData[i][rowKey]);
         }}
       />
     </td>);

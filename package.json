@@ -63,6 +63,7 @@
     "bootstrap": "^3.3.6",
     "browserify": "^13.0.1",
     "jquery": "^3.0.0",
+    "moment": "^2.13.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-redux": "^4.4.5",

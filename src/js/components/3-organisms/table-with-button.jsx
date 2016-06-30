@@ -3,23 +3,20 @@ import Button from '../1-atoms/button.jsx';
 import Table from '../2-molecules/table.jsx';
 import { connect } from 'react-redux';
 
-let TableWithButton = ({ dispatch, buttonText, tableData, visibleColumns, rowKey }) => {
-  dispatch({ type: 'LIST_VIEW' });
-
-  return (
-    <div>
-      <Button
-        label={buttonText}
-        onClick={() => {}}
-      />
-      <Table
-        tableData={tableData}
-        visibleColumns={visibleColumns}
-        rowKey={rowKey}
-      />
-    </div>
-  );
-};
+let TableWithButton = ({ dispatch, buttonText, tableData, visibleColumns, rowKey, onProjectViewClick }) => (
+  <div>
+    <Button
+      label={buttonText}
+      onClick={() => {}}
+    />
+    <Table
+      tableData={tableData}
+      visibleColumns={visibleColumns}
+      rowKey={rowKey}
+      onProjectViewClick={onProjectViewClick}
+    />
+  </div>
+);
 
 TableWithButton = connect()(TableWithButton);
 
