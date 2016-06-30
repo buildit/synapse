@@ -5,7 +5,7 @@ import React, {
 import TableWithButton from './3-organisms/table-with-button';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-import getProjectListReducer from '../reducers/admin/getProjectList';
+import { getProjectListReducer } from '../reducers';
 
 class Main extends Component {
   componentDidMount() {

@@ -1,7 +1,7 @@
 import thunkMiddleware from 'redux-thunk';
+import reducers from '../reducers';
 
 const redux = require('redux');
-const reducers = require('../reducers');
 
 module.exports = (initialState) => (redux.createStore(
   reducers,
