@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-const appDataReducer = (state = {}, action) => {
+const appDataReducer = (state = { isFetching: false }, action) => {
   switch (action.type) {
   case 'UPDATE_PROJECT_LIST': {
     return {
@@ -8,7 +8,10 @@ const appDataReducer = (state = {}, action) => {
     };
   }
   case 'FETCH_PROJECTS_REQUEST': {
-    return state;
+    return {
+      ...state,
+      isFetching: true,
+    };
   }
   default:
     return state;

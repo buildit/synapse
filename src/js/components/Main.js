@@ -20,23 +20,36 @@ class Main extends Component {
       }
     }
 
-    return (
-      <div className="index">
-        <h1>Synapse</h1>
-        <TableWithButton
-          buttonText={"New"}
-          tableData={projects}
-          visibleColumns={[
-            'name',
-            'portfolio',
-            'program',
-            'status',
-            'description',
-          ]}
-          rowKey={'id'}
-        />
-      </div>
-    );
+    let result;
+
+    if (this.props.appData.isFetching) {
+      result = (
+        <div className="index">
+          <h1>Synapse</h1>
+          <h4>Loading...</h4>
+        </div>
+      );
+    } else {
+      result = (
+        <div className="index">
+          <h1>Synapse</h1>
+          <TableWithButton
+            buttonText={"New"}
+            tableData={projects}
+            visibleColumns={[
+              'name',
+              'portfolio',
+              'program',
+              'status',
+              'description',
+            ]}
+            rowKey={'id'}
+          />
+        </div>
+      );
+    }
+
+    return result;
   }
 }
 
