@@ -162,13 +162,12 @@ const Project = ({ project }) => {
           rowKey="name"
         />
       </div>
-
     </div>
   );
 };
 
-export default Project;
-
 Project.propTypes = {
   project: React.PropTypes.object.isRequired,
 };
+
+export default Project;

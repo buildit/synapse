@@ -21,7 +21,11 @@ const App = ({ actions, ui, appData }) => {
     );
   }
   case 'projectView': {
-    return <Project project={appData.project} />;
+    return (
+      <Project
+        project={appData.project}
+      />
+    );
   }
   default: {
     return <p>Uh oh.</p>;
