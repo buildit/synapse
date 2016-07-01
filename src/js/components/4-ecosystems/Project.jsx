@@ -1,5 +1,6 @@
 import React from 'react';
 import Text from '../1-atoms/Text';
+import Table from '../2-molecules/Table';
 import moment from 'moment';
 
 const formatDate = date => {
@@ -8,8 +9,6 @@ const formatDate = date => {
   }
   return '';
 };
-
-const Flow = <p>Placeholder for flow component.</p>;
 
 const Project = ({ project }) => {
   let projectDemand = project.demand;
@@ -69,6 +68,13 @@ const Project = ({ project }) => {
           label="Password"
           content="********"
         />
+
+        <h3>Flow</h3>
+        <Table
+          tableData={projectDemand.flow}
+          visibleColumns={['sequence', 'name']}
+          rowKey="sequence"
+        />
       </div>
 
       <div className="subsection">
@@ -98,6 +104,20 @@ const Project = ({ project }) => {
           label="Password"
           content="********"
         />
+
+        <h3>Flow</h3>
+        <Table
+          tableData={projectDefect.flow}
+          visibleColumns={['sequence', 'name']}
+          rowKey="sequence"
+        />
+
+        <h3>Severity</h3>
+        <Table
+          tableData={projectDefect.severity}
+          visibleColumns={['sequence', 'name', 'groupWith']}
+          rowKey="sequence"
+        />
       </div>
 
       <div className="subsection">
@@ -126,6 +146,13 @@ const Project = ({ project }) => {
         <Text
           label="Password"
           content="********"
+        />
+
+        <h3>Roles</h3>
+        <Table
+          tableData={projectEffort.role}
+          visibleColumns={['name', 'groupWith']}
+          rowKey="name"
         />
       </div>
 
