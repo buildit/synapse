@@ -1,15 +1,17 @@
 import React from 'react';
-import Button from '../1-atoms/button.jsx';
-import Table from '../2-molecules/table.jsx';
+import Button from '../1-atoms/Button.jsx';
+import TableWithAction from '../2-molecules/TableWithAction.jsx';
 import { connect } from 'react-redux';
 
-let TableWithButton = ({ dispatch, buttonText, tableData, visibleColumns, rowKey, onProjectViewClick }) => (
+let TableWithActionWithButton = ({
+  buttonText, tableData, visibleColumns, rowKey, onProjectViewClick,
+}) => (
   <div>
     <Button
       label={buttonText}
       onClick={() => {}}
     />
-    <Table
+    <TableWithAction
       tableData={tableData}
       visibleColumns={visibleColumns}
       rowKey={rowKey}
@@ -18,14 +20,15 @@ let TableWithButton = ({ dispatch, buttonText, tableData, visibleColumns, rowKey
   </div>
 );
 
-TableWithButton = connect()(TableWithButton);
+TableWithActionWithButton = connect()(TableWithActionWithButton);
 
-export default TableWithButton;
+export default TableWithActionWithButton;
 
-TableWithButton.propTypes = {
+TableWithActionWithButton.propTypes = {
   dispatch: React.PropTypes.func.isRequired,
   buttonText: React.PropTypes.string.isRequired,
   tableData: React.PropTypes.array.isRequired,
   visibleColumns: React.PropTypes.array.isRequired,
   rowKey: React.PropTypes.string.isRequired,
+  onProjectViewClick: React.PropTypes.func.isRequired,
 };

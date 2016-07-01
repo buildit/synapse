@@ -2,7 +2,7 @@ import React, {
   Component,
   PropTypes,
 } from 'react';
-import TableWithButton from '../3-organisms/table-with-button';
+import TableWithButton from '../3-organisms/TableWithActionWithButton';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 

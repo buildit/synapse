@@ -1,9 +1,9 @@
 import React from 'react';
-import TableCell from '../1-atoms/table-cell';
-import TableHeaderCell from '../1-atoms/table-header-cell';
-import Link from '../1-atoms/link';
+import TableCell from '../1-atoms/TableCell';
+import TableHeaderCell from '../1-atoms/TableHeaderCell';
+import Link from '../1-atoms/Link';
 
-const Table = ({ tableData, visibleColumns, rowKey, onProjectViewClick }) => {
+const TableWithAction = ({ tableData, visibleColumns, rowKey, onProjectViewClick }) => {
   let headerRow = [];
   let bodyRows = [];
 
@@ -42,10 +42,11 @@ const Table = ({ tableData, visibleColumns, rowKey, onProjectViewClick }) => {
   );
 };
 
-export default Table;
+export default TableWithAction;
 
-Table.propTypes = {
+TableWithAction.propTypes = {
   tableData: React.PropTypes.array.isRequired,
   visibleColumns: React.PropTypes.array.isRequired,
   rowKey: React.PropTypes.string.isRequired,
+  onProjectViewClick: React.PropTypes.func.isRequired,
 };

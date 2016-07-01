@@ -1,5 +1,5 @@
 import React from 'react';
-import Text from '../1-atoms/text';
+import Text from '../1-atoms/Text';
 import moment from 'moment';
 
 const formatDate = date => {
