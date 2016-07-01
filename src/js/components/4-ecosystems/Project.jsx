@@ -162,7 +162,6 @@ const Project = ({ project }) => {
           rowKey="name"
         />
       </div>
-
     </div>
   );
 };
