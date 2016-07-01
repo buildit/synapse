@@ -16,15 +16,22 @@ const Project = ({ project }) => {
   let projectEffort = project.effort;
 
   if (!projectDemand) {
-    projectDemand = {};
+    projectDemand = {
+      flow: [],
+    };
   }
 
   if (!projectDefect) {
-    projectDefect = {};
+    projectDefect = {
+      flow: [],
+      severity: [],
+    };
   }
 
   if (!projectEffort) {
-    projectEffort = {};
+    projectEffort = {
+      role: [],
+    };
   }
 
   return (

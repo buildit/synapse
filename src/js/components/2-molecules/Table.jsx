@@ -2,7 +2,7 @@ import React from 'react';
 import TableCell from '../1-atoms/TableCell';
 import TableHeaderCell from '../1-atoms/TableHeaderCell';
 
-const TableWithAction = ({ tableData, visibleColumns, rowKey }) => {
+const Table = ({ tableData, visibleColumns, rowKey }) => {
   let headerRow = [];
   let bodyRows = [];
 
@@ -33,9 +33,9 @@ const TableWithAction = ({ tableData, visibleColumns, rowKey }) => {
   );
 };
 
-export default TableWithAction;
+export default Table;
 
-TableWithAction.propTypes = {
+Table.propTypes = {
   tableData: React.PropTypes.array.isRequired,
   visibleColumns: React.PropTypes.array.isRequired,
   rowKey: React.PropTypes.string.isRequired,
