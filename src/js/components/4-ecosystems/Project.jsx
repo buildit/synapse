@@ -1,6 +1,5 @@
 import React from 'react';
 import Text from '../1-atoms/text';
-import Button from '../1-atoms/Button';
 import Table from '../2-molecules/Table';
 import moment from 'moment';
 
@@ -11,7 +10,7 @@ const formatDate = date => {
   return '';
 };
 
-const Project = ({ project, onSwitchView }) => {
+const Project = ({ project }) => {
   let projectDemand = project.demand;
   let projectDefect = project.defect;
   let projectEffort = project.effort;
@@ -37,13 +36,6 @@ const Project = ({ project, onSwitchView }) => {
 
   return (
     <div>
-      <Button
-        label="Switch to list view"
-        onClick={() => {
-          onSwitchView('listView');
-        }
-      }
-      />
       <h1>{project.name}</h1>
 
       <Text label="ID" content={project.id} />

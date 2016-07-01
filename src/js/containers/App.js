@@ -4,28 +4,34 @@ import React, {
 import { connect } from 'react-redux';
 import ProjectList from '../components/4-ecosystems/ProjectList';
 import Project from '../components/4-ecosystems/Project';
+import Nav from '../components/2-molecules/Nav';
 import { fetchProjectList, fetchProject } from '../actions/index.js';
 
 const App = ({ ui, appData, actions, onSwitchView }) => {
   switch (ui.view) {
   case 'listView': {
     return (
-      <ProjectList
-        actions={actions}
-        ui={ui}
-        appData={appData}
-        fetchProjectList={fetchProjectList}
-        fetchProject={fetchProject}
-      />
+      <div className="container">
+        <Nav onSwitchView={onSwitchView} />
+        <ProjectList
+          actions={actions}
+          ui={ui}
+          appData={appData}
+          fetchProjectList={fetchProjectList}
+          fetchProject={fetchProject}
+        />
+      </div>
     );
   }
   case 'projectView': {
     return (
-      <Project
-        actions={actions}
-        project={appData.project}
-        onSwitchView={onSwitchView}
-      />
+      <div className="container">
+        <Nav onSwitchView={onSwitchView} />
+        <Project
+          actions={actions}
+          project={appData.project}
+        />
+      </div>
   );
   }
   default: {
