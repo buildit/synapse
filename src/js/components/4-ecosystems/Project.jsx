@@ -1,5 +1,6 @@
 import React from 'react';
-import Text from '../1-atoms/Text';
+import Text from '../1-atoms/text';
+import Button from '../1-atoms/Button';
 import Table from '../2-molecules/Table';
 import moment from 'moment';
 
@@ -10,7 +11,7 @@ const formatDate = date => {
   return '';
 };
 
-const Project = ({ project }) => {
+const Project = ({ project, onSwitchView }) => {
   let projectDemand = project.demand;
   let projectDefect = project.defect;
   let projectEffort = project.effort;
@@ -36,6 +37,13 @@ const Project = ({ project }) => {
 
   return (
     <div>
+      <Button
+        label="Switch to list view"
+        onClick={() => {
+          onSwitchView('listView');
+        }
+      }
+      />
       <h1>{project.name}</h1>
 
       <Text label="ID" content={project.id} />
@@ -167,8 +175,9 @@ const Project = ({ project }) => {
   );
 };
 
-export default Project;
-
 Project.propTypes = {
   project: React.PropTypes.object.isRequired,
+  onSwitchView: React.PropTypes.func.isRequired,
 };
+
+export default Project;
