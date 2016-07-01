@@ -6,13 +6,18 @@ import ProjectList from '../components/4-ecosystems/ProjectList';
 import Project from '../components/4-ecosystems/Project';
 import Nav from '../components/2-molecules/Nav';
 import { fetchProjectList, fetchProject } from '../actions/index.js';
+import navLinks from './navLinks';
 
 const App = ({ ui, appData, actions, onSwitchView }) => {
   switch (ui.view) {
   case 'listView': {
     return (
       <div className="container">
-        <Nav onSwitchView={onSwitchView} />
+        <Nav
+          onSwitchView={onSwitchView}
+          links={navLinks}
+          currentLink="List view"
+        />
         <ProjectList
           actions={actions}
           ui={ui}
@@ -26,7 +31,11 @@ const App = ({ ui, appData, actions, onSwitchView }) => {
   case 'projectView': {
     return (
       <div className="container">
-        <Nav onSwitchView={onSwitchView} />
+        <Nav
+          onSwitchView={onSwitchView}
+          links={navLinks}
+          currentLink="Project view"
+        />
         <Project
           actions={actions}
           project={appData.project}

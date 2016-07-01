@@ -1,21 +1,37 @@
 import React from 'react';
 
-const Nav = ({ onSwitchView }) => (
-  <nav className="navbar">
-    <a className="navbar-brand">Synapse</a>
-    <ul className="nav navbar-nav">
-      <li className="nav-item">
+const Nav = ({ onSwitchView, links, currentLink }) => {
+  const visibleLinks = links.map(link => {
+    if (link.label === currentLink) {
+      return (
+        <li className="nav-item">
+          <a className="nav-link current-link">{link.label}</a>
+        </li>
+      );
+    }
+    return (
+      <li>
         <a
           className="nav-link"
           onClick={(event) => {
             event.preventDefault();
-            onSwitchView('listView');
+            onSwitchView(link.view);
           }}
-        >List view</a>
+        >{link.label}</a>
       </li>
-    </ul>
-  </nav>
+    );
+  }
 );
+
+  return (
+    <nav className="navbar">
+      <a className="navbar-brand">Synapse</a>
+      <ul className="nav navbar-nav">
+        {visibleLinks}
+      </ul>
+    </nav>
+  );
+};
 
 Nav.propTypes = {
   onSwitchView: React.PropTypes.func.isRequired,
