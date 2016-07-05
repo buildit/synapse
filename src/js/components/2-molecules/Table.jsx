@@ -14,9 +14,16 @@ const Table = ({ tableData, visibleColumns, rowKey }) => {
     let bodyRow = [];
     for (const key of visibleColumns) {
       let cellValue = tableData[i][key];
+      if (cellValue) {
+        cellValue = cellValue.toString();
+      }
       bodyRow.push(<TableCell key={i + key} cellValue={cellValue} />);
     }
-    bodyRows.push(<tr id={tableData[i][rowKey]} className="tableBodyRow">{bodyRow}</tr>);
+    bodyRows.push(<tr
+      id={tableData[i][rowKey]}
+      key={i}
+      className="tableBodyRow"
+    >{bodyRow}</tr>);
   }
 
   return (

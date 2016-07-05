@@ -1,16 +1,22 @@
 import React from 'react';
 
 const Nav = ({ onSwitchView, links, currentLink }) => {
-  const visibleLinks = links.map(link => {
+  const visibleLinks = links.map((link, index) => {
     if (link.label === currentLink) {
       return (
-        <li className="nav-item">
+        <li
+          key={index}
+          className="nav-item"
+        >
           <a className="nav-link current-link">{link.label}</a>
         </li>
       );
     }
     return (
-      <li>
+      <li
+        key={index}
+        className="nav-item"
+      >
         <a
           className="nav-link"
           onClick={(event) => {

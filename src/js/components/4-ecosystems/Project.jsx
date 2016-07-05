@@ -168,7 +168,6 @@ const Project = ({ project }) => {
 
 Project.propTypes = {
   project: React.PropTypes.object.isRequired,
-  onSwitchView: React.PropTypes.func.isRequired,
 };
 
 export default Project;
