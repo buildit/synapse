@@ -3,12 +3,10 @@ import React, {
   PropTypes,
 } from 'react';
 import TableWithButton from '../3-organisms/TableWithActionWithButton';
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
 
 class ProjectList extends Component {
   componentDidMount() {
-    this.props.fetchProjectList();
+    this.props.fetchProjects();
   }
 
   render() {
@@ -64,15 +62,9 @@ class ProjectList extends Component {
 ProjectList.propTypes = {
   appData: PropTypes.object,
   ui: PropTypes.object,
-  fetchProjectList: PropTypes.func,
+  fetchIt: PropTypes.func,
   fetchProject: PropTypes.func,
+  fetchProjects: PropTypes.func,
 };
-
-const mapStateToProps = () => ({});
-
-ProjectList = connect(
-  mapStateToProps,
-  actions
-)(ProjectList);
 
 export default ProjectList;

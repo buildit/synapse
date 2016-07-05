@@ -8,16 +8,11 @@ const appDataReducer = (state = { isFetching: false }, action) => {
       isFetching: true,
     };
   }
-  case 'FETCH_PROJECTS_SUCCESS': {
+  case 'FETCH_PROJECTS_RECEIVE': {
+    console.log(action);
     return {
       ...state,
-      projectList: action.projectList,
-      isFetching: false,
-    };
-  }
-  case 'FETCH_PROJECTS_FAILURE': {
-    return {
-      ...state,
+      projectList: action.response,
       isFetching: false,
     };
   }

@@ -1,25 +1,26 @@
 import $ from 'jquery';
 
-export const fetchProjectList = () => (dispatch) => {
-  dispatch({
-    type: 'FETCH_PROJECTS_REQUEST',
-  });
+const requestProjects = () => (
+  { type: 'FETCH_PROJECTS_REQUEST' }
+);
 
-  return $.get('http://localhost:6565/project')
-    .done(
-      data => {
-        dispatch({
-          type: 'FETCH_PROJECTS_SUCCESS',
-          projectList: data,
-        });
-      })
-      .fail(() => {
-        dispatch({
-          type: 'FETCH_PROJECTS_FAILURE',
-          errorMessage: 'There was an error.',
-        });
+const receiveProjects = (response) => (
+  {
+    type: 'FETCH_PROJECTS_RECEIVE',
+    response,
+  }
+);
+
+export const fetchProjects = () => (
+  dispatch => {
+    dispatch(requestProjects());
+    return $.get('http://localhost:6565/project/')
+      .done(response => {
+        dispatch(receiveProjects(response));
       });
-};
+      // handle the error/failure case
+  }
+);
 
 export const fetchProject = (id) => (dispatch) => {
   dispatch({
@@ -45,3 +46,8 @@ export const fetchProject = (id) => (dispatch) => {
         });
       });
 };
+
+export const onSwitchView = view => ({
+  type: 'SWITCH_VIEW',
+  view,
+});
