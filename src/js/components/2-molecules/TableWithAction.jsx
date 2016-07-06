@@ -17,7 +17,7 @@ const TableWithAction = ({ tableData, visibleColumns, rowKey, onProjectViewClick
       let cellValue = tableData[i][key];
       bodyRow.push(<TableCell key={i + key} cellValue={cellValue} />);
     }
-    bodyRow.push(<td key={`link-$(i)`}>
+    bodyRow.push(<td key={`link-${i}`}>
       <Link
         label="View"
         onClick={() => {

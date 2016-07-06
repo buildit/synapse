@@ -4,6 +4,12 @@
     "indent": ["error", 2],
     "no-class-assign": "warn"
   },
+  "globals": {
+    "jest": false,
+    "describe": false,
+    "it": false,
+    "expect": false
+  },
   "parserOptions": {
     "ecmaVersion": 6,
     "ecmaFeatures": {

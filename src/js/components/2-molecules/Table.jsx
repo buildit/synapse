@@ -21,7 +21,7 @@ const Table = ({ tableData, visibleColumns, rowKey }) => {
     }
     bodyRows.push(<tr
       id={tableData[i][rowKey]}
-      key={i}
+      key={tableData[i][rowKey]}
       className="tableBodyRow"
     >{bodyRow}</tr>);
   }

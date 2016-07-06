@@ -1,16 +1,14 @@
-jest.unmock('../src/js/components/1-atoms/button');
+jest.unmock('../src/js/components/1-atoms/Button');
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import TestUtils from 'react-addons-test-utils';
-
-const Button = require('../src/js/components/1-atoms/Button').default;
+import { shallow } from 'enzyme';
+import Button from '../src/js/components/1-atoms/Button';
 
 describe('Button', () => {
-  it('exists', () => {
-    expect(Button({
-      label: 'click',
-      onClick: () => {},
-    })).not.toBe(null);
+  it('ouputs a <button> with passed label', () => {
+    const label = 'hi';
+    const wrapper = shallow(<Button label={label} onClick={() => {}} />);
+    expect(wrapper.name()).toEqual('button');
+    expect(wrapper.text()).toEqual(label);
   });
 });

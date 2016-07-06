@@ -29,10 +29,11 @@
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
     "testRegex": "test/.*",
     "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react",
-      "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/react-addons-test-utils",
-      "<rootDir>/node_modules/fbjs"
+      "react",
+      "react-dom",
+      "react-addons-test-utils",
+      "fbjs",
+      "enzyme"
     ]
   },
   "devDependencies": {
@@ -42,6 +43,7 @@
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "del": "^2.2.1",
+    "enzyme": "^2.3.0",
     "eslint": "^2.13.1",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.9.2",
@@ -55,6 +57,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "jest-cli": "^13.0.0",
     "react-addons-test-utils": "^15.1.0",
+    "sinon": "^1.17.4",
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
