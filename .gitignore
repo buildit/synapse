@@ -14,5 +14,8 @@ dist
 # Selenium server, which you should download directly
 selenium-server-standalone-*
 
+# Testing stuff
+errorShots/
+
 # Logs
 *.log

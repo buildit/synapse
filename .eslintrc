@@ -8,7 +8,8 @@
     "jest": false,
     "describe": false,
     "it": false,
-    "expect": false
+    "expect": false,
+    "browser": false
   },
   "parserOptions": {
     "ecmaVersion": 6,

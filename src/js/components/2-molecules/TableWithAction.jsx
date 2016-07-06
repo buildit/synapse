@@ -20,6 +20,7 @@ const TableWithAction = ({ tableData, visibleColumns, rowKey, onProjectViewClick
     bodyRow.push(<td key={`link-${i}`}>
       <Link
         label="View"
+        id={`link-${i}`}
         onClick={() => {
           onProjectViewClick(tableData[i][rowKey]);
         }}

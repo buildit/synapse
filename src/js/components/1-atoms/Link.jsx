@@ -1,11 +1,12 @@
 import React from 'react';
 
-const Link = ({ label, onClick }) => (
+const Link = ({ label, onClick, id }) => (
   <a
     onClick={(event) => {
       event.preventDefault();
       onClick();
     }}
+    id={id}
   >{label}
   </a>
 );
@@ -15,4 +16,5 @@ export default Link;
 Link.propTypes = {
   label: React.PropTypes.string,
   onClick: React.PropTypes.func,
+  id: React.PropTypes.string,
 };
