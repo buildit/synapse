@@ -7,7 +7,7 @@
     "build": "gulp",
     "lint": "eslint src/ test/ *.js",
     "start": "gulp server",
-    "test": "jest --verbose"
+    "test": "jest --verbose && ./node_modules/.bin/wdio wdio.conf.js"
   },
   "pre-commit": [
     "lint"
@@ -58,7 +58,9 @@
     "jest-cli": "^13.0.0",
     "react-addons-test-utils": "^15.1.0",
     "sinon": "^1.17.4",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "wdio-mocha-framework": "^0.3.5",
+    "webdriverio": "^4.1.1"
   },
   "dependencies": {
     "babel-preset-stage-2": "^6.11.0",

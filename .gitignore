@@ -10,3 +10,9 @@ dist
 
 .idea
 .DS_Store
+
+# Selenium server, which you should download directly
+selenium-server-standalone-*
+
+# Logs
+*.log

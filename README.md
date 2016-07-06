@@ -41,3 +41,17 @@ Here's a little table that describes the characteristics of the Flow, Role, and 
 |**Flow**    |y          |y      |          |
 |**Role**    |           |y      |y         |
 |**Severity**|y          |y      |y         |
+
+
+## Setting up for testing
+There needs to be a Selenium server running for our UI tests to work. To install a standalone Selenium server:
+```
+curl -O http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
+```
+
+Then, to run it:
+```
+java -jar selenium-server-standalone-2.53.0.jar
+```
+
+The local server also needs to be running the site at http://localhost:3000/. This is what the tests look at.
