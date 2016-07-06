@@ -36,7 +36,8 @@ Our state tree has the following shape, with some typical values:
 ## We have lists
 Here's a little table that describes the characteristics of the Flow, Role, and Severity lists.
 
-            Sequence    Name    Group with
-Flow        y           y
-Role                    y       y
-Severity    y           y       y
+|            |Sequence   |Name   |Group with|
+|------------|-----------|-------|----------|
+|**Flow**    |y          |y      |          |
+|**Role**    |           |y      |y         |
+|**Severity**|y          |y      |y         |
