@@ -12,16 +12,29 @@ const receiveProjects = (response) => (
   }
 );
 
-export const fetchProjects = () => (
-  dispatch => {
-    dispatch(requestProjects());
-    return $.get(`${apiBaseUrl}project/`)
-      .done(response => {
-        dispatch(receiveProjects(response));
-      });
-      // handle the error/failure case
+const setErrorMessage = (message) => (
+  {
+    type: 'SET_ERROR_MESSAGE',
+    message,
   }
 );
+
+export const onSwitchView = view => ({
+  type: 'SWITCH_VIEW',
+  view,
+});
+
+export const fetchProjects = () => (dispatch) => {
+  dispatch(requestProjects());
+  return $.get(`${apiBaseUrl}project/`)
+    .done(response => {
+      dispatch(receiveProjects(response));
+    })
+    .fail(response => {
+      dispatch(setErrorMessage(response.responseText));
+      dispatch(onSwitchView('error'));
+    });
+};
 
 export const fetchProject = (id) => (dispatch) => {
   dispatch({
@@ -45,10 +58,9 @@ export const fetchProject = (id) => (dispatch) => {
           type: 'FETCH_PROJECT_FAILURE',
           errorMessage: 'There was an error.',
         });
+        dispatch({
+          type: 'SWITCH_VIEW',
+          view: 'error',
+        });
       });
 };
-
-export const onSwitchView = view => ({
-  type: 'SWITCH_VIEW',
-  view,
-});

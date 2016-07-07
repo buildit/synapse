@@ -5,6 +5,7 @@ const appDataReducer = (state = { isFetching: false }, action) => {
   case 'FETCH_PROJECTS_REQUEST': {
     return {
       ...state,
+      projectId: action.projectId,
       isFetching: true,
     };
   }
@@ -57,6 +58,12 @@ const uiReducer = (state = { view: 'listView', errorMessage: null }, action) => 
     return {
       ...state,
       view: action.view,
+    };
+  }
+  case 'SET_ERROR_MESSAGE': {
+    return {
+      ...state,
+      errorMessage: action.message,
     };
   }
   default:
