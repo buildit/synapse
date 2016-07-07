@@ -1,5 +1,5 @@
 import React from 'react';
-import Text from '../1-atoms/text';
+import Text from '../1-atoms/Text';
 import Table from '../2-molecules/Table';
 import moment from 'moment';
 
