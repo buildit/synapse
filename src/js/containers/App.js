@@ -2,50 +2,26 @@ import React, {
   PropTypes,
 } from 'react';
 import { connect } from 'react-redux';
-import ProjectList from '../components/4-ecosystems/ProjectList';
-import Project from '../components/4-ecosystems/Project';
+// import ProjectList from '../components/4-ecosystems/ProjectList';
+// import Project from '../components/4-ecosystems/Project';
+import Body from '../components/4-ecosystems/Body';
 import Nav from '../components/2-molecules/Nav';
 import * as actionCreators from '../actions/index.js';
 import navLinks from './navLinks';
 
-const App = ({ ui, appData, onSwitchView, fetchProject, fetchProjects }) => {
-  switch (ui.view) {
-  case 'listView': {
-    return (
-      <div className="container">
-        <Nav
-          onSwitchView={onSwitchView}
-          links={navLinks}
-          currentLink="List view"
-        />
-        <ProjectList
-          ui={ui}
-          appData={appData}
-          fetchProjects={fetchProjects}
-          fetchProject={fetchProject}
-        />
-      </div>
-    );
-  }
-  case 'projectView': {
-    return (
-      <div className="container">
-        <Nav
-          onSwitchView={onSwitchView}
-          links={navLinks}
-          currentLink="Project view"
-        />
-        <Project
-          project={appData.project}
-        />
-      </div>
-  );
-  }
-  default: {
-    return <p>Uh oh.</p>;
-  }
-  }
-};
+const App = ({ ui, onSwitchView, fetchProject, fetchProjects }) => (
+  <div className="container">
+    <Nav
+      onSwitchView={onSwitchView}
+      links={navLinks}
+    />
+    <Body
+      view={ui.view}
+      fetchProject={fetchProject}
+      fetchProjects={fetchProjects}
+    />
+  </div>
+);
 
 App.propTypes = {
   ui: PropTypes.object.isRequired,

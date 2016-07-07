@@ -5,11 +5,11 @@ const appDataReducer = (state = { isFetching: false }, action) => {
   case 'FETCH_PROJECTS_REQUEST': {
     return {
       ...state,
+      projectId: action.projectId,
       isFetching: true,
     };
   }
   case 'FETCH_PROJECTS_RECEIVE': {
-    console.log(action);
     return {
       ...state,
       projectList: action.response,
@@ -58,6 +58,12 @@ const uiReducer = (state = { view: 'listView', errorMessage: null }, action) => 
     return {
       ...state,
       view: action.view,
+    };
+  }
+  case 'SET_ERROR_MESSAGE': {
+    return {
+      ...state,
+      errorMessage: action.message,
     };
   }
   default:
