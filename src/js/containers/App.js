@@ -6,7 +6,7 @@ import ProjectList from '../components/4-ecosystems/ProjectList';
 import Project from '../components/4-ecosystems/Project';
 import Nav from '../components/2-molecules/Nav';
 import * as actionCreators from '../actions/index.js';
-import navLinks from './navLinks';
+import navLinks from '../../nav.config.js';
 
 const App = ({ ui, appData, onSwitchView, fetchProject, fetchProjects }) => {
   switch (ui.view) {

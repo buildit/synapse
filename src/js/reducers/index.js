@@ -9,7 +9,6 @@ const appDataReducer = (state = { isFetching: false }, action) => {
     };
   }
   case 'FETCH_PROJECTS_RECEIVE': {
-    console.log(action);
     return {
       ...state,
       projectList: action.response,
