@@ -1,8 +1,9 @@
 const assert = require('assert');
+const clientBaseUrl = require('../config/development.json').client.baseUrl;
 
 describe('Synapse app', () => {
   before(() => {
-    browser.url('http://localhost:3000/');
+    browser.url(clientBaseUrl);
   });
 
   it('should have a page title', () => {

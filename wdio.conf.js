@@ -1,3 +1,4 @@
+const clientBaseUrl = require('./config/development.json').client.baseUrl;
 exports.config = {
 
   //
@@ -44,7 +45,7 @@ exports.config = {
     // 5 instance gets started at a time.
     maxInstances: 5,
     //
-    browserName: 'phantomjs',
+    browserName: 'chrome',
   }],
   //
   // ===================
@@ -68,7 +69,7 @@ exports.config = {
   //
   // Set a base URL in order to shorten url command calls. If your url parameter starts
   // with "/", then the base url gets prepended.
-  baseUrl: 'http://localhost',
+  baseUrl: clientBaseUrl,
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,

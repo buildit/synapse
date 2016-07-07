@@ -1,4 +1,5 @@
 import $ from 'jquery';
+const apiBaseUrl = require('../../../config/development.json').api.baseUrl;
 
 const requestProjects = () => (
   { type: 'FETCH_PROJECTS_REQUEST' }
@@ -14,7 +15,7 @@ const receiveProjects = (response) => (
 export const fetchProjects = () => (
   dispatch => {
     dispatch(requestProjects());
-    return $.get('http://localhost:6565/project/')
+    return $.get(`${apiBaseUrl}project/`)
       .done(response => {
         dispatch(receiveProjects(response));
       });
@@ -27,7 +28,7 @@ export const fetchProject = (id) => (dispatch) => {
     type: 'FETCH_PROJECT_REQUEST',
   });
 
-  return $.get(`http://localhost:6565/project/${id}`)
+  return $.get(`${apiBaseUrl}project/${id}`)
     .done(
       data => {
         dispatch({

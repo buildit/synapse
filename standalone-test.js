@@ -1,7 +1,8 @@
 const webdriverio = require('webdriverio');
-const options = { desiredCapabilities: { browserName: 'firefox' } };
+const options = { desiredCapabilities: { browserName: 'chrome' } };
 const client = webdriverio.remote(options);
 const assert = require('assert');
+const clientBaseUrl = require('./config/development.json').client.baseUrl;
 
 const testIsEqual = (expected, actual) => {
   const failureMessage =
@@ -18,7 +19,7 @@ const testIsEqual = (expected, actual) => {
 
 client
     .init()
-    .url('http://localhost:3000/')
+    .url(clientBaseUrl)
     .click('#link-0')
     .getText('h1')
       .then(text => {

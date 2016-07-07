@@ -12,10 +12,27 @@ Build and watch for changes:
 npm run build
 ```
 
-Start a local dev server on port 3000:
+Start a local dev server:
 ```
 npm start
 ```
+
+## Configuration
+Configuration details for the site are specified in the `config` folder. For example, rather than referring to the api url in a literal string, refer to the value in the config file:
+
+Define the client url at the top of your file:
+
+```
+const apiBaseUrl = require('./config/development.json').api.baseUrl;
+```
+
+Then use it like so:
+
+```
+$.get(`${apiBaseUrl}project/`)
+```
+
+At some point we'll need to take this another step further, differentiating between development and production, but this is a start.
 
 ## State tree
 Our state tree has the following shape, with some typical values:
@@ -54,4 +71,4 @@ Then, to run it:
 java -jar selenium-server-standalone-2.53.0.jar
 ```
 
-The local server also needs to be running the site at http://localhost:3000/. This is what the tests look at.
+The local server also needs to be running the site at the client url specified in `config/development.json`. This site what the tests look at.
