@@ -32,7 +32,7 @@ App.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log(state);
+  console.log('state-formData:', state.ui.formData);
   const props = {
     ui: state.ui,
     appData: state.appData,

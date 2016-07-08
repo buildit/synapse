@@ -41,11 +41,13 @@ Our state tree has the following shape, with some typical values:
 {
   appData: {
     projectList: [],
+    project: {...},
     isFetching: false
   },
   ui: {
     view: 'LIST_VIEW',
-    errorMsg: 'There was an error fetching data from the server.'
+    errorMsg: 'There was an error fetching data from the server.',
+    projectFormData: {...}
   }
 }
 ```

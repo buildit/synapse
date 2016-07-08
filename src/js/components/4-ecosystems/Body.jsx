@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import ProjectList from '../3-organisms/ProjectList';
 import Project from '../3-organisms/Project';
+import EditProject from '../3-organisms/EditProject';
 import Error from '../1-atoms/Error';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/index.js';
 
-const Body = ({ appData, ui, view, fetchProjects, fetchProject }) => {
+const Body = ({ appData, ui, view, fetchProjects, fetchProject, onSwitchView, onInputChange }) => {
   switch (view) {
 
   case 'listView': {
@@ -18,9 +19,18 @@ const Body = ({ appData, ui, view, fetchProjects, fetchProject }) => {
       />);
   }
 
-  case 'projectView': return <Project project={appData.project} />;
+  case 'projectView': {
+    return (
+      <Project
+        project={appData.project}
+        onSwitchView={onSwitchView}
+      />
+  );
+  }
 
-  case 'editProject': { return <div>Edit project</div>; }
+  case 'editProject': {
+    return <EditProject project={appData.project} onInputChange={onInputChange} />;
+  }
 
   case 'newProjectList': { return <div>New project list</div>; }
 
@@ -36,6 +46,7 @@ Body.propTypes = {
   ui: PropTypes.object.isRequired,
   fetchProjects: PropTypes.func.isRequired,
   fetchProject: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

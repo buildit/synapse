@@ -1,5 +1,6 @@
 import React from 'react';
 import Text from '../1-atoms/Text';
+import Button from '../1-atoms/Button';
 import Table from '../2-molecules/Table';
 import moment from 'moment';
 
@@ -10,7 +11,7 @@ const formatDate = date => {
   return '';
 };
 
-const Project = ({ project }) => {
+const Project = ({ project, onSwitchView }) => {
   let projectDemand = project.demand;
   let projectDefect = project.defect;
   let projectEffort = project.effort;
@@ -37,6 +38,13 @@ const Project = ({ project }) => {
   return (
     <div>
       <h1>{project.name}</h1>
+
+      <Button
+        label="Edit"
+        onClick={() => {
+          onSwitchView('editProject');
+        }}
+      />
 
       <Text label="ID" content={project.id} />
       <Text label="Name" content={project.name} />

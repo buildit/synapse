@@ -64,3 +64,12 @@ export const fetchProject = (id) => (dispatch) => {
         });
       });
 };
+
+export const onInputChange = (section, key, value) => {
+  return ({
+    type: 'UPDATE_FORM_DATA',
+    section,
+    key,
+    value,
+  });
+}

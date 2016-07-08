@@ -40,7 +40,15 @@ const appDataReducer = (state = { isFetching: false }, action) => {
   }
 };
 
-const uiReducer = (state = { view: 'listView', errorMessage: null }, action) => {
+const uiReducer = (state = {
+  view: 'listView',
+  errorMessage: null,
+  formData: {
+    demand: {},
+    defect: {},
+    effort: {},
+  },
+}, action) => {
   switch (action.type) {
   case 'FETCH_PROJECTS_FAILURE': {
     return {
@@ -66,8 +74,41 @@ const uiReducer = (state = { view: 'listView', errorMessage: null }, action) => 
       errorMessage: action.message,
     };
   }
-  default:
-    return state;
+  case 'UPDATE_FORM_DATA': {
+    const newFormData = state.formData;
+    switch (action.section) {
+    case 'header': {
+      newFormData[action.key] = action.value;
+      return {
+        ...state,
+        formData: newFormData,
+      };
+    }
+    case 'demand': {
+      newFormData.demand[action.key] = action.value;
+      return {
+        ...state,
+        formData: newFormData,
+      };
+    }
+    case 'defect': {
+      newFormData.defect[action.key] = action.value;
+      return {
+        ...state,
+        formData: newFormData,
+      };
+    }
+    case 'effort': {
+      newFormData.effort[action.key] = action.value;
+      return {
+        ...state,
+        formData: newFormData,
+      };
+    }
+    default: return state;
+    }
+  }
+  default: return state;
   }
 };
 
