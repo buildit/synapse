@@ -1,7 +1,7 @@
 import React from 'react';
 
-const TableCell = ({ cellValue }) => (
-  <td className="tableCell">{cellValue}</td>
+const TableCell = ({ cellValue, id }) => (
+  <td className="tableCell" id={id}>{cellValue}</td>
 );
 
 export default TableCell;

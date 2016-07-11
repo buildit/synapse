@@ -6,7 +6,16 @@ import Error from '../1-atoms/Error';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/index.js';
 
-const Body = ({ appData, ui, view, fetchProjects, fetchProject, onSwitchView, onInputChange }) => {
+const Body = ({
+  appData,
+  ui,
+  view,
+  fetchProjects,
+  fetchProject,
+  onSwitchView,
+  onInputChange,
+  initializeFormData,
+ }) => {
   switch (view) {
 
   case 'listView': {
@@ -29,7 +38,12 @@ const Body = ({ appData, ui, view, fetchProjects, fetchProject, onSwitchView, on
   }
 
   case 'editProject': {
-    return <EditProject project={appData.project} onInputChange={onInputChange} />;
+    return (
+      <EditProject
+        project={appData.project}
+        onInputChange={onInputChange}
+        initializeFormData={initializeFormData}
+      />);
   }
 
   case 'newProjectList': { return <div>New project list</div>; }
@@ -47,6 +61,8 @@ Body.propTypes = {
   fetchProjects: PropTypes.func.isRequired,
   fetchProject: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
+  initializeFormData: PropTypes.func.isRequired,
+  onSwitchView: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

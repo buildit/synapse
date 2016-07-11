@@ -124,7 +124,7 @@ const Project = ({ project, onSwitchView }) => {
         <Table
           tableData={projectDefect.flow}
           visibleColumns={['sequence', 'name']}
-          rowKey="sequence"
+          rowKey="name"
         />
 
         <h3>Severity</h3>

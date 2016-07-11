@@ -108,6 +108,12 @@ const uiReducer = (state = {
     default: return state;
     }
   }
+  case 'INITIALIZE_FORM_DATA': {
+    return {
+      ...state,
+      formData: action.project,
+    };
+  }
   default: return state;
   }
 };

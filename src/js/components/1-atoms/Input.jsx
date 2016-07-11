@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import moment from 'moment';
+// import moment from 'moment';
 
 const Input = ({ label, section, property, onInputChange, initialValue = '' }) => {
   let input;
@@ -31,7 +31,6 @@ Input.propTypes = {
   section: PropTypes.string,
   property: PropTypes.string,
   label: PropTypes.string,
-
   type: PropTypes.string,
   initialValue: PropTypes.string,
   onInputChange: PropTypes.func.isRequired,

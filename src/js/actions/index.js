@@ -65,11 +65,14 @@ export const fetchProject = (id) => (dispatch) => {
       });
 };
 
-export const onInputChange = (section, key, value) => {
-  return ({
-    type: 'UPDATE_FORM_DATA',
-    section,
-    key,
-    value,
-  });
-}
+export const onInputChange = (section, key, value) => ({
+  type: 'UPDATE_FORM_DATA',
+  section,
+  key,
+  value,
+});
+
+export const initializeFormData = (project) => ({
+  type: 'INITIALIZE_FORM_DATA',
+  project,
+});

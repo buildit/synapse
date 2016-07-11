@@ -7,7 +7,12 @@ const Table = ({ tableData, visibleColumns, rowKey }) => {
   let bodyRows = [];
 
   for (let headerValue of visibleColumns) {
-    headerRow.push(<TableHeaderCell key={headerValue} headerValue={headerValue} />);
+    headerRow.push(
+      <TableHeaderCell
+        key={headerValue}
+        id={headerValue}
+        headerValue={headerValue}
+      />);
   }
 
   for (let i = 0; i < tableData.length; i++) {
@@ -17,13 +22,16 @@ const Table = ({ tableData, visibleColumns, rowKey }) => {
       if (cellValue) {
         cellValue = cellValue.toString();
       }
-      bodyRow.push(<TableCell key={i + key} cellValue={cellValue} />);
+      bodyRow.push(<TableCell key={i + key} id={i + key} cellValue={cellValue} />);
     }
-    bodyRows.push(<tr
-      id={tableData[i][rowKey]}
-      key={tableData[i][rowKey]}
-      className="tableBodyRow"
-    >{bodyRow}</tr>);
+    if (tableData[i][rowKey]) {
+      const bodyRowKey = `row-${tableData[i][rowKey]}`;
+      bodyRows.push(<tr
+        key={bodyRowKey}
+        id={bodyRowKey}
+        className="tableBodyRow"
+      >{bodyRow}</tr>);
+    }
   }
 
   return (
