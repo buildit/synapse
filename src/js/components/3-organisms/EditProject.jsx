@@ -10,6 +10,7 @@ class EditProject extends Component {
   render() {
     const onInputChange = this.props.onInputChange;
     const project = this.props.project;
+    const onListItemRemove = this.props.onListItemRemove;
     return (
       <div>
         <h1>{project.name}</h1>
@@ -122,7 +123,9 @@ class EditProject extends Component {
         />
         <EditableFlowTable
           items={project.demand.flow}
-          actions={[{ label: 'Remove', onClick: (i) => { console.log('action index', i) } }]}
+          actions={[{ label: 'Remove', onClick: (i) => {
+            onListItemRemove('demand', 'flow', i);
+          } }]}
         />
 
         <h2>Defect</h2>
@@ -223,4 +226,5 @@ EditProject.propTypes = {
   project: PropTypes.object.isRequired,
   onInputChange: PropTypes.func.isRequired,
   initializeFormData: PropTypes.func.isRequired,
+  onListItemRemove: PropTypes.func.isRequired,
 };

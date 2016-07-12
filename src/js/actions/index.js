@@ -76,3 +76,10 @@ export const initializeFormData = (project) => ({
   type: 'INITIALIZE_FORM_DATA',
   project,
 });
+
+export const onListItemRemove = (section, list, index) => ({
+  type: 'REMOVE_LIST_ITEM',
+  section,
+  list,
+  index,
+});

@@ -114,6 +114,16 @@ const uiReducer = (state = {
       formData: action.project,
     };
   }
+  case 'REMOVE_LIST_ITEM': {
+    let newList = state.formData[action.section][action.list];
+    newList = newList.slice(0, action.index).concat(newList.slice(action.index + 1));
+    const newFormData = state.formData;
+    newFormData[action.section][action.list] = newList;
+    return {
+      ...state,
+      formData: newFormData,
+    };
+  }
   default: return state;
   }
 };

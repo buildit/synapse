@@ -63,7 +63,7 @@ describe('Table', () => {
       />
     );
 
-    expect(wrapper.find({ id: 'P001' }).find('td').length).toEqual(2);
+    expect(wrapper.find({ id: 'row-P001' }).find('td').length).toEqual(2);
   });
 
   it('row id value matches the value corresponding to the rowKey', () => {
@@ -77,6 +77,6 @@ describe('Table', () => {
       />
     );
 
-    expect(wrapper.find({ id: 'CitiPlanner' }).length).toEqual(1);
+    expect(wrapper.find({ id: 'row-CitiPlanner' }).length).toEqual(1);
   });
 });
