@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Input from '../1-atoms/Input';
+import EditableFlowTable from '../2-molecules/EditableFlowTable';
 
 class EditProject extends Component {
   componentWillMount() {
@@ -118,6 +119,10 @@ class EditProject extends Component {
           property="password"
           onInputChange={onInputChange}
           initialValue={project.demand.password}
+        />
+        <EditableFlowTable
+          items={project.demand.flow}
+          actions={[{ label: 'Remove', onClick: (i) => { console.log('action index', i) } }]}
         />
 
         <h2>Defect</h2>
