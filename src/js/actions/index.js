@@ -88,3 +88,9 @@ export const addItemToList = (name) => ({
   type: 'ADD_FLOW_LIST_ITEM',
   name,
 });
+
+export const addItemToRoleList = (name, groupWith) => ({
+  type: 'ADD_ROLE_LIST_ITEM',
+  name,
+  groupWith,
+});

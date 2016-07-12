@@ -3,6 +3,7 @@ import Input from '../1-atoms/Input';
 import EditableFlowTable from '../2-molecules/EditableFlowTable';
 import EditableRoleTable from '../2-molecules/EditableRoleTable';
 import AddFlowItem from '../1-atoms/AddFlowItem';
+import AddRoleItem from '../1-atoms/AddRoleItem';
 
 class EditProject extends Component {
   componentWillMount() {
@@ -14,6 +15,7 @@ class EditProject extends Component {
     const project = this.props.project;
     const onListItemRemove = this.props.onListItemRemove;
     const addItemToList = this.props.addItemToList;
+    const addItemToRoleList = this.props.addItemToRoleList;
     return (
       <div>
         <h1>{project.name}</h1>
@@ -235,6 +237,11 @@ class EditProject extends Component {
             onListItemRemove('effort', 'role', i);
           } }]}
         />
+        <AddRoleItem
+          onAddClick={(name, groupWith) => {
+            addItemToRoleList(name, groupWith);
+          }}
+        />
       </div>
     );
   }
@@ -248,4 +255,5 @@ EditProject.propTypes = {
   initializeFormData: PropTypes.func.isRequired,
   onListItemRemove: PropTypes.func.isRequired,
   addItemToList: PropTypes.func.isRequired,
+  addItemToRoleList: PropTypes.func.isRequired,
 };

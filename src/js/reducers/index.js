@@ -132,6 +132,14 @@ const uiReducer = (state = {
       formData: newFormData,
     };
   }
+  case 'ADD_ROLE_LIST_ITEM': {
+    const newFormData = state.formData;
+    newFormData.effort.role.push({ name: action.name, groupWith: action.groupWith });
+    return {
+      ...state,
+      formData: newFormData,
+    };
+  }
   default: return state;
   }
 };

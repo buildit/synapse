@@ -17,6 +17,7 @@ const Body = ({
   initializeFormData,
   onListItemRemove,
   addItemToList,
+  addItemToRoleList,
  }) => {
   switch (view) {
 
@@ -47,6 +48,7 @@ const Body = ({
         initializeFormData={initializeFormData}
         onListItemRemove={onListItemRemove}
         addItemToList={addItemToList}
+        addItemToRoleList={addItemToRoleList}
       />);
   }
 
@@ -69,6 +71,7 @@ Body.propTypes = {
   onSwitchView: PropTypes.func.isRequired,
   onListItemRemove: PropTypes.func.isRequired,
   addItemToList: PropTypes.func.isRequired,
+  addItemToRoleList: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
