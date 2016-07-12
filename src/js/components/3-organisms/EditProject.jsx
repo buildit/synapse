@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Input from '../1-atoms/Input';
 import EditableFlowTable from '../2-molecules/EditableFlowTable';
+import EditableRoleTable from '../2-molecules/EditableRoleTable';
 import AddFlowItem from '../1-atoms/AddFlowItem';
 
 class EditProject extends Component {
@@ -178,6 +179,12 @@ class EditProject extends Component {
           onInputChange={onInputChange}
           initialValue={project.defect.password}
         />
+        <EditableFlowTable
+          items={project.defect.flow}
+          actions={[{ label: 'Remove', onClick: (i) => {
+            onListItemRemove('defect', 'flow', i);
+          } }]}
+        />
 
         <h2>Effort</h2>
         <Input
@@ -221,6 +228,12 @@ class EditProject extends Component {
           property="password"
           onInputChange={onInputChange}
           initialValue={project.effort.password}
+        />
+        <EditableRoleTable
+          items={project.effort.role}
+          actions={[{ label: 'Remove', onClick: (i) => {
+            onListItemRemove('effort', 'role', i);
+          } }]}
         />
       </div>
     );

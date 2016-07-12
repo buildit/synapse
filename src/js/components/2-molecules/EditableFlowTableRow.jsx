@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Badge from '../1-atoms/Badge';
 import Link from '../1-atoms/Link';
 
-const EditableTableRow = React.createClass({
+const EditableFlowTableRow = React.createClass({
   propTypes: {
     item: PropTypes.object.isRequired,
     actions: PropTypes.array.isRequired,
@@ -41,4 +41,4 @@ const EditableTableRow = React.createClass({
   },
 });
 
-export default EditableTableRow;
+export default EditableFlowTableRow;

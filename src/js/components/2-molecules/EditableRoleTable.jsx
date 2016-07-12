@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
-import EditableFlowTableRow from '../2-molecules/EditableFlowTableRow';
+import EditableRoleTableRow from '../2-molecules/EditableRoleTableRow';
 
-const EditableFlowTable = ({ items, actions }) => {
+const EditableRoleTable = ({ items, actions }) => {
   const bodyRows = [];
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
     bodyRows.push(
-      <EditableFlowTableRow
+      <EditableRoleTableRow
         item={item}
         key={i}
         index={i}
@@ -21,10 +21,10 @@ const EditableFlowTable = ({ items, actions }) => {
       <thead>
         <tr className="tableHeaderRow">
           <th className="tableHeaderCell">
-            Sequence
+            Name
           </th>
           <th className="tableHeaderCell">
-            Name
+            Group With
           </th>
         </tr>
       </thead>
@@ -35,9 +35,9 @@ const EditableFlowTable = ({ items, actions }) => {
   );
 };
 
-export default EditableFlowTable;
+export default EditableRoleTable;
 
-EditableFlowTable.propTypes = {
+EditableRoleTable.propTypes = {
   items: PropTypes.array.isRequired,
   actions: PropTypes.array.isRequired,
 };
