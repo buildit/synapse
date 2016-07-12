@@ -99,3 +99,9 @@ export const addItemToRoleList = (name, groupWith) => ({
   name,
   groupWith,
 });
+
+export const addItemToSeverityList = (name, groupWith) => ({
+  type: 'ADD_SEVERITY_LIST_ITEM',
+  name,
+  groupWith,
+});

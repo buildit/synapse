@@ -148,6 +148,14 @@ const uiReducer = (state = {
       formData: newFormData,
     };
   }
+  case 'ADD_SEVERITY_LIST_ITEM': {
+    const newFormData = state.formData;
+    newFormData.defect.severity.push({ name: action.name, groupWith: action.groupWith });
+    return {
+      ...state,
+      formData: newFormData,
+    };
+  }
   default: return state;
   }
 };

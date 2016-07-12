@@ -19,6 +19,7 @@ const Body = ({
   addItemToDemandFlowList,
   addItemToDefectFlowList,
   addItemToRoleList,
+  addItemToSeverityList,
  }) => {
   switch (view) {
 
@@ -51,6 +52,7 @@ const Body = ({
         addItemToDemandFlowList={addItemToDemandFlowList}
         addItemToDefectFlowList={addItemToDefectFlowList}
         addItemToRoleList={addItemToRoleList}
+        addItemToSeverityList={addItemToSeverityList}
       />);
   }
 
@@ -75,6 +77,7 @@ Body.propTypes = {
   addItemToDemandFlowList: PropTypes.func.isRequired,
   addItemToDefectFlowList: PropTypes.func.isRequired,
   addItemToRoleList: PropTypes.func.isRequired,
+  addItemToSeverityList: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

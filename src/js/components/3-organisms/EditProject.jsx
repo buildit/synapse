@@ -5,6 +5,7 @@ import EditableRoleTable from '../2-molecules/EditableRoleTable';
 import EditableSeverityTable from '../2-molecules/EditableSeverityTable';
 import AddFlowItem from '../1-atoms/AddFlowItem';
 import AddRoleItem from '../1-atoms/AddRoleItem';
+import AddSeverityItem from '../1-atoms/AddSeverityItem';
 
 class EditProject extends Component {
   componentWillMount() {
@@ -18,6 +19,7 @@ class EditProject extends Component {
     const addItemToDemandFlowList = this.props.addItemToDemandFlowList;
     const addItemToDefectFlowList = this.props.addItemToDefectFlowList;
     const addItemToRoleList = this.props.addItemToRoleList;
+    const addItemToSeverityList = this.props.addItemToSeverityList;
     return (
       <div>
         <h1>{project.name}</h1>
@@ -200,6 +202,11 @@ class EditProject extends Component {
             onListItemRemove('defect', 'severity', i);
           } }]}
         />
+        <AddSeverityItem
+          onAddClick={(name, groupWith) => {
+            addItemToSeverityList(name, groupWith);
+          }}
+        />
 
         <h2>Effort</h2>
         <Input
@@ -270,4 +277,5 @@ EditProject.propTypes = {
   addItemToDemandFlowList: PropTypes.func.isRequired,
   addItemToDefectFlowList: PropTypes.func.isRequired,
   addItemToRoleList: PropTypes.func.isRequired,
+  addItemToSeverityList: PropTypes.func.isRequired,
 };
