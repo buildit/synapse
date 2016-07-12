@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Input from '../1-atoms/Input';
 import EditableFlowTable from '../2-molecules/EditableFlowTable';
 import EditableRoleTable from '../2-molecules/EditableRoleTable';
+import EditableSeverityTable from '../2-molecules/EditableSeverityTable';
 import AddFlowItem from '../1-atoms/AddFlowItem';
 import AddRoleItem from '../1-atoms/AddRoleItem';
 
@@ -192,6 +193,12 @@ class EditProject extends Component {
           onAddClick={(name) => {
             addItemToDefectFlowList(name);
           }}
+        />
+        <EditableSeverityTable
+          items={project.defect.severity}
+          actions={[{ label: 'Remove', onClick: (i) => {
+            onListItemRemove('defect', 'severity', i);
+          } }]}
         />
 
         <h2>Effort</h2>
