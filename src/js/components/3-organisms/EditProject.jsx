@@ -14,7 +14,8 @@ class EditProject extends Component {
     const onInputChange = this.props.onInputChange;
     const project = this.props.project;
     const onListItemRemove = this.props.onListItemRemove;
-    const addItemToList = this.props.addItemToList;
+    const addItemToDemandFlowList = this.props.addItemToDemandFlowList;
+    const addItemToDefectFlowList = this.props.addItemToDefectFlowList;
     const addItemToRoleList = this.props.addItemToRoleList;
     return (
       <div>
@@ -134,7 +135,7 @@ class EditProject extends Component {
         />
         <AddFlowItem
           onAddClick={(name) => {
-            addItemToList(name);
+            addItemToDemandFlowList(name);
           }}
         />
 
@@ -186,6 +187,11 @@ class EditProject extends Component {
           actions={[{ label: 'Remove', onClick: (i) => {
             onListItemRemove('defect', 'flow', i);
           } }]}
+        />
+        <AddFlowItem
+          onAddClick={(name) => {
+            addItemToDefectFlowList(name);
+          }}
         />
 
         <h2>Effort</h2>
@@ -254,6 +260,7 @@ EditProject.propTypes = {
   onInputChange: PropTypes.func.isRequired,
   initializeFormData: PropTypes.func.isRequired,
   onListItemRemove: PropTypes.func.isRequired,
-  addItemToList: PropTypes.func.isRequired,
+  addItemToDemandFlowList: PropTypes.func.isRequired,
+  addItemToDefectFlowList: PropTypes.func.isRequired,
   addItemToRoleList: PropTypes.func.isRequired,
 };

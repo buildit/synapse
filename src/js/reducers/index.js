@@ -124,9 +124,17 @@ const uiReducer = (state = {
       formData: newFormData,
     };
   }
-  case 'ADD_FLOW_LIST_ITEM': {
+  case 'ADD_DEMAND_FLOW_LIST_ITEM': {
     const newFormData = state.formData;
     newFormData.demand.flow.push({ name: action.name });
+    return {
+      ...state,
+      formData: newFormData,
+    };
+  }
+  case 'ADD_DEFECT_FLOW_LIST_ITEM': {
+    const newFormData = state.formData;
+    newFormData.defect.flow.push({ name: action.name });
     return {
       ...state,
       formData: newFormData,

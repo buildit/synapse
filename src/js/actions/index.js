@@ -84,8 +84,13 @@ export const onListItemRemove = (section, list, index) => ({
   index,
 });
 
-export const addItemToList = (name) => ({
-  type: 'ADD_FLOW_LIST_ITEM',
+export const addItemToDemandFlowList = (name) => ({
+  type: 'ADD_DEMAND_FLOW_LIST_ITEM',
+  name,
+});
+
+export const addItemToDefectFlowList = (name) => ({
+  type: 'ADD_DEFECT_FLOW_LIST_ITEM',
   name,
 });
 

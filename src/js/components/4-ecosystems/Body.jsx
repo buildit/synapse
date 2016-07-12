@@ -16,7 +16,8 @@ const Body = ({
   onInputChange,
   initializeFormData,
   onListItemRemove,
-  addItemToList,
+  addItemToDemandFlowList,
+  addItemToDefectFlowList,
   addItemToRoleList,
  }) => {
   switch (view) {
@@ -47,7 +48,8 @@ const Body = ({
         onInputChange={onInputChange}
         initializeFormData={initializeFormData}
         onListItemRemove={onListItemRemove}
-        addItemToList={addItemToList}
+        addItemToDemandFlowList={addItemToDemandFlowList}
+        addItemToDefectFlowList={addItemToDefectFlowList}
         addItemToRoleList={addItemToRoleList}
       />);
   }
@@ -70,7 +72,8 @@ Body.propTypes = {
   initializeFormData: PropTypes.func.isRequired,
   onSwitchView: PropTypes.func.isRequired,
   onListItemRemove: PropTypes.func.isRequired,
-  addItemToList: PropTypes.func.isRequired,
+  addItemToDemandFlowList: PropTypes.func.isRequired,
+  addItemToDefectFlowList: PropTypes.func.isRequired,
   addItemToRoleList: PropTypes.func.isRequired,
 };
 
