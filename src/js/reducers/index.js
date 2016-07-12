@@ -124,6 +124,14 @@ const uiReducer = (state = {
       formData: newFormData,
     };
   }
+  case 'ADD_FLOW_LIST_ITEM': {
+    const newFormData = state.formData;
+    newFormData.demand.flow.push({ name: action.name });
+    return {
+      ...state,
+      formData: newFormData,
+    };
+  }
   default: return state;
   }
 };

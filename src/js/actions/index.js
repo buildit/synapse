@@ -83,3 +83,8 @@ export const onListItemRemove = (section, list, index) => ({
   list,
   index,
 });
+
+export const addItemToList = (name) => ({
+  type: 'ADD_FLOW_LIST_ITEM',
+  name,
+});

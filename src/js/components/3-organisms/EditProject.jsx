@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Input from '../1-atoms/Input';
 import EditableFlowTable from '../2-molecules/EditableFlowTable';
+import AddFlowItem from '../1-atoms/AddFlowItem';
 
 class EditProject extends Component {
   componentWillMount() {
@@ -11,6 +12,7 @@ class EditProject extends Component {
     const onInputChange = this.props.onInputChange;
     const project = this.props.project;
     const onListItemRemove = this.props.onListItemRemove;
+    const addItemToList = this.props.addItemToList;
     return (
       <div>
         <h1>{project.name}</h1>
@@ -127,6 +129,11 @@ class EditProject extends Component {
             onListItemRemove('demand', 'flow', i);
           } }]}
         />
+        <AddFlowItem
+          onAddClick={(name) => {
+            addItemToList(name);
+          }}
+        />
 
         <h2>Defect</h2>
         <Input
@@ -227,4 +234,5 @@ EditProject.propTypes = {
   onInputChange: PropTypes.func.isRequired,
   initializeFormData: PropTypes.func.isRequired,
   onListItemRemove: PropTypes.func.isRequired,
+  addItemToList: PropTypes.func.isRequired,
 };

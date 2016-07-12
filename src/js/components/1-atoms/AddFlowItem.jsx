@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 const AddFlowItem = ({ onAddClick }) => {
   let input;
@@ -22,3 +22,7 @@ const AddFlowItem = ({ onAddClick }) => {
 };
 
 export default AddFlowItem;
+
+AddFlowItem.propTypes = {
+  onAddClick: PropTypes.func.isRequired,
+};
