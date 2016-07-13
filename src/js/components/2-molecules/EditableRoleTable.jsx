@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import EditableRoleTableRow from '../2-molecules/EditableRoleTableRow';
 
-const EditableRoleTable = ({ items, actions }) => {
+const EditableRoleTable = ({ items, removeItem, moveItemUp, moveItemDown }) => {
   const bodyRows = [];
 
   for (let i = 0; i < items.length; i++) {
@@ -11,7 +11,10 @@ const EditableRoleTable = ({ items, actions }) => {
         item={item}
         key={i}
         index={i}
-        actions={actions}
+        itemsSize={items.length}
+        removeItem={removeItem}
+        moveItemUp={moveItemUp}
+        moveItemDown={moveItemDown}
       />
     );
   }
@@ -39,5 +42,7 @@ export default EditableRoleTable;
 
 EditableRoleTable.propTypes = {
   items: PropTypes.array.isRequired,
-  actions: PropTypes.array.isRequired,
+  removeItem: PropTypes.func.isRequired,
+  moveItemUp: PropTypes.func.isRequired,
+  moveItemDown: PropTypes.func.isRequired,
 };

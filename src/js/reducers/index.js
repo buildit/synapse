@@ -144,6 +144,40 @@ const uiReducer = (state = {
       formData: newFormData,
     };
   }
+  case 'MOVE_LIST_ITEM_UP': {
+    if (action.index === 0) {
+      return {
+        ...state,
+      };
+    }
+    const newList = state.formData[action.section][action.list];
+    const temp = newList[action.index - 1];
+    newList[action.index - 1] = newList[action.index];
+    newList[action.index] = temp;
+    const newFormData = state.formData;
+    newFormData[action.section][action.list] = newList;
+    return {
+      ...state,
+      formData: newFormData,
+    };
+  }
+  case 'MOVE_LIST_ITEM_DOWN': {
+    const newList = state.formData[action.section][action.list];
+    if (action.index >= newList.length - 1) {
+      return {
+        ...state,
+      };
+    }
+    const temp = newList[action.index + 1];
+    newList[action.index + 1] = newList[action.index];
+    newList[action.index] = temp;
+    const newFormData = state.formData;
+    newFormData[action.section][action.list] = newList;
+    return {
+      ...state,
+      formData: newFormData,
+    };
+  }
   case 'ADD_DEMAND_FLOW_LIST_ITEM': {
     const newFormData = state.formData;
     newFormData.demand.flow.push({ name: action.name });

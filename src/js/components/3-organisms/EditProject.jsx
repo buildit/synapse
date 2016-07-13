@@ -21,6 +21,8 @@ class EditProject extends Component {
     const addItemToDefectFlowList = this.props.addItemToDefectFlowList;
     const addItemToRoleList = this.props.addItemToRoleList;
     const addItemToSeverityList = this.props.addItemToSeverityList;
+    const moveListItemUp = this.props.moveListItemUp;
+    const moveListItemDown = this.props.moveListItemDown;
     return (
       <form>
         <h1>{project.name}</h1>
@@ -134,9 +136,21 @@ class EditProject extends Component {
         <h3>Demand flow</h3>
         <EditableFlowTable
           items={project.demand.flow}
-          actions={[{ label: 'Remove', onClick: (i) => {
-            onListItemRemove('demand', 'flow', i);
-          } }]}
+          removeItem={
+            (i) => {
+              onListItemRemove('demand', 'flow', i);
+            }
+          }
+          moveItemUp={
+            (i) => {
+              moveListItemUp('demand', 'flow', i);
+            }
+          }
+          moveItemDown={
+            (i) => {
+              moveListItemDown('demand', 'flow', i);
+            }
+          }
         />
         <AddFlowItem
           onAddClick={(name) => {
@@ -190,9 +204,21 @@ class EditProject extends Component {
         <h3>Defect flow</h3>
         <EditableFlowTable
           items={project.defect.flow}
-          actions={[{ label: 'Remove', onClick: (i) => {
-            onListItemRemove('defect', 'flow', i);
-          } }]}
+          removeItem={
+            (i) => {
+              onListItemRemove('defect', 'flow', i);
+            }
+          }
+          moveItemUp={
+            (i) => {
+              moveListItemUp('defect', 'flow', i);
+            }
+          }
+          moveItemDown={
+            (i) => {
+              moveListItemDown('defect', 'flow', i);
+            }
+          }
         />
         <AddFlowItem
           onAddClick={(name) => {
@@ -202,9 +228,21 @@ class EditProject extends Component {
         <h3>Defect severity</h3>
         <EditableSeverityTable
           items={project.defect.severity}
-          actions={[{ label: 'Remove', onClick: (i) => {
-            onListItemRemove('defect', 'severity', i);
-          } }]}
+          removeItem={
+            (i) => {
+              onListItemRemove('defect', 'severity', i);
+            }
+          }
+          moveItemUp={
+            (i) => {
+              moveListItemUp('defect', 'severity', i);
+            }
+          }
+          moveItemDown={
+            (i) => {
+              moveListItemDown('defect', 'severity', i);
+            }
+          }
         />
         <AddSeverityItem
           onAddClick={(name, groupWith) => {
@@ -258,9 +296,21 @@ class EditProject extends Component {
         <h3>Roles</h3>
         <EditableRoleTable
           items={project.effort.role}
-          actions={[{ label: 'Remove', onClick: (i) => {
-            onListItemRemove('effort', 'role', i);
-          } }]}
+          removeItem={
+            (i) => {
+              onListItemRemove('effort', 'role', i);
+            }
+          }
+          moveItemUp={
+            (i) => {
+              moveListItemUp('effort', 'role', i);
+            }
+          }
+          moveItemDown={
+            (i) => {
+              moveListItemDown('effort', 'role', i);
+            }
+          }
         />
         <AddRoleItem
           onAddClick={(name, groupWith) => {
@@ -283,4 +333,6 @@ EditProject.propTypes = {
   addItemToDefectFlowList: PropTypes.func.isRequired,
   addItemToRoleList: PropTypes.func.isRequired,
   addItemToSeverityList: PropTypes.func.isRequired,
+  moveListItemUp: PropTypes.func.isRequired,
+  moveListItemDown: PropTypes.func.isRequired,
 };

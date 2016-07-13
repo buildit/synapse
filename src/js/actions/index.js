@@ -105,3 +105,17 @@ export const addItemToSeverityList = (name, groupWith) => ({
   name,
   groupWith,
 });
+
+export const moveListItemUp = (section, list, index) => ({
+  type: 'MOVE_LIST_ITEM_UP',
+  section,
+  list,
+  index,
+});
+
+export const moveListItemDown = (section, list, index) => ({
+  type: 'MOVE_LIST_ITEM_DOWN',
+  section,
+  list,
+  index,
+});

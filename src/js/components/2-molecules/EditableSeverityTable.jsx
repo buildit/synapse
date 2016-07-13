@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import EditableSeverityTableRow from '../2-molecules/EditableSeverityTableRow';
 
-const EditableSeverityTable = ({ items, actions }) => {
+const EditableSeverityTable = ({ items, removeItem, moveItemUp, moveItemDown }) => {
   const bodyRows = [];
 
   for (let i = 0; i < items.length; i++) {
@@ -11,7 +11,10 @@ const EditableSeverityTable = ({ items, actions }) => {
         item={item}
         key={i}
         index={i}
-        actions={actions}
+        itemsSize={items.length}
+        removeItem={removeItem}
+        moveItemUp={moveItemUp}
+        moveItemDown={moveItemDown}
       />
     );
   }
@@ -42,5 +45,7 @@ export default EditableSeverityTable;
 
 EditableSeverityTable.propTypes = {
   items: PropTypes.array.isRequired,
-  actions: PropTypes.array.isRequired,
+  removeItem: PropTypes.func.isRequired,
+  moveItemUp: PropTypes.func.isRequired,
+  moveItemDown: PropTypes.func.isRequired,
 };

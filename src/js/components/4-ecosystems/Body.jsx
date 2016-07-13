@@ -20,6 +20,8 @@ const Body = ({
   addItemToDefectFlowList,
   addItemToRoleList,
   addItemToSeverityList,
+  moveListItemUp,
+  moveListItemDown,
  }) => {
   switch (view) {
 
@@ -53,6 +55,8 @@ const Body = ({
         addItemToDefectFlowList={addItemToDefectFlowList}
         addItemToRoleList={addItemToRoleList}
         addItemToSeverityList={addItemToSeverityList}
+        moveListItemUp={moveListItemUp}
+        moveListItemDown={moveListItemDown}
       />);
   }
 
@@ -78,6 +82,8 @@ Body.propTypes = {
   addItemToDefectFlowList: PropTypes.func.isRequired,
   addItemToRoleList: PropTypes.func.isRequired,
   addItemToSeverityList: PropTypes.func.isRequired,
+  moveListItemUp: PropTypes.func.isRequired,
+  moveListItemDown: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
