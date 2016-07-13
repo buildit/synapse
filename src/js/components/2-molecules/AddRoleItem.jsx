@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
+import Button from '../1-atoms/Button';
 
-const AddSeverityItem = ({ onAddClick }) => {
+const AddRoleItem = ({ onAddClick }) => {
   let nameInput;
   let groupWithInput;
   return (
-    <div>
+    <div className="add-role-item">
       <span>Name</span>
       <input
         ref={node => {
@@ -17,20 +18,21 @@ const AddSeverityItem = ({ onAddClick }) => {
           groupWithInput = node;
         }}
       />
-      <button
+      <Button
+        label="Add"
         onClick={event => {
           event.preventDefault();
           onAddClick(nameInput.value, groupWithInput.value);
           nameInput.value = '';
           groupWithInput.value = '';
         }}
-      >Add</button>
+      />
     </div>
   );
 };
 
-export default AddSeverityItem;
+export default AddRoleItem;
 
-AddSeverityItem.propTypes = {
+AddRoleItem.propTypes = {
   onAddClick: PropTypes.func.isRequired,
 };

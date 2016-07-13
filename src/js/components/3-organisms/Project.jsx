@@ -2,14 +2,7 @@ import React from 'react';
 import Text from '../1-atoms/Text';
 import Button from '../1-atoms/Button';
 import Table from '../2-molecules/Table';
-import moment from 'moment';
-
-const formatDate = date => {
-  if (date) {
-    return moment(date).format('MMMM Do YYYY');
-  }
-  return '';
-};
+import formatDate from '../../helpers/formatDate';
 
 const Project = ({ project, onSwitchView }) => {
   let projectDemand = project.demand;

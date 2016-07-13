@@ -1,22 +1,24 @@
 import React, { PropTypes } from 'react';
+import Button from '../1-atoms/Button';
 
 const AddFlowItem = ({ onAddClick }) => {
   let input;
   return (
-    <div>
+    <div className="add-flow-item">
       <span>Name</span>
       <input
         ref={node => {
           input = node;
         }}
       />
-      <button
+      <Button
+        label="Add"
         onClick={event => {
           event.preventDefault();
           onAddClick(input.value);
           input.value = '';
         }}
-      >Add</button>
+      />
     </div>
   );
 };

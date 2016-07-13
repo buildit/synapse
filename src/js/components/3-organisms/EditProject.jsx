@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import Input from '../1-atoms/Input';
+import DateInput from '../1-atoms/DateInput';
 import EditableFlowTable from '../2-molecules/EditableFlowTable';
 import EditableRoleTable from '../2-molecules/EditableRoleTable';
 import EditableSeverityTable from '../2-molecules/EditableSeverityTable';
-import AddFlowItem from '../1-atoms/AddFlowItem';
-import AddRoleItem from '../1-atoms/AddRoleItem';
-import AddSeverityItem from '../1-atoms/AddSeverityItem';
+import AddFlowItem from '../2-molecules/AddFlowItem';
+import AddRoleItem from '../2-molecules/AddRoleItem';
+import AddSeverityItem from '../2-molecules/AddSeverityItem';
 
 class EditProject extends Component {
   componentWillMount() {
@@ -21,7 +22,7 @@ class EditProject extends Component {
     const addItemToRoleList = this.props.addItemToRoleList;
     const addItemToSeverityList = this.props.addItemToSeverityList;
     return (
-      <div>
+      <form>
         <h1>{project.name}</h1>
         <Input
           label="ID"
@@ -65,14 +66,14 @@ class EditProject extends Component {
           onInputChange={onInputChange}
           initialValue={project.description}
         />
-        <Input
+        <DateInput
           label="Start date"
           section="header"
           property="startDate"
           onInputChange={onInputChange}
           initialValue={project.startDate}
         />
-        <Input
+        <DateInput
           label="End date"
           section="header"
           property="endDate"
@@ -130,6 +131,7 @@ class EditProject extends Component {
           onInputChange={onInputChange}
           initialValue={project.demand.password}
         />
+        <h3>Demand flow</h3>
         <EditableFlowTable
           items={project.demand.flow}
           actions={[{ label: 'Remove', onClick: (i) => {
@@ -185,6 +187,7 @@ class EditProject extends Component {
           onInputChange={onInputChange}
           initialValue={project.defect.password}
         />
+        <h3>Defect flow</h3>
         <EditableFlowTable
           items={project.defect.flow}
           actions={[{ label: 'Remove', onClick: (i) => {
@@ -196,6 +199,7 @@ class EditProject extends Component {
             addItemToDefectFlowList(name);
           }}
         />
+        <h3>Defect severity</h3>
         <EditableSeverityTable
           items={project.defect.severity}
           actions={[{ label: 'Remove', onClick: (i) => {
@@ -251,6 +255,7 @@ class EditProject extends Component {
           onInputChange={onInputChange}
           initialValue={project.effort.password}
         />
+        <h3>Roles</h3>
         <EditableRoleTable
           items={project.effort.role}
           actions={[{ label: 'Remove', onClick: (i) => {
@@ -262,7 +267,7 @@ class EditProject extends Component {
             addItemToRoleList(name, groupWith);
           }}
         />
-      </div>
+      </form>
     );
   }
 }

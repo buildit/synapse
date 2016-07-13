@@ -1,21 +1,21 @@
 import React, { PropTypes } from 'react';
-// import moment from 'moment';
+import formatDate from '../../helpers/formatDate';
 
-const Input = ({ label, section, property, onInputChange, initialValue = '' }) => {
+const DateInput = ({ label, section, property, onInputChange, initialValue = '' }) => {
   let input;
   return (
     <div className="form-group">
-      <label htmlFor={`${section}${property}`}>{label}</label>
+      <label>{label}</label>
       <input
         className="form-control"
-        type="text"
+        type="date"
         id={`${section}${property}`}
         placeholder={label}
         ref={node => {
           input = node;
           if (input) {
             if (!input.value) {
-              input.value = initialValue;
+              input.value = formatDate(initialValue);
             }
           }
         }
@@ -29,9 +29,9 @@ const Input = ({ label, section, property, onInputChange, initialValue = '' }) =
     );
 };
 
-export default Input;
+export default DateInput;
 
-Input.propTypes = {
+DateInput.propTypes = {
   section: PropTypes.string,
   property: PropTypes.string,
   label: PropTypes.string,
