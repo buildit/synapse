@@ -5,29 +5,6 @@ import Table from '../2-molecules/Table';
 import formatDate from '../../helpers/formatDate';
 
 const Project = ({ project, onSwitchView }) => {
-  let projectDemand = project.demand;
-  let projectDefect = project.defect;
-  let projectEffort = project.effort;
-
-  if (!projectDemand) {
-    projectDemand = {
-      flow: [],
-    };
-  }
-
-  if (!projectDefect) {
-    projectDefect = {
-      flow: [],
-      severity: [],
-    };
-  }
-
-  if (!projectEffort) {
-    projectEffort = {
-      role: [],
-    };
-  }
-
   return (
     <div>
       <h1>{project.name}</h1>
@@ -53,24 +30,24 @@ const Project = ({ project, onSwitchView }) => {
         <h2>Demand</h2>
         <Text
           label="Source"
-          content={projectDemand.source}
+          content={project.demand.source}
         />
         <Text
           label="Source URL"
-          content={projectDemand.url}
+          content={project.demand.url}
         />
         <Text
           label="Project"
-          content={projectDemand.project}
+          content={project.demand.project}
         />
         <h3>Auth</h3>
         <Text
           label="Auth policy"
-          content={projectDemand.authPolicy}
+          content={project.demand.authPolicy}
         />
         <Text
           label="Username"
-          content={projectDemand.username}
+          content={project.demand.username}
         />
         <Text
           label="Password"
@@ -79,7 +56,7 @@ const Project = ({ project, onSwitchView }) => {
 
         <h3>Flow</h3>
         <Table
-          tableData={projectDemand.flow}
+          tableData={project.demand.flow}
           visibleColumns={['sequence', 'name']}
           rowKey="sequence"
         />
@@ -89,24 +66,24 @@ const Project = ({ project, onSwitchView }) => {
         <h2>Defect</h2>
         <Text
           label="Source"
-          content={projectDefect.source}
+          content={project.defect.source}
         />
         <Text
           label="Source URL"
-          content={projectDefect.url}
+          content={project.defect.url}
         />
         <Text
           label="Project"
-          content={projectDefect.project}
+          content={project.defect.project}
         />
         <h3>Auth</h3>
         <Text
           label="Auth policy"
-          content={projectDefect.authPolicy}
+          content={project.defect.authPolicy}
         />
         <Text
           label="Username"
-          content={projectDefect.username}
+          content={project.defect.username}
         />
         <Text
           label="Password"
@@ -115,14 +92,14 @@ const Project = ({ project, onSwitchView }) => {
 
         <h3>Flow</h3>
         <Table
-          tableData={projectDefect.flow}
+          tableData={project.defect.flow}
           visibleColumns={['sequence', 'name']}
           rowKey="name"
         />
 
         <h3>Severity</h3>
         <Table
-          tableData={projectDefect.severity}
+          tableData={project.defect.severity}
           visibleColumns={['sequence', 'name', 'groupWith']}
           rowKey="sequence"
         />
@@ -132,24 +109,24 @@ const Project = ({ project, onSwitchView }) => {
         <h2>Effort</h2>
         <Text
           label="Source"
-          content={projectEffort.source}
+          content={project.effort.source}
         />
         <Text
           label="Source URL"
-          content={projectEffort.url}
+          content={project.effort.url}
         />
         <Text
           label="Project"
-          content={projectEffort.project}
+          content={project.effort.project}
         />
         <h3>Auth</h3>
         <Text
           label="Auth policy"
-          content={projectEffort.authPolicy}
+          content={project.effort.authPolicy}
         />
         <Text
           label="Username"
-          content={projectEffort.username}
+          content={project.effort.username}
         />
         <Text
           label="Password"
@@ -158,7 +135,7 @@ const Project = ({ project, onSwitchView }) => {
 
         <h3>Roles</h3>
         <Table
-          tableData={projectEffort.role}
+          tableData={project.effort.role}
           visibleColumns={['name', 'groupWith']}
           rowKey="name"
         />

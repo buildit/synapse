@@ -23,9 +23,29 @@ const appDataReducer = (state = { isFetching: false }, action) => {
     };
   }
   case 'FETCH_PROJECT_SUCCESS': {
+    const project = action.project;
+    if (!project.demand) {
+      project.demand = {
+        flow: [],
+      };
+    }
+
+    if (!project.defect) {
+      project.defect = {
+        flow: [],
+        severity: [],
+      };
+    }
+
+    if (!project.effort) {
+      project.effort = {
+        role: [],
+      };
+    }
+
     return {
       ...state,
-      project: action.project,
+      project,
       isFetching: false,
     };
   }
