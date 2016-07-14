@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Input from '../1-atoms/Input';
 import DateInput from '../1-atoms/DateInput';
+import Button from '../1-atoms/Button';
 import EditableFlowTable from '../2-molecules/EditableFlowTable';
 import EditableRoleTable from '../2-molecules/EditableRoleTable';
 import EditableSeverityTable from '../2-molecules/EditableSeverityTable';
@@ -15,6 +16,7 @@ class EditProject extends Component {
 
   render() {
     const onInputChange = this.props.onInputChange;
+    const onSaveFormData = this.props.onInputChange;
     const project = this.props.project;
     const onListItemRemove = this.props.onListItemRemove;
     const addItemToDemandFlowList = this.props.addItemToDemandFlowList;
@@ -26,6 +28,14 @@ class EditProject extends Component {
     return (
       <form>
         <h1>{project.name}</h1>
+        <Button
+          label="Save"
+          onClick={onSaveFormData}
+        />
+        <Button
+          label="Cancel"
+          onClick={() => {}}
+        />
         <Input
           label="ID"
           section="header"
@@ -317,6 +327,14 @@ class EditProject extends Component {
             addItemToRoleList(name, groupWith);
           }}
         />
+        <Button
+          label="Save"
+          onClick={onSaveFormData}
+        />
+        <Button
+          label="Cancel"
+          onClick={() => {}}
+        />
       </form>
     );
   }
@@ -327,6 +345,7 @@ export default EditProject;
 EditProject.propTypes = {
   project: PropTypes.object.isRequired,
   onInputChange: PropTypes.func.isRequired,
+  onSaveFormData: PropTypes.func.isRequired,
   initializeFormData: PropTypes.func.isRequired,
   onListItemRemove: PropTypes.func.isRequired,
   addItemToDemandFlowList: PropTypes.func.isRequired,
