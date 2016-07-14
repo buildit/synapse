@@ -1,6 +1,11 @@
 import { combineReducers } from 'redux';
+import blankProject from '../helpers/blankProject';
+import _ from 'lodash';
 
-const appDataReducer = (state = { isFetching: false }, action) => {
+const appDataReducer = (state = {
+  isFetching: false,
+  starterProjectList: [],
+}, action) => {
   switch (action.type) {
   case 'FETCH_PROJECTS_REQUEST': {
     return {
@@ -13,6 +18,19 @@ const appDataReducer = (state = { isFetching: false }, action) => {
     return {
       ...state,
       projectList: action.response,
+      isFetching: false,
+    };
+  }
+  case 'FETCH_STARTER_PROJECTS_REQUEST': {
+    return {
+      ...state,
+      isFetching: true,
+    };
+  }
+  case 'FETCH_STARTER_PROJECTS_RECEIVE': {
+    return {
+      ...state,
+      starterProjectList: action.response,
       isFetching: false,
     };
   }
@@ -53,6 +71,24 @@ const appDataReducer = (state = { isFetching: false }, action) => {
     return {
       ...state,
       isFetching: false,
+    };
+  }
+  case 'INITIALIZE_NEW_PROJECT': {
+    const starterProject = blankProject;
+    let harvestProject;
+    state.starterProjectList.forEach(project => {
+      if (project.id === action.harvestId) {
+        harvestProject = project;
+      }
+    });
+    _.forIn(harvestProject, (value, key) => {
+      if (harvestProject[key]) {
+        starterProject[key] = harvestProject[key];
+      }
+    });
+    return {
+      ...state,
+      project: starterProject,
     };
   }
   default:

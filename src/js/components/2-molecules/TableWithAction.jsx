@@ -3,7 +3,7 @@ import TableCell from '../1-atoms/TableCell';
 import TableHeaderCell from '../1-atoms/TableHeaderCell';
 import Link from '../1-atoms/Link';
 
-const TableWithAction = ({ tableData, visibleColumns, rowKey, onProjectViewClick }) => {
+const TableWithAction = ({ tableData, visibleColumns, rowKey, onActionClick, actionLabel }) => {
   let headerRow = [];
   let bodyRows = [];
 
@@ -19,10 +19,10 @@ const TableWithAction = ({ tableData, visibleColumns, rowKey, onProjectViewClick
     }
     bodyRow.push(<td key={`link-${i}`}>
       <Link
-        label="View"
+        label={actionLabel}
         id={`link-${i}`}
         onClick={() => {
-          onProjectViewClick(tableData[i][rowKey]);
+          onActionClick(tableData[i][rowKey]);
         }}
       />
     </td>);
@@ -53,5 +53,6 @@ TableWithAction.propTypes = {
   tableData: React.PropTypes.array.isRequired,
   visibleColumns: React.PropTypes.array.isRequired,
   rowKey: React.PropTypes.string.isRequired,
-  onProjectViewClick: React.PropTypes.func.isRequired,
+  actionLabel: React.PropTypes.string.isRequired,
+  onActionClick: React.PropTypes.func.isRequired,
 };

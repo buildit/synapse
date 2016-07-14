@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import ProjectList from '../3-organisms/ProjectList';
+import NewProjectList from '../3-organisms/NewProjectList';
 import Project from '../3-organisms/Project';
 import EditProject from '../3-organisms/EditProject';
 import Error from '../1-atoms/Error';
@@ -12,6 +13,8 @@ const Body = ({
   view,
   fetchProjects,
   fetchProject,
+  fetchStarterProjects,
+  initializeNewProject,
   onSwitchView,
   onInputChange,
   initializeFormData,
@@ -32,6 +35,7 @@ const Body = ({
         fetchProject={fetchProject}
         projects={appData.projectList}
         isFetching={appData.isFetching}
+        onSwitchView={onSwitchView}
       />);
   }
 
@@ -60,7 +64,16 @@ const Body = ({
       />);
   }
 
-  case 'newProjectList': { return <div>New project list</div>; }
+  case 'newProjectList': {
+    return (
+      <NewProjectList
+        fetchStarterProjects={fetchStarterProjects}
+        initializeNewProject={initializeNewProject}
+        starterProjects={appData.starterProjectList}
+        isFetching={appData.isFetching}
+        onSwitchView={onSwitchView}
+      />);
+  }
 
   case 'error': { return <Error message={ui.errorMessage} />; }
 
@@ -74,6 +87,8 @@ Body.propTypes = {
   ui: PropTypes.object.isRequired,
   fetchProjects: PropTypes.func.isRequired,
   fetchProject: PropTypes.func.isRequired,
+  fetchStarterProjects: PropTypes.func.isRequired,
+  initializeNewProject: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
   initializeFormData: PropTypes.func.isRequired,
   onSwitchView: PropTypes.func.isRequired,
@@ -87,6 +102,7 @@ Body.propTypes = {
 };
 
 function mapStateToProps(state) {
+  // console.log(state);
   const props = {
     ui: state.ui,
     appData: state.appData,

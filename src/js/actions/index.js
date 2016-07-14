@@ -1,5 +1,6 @@
 import $ from 'jquery';
 const apiBaseUrl = require('../../../config/development.json').api.baseUrl;
+const starterProjectsBaseApiUrl = require('../../../config/development.json').api.baseUrl;
 
 const requestProjects = () => (
   { type: 'FETCH_PROJECTS_REQUEST' }
@@ -8,6 +9,17 @@ const requestProjects = () => (
 const receiveProjects = (response) => (
   {
     type: 'FETCH_PROJECTS_RECEIVE',
+    response,
+  }
+);
+
+const requestStarterProjects = () => (
+  { type: 'FETCH_STARTER_PROJECTS_REQUEST' }
+);
+
+const receiveStarterProjects = (response) => (
+  {
+    type: 'FETCH_STARTER_PROJECTS_RECEIVE',
     response,
   }
 );
@@ -29,6 +41,18 @@ export const fetchProjects = () => (dispatch) => {
   return $.get(`${apiBaseUrl}project/`)
     .done(response => {
       dispatch(receiveProjects(response));
+    })
+    .fail(response => {
+      dispatch(setErrorMessage(response.responseText));
+      dispatch(onSwitchView('error'));
+    });
+};
+
+export const fetchStarterProjects = () => (dispatch) => {
+  dispatch(requestStarterProjects());
+  return $.get(`${starterProjectsBaseApiUrl}harvest_project/`)
+    .done(response => {
+      dispatch(receiveStarterProjects(response));
     })
     .fail(response => {
       dispatch(setErrorMessage(response.responseText));
@@ -64,6 +88,11 @@ export const fetchProject = (id) => (dispatch) => {
         });
       });
 };
+
+export const initializeNewProject = (harvestId) => ({
+  type: 'INITIALIZE_NEW_PROJECT',
+  harvestId,
+});
 
 export const onInputChange = (section, key, value) => ({
   type: 'UPDATE_FORM_DATA',
