@@ -17,6 +17,7 @@ const Body = ({
   initializeNewProject,
   onSwitchView,
   onInputChange,
+  onSaveFormData,
   initializeFormData,
   onListItemRemove,
   addItemToDemandFlowList,
@@ -53,6 +54,7 @@ const Body = ({
       <EditProject
         project={appData.project}
         onInputChange={onInputChange}
+        onSaveFormData={onInputChange}
         initializeFormData={initializeFormData}
         onListItemRemove={onListItemRemove}
         addItemToDemandFlowList={addItemToDemandFlowList}
@@ -90,6 +92,7 @@ Body.propTypes = {
   fetchStarterProjects: PropTypes.func.isRequired,
   initializeNewProject: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
+  onSaveFormData: PropTypes.func.isRequired,
   initializeFormData: PropTypes.func.isRequired,
   onSwitchView: PropTypes.func.isRequired,
   onListItemRemove: PropTypes.func.isRequired,

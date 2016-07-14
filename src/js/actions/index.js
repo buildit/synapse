@@ -101,6 +101,13 @@ export const onInputChange = (section, key, value) => ({
   value,
 });
 
+export const onSaveFormData = (section, key, value) => ({
+  type: 'SAVE_FORM_DATA',
+  section,
+  key,
+  value,
+});
+
 export const initializeFormData = (project) => ({
   type: 'INITIALIZE_FORM_DATA',
   project,
