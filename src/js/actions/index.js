@@ -89,6 +89,17 @@ export const fetchProject = (id) => (dispatch) => {
       });
 };
 
+export const saveFormData = (project) => () => {
+  console.log(project);
+  return $.ajax({
+    type: 'POST',
+    url: `${apiBaseUrl}project/${project.id}`,
+    data: JSON.stringify(project),
+    contentType: 'application/json',
+    dataType: 'json',
+  });
+};
+
 export const initializeNewProject = (harvestId) => ({
   type: 'INITIALIZE_NEW_PROJECT',
   harvestId,
@@ -96,13 +107,6 @@ export const initializeNewProject = (harvestId) => ({
 
 export const onInputChange = (section, key, value) => ({
   type: 'UPDATE_FORM_DATA',
-  section,
-  key,
-  value,
-});
-
-export const onSaveFormData = (section, key, value) => ({
-  type: 'SAVE_FORM_DATA',
   section,
   key,
   value,
