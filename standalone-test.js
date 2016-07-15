@@ -2,7 +2,7 @@ const webdriverio = require('webdriverio');
 const options = { desiredCapabilities: { browserName: 'chrome' } };
 const client = webdriverio.remote(options);
 const assert = require('assert');
-const clientBaseUrl = require('./config/development.json').client.baseUrl;
+const clientBaseUrl = 'http://localhost:3000/';
 
 const testIsEqual = (expected, actual) => {
   const failureMessage =

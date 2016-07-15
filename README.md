@@ -18,12 +18,14 @@ npm start
 ```
 
 ## Configuration
-Configuration details for the site are specified in the `config` folder. For example, rather than referring to the api url in a literal string, refer to the value in the config file:
+Configuration details for the site are specified in the `config` folder. The variables in these files are exposed to the global client environment. The gulp task `config` determines which file gets exposed (development.js, production.js, etc). And the gulp task takes its cue from the process.env.NODE_ENV, which is set in the `build` script in package.json.
+
+We can then use the variables defined in the config folder in our code. For example, rather than referring to the api url in a literal string, refer to the value in the config file:
 
 Define the client url at the top of your file:
 
 ```
-const apiBaseUrl = require('./config/development.json').api.baseUrl;
+const apiBaseUrl = api.baseUrl;
 ```
 
 Then use it like so:
@@ -31,8 +33,6 @@ Then use it like so:
 ```
 $.get(`${apiBaseUrl}project/`)
 ```
-
-At some point we'll need to take this another step further, differentiating between development and production, but this is a start.
 
 ## State tree
 Our state tree has the following shape, with some typical values:

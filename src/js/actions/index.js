@@ -1,6 +1,6 @@
 import $ from 'jquery';
-const apiBaseUrl = require('../../../config/development.json').api.baseUrl;
-const starterProjectsBaseApiUrl = require('../../../config/development.json').api.baseUrl;
+const apiBaseUrl = api.baseUrl;
+const starterProjectsBaseApiUrl = starterProjectsApi.baseUrl;
 
 const requestProjects = () => (
   { type: 'FETCH_PROJECTS_REQUEST' }

@@ -8,10 +8,29 @@ const less = require('gulp-less');
 const lesshint = require('gulp-lesshint');
 const source = require('vinyl-source-stream');
 const sourcemaps = require('gulp-sourcemaps');
+const rename = require('gulp-rename');
+const cowsay = require('cowsay');
 
 gulp.task('clean', () => (
   del(['dist'])
 ));
+
+gulp.task('config', ['clean'], () => {
+  console.log(cowsay.say({
+    text: `Setting up configuration\nfor ${process.env.NODE_ENV} environment.`,
+    e: 'oO',
+    T: 'U ',
+  }));
+  if (process.env.NODE_ENV === 'production') {
+    gulp.src('./config/production.js')
+      .pipe(rename('config.js'))
+      .pipe(gulp.dest('./dist/js'));
+  } else {
+    gulp.src('./config/development.js')
+      .pipe(rename('config.js'))
+      .pipe(gulp.dest('./dist/js'));
+  }
+});
 
 gulp.task('js', ['clean'], () => (
   browserify({
@@ -66,4 +85,4 @@ gulp.task('server', () => {
   });
 });
 
-gulp.task('default', ['js', 'css', 'html']);
+gulp.task('default', ['config', 'js', 'css', 'html']);

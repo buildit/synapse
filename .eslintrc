@@ -9,7 +9,9 @@
     "describe": false,
     "it": false,
     "expect": false,
-    "browser": false
+    "browser": false,
+    "api": false,
+    "starterProjectsApi": false,
   },
   "parserOptions": {
     "ecmaVersion": 6,
