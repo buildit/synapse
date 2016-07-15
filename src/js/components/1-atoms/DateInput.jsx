@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import formatDate from '../../helpers/formatDate';
 
 const DateInput = ({ label, section, property, onInputChange, initialValue = '' }) => {
   let input;
@@ -15,7 +14,7 @@ const DateInput = ({ label, section, property, onInputChange, initialValue = '' 
           input = node;
           if (input) {
             if (!input.value) {
-              input.value = formatDate(initialValue);
+              input.value = initialValue;
             }
           }
         }

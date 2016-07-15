@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import blankProject from '../helpers/blankProject';
+import normalizeProject from '../helpers/normalizeProject';
 import _ from 'lodash';
 
 const appDataReducer = (state = {
@@ -41,25 +42,7 @@ const appDataReducer = (state = {
     };
   }
   case 'FETCH_PROJECT_SUCCESS': {
-    const project = action.project;
-    if (!project.demand) {
-      project.demand = {
-        flow: [],
-      };
-    }
-
-    if (!project.defect) {
-      project.defect = {
-        flow: [],
-        severity: [],
-      };
-    }
-
-    if (!project.effort) {
-      project.effort = {
-        role: [],
-      };
-    }
+    const project = normalizeProject(action.project);
 
     return {
       ...state,
