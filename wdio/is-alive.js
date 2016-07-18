@@ -1,5 +1,5 @@
 const assert = require('assert');
-const clientBaseUrl = require('../config/development.json').client.baseUrl;
+const clientBaseUrl = 'http://localhost:3000/'
 
 describe('Synapse app', () => {
   before(() => {
