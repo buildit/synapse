@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import normalizeDemandData from '../helpers/normalizeDemandData';
 const apiBaseUrl = api.baseUrl;
 const starterProjectsBaseApiUrl = starterProjectsApi.baseUrl;
 
@@ -89,6 +90,44 @@ export const fetchProject = (id) => (dispatch) => {
       });
 };
 
+export const fetchStatus = (id) => (dispatch) => {
+  dispatch({
+    type: 'FETCH_STATUS_REQUEST',
+  });
+
+  return $.get('x')
+    // When status api is working uncomment these lines
+    // .done(data => {
+    //   dispatch({
+    //     type: 'FETCH_STATUS_SUCCESS',
+    //     status: data[0],
+    //   });
+    //   dispatch({
+    //     type: 'SWITCH_VIEW',
+    //     view: 'statusView',
+    //   });
+    // })
+    // .fail(() => {
+    //   dispatch({
+    //     type: 'FETCH_STATUS_FAILURE',
+    //     errorMessage: 'There was an error.',
+    //   });
+    //   dispatch({
+    //     type: 'SWITCH_VIEW',
+    //     view: 'error',
+    //   });
+    // })
+
+    // Faking the success of the data call
+    .always(() => {
+      const data = getSampleData();
+      dispatch({
+        type: 'FETCH_STATUS_SUCCESS',
+        status: data,
+      });
+    });
+};
+
 export const saveFormData = (project) => () => {
   console.log(project);
   return $.ajax({
@@ -159,3 +198,56 @@ export const moveListItemDown = (section, list, index) => ({
   list,
   index,
 });
+
+function getSampleData() {
+  const sampleData = [
+    {
+      projectDate: '2015-12-03',
+      status: {
+        'To Do': 5,
+      },
+    },
+    {
+      projectDate: '2015-12-04',
+      status:
+      {
+        'To Do': 6,
+        'In Progress': 2,
+      },
+    },
+    {
+      projectDate: '2015-12-05',
+      status:
+      {
+        'To Do': 3,
+        'In Progress': 4,
+        Done: 2,
+      },
+    },
+    {
+      projectDate: '2015-12-06',
+      status:
+      {
+        'To Do': 2,
+        Done: 4,
+      },
+    },
+    {
+      projectDate: '2015-12-08',
+      status:
+      {
+        'To Do': 0,
+        'In Progress': 5,
+        Done: 5,
+      },
+    },
+    {
+      projectDate: '2015-12-09',
+      status:
+      {
+        'To Do': 0,
+      },
+    },
+  ];
+  return normalizeDemandData(sampleData);
+}

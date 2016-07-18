@@ -9,7 +9,7 @@ import Nav from '../components/2-molecules/Nav';
 import * as actionCreators from '../actions/index.js';
 import navLinks from '../../nav.config.js';
 
-const App = ({ ui, onSwitchView, fetchProject, fetchProjects }) => (
+const App = ({ ui, onSwitchView, fetchProject, fetchProjects, fetchStatus }) => (
   <div className="container">
     <Nav
       onSwitchView={onSwitchView}
@@ -19,6 +19,7 @@ const App = ({ ui, onSwitchView, fetchProject, fetchProjects }) => (
       view={ui.view}
       fetchProject={fetchProject}
       fetchProjects={fetchProjects}
+      fetchStatus={fetchStatus}
     />
   </div>
 );
@@ -29,10 +30,10 @@ App.propTypes = {
   onSwitchView: PropTypes.func.isRequired,
   fetchProject: PropTypes.func.isRequired,
   fetchProjects: PropTypes.func.isRequired,
+  fetchStatus: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
-  // console.log('state-formData:', state.ui.formData);
   const props = {
     ui: state.ui,
     appData: state.appData,

@@ -15,6 +15,12 @@ const Project = ({ project, onSwitchView }) => {
           onSwitchView('editProject');
         }}
       />
+      <Button
+        label="Status"
+        onClick={() => {
+          onSwitchView('statusView');
+        }}
+      />
 
       <Text label="ID" content={project.id} />
       <Text label="Name" content={project.name} />

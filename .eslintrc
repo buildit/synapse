@@ -8,6 +8,7 @@
     "jest": false,
     "describe": false,
     "it": false,
+    "xit": false,
     "expect": false,
     "browser": false,
     "api": false,

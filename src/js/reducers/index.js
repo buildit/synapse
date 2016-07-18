@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
 import blankProject from '../helpers/blankProject';
 import normalizeProject from '../helpers/normalizeProject';
+// import normalizeDemandData from '../helpers/normalizeDemandData';
 import _ from 'lodash';
 
 const appDataReducer = (state = {
   isFetching: false,
   starterProjectList: [],
+  status: [],
 }, action) => {
   switch (action.type) {
   case 'FETCH_PROJECTS_REQUEST': {
@@ -51,6 +53,25 @@ const appDataReducer = (state = {
     };
   }
   case 'FETCH_PROJECT_FAILURE': {
+    return {
+      ...state,
+      isFetching: false,
+    };
+  }
+  case 'FETCH_STATUS_REQUEST': {
+    return {
+      ...state,
+      isFetching: true,
+    };
+  }
+  case 'FETCH_STATUS_SUCCESS': {
+    return {
+      ...state,
+      status: action.status,
+      isFetching: false,
+    };
+  }
+  case 'FETCH_STATUS_FAILURE': {
     return {
       ...state,
       isFetching: false,
