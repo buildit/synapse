@@ -8,7 +8,7 @@
     "build:production": "gulp --environment production",
     "lint": "eslint src/ test/ *.js",
     "start": "gulp server",
-    "test": "jest --verbose && ./node_modules/.bin/wdio wdio.conf.js",
+    "test": "jest --verbose",
     "test:changed-files": "jest --verbose -o",
     "test-it-the-other-way": "node standalone-test.js"
   },
