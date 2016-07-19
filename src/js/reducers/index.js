@@ -7,7 +7,7 @@ import _ from 'lodash';
 const appDataReducer = (state = {
   isFetching: false,
   starterProjectList: [],
-  status: [],
+  demandStatus: [],
 }, action) => {
   switch (action.type) {
   case 'FETCH_PROJECTS_REQUEST': {
@@ -65,10 +65,10 @@ const appDataReducer = (state = {
     };
   }
   case 'FETCH_STATUS_SUCCESS': {
-    const demandData = normalizeDemandData(action.status);
+    const normalizedStatusData = normalizeDemandData(action.statusData);
     return {
       ...state,
-      status: demandData,
+      demandStatus: normalizedStatusData,
       isFetching: false,
     };
   }

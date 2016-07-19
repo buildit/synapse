@@ -94,10 +94,10 @@ export const fetchStatus = (id) => (dispatch) => {
     type: 'FETCH_STATUS_REQUEST',
   });
   return $.get(`${apiBaseUrl}project/${id}/demand`)
-    .done(data => {
+    .done(statusData => {
       dispatch({
         type: 'FETCH_STATUS_SUCCESS',
-        status: data,
+        statusData,
       });
       dispatch({
         type: 'SWITCH_VIEW',

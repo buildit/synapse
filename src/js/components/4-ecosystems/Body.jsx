@@ -3,7 +3,7 @@ import ProjectList from '../3-organisms/ProjectList';
 import NewProjectList from '../3-organisms/NewProjectList';
 import Project from '../3-organisms/Project';
 import EditProject from '../3-organisms/EditProject';
-import Chart from '../3-organisms/Chart';
+import Status from '../3-organisms/Status';
 import Error from '../1-atoms/Error';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/index.js';
@@ -82,10 +82,10 @@ const Body = ({
 
   case 'statusView': {
     return (
-      <Chart
+      <Status
         fetchStatus={fetchStatus}
         projectId={appData.project.id}
-        status={appData.status}
+        demandStatus={appData.demandStatus}
       />
     );
   }
