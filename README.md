@@ -18,7 +18,7 @@ npm start
 ```
 
 ## Configuration
-Configuration details for the site are specified in the `config` folder. The variables in these files are exposed to the global client environment. The gulp task `config` determines which file gets exposed (development.js, production.js, etc). And the gulp task takes its cue from the process.env.NODE_ENV, which is set in the `build` script in package.json.
+Configuration details for the site are specified in the `config` folder. The variables in these files are exposed to the global client environment. The gulp task `config` determines which file gets exposed (development.js, production.js, etc). And the gulp task takes its cue from the command line argument passed to gulp, such as `gulp --environment production`. We don't run `gulp` directly; we run it via npm scripts. Check out the `build` scripts in package.json to see how we're firing off builds for development vs. production.
 
 We can then use the variables defined in the config folder in our code. For example, rather than referring to the api url in a literal string, refer to the value in the config file:
 
@@ -33,6 +33,8 @@ Then use it like so:
 ```
 $.get(`${apiBaseUrl}project/`)
 ```
+
+Note that `config/production.js` currently does not contain any valid api endpoints. If you run `npm build:production`, the app will not be able to grab any data. When we have the production api up and running we can put the correct values in `config/production.js`.
 
 ## State tree
 Our state tree has the following shape, with some typical values:

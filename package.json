@@ -4,8 +4,8 @@
   "description": "Management information dashboard.",
   "main": "dev-server.js",
   "scripts": {
-    "build": "NODE_ENV=development && gulp",
-    "build:production": "NODE_ENV=production && gulp",
+    "build": "gulp --environment development",
+    "build:production": "gulp --environment production",
     "lint": "eslint src/ test/ *.js",
     "start": "gulp server",
     "test": "jest --verbose && ./node_modules/.bin/wdio wdio.conf.js",
@@ -64,7 +64,8 @@
     "sinon": "^1.17.4",
     "vinyl-source-stream": "^1.1.0",
     "wdio-mocha-framework": "^0.3.5",
-    "webdriverio": "^4.1.1"
+    "webdriverio": "^4.1.1",
+    "yargs": "^4.8.1"
   },
   "dependencies": {
     "babel-preset-stage-2": "^6.11.0",
