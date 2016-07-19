@@ -6,7 +6,7 @@ import ReactHighcharts from 'react-highcharts';
 
 class Chart extends Component {
   componentDidMount() {
-    this.props.fetchStatus();
+    this.props.fetchStatus(this.props.projectId);
   }
 
   render() {
@@ -27,20 +27,6 @@ class Chart extends Component {
           text: 'Demand',
         },
       },
-      // series: [
-      //   {
-      //     name: 'To do',
-      //     data: [5, 6, 3, 2, 1],
-      //   },
-      //   {
-      //     name: 'In progress',
-      //     data: [1, 7, 8, 3, 2],
-      //   },
-      //   {
-      //     name: 'Done',
-      //     data: [0, 1, 3, 4, 7],
-      //   },
-      // ],
       series: this.props.status,
       plotOptions: {
         series: {
@@ -48,6 +34,10 @@ class Chart extends Component {
         },
       },
     };
+
+    if (this.props.status.length < 1) {
+      return <div>There is no status data for project {this.props.projectId}.</div>;
+    }
     return (
       <div>
         <ReactHighcharts config={config} />
@@ -58,6 +48,7 @@ class Chart extends Component {
 
 Chart.propTypes = {
   fetchStatus: PropTypes.func.isRequired,
+  projectId: PropTypes.string.isRequired,
   status: PropTypes.array.isRequired,
 };
 

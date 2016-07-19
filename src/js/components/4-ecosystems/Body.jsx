@@ -84,6 +84,7 @@ const Body = ({
     return (
       <Chart
         fetchStatus={fetchStatus}
+        projectId={appData.project.id}
         status={appData.status}
       />
     );
@@ -118,7 +119,7 @@ Body.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log(state);
+  // console.log(state);
   const props = {
     ui: state.ui,
     appData: state.appData,
