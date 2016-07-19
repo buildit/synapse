@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import blankProject from '../helpers/blankProject';
 import normalizeProject from '../helpers/normalizeProject';
-// import normalizeDemandData from '../helpers/normalizeDemandData';
+import normalizeDemandData from '../helpers/normalizeDemandData';
 import _ from 'lodash';
 
 const appDataReducer = (state = {
@@ -65,9 +65,10 @@ const appDataReducer = (state = {
     };
   }
   case 'FETCH_STATUS_SUCCESS': {
+    const demandData = normalizeDemandData(action.status);
     return {
       ...state,
-      status: action.status,
+      status: demandData,
       isFetching: false,
     };
   }

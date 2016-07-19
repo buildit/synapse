@@ -118,7 +118,7 @@ Body.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log(state);
+  // console.log(state);
   const props = {
     ui: state.ui,
     appData: state.appData,
