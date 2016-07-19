@@ -17,7 +17,7 @@ gulp.task('clean', () => (
 ));
 
 gulp.task('config', ['clean'], () => {
-  const environment = argv.environment
+  const environment = argv.environment;
   console.log(cowsay.say({
     text: `Setting up configuration\nfor ${environment} environment.`,
     e: 'oO',

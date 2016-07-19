@@ -116,21 +116,21 @@ export const fetchStatus = (id) => (dispatch) => {
     });
 };
 
-export const saveFormData = (project) => (dispatch) => {
-  return $.ajax({
+export const saveFormData = (project) => (dispatch) => (
+  $.ajax({
     type: 'POST',
     url: `${apiBaseUrl}project/${project.id}`,
     data: JSON.stringify(project),
     contentType: 'application/json',
   })
-.done(() => {
-  dispatch(onSwitchView('listView'));
-})
-.fail(response => {
-  dispatch(setErrorMessage(response.responseText));
-  dispatch(onSwitchView('error'));
-});
-};
+  .done(() => {
+    dispatch(onSwitchView('listView'));
+  })
+  .fail(response => {
+    dispatch(setErrorMessage(response.responseText));
+    dispatch(onSwitchView('error'));
+  })
+);
 
 export const initializeNewProject = (harvestId) => ({
   type: 'INITIALIZE_NEW_PROJECT',

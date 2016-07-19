@@ -1,28 +1,29 @@
 import normalizeDate from './normalizeDate';
 
 const normalizeProject = project => {
-  project.startDate = normalizeDate(project.startDate);
-  project.endDate = normalizeDate(project.endDate);
+  const normalizedProject = project;
+  normalizedProject.startDate = normalizeDate(normalizedProject.startDate);
+  normalizedProject.endDate = normalizeDate(normalizedProject.endDate);
 
-  if (!project.demand) {
-    project.demand = {
+  if (!normalizedProject.demand) {
+    normalizedProject.demand = {
       flow: [],
     };
   }
 
-  if (!project.defect) {
-    project.defect = {
+  if (!normalizedProject.defect) {
+    normalizedProject.defect = {
       flow: [],
       severity: [],
     };
   }
 
-  if (!project.effort) {
-    project.effort = {
+  if (!normalizedProject.effort) {
+    normalizedProject.effort = {
       role: [],
     };
   }
-  return project;
+  return normalizedProject;
 };
 
 export default normalizeProject;
