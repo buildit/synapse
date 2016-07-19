@@ -128,15 +128,21 @@ export const fetchStatus = (id) => (dispatch) => {
     });
 };
 
-export const saveFormData = (project) => () => {
+export const saveFormData = (project) => (dispatch) => {
   console.log(project);
   return $.ajax({
     type: 'POST',
     url: `${apiBaseUrl}project/${project.id}`,
     data: JSON.stringify(project),
     contentType: 'application/json',
-    dataType: 'json',
-  });
+  })
+.done(() => {
+  dispatch(onSwitchView('listView'));
+})
+.fail(response => {
+  dispatch(setErrorMessage(response.responseText));
+  dispatch(onSwitchView('error'));
+});
 };
 
 export const initializeNewProject = (harvestId) => ({
