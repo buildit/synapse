@@ -3,10 +3,8 @@ const findIndexOfCategory = require('./findIndexOfCategory');
 
 const normalizeDemandData = data => (
   data.reduce((previous, current) => {
-    // console.log('current:', current);
     const categories = Object.keys(current.status);
     categories.forEach(category => {
-      // console.log('category:', category);
       if (!categoryExists(previous, category)) {
         previous.push({
           name: category,
@@ -14,7 +12,6 @@ const normalizeDemandData = data => (
         });
       }
       const value = current.status[category];
-      // console.log(value);
       if (value) {
         const index = findIndexOfCategory(previous, category);
         // Not sure why we'd ever have an undefined index at this point.

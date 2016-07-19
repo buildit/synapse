@@ -70,7 +70,7 @@ describe('Normalizer for demand data', () => {
   });
 
   xit('the data is an array of numbers', () => {
-    const firstDataPoint = normalizedData[0]
+    const firstDataPoint = normalizedData[0];
     expect(firstDataPoint).toEqual(5);
   });
 

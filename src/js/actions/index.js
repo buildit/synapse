@@ -90,12 +90,10 @@ export const fetchProject = (id) => (dispatch) => {
 };
 
 export const fetchStatus = (id) => (dispatch) => {
-  console.log('Get status for project id#:', id);
   dispatch({
     type: 'FETCH_STATUS_REQUEST',
   });
-
-  return $.get('http://midas-api.buildit.tools/project/P001/demand')
+  return $.get(`${apiBaseUrl}project/${id}/demand`)
     .done(data => {
       dispatch({
         type: 'FETCH_STATUS_SUCCESS',
@@ -119,7 +117,6 @@ export const fetchStatus = (id) => (dispatch) => {
 };
 
 export const saveFormData = (project) => (dispatch) => {
-  console.log(project);
   return $.ajax({
     type: 'POST',
     url: `${apiBaseUrl}project/${project.id}`,

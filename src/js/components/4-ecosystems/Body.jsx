@@ -84,6 +84,7 @@ const Body = ({
     return (
       <Chart
         fetchStatus={fetchStatus}
+        projectId={appData.project.id}
         status={appData.status}
       />
     );
