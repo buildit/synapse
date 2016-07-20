@@ -1,39 +1,40 @@
-import React, { PropTypes } from 'react';
-import { Button, Modal } from 'bootstrap';
+import React from 'react';
+import { Modal } from 'react-bootstrap';
+import Button from '../1-atoms/Button';
 
-const SaveConfirmationModal = () => {
-  const onSwitchView = this.props.onSwitchView;
+const SaveConfirmationModal = () => ({
+  render() {
+    const onSwitchView = this.props.onSwitchView;
+    return (
+      <div className="static-modal">
+        <Modal.Dialog>
+          <Modal.Header>
+            <Modal.Title>Project Info Saved</Modal.Title>
+          </Modal.Header>
 
-  return (
-    <div className="modal-container" style={{ height: 200 }}>
-      <Modal
-        container={this}
-        aria-labelledby="contained-modal-title"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title">Save Confrmation</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div>
-          Project updated!
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            label="OK"
-            onClick={() => {
-              onSwitchView('listView');
-            }}
-          />
-        </Modal.Footer>
-      </Modal>
+          <Modal.Body>
+            Project has been saved!
+          </Modal.Body>
 
-    </div>
-  );
-};
+          <Modal.Footer>
+            <Button
+              label="Close"
+              onClick={(event) => {
+                event.preventDefault();
+                onSwitchView('listView');
+              }}
+            />
+          </Modal.Footer>
+
+        </Modal.Dialog>
+      </div>
+    );
+  },
+});
+
 
 export default SaveConfirmationModal;
 
 SaveConfirmationModal.propTypes = {
-  onSwitchView: PropTypes.func.isRequired,
+  onSwitchView: React.PropTypes.func.isRequired,
 };
