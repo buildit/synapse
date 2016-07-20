@@ -251,6 +251,19 @@ const uiReducer = (state = {
       formData: newFormData,
     };
   }
+  case 'SHOW_MODAL': {
+    return {
+      ...state,
+      modalMessage: action.modal,
+    };
+  }
+
+  case 'HIDE_MODAL': {
+    return {
+      ...state,
+      modalMessage: '',
+    };
+  }
   default: return state;
   }
 };

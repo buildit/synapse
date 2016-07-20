@@ -5,6 +5,7 @@ import Project from '../3-organisms/Project';
 import EditProject from '../3-organisms/EditProject';
 import Status from '../3-organisms/Status';
 import Error from '../1-atoms/Error';
+import SaveConfirmationModal from '../2-molecules/SaveConfirmationModal';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/index.js';
 
@@ -91,6 +92,14 @@ const Body = ({
   }
 
   case 'error': { return <Error message={ui.errorMessage} />; }
+
+  case 'modalView': {
+    return (
+      <SaveConfirmationModal
+        onSwitchView={onSwitchView}
+      />)
+        ;
+  }
 
   default: return <div>Nothing.</div>;
   }

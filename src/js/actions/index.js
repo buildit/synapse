@@ -36,6 +36,14 @@ export const onSwitchView = view => ({
   view,
 });
 
+export const showModal = (modal, project) => ({
+  type: 'SHOW_MODAL', modal, project,
+});
+
+export const hideModal = (modal) => ({
+  type: 'HIDE_MODAL', modal,
+});
+
 export const fetchProjects = () => (dispatch) => {
   dispatch(requestProjects());
   return $.get(`${apiBaseUrl}project/`)
@@ -124,7 +132,8 @@ export const saveFormData = (project) => (dispatch) => (
     contentType: 'application/json',
   })
   .done(() => {
-    dispatch(onSwitchView('listView'));
+    dispatch(onSwitchView('modalView'));
+    dispatch(showModal('SaveConfirmationModal', project));
   })
   .fail(response => {
     dispatch(setErrorMessage(response.responseText));
