@@ -36,9 +36,6 @@ node {
 
       stage "Test"
         sh "npm run test"
-        step([$class: 'JUnitResultArchiver', testResults: 'reports/test-results.xml'])
-        publishHTML(target: [reportDir: 'reports', reportFiles: 'test-results.html', reportName: 'Test Results'])
-        publishHTML(target: [reportDir: 'reports/coverage', reportFiles: 'index.html', reportName: 'Coverage Results'])
 
       stage "Analysis"
         sh "/usr/local/sonar-scanner-2.6.1/bin/sonar-scanner -e -Dsonar.projectVersion=${version}"
