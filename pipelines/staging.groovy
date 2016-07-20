@@ -38,7 +38,7 @@ node {
         sh "npm run test"
 
       stage "Analysis"
-        sh "/usr/local/sonar-scanner-2.6.1/bin/sonar-scanner -e -Dsonar.projectVersion=${version}"
+        sh "npm run lint"
 
       stage "Build"
         sh "MODE=production npm run build"
