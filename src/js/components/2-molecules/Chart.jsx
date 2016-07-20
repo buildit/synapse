@@ -13,6 +13,7 @@ const Chart = ({ data, title }) => {
       title: {
         text: 'Date',
       },
+      type: 'datetime',
     },
     yAxis: {
       title: {

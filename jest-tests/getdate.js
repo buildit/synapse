@@ -18,4 +18,9 @@ describe('Date getter', () => {
     const year = getDate.year(date);
     expect(year).toEqual('2016');
   });
+
+  it('should return UTC format', () => {
+    const utc = getDate.utc(date);
+    expect(utc).toEqual(1465430400000);
+  });
 });
