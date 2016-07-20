@@ -25,6 +25,9 @@ const Chart = ({ data, title }) => {
         stacking: 'normal',
       },
     },
+    credits: {
+      enabled: false,
+    },
   };
   if (data.length < 1) {
     return <div>There is no {title} data for this project.</div>;
