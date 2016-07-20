@@ -3,6 +3,7 @@ import React, {
   PropTypes,
 } from 'react';
 import Chart from '../2-molecules/Chart';
+import LineChart from '../2-molecules/LineChart';
 
 class Status extends Component {
   componentDidMount() {
@@ -17,6 +18,12 @@ class Status extends Component {
           title="Demand"
           data={this.props.demandStatus}
         />
+        <div className="chartHolder">
+          <LineChart
+            title="Defect"
+            yName="Severity"
+          />
+        </div>
       </div>
     );
   }
