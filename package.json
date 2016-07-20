@@ -23,6 +23,10 @@
   "license": "MIT",
   "homepage": "https://bitbucket.org/digitalrigbitbucketteam/synapse#readme",
   "jest": {
+    "collectCoverage": true,
+    "collectCoverageOnlyFrom": {
+      "src/js/containers/App.js": true
+    },
     "moduleFileExtensions": [
       "jsx",
       "js",
