@@ -11,6 +11,8 @@ node {
         npm = load "lib/npm.groovy"
         shell = load "lib/shell.groovy"
         slack = load "lib/slack.groovy"
+        convox = load "lib/convox.groovy"
+        template = load "lib/template.groovy"
 
         def registry = "https://006393696278.dkr.ecr.us-west-2.amazonaws.com"
         def appUrl = "http://synapse.staging.buildit.tools"
