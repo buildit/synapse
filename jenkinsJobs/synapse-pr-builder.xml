@@ -9,7 +9,7 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <url>git@bitbucket.org:digitalrigbitbucketteam/synapse.git</url>
-        <credentialsId>7eab6bd5-f43e-47fc-888e-0c540e577544</credentialsId>
+        <credentialsId>git-credentials</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
