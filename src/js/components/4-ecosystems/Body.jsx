@@ -18,8 +18,6 @@ const Body = ({
   saveFormData,
   fetchStarterProjects,
   fetchStatus,
-  fetchDefect,
-  fetchEffort,
   initializeNewProject,
   onSwitchView,
   onInputChange,
@@ -87,8 +85,6 @@ const Body = ({
     return (
       <Status
         fetchStatus={fetchStatus}
-        fetchDefect={fetchDefect}
-        fetchEffort={fetchEffort}
         projectId={appData.project.id}
         demandStatus={appData.demandStatus}
         defectStatus={appData.defectStatus}
@@ -119,8 +115,6 @@ Body.propTypes = {
   saveFormData: PropTypes.func.isRequired,
   fetchStarterProjects: PropTypes.func.isRequired,
   fetchStatus: PropTypes.func.isRequired,
-  fetchDefect: PropTypes.func.isRequired,
-  fetchEffort: PropTypes.func.isRequired,
   initializeNewProject: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
   initializeFormData: PropTypes.func.isRequired,

@@ -128,7 +128,6 @@ export const fetchDefect = (id) => (dispatch) => {
   });
   return $.get(`${apiBaseUrl}project/${id}/defect`)
     .done(statusDefectData => {
-      dispatch(fetchEffort(id));
       dispatch({
         type: 'FETCH_DEFECT_SUCCESS',
         statusDefectData,
@@ -143,30 +142,69 @@ export const fetchDefect = (id) => (dispatch) => {
         type: 'SWITCH_VIEW',
         view: 'error',
       });
+    })
+    .always(() => {
+      dispatch(fetchEffort(id));
     });
 };
 export const fetchStatus = (id) => (dispatch) => {
+  const demandCall = $.get(`${apiBaseUrl}project/${id}/demand`);
+  const defectCall = $.get(`${apiBaseUrl}project/${id}/defect`);
+  const effortCall = $.get(`${apiBaseUrl}project/${id}/effort`);
   dispatch({
     type: 'FETCH_STATUS_REQUEST',
   });
-  return $.get(`${apiBaseUrl}project/${id}/demand`)
-    .done(statusData => {
-      dispatch(fetchDefect(id));
-      dispatch({
-        type: 'FETCH_STATUS_SUCCESS',
-        statusData,
-      });
-    })
-    .fail(() => {
-      dispatch({
-        type: 'FETCH_STATUS_FAILURE',
-        errorMessage: 'There was an error.',
-      });
-      dispatch({
-        type: 'SWITCH_VIEW',
-        view: 'error',
-      });
+  $.when(demandCall)
+  .done(statusData => {
+    dispatch({
+      type: 'FETCH_STATUS_SUCCESS',
+      statusData,
     });
+  })
+  .fail(() => {
+    dispatch({
+      type: 'FETCH_STATUS_FAILURE',
+      errorMessage: 'There was an error.',
+    });
+    dispatch({
+      type: 'SWITCH_VIEW',
+      view: 'error',
+    });
+  });
+  $.when(defectCall)
+  .done(statusDefectData => {
+    dispatch({
+      type: 'FETCH_DEFECT_SUCCESS',
+      statusDefectData,
+    });
+  })
+  .fail(() => {
+    dispatch({
+      type: 'FETCH_STATUS_FAILURE',
+      errorMessage: 'There was an error.',
+    });
+    dispatch({
+      type: 'SWITCH_VIEW',
+      view: 'error',
+    });
+  });
+  $.when(effortCall)
+  .done(statusEffortData => {
+    dispatch({
+      type: 'FETCH_EFFORT_SUCCESS',
+      statusEffortData,
+    });
+  })
+  .fail(() => {
+    dispatch({
+      type: 'FETCH_STATUS_FAILURE',
+      errorMessage: 'There was an error.',
+    });
+    dispatch({
+      type: 'SWITCH_VIEW',
+      view: 'error',
+    });
+  });
 };
 
 export const saveFormData = (project) => (dispatch) => (

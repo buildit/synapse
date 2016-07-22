@@ -38,6 +38,9 @@ const LineChart = ({ title, yName, data }) => {
         },
       },
     },
+    credits: {
+      enabled: false,
+    },
     series: [{
       name: 'Defect',
             // Define the data points. All series have a dummy year
