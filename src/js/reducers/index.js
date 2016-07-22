@@ -8,6 +8,8 @@ const appDataReducer = (state = {
   isFetching: false,
   starterProjectList: [],
   demandStatus: [],
+  effortStatus: [],
+  defectStatus: [],
 }, action) => {
   switch (action.type) {
   case 'FETCH_PROJECTS_REQUEST': {
@@ -69,6 +71,20 @@ const appDataReducer = (state = {
     return {
       ...state,
       demandStatus: normalizedStatusData,
+      isFetching: false,
+    };
+  }
+  case 'FETCH_DEFECT_SUCCESS': {
+    return {
+      ...state,
+      defectStatus: action.statusDefectData,
+      isFetching: false,
+    };
+  }
+  case 'FETCH_EFFORT_SUCCESS': {
+    return {
+      ...state,
+      effortStatus: action.statusEffortData,
       isFetching: false,
     };
   }

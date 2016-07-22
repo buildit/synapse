@@ -22,6 +22,7 @@ class Status extends Component {
           <LineChart
             title="Defect"
             yName="Severity"
+            data={this.props.defectStatus}
           />
         </div>
       </div>
@@ -33,6 +34,7 @@ Status.propTypes = {
   fetchStatus: PropTypes.func.isRequired,
   projectId: PropTypes.string.isRequired,
   demandStatus: PropTypes.array.isRequired,
+  defectStatus: PropTypes.array.isRequired,
 };
 
 export default Status;

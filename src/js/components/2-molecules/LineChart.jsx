@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import ReactHighcharts from 'react-highcharts';
 
-const LineChart = ({ title, yName }) => {
+const LineChart = ({ title, yName, data }) => {
+  console.log ("data", data)
   const config = {
     chart: {
       type: 'spline',

@@ -96,20 +96,65 @@ export const fetchProject = (id) => (dispatch) => {
         });
       });
 };
-
+export const fetchEffort = (id) => (dispatch) => {
+  dispatch({
+    type: 'FETCH_STATUS_REQUEST',
+  });
+  return $.get(`${apiBaseUrl}project/${id}/effort`)
+    .done(statusEffortData => {
+      dispatch({
+        type: 'FETCH_EFFORT_SUCCESS',
+        statusEffortData,
+      });
+      dispatch({
+        type: 'SWITCH_VIEW',
+        view: 'statusView',
+      });
+    })
+    .fail(() => {
+      dispatch({
+        type: 'FETCH_STATUS_FAILURE',
+        errorMessage: 'There was an error.',
+      });
+      dispatch({
+        type: 'SWITCH_VIEW',
+        view: 'error',
+      });
+    });
+};
+export const fetchDefect = (id) => (dispatch) => {
+  dispatch({
+    type: 'FETCH_STATUS_REQUEST',
+  });
+  return $.get(`${apiBaseUrl}project/${id}/defect`)
+    .done(statusDefectData => {
+      dispatch(fetchEffort(id));
+      dispatch({
+        type: 'FETCH_DEFECT_SUCCESS',
+        statusDefectData,
+      });
+    })
+    .fail(() => {
+      dispatch({
+        type: 'FETCH_STATUS_FAILURE',
+        errorMessage: 'There was an error.',
+      });
+      dispatch({
+        type: 'SWITCH_VIEW',
+        view: 'error',
+      });
+    });
+};
 export const fetchStatus = (id) => (dispatch) => {
   dispatch({
     type: 'FETCH_STATUS_REQUEST',
   });
   return $.get(`${apiBaseUrl}project/${id}/demand`)
     .done(statusData => {
+      dispatch(fetchDefect(id));
       dispatch({
         type: 'FETCH_STATUS_SUCCESS',
         statusData,
-      });
-      dispatch({
-        type: 'SWITCH_VIEW',
-        view: 'statusView',
       });
     })
     .fail(() => {
