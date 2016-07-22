@@ -9,7 +9,10 @@ const norm = function norm() {
   }
 
   my.datum = function datum(d) {
-    if (!arguments.length) return this.data;
+    if (d === undefined) {
+      return this.data;
+    }
+
     this.data = d;
     return my;
   };

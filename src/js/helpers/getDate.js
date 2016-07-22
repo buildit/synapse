@@ -10,7 +10,7 @@ const getDate = {
   ),
   utc: (date) => {
     const day = parseInt(date.split('-')[2], 10);
-    const month = parseInt(date.split('-')[1], 10);
+    const month = parseInt(date.split('-')[1], 10) - 1;
     const year = parseInt(date.split('-')[0], 10);
     return (Date.UTC(year, month, day));
   },

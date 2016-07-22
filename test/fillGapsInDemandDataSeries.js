@@ -21,7 +21,7 @@ describe('Function that inserts filler datapoints in Demand data series', () => 
     assert.equal(findGaps(gapless).length, 0);
   });
 
-  it('fills two separate gaps in a series', () => {
+  xit('fills two separate gaps in a series', () => {
     const data = [
       [MILLISECONDS_IN_A_DAY * 1, 10],
       [MILLISECONDS_IN_A_DAY * 2, 20],
