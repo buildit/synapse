@@ -1,6 +1,6 @@
 var api = {
-  baseUrl: '',
+  baseUrl: 'http://midas-api.buildit.tools',
 };
 var starterProjectsApi = {
-  baseUrl: '',
+  baseUrl: 'http://midas-api.buildit.tools',
 };
