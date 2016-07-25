@@ -1,5 +1,4 @@
 const fillMissingCategories = require('./fillMissingCategories');
-const fillGapsInDemandDataSeries = require('./fillGapsInDemandDataSeries');
 const sortDemandData = require('./sortDemandData');
 const transformEffortData = require('./transformEffortData');
 
