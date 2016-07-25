@@ -13,7 +13,7 @@ class Status extends Component {
   render() {
     return (
       <div>
-        <h1>Project status</h1>
+        <h1>{this.props.projectName} > status</h1>
         <Chart
           title="Demand"
           data={this.props.demandStatus}
@@ -39,7 +39,8 @@ class Status extends Component {
 
 Status.propTypes = {
   fetchStatus: PropTypes.func.isRequired,
-  projectId: PropTypes.string.isRequired,
+  projectName: PropTypes.string.isRequired,
+  project: PropTypes.string.isRequired,
   demandStatus: PropTypes.array.isRequired,
   defectStatus: PropTypes.array.isRequired,
   effortStatus: PropTypes.array.isRequired,
