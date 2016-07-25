@@ -11,10 +11,6 @@ const LineChart = ({ title, yLabel, data }) => {
     },
     xAxis: {
       type: 'datetime',
-      dateTimeLabelFormats: { // don't display the dummy year
-        month: '%e. %b',
-        year: '%b',
-      },
       title: {
         text: 'Date',
       },
@@ -42,6 +38,9 @@ const LineChart = ({ title, yLabel, data }) => {
     },
     series: data,
   };
+  if (data.length < 1) {
+    return <div>There is no {title} data for this project.</div>;
+  }
   return (
     <div>
       <ReactHighcharts config={config} />

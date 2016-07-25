@@ -83,9 +83,15 @@ const appDataReducer = (state = {
     };
   }
   case 'FETCH_DEFECT_SUCCESS': {
+    const normalizedDefectData =
+      normalizeDefectData()
+        .datum(action.statusDefectData)
+        .sort()
+        .transform()
+        .getData();
     return {
       ...state,
-      defectStatus: action.statusDefectData,
+      defectStatus: normalizedDefectData,
       isFetching: false,
     };
   }
