@@ -25,6 +25,13 @@ class Status extends Component {
             data={this.props.defectStatus}
           />
         </div>
+        <div className="chartHolder">
+          <LineChart
+            title="Effort"
+            yLabel="Activity"
+            data={this.props.effortStatus}
+          />
+        </div>
       </div>
     );
   }
@@ -35,6 +42,7 @@ Status.propTypes = {
   projectId: PropTypes.string.isRequired,
   demandStatus: PropTypes.array.isRequired,
   defectStatus: PropTypes.array.isRequired,
+  effortStatus: PropTypes.array.isRequired,
 };
 
 export default Status;

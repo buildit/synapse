@@ -3,6 +3,7 @@ import blankProject from '../helpers/blankProject';
 import normalizeProject from '../helpers/normalizeProject';
 import normalizeDemandData from '../helpers/normalizeDemandData';
 import normalizeDefectData from '../helpers/normalizeDefectData';
+import normalizeEffortData from '../helpers/normalizeEffortData';
 import _ from 'lodash';
 
 const appDataReducer = (state = {
@@ -96,9 +97,15 @@ const appDataReducer = (state = {
     };
   }
   case 'FETCH_EFFORT_SUCCESS': {
+    const normalizedEffortData =
+      normalizeEffortData()
+        .datum(action.statusEffortData)
+        .sort()
+        .transform()
+        .getData();
     return {
       ...state,
-      effortStatus: action.statusEffortData,
+      effortStatus: normalizedEffortData,
       isFetching: false,
     };
   }

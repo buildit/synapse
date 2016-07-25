@@ -88,6 +88,7 @@ const Body = ({
         projectId={appData.project.id}
         demandStatus={appData.demandStatus}
         defectStatus={appData.defectStatus}
+        effortStatus={appData.effortStatus}
       />
     );
   }
