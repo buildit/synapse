@@ -9,7 +9,8 @@
     "lint": "eslint src/ test/ *.js",
     "start": "gulp server",
     "test": "jest --verbose",
-    "test:changed-files": "jest --verbose -o",
+    "test:changed": "jest --verbose -o",
+    "test:mocha": "mocha",
     "test-it-the-other-way": "node standalone-test.js"
   },
   "pre-commit": [
@@ -34,7 +35,7 @@
       "node"
     ],
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "testRegex": "test/.*",
+    "testRegex": "jest-tests/.*",
     "unmockedModulePathPatterns": [
       "react",
       "react-dom",
@@ -49,6 +50,7 @@
     "babel-jest": "^13.0.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
+    "chai": "^3.5.0",
     "cowsay": "^1.1.8",
     "del": "^2.2.1",
     "enzyme": "^2.3.0",

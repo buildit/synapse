@@ -67,7 +67,14 @@ const appDataReducer = (state = {
     };
   }
   case 'FETCH_STATUS_SUCCESS': {
-    const normalizedStatusData = normalizeDemandData(action.statusData);
+    const normalizedStatusData =
+      normalizeDemandData()
+        .datum(action.statusData)
+        .fill()
+        .sort()
+        .transform()
+        .getData();
+
     return {
       ...state,
       demandStatus: normalizedStatusData,

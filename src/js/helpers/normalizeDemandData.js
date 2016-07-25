@@ -1,29 +1,53 @@
-const categoryExists = require('./categoryExists');
-const findIndexOfCategory = require('./findIndexOfCategory');
+const fillMissingCategories = require('./fillMissingCategories');
+const fillGapsInDemandDataSeries = require('./fillGapsInDemandDataSeries');
+const sortDemandData = require('./sortDemandData');
+const transformDemandData = require('./transformDemandData');
 
-const normalizeDemandData = data => (
-  data.reduce((previous, current) => {
-    const categories = Object.keys(current.status);
-    categories.forEach(category => {
-      if (!categoryExists(previous, category)) {
-        previous.push({
-          name: category,
-          data: [],
-        });
-      }
-      const value = current.status[category];
-      if (value) {
-        const index = findIndexOfCategory(previous, category);
-        // Not sure why we'd ever have an undefined index at this point.
-        // But seems we encounter it sometimes.
-        if (previous[index]) {
-          previous[index].data.push(value);
-        }
-      }
+
+const norm = function norm() {
+  function my() {
+  }
+
+  my.datum = function datum(d) {
+    if (d === undefined) {
+      return this.data;
+    }
+
+    this.data = d;
+    return my;
+  };
+
+  my.fill = function fill() {
+    fillMissingCategories(this.data);
+    return my;
+  };
+
+  my.sort = function sort() {
+    sortDemandData(this.data);
+    return my;
+  };
+
+  my.log = function log() {
+    this.data.forEach(item => {
+      console.log(item);
     });
+    return my;
+  };
 
-    return previous;
-  }, [])
-);
+  my.getData = function getData() {
+    return this.data;
+  };
 
-export default normalizeDemandData;
+  my.transform = function transform() {
+    this.data = transformDemandData(this.data);
+    return my;
+  };
+
+  my.fillGapsInDataSeries = function fillGapsInDataSeries() {
+    return my;
+  };
+
+  return my;
+};
+
+module.exports = norm;
