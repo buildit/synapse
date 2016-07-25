@@ -21,7 +21,7 @@ class Status extends Component {
         <div className="chartHolder">
           <LineChart
             title="Defect"
-            yName="Severity"
+            yLabel="Severity"
             data={this.props.defectStatus}
           />
         </div>

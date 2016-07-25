@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import blankProject from '../helpers/blankProject';
 import normalizeProject from '../helpers/normalizeProject';
 import normalizeDemandData from '../helpers/normalizeDemandData';
+import normalizeDefectData from '../helpers/normalizeDefectData';
 import _ from 'lodash';
 
 const appDataReducer = (state = {
