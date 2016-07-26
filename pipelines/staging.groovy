@@ -4,7 +4,7 @@ node {
 
     try {
       stage "Set Up"
-        sh "curl -L http://nexus.riglet:9000/nexus/service/local/repositories/staging/content/zips/jenkins-pipeline-libraries/jenkins-pipeline-libraries-1.6.0.zip -o lib.zip && echo 'A' | unzip lib.zip"
+        sh "curl -L http://nexus.riglet:9000/nexus/service/local/repositories/staging/content/zips/jenkins-pipeline-libraries/jenkins-pipeline-libraries-1.7.0.zip -o lib.zip && echo 'A' | unzip lib.zip"
 
         ecr = load "lib/ecr.groovy"
         git = load "lib/git.groovy"
