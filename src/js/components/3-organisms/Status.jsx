@@ -41,6 +41,7 @@ Status.propTypes = {
   fetchStatus: PropTypes.func.isRequired,
   projectName: PropTypes.string.isRequired,
   project: PropTypes.string.isRequired,
+  projectId: PropTypes.string.isRequired,
   demandStatus: PropTypes.array.isRequired,
   defectStatus: PropTypes.array.isRequired,
   effortStatus: PropTypes.array.isRequired,

@@ -21,11 +21,6 @@ const LineChart = ({ title, yLabel, data }) => {
       },
       min: 0,
     },
-    tooltip: {
-      headerFormat: '<b>{series.name}</b><br>',
-      pointFormat: '{point.x:%e. %b}: {point.y:.2f}',
-    },
-
     plotOptions: {
       spline: {
         marker: {

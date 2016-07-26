@@ -4,6 +4,7 @@ import NewProjectList from '../3-organisms/NewProjectList';
 import Project from '../3-organisms/Project';
 import EditProject from '../3-organisms/EditProject';
 import Status from '../3-organisms/Status';
+import Projection from '../3-organisms/Projection';
 import Error from '../1-atoms/Error';
 import SaveConfirmationModal from '../2-molecules/SaveConfirmationModal';
 import { connect } from 'react-redux';
@@ -90,6 +91,14 @@ const Body = ({
         demandStatus={appData.demandStatus}
         defectStatus={appData.defectStatus}
         effortStatus={appData.effortStatus}
+      />
+    );
+  }
+
+  case 'projectionView': {
+    return (
+      <Projection
+        projectName={appData.project.name}
       />
     );
   }

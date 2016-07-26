@@ -21,6 +21,12 @@ const Project = ({ project, onSwitchView }) => {
           onSwitchView('statusView');
         }}
       />
+      <Button
+        label="Projection"
+        onClick={() => {
+          onSwitchView('projectionView');
+        }}
+      />
 
       <Text label="ID" content={project.id} />
       <Text label="Name" content={project.name} />
