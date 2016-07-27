@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Badge from '../1-atoms/Badge';
 import Link from '../1-atoms/Link';
+import Icon from '../1-atoms/Icon';
 
 const EditableFlowTableRow = React.createClass({
   propTypes: {
@@ -32,43 +33,42 @@ const EditableFlowTableRow = React.createClass({
     switch (index) {
     case 0:
       if (itemsSize > 1) {
-        actions.push(<Link
-          label="Remove"
+        actions.push(<Icon
+          icon="fa fa-times-circle"
           onClick={this.removeItemOnClick}
         />);
-        actions.push(<div></div>);
-        actions.push(<Link
-          label="Down"
+        actions.push(<Icon
+          icon="fa fa-arrow-circle-down"
           onClick={this.moveItemDownOnClick}
         />);
       } else {
-        actions.push(<Link
-          label="Remove"
+        actions.push(<Icon
+          icon="fa fa-times-circle"
           onClick={this.removeItemOnClick}
         />);
       }
       break;
     case itemsSize - 1:
-      actions.push(<Link
-        label="Remove"
+      actions.push(<Icon
+        icon="fa fa-times-circle"
         onClick={this.removeItemOnClick}
       />);
-      actions.push(<Link
-        label="Up"
+      actions.push(<Icon
+        icon="fa fa-arrow-circle-up"
         onClick={this.moveItemUpOnClick}
       />);
       break;
     default:
-      actions.push(<Link
-        label="Remove"
+      actions.push(<Icon
+        icon="fa fa-times-circle"
         onClick={this.removeItemOnClick}
       />);
-      actions.push(<Link
-        label="Up"
+      actions.push(<Icon
+        icon="fa fa-arrow-circle-up"
         onClick={this.moveItemUpOnClick}
       />);
-      actions.push(<Link
-        label="Down"
+      actions.push(<Icon
+        icon="fa fa-arrow-circle-down"
         onClick={this.moveItemDownOnClick}
       />);
     }
