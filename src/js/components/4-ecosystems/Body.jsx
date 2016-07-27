@@ -88,6 +88,7 @@ const Body = ({
         fetchStatus={fetchStatus}
         projectId={appData.project.id}
         projectName={appData.project.name}
+        project={appData.project}
         demandStatus={appData.demandStatus}
         defectStatus={appData.defectStatus}
         effortStatus={appData.effortStatus}

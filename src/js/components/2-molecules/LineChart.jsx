@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import ReactHighcharts from 'react-highcharts';
 
-const LineChart = ({ title, yLabel, data }) => {
+const LineChart = ({ title, yLabel, data, startDateInMS, endDateInMS }) => {
   const config = {
     chart: {
       type: 'spline',
@@ -14,6 +14,8 @@ const LineChart = ({ title, yLabel, data }) => {
       title: {
         text: 'Date',
       },
+      min: startDateInMS,
+      max: endDateInMS,
     },
     yAxis: {
       title: {

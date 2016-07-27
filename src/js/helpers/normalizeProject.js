@@ -2,8 +2,8 @@ import normalizeDate from './normalizeDate';
 
 const normalizeProject = project => {
   const normalizedProject = project;
-  normalizedProject.startDate = normalizeDate(normalizedProject.startDate);
-  normalizedProject.endDate = normalizeDate(normalizedProject.endDate);
+  normalizedProject.startDate = normalizeDate(normalizedProject.startDate) || '2000-01-01';
+  normalizedProject.endDate = normalizeDate(normalizedProject.endDate) || '2020-01-01';
 
   if (!normalizedProject.demand) {
     normalizedProject.demand = {
