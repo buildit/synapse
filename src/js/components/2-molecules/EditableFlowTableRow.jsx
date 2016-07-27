@@ -28,75 +28,62 @@ const EditableFlowTableRow = React.createClass({
     const item = this.props.item;
     const index = this.props.index;
     const itemsSize = this.props.itemsSize;
-    let actions;
+    let actions = [];
     switch (index) {
     case 0:
       if (itemsSize > 1) {
-        actions = (
-          <td>
-            <Link
-              label="Remove"
-              onClick={this.removeItemOnClick}
-            />
-            <Link
-              label="Move Down"
-              onClick={this.moveItemDownOnClick}
-            />
-          </td>
-        );
+        actions.push(<Link
+          label="Remove"
+          onClick={this.removeItemOnClick}
+        />);
+        actions.push(<div></div>);
+        actions.push(<Link
+          label="Down"
+          onClick={this.moveItemDownOnClick}
+        />);
       } else {
-        actions = (
-          <td>
-            <Link
-              label="Remove"
-              onClick={this.removeItemOnClick}
-            />
-          </td>
-        );
+        actions.push(<Link
+          label="Remove"
+          onClick={this.removeItemOnClick}
+        />);
       }
       break;
     case itemsSize - 1:
-      actions = (
-        <td>
-          <Link
-            label="Remove"
-            onClick={this.removeItemOnClick}
-          />
-          <Link
-            label="Move Up"
-            onClick={this.moveItemUpOnClick}
-          />
-        </td>
-      );
+      actions.push(<Link
+        label="Remove"
+        onClick={this.removeItemOnClick}
+      />);
+      actions.push(<Link
+        label="Up"
+        onClick={this.moveItemUpOnClick}
+      />);
       break;
     default:
-      actions = (
-        <td>
-          <Link
-            label="Remove"
-            onClick={this.removeItemOnClick}
-          />
-          <Link
-            label="Move Up"
-            onClick={this.moveItemUpOnClick}
-          />
-          <Link
-            label="Move Down"
-            onClick={this.moveItemDownOnClick}
-          />
-        </td>
-      );
+      actions.push(<Link
+        label="Remove"
+        onClick={this.removeItemOnClick}
+      />);
+      actions.push(<Link
+        label="Up"
+        onClick={this.moveItemUpOnClick}
+      />);
+      actions.push(<Link
+        label="Down"
+        onClick={this.moveItemDownOnClick}
+      />);
     }
 
     return (
-      <tr>
+      <tr className="editable-table-row">
         <td>
           <Badge label={(this.props.index + 1).toString()} />
         </td>
         <td>
           <span>{item.name}</span>
         </td>
-        {actions}
+        <td className="actions">
+          {actions}
+        </td>
       </tr>
     );
   },
