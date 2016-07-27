@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import Badge from '../1-atoms/Badge';
-import Link from '../1-atoms/Link';
 import Icon from '../1-atoms/Icon';
 
 const EditableFlowTableRow = React.createClass({
@@ -29,7 +28,7 @@ const EditableFlowTableRow = React.createClass({
     const item = this.props.item;
     const index = this.props.index;
     const itemsSize = this.props.itemsSize;
-    let actions = [];
+    const actions = [];
     switch (index) {
     case 0:
       if (itemsSize > 1) {
@@ -37,6 +36,7 @@ const EditableFlowTableRow = React.createClass({
           icon="fa fa-times-circle"
           onClick={this.removeItemOnClick}
         />);
+        actions.push(<span></span>);
         actions.push(<Icon
           icon="fa fa-arrow-circle-down"
           onClick={this.moveItemDownOnClick}
@@ -74,7 +74,7 @@ const EditableFlowTableRow = React.createClass({
     }
 
     return (
-      <tr className="editable-table-row">
+      <tr className="editable-flow-table-row">
         <td>
           <Badge label={(this.props.index + 1).toString()} />
         </td>
@@ -82,7 +82,9 @@ const EditableFlowTableRow = React.createClass({
           <span>{item.name}</span>
         </td>
         <td className="actions">
-          {actions}
+          {actions.map((action, i) => (
+            <span key={i}>{action}</span>
+          ))}
         </td>
       </tr>
     );

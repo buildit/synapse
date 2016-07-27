@@ -48,7 +48,7 @@ gulp.task('js', ['clean'], () => (
   .pipe(gulp.dest('dist/js'))
 ));
 
-gulp.task('html', ['clean', 'html-lint'], () => (
+gulp.task('html', ['clean'], () => (
   gulp.src('./src/**/*.html')
     .pipe(gulp.dest('./dist'))
 ));

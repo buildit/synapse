@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Badge from '../1-atoms/Badge';
-import Link from '../1-atoms/Link';
+import Icon from '../1-atoms/Icon';
 
 const EditableSeverityTableRow = React.createClass({
   propTypes: {
@@ -28,68 +28,53 @@ const EditableSeverityTableRow = React.createClass({
     const item = this.props.item;
     const index = this.props.index;
     const itemsSize = this.props.itemsSize;
-    let actions;
+    let actions = [];
     switch (index) {
     case 0:
       if (itemsSize > 1) {
-        actions = (
-          <td>
-            <Link
-              label="Remove"
-              onClick={this.removeItemOnClick}
-            />
-            <Link
-              label="Move Down"
-              onClick={this.moveItemDownOnClick}
-            />
-          </td>
-        );
+        actions.push(<Icon
+          icon="fa fa-times-circle"
+          onClick={this.removeItemOnClick}
+        />);
+        actions.push(<span></span>);
+        actions.push(<Icon
+          icon="fa fa-arrow-circle-down"
+          onClick={this.moveItemDownOnClick}
+        />);
       } else {
-        actions = (
-          <td>
-            <Link
-              label="Remove"
-              onClick={this.removeItemOnClick}
-            />
-          </td>
-        );
+        actions.push(<Icon
+          icon="fa fa-times-circle"
+          onClick={this.removeItemOnClick}
+        />);
       }
       break;
     case itemsSize - 1:
-      actions = (
-        <td>
-          <Link
-            label="Remove"
-            onClick={this.removeItemOnClick}
-          />
-          <Link
-            label="Move Up"
-            onClick={this.moveItemUpOnClick}
-          />
-        </td>
-      );
+      actions.push(<Icon
+        icon="fa fa-times-circle"
+        onClick={this.removeItemOnClick}
+      />);
+      actions.push(<Icon
+        icon="fa fa-arrow-circle-up"
+        onClick={this.moveItemUpOnClick}
+      />);
       break;
     default:
-      actions = (
-        <td>
-          <Link
-            label="Remove"
-            onClick={this.removeItemOnClick}
-          />
-          <Link
-            label="Move Up"
-            onClick={this.moveItemUpOnClick}
-          />
-          <Link
-            label="Move Down"
-            onClick={this.moveItemDownOnClick}
-          />
-        </td>
-      );
+      actions.push(<Icon
+        icon="fa fa-times-circle"
+        onClick={this.removeItemOnClick}
+      />);
+      actions.push(<Icon
+        icon="fa fa-arrow-circle-up"
+        onClick={this.moveItemUpOnClick}
+      />);
+      actions.push(<Icon
+        icon="fa fa-arrow-circle-down"
+        onClick={this.moveItemDownOnClick}
+      />);
     }
 
     return (
-      <tr>
+      <tr className="editable-severity-table-row">
         <td>
           <Badge label={(this.props.index + 1).toString()} />
         </td>
@@ -99,7 +84,11 @@ const EditableSeverityTableRow = React.createClass({
         <td>
           <span>{item.groupWith}</span>
         </td>
-        {actions}
+        <td className="actions">
+          {actions.map((action, i) => (
+            <span key={i}>{action}</span>
+          ))}
+        </td>
       </tr>
     );
   },
