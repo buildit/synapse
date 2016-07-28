@@ -4,7 +4,7 @@ node {
 
     try {
       stage "Set Up"
-        sh "curl -L http://nexus.riglet:9000/nexus/service/local/repositories/staging/content/zips/jenkins-pipeline-libraries/jenkins-pipeline-libraries-1.7.0.zip -o lib.zip && echo 'A' | unzip lib.zip"
+        sh "curl -L http://nexus.riglet:9000/nexus/service/local/repositories/staging/content/zips/jenkins-pipeline-libraries/jenkins-pipeline-libraries-${env.PIPELINE_LIBS_VERSION}.zip -o lib.zip && echo 'A' | unzip lib.zip"
 
         ecr = load "lib/ecr.groovy"
         git = load "lib/git.groovy"
@@ -14,12 +14,9 @@ node {
         convox = load "lib/convox.groovy"
         template = load "lib/template.groovy"
 
-        def registry = "https://006393696278.dkr.ecr.us-west-2.amazonaws.com"
-        def appUrl = "http://synapse.staging.buildit.tools"
+        def registry = "https://006393696278.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
+        def appUrl = "http://synapse.staging.riglet"
         def appName = "synapse"
-        def awsRegion = "us-west-2"
-        def convoxRack = "convox.buildit.tools"
-        def convoxPassword = "PqSKzNqXXbKuuJspbXZBUIRGSAtlER"
 
         // global for exception handling
         slackChannel = "midas_project"
@@ -49,7 +46,7 @@ node {
       stage "Docker Image Build"
         def tag = "${version}-${shortCommitHash}-${env.BUILD_NUMBER}"
         def image = docker.build("${appName}:${tag}", '.')
-        ecr.authenticate(awsRegion)
+        ecr.authenticate(env.AWS_REGION)
 
       stage "Docker Push"
         docker.withRegistry(registry) {
@@ -61,7 +58,7 @@ node {
         def ymlData = template.transform(readFile("docker-compose.yml.template"), [tag :tag])
         writeFile(file: tmpFile, text: ymlData)
 
-        sh "convox login ${convoxRack} --password ${convoxPassword}"
+        sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"
         sh "convox deploy --app ${appName}-staging --description '${tag}' --file ${tmpFile}"
         slack.notify("Deployed to Staging", "Commit <${gitUrl}/commits/\'${shortCommitHash}\'|\'${shortCommitHash}\'> has been deployed to <${appUrl}|${appUrl}>\n\n${commitMessage}", "good", "http://i296.photobucket.com/albums/mm200/kingzain/the_eye_of_sauron_by_stirzocular-d86f0oo_zpslnqbwhv2.png", slackChannel)
 

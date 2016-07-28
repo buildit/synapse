@@ -9,7 +9,7 @@ node {
     stage "Set Up"
       checkout scm
 
-      sh "curl -L http://nexus.riglet:9000/nexus/service/local/repositories/staging/content/zips/jenkins-pipeline-libraries/jenkins-pipeline-libraries-1.5.0.zip -o lib.zip && echo 'A' | unzip lib.zip"
+      sh "curl -L http://nexus.riglet:9000/nexus/service/local/repositories/staging/content/zips/jenkins-pipeline-libraries/jenkins-pipeline-libraries-${env.PIPELINE_LIBS_VERSION}.zip -o lib.zip && echo 'A' | unzip lib.zip"
 
       ui = load "lib/ui.groovy"
       ecr = load "lib/ecr.groovy"
@@ -17,10 +17,7 @@ node {
       template = load "lib/template.groovy"
 
       def appName = "synapse"
-      def awsRegion = "us-west-2"
-      def convoxRack = "convox.buildit.tools"
-      def convoxPassword = "PqSKzNqXXbKuuJspbXZBUIRGSAtlER"
-      def appUrl = "http://synapse.buildit.tools"
+      def appUrl = "http://synapse.riglet"
 
       // global for exception handling
       slackChannel = "midas_project"
@@ -28,14 +25,14 @@ node {
 
     stage "Write docker-compose"
       // global for exception handling
-      tag = ui.selectTag(ecr.imageTags(appName, awsRegion))
+      tag = ui.selectTag(ecr.imageTags(appName, env.AWS_REGION))
       def tmpFile = UUID.randomUUID().toString() + ".tmp"
       def ymlData = template.transform(readFile("docker-compose.yml.template"), [tag :tag])
 
       writeFile(file: tmpFile, text: ymlData)
 
     stage "Deploy to production"
-      sh "convox login ${convoxRack} --password ${convoxPassword}"
+      sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"
       sh "convox deploy --app ${appName} --description '${tag}' --file ${tmpFile}"
       sh "rm ${tmpFile}"
 
