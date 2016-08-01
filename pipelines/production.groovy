@@ -20,7 +20,7 @@ node {
       def appUrl = "http://synapse.riglet"
 
       // global for exception handling
-      slackChannel = "midas_project"
+      slackChannel = "synapse"
       gitUrl = "https://bitbucket.org/digitalrigbitbucketteam/synapse"
 
     stage "Write docker-compose"
