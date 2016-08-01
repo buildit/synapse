@@ -19,7 +19,7 @@ node {
         def appName = "synapse"
 
         // global for exception handling
-        slackChannel = "midas_project"
+        slackChannel = "synapse"
         gitUrl = "https://bitbucket.org/digitalrigbitbucketteam/synapse"
 
       stage "Checkout"
