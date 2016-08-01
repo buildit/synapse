@@ -9,7 +9,7 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <url>git@bitbucket.org:digitalrigbitbucketteam/synapse.git</url>
-        <credentialsId>git-credentials</credentialsId>
+        <credentialsId>7eab6bd5-f43e-47fc-888e-0c540e577544</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -38,7 +38,7 @@
     <bitbucketpullrequestbuilder.bitbucketpullrequestbuilder.BitbucketBuildTrigger plugin="bitbucket-pullrequest-builder@1.4.18">
       <spec>* * * * *</spec>
       <cron>* * * * *</cron>
-      <credentialsId>7eab6bd5-f43e-47fc-888e-0c540e577544</credentialsId>
+      <credentialsId>git-credentials</credentialsId>
       <username></username>
       <password></password>
       <repositoryOwner>digitalrigbitbucketteam</repositoryOwner>
@@ -55,7 +55,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>. ~/.nvm/nvm.sh
+      <command>export PATH=/var/lib/jenkins/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/latest/bin:$PATH
 npm install
 npm run build
 npm run lint
