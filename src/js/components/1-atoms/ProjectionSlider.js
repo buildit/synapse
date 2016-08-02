@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 
-const ProjectionSlider = ({ label, onInputChange, initialValue, min, max }) => {
+const ProjectionSlider = ({ label, legendClass, onInputChange, initialValue, min, max }) => {
   let input;
   return (
     <div className="form-group">
-      <label>{label}: <span>{initialValue}</span></label>
+      <span className={`legend ${legendClass}`}></span>
+      <label
+      >{label}: <span>{initialValue}</span></label>
       <input
         className="form-control"
         type="range"

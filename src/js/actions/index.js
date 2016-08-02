@@ -238,6 +238,11 @@ export const updateProjectionVelocityStart = value => ({
   value,
 });
 
+export const updateProjectionVelocityMiddle = value => ({
+  type: 'UPDATE_PROJECTION_VELOCITY_MIDDLE',
+  value,
+});
+
 export const updateProjectionVelocityEnd = value => ({
   type: 'UPDATE_PROJECTION_VELOCITY_END',
   value,
@@ -250,5 +255,15 @@ export const updateProjectionPeriodStart = value => ({
 
 export const updateProjectionPeriodEnd = value => ({
   type: 'UPDATE_PROJECTION_PERIOD_END',
+  value,
+});
+
+export const updateProjectionBacklogSize = value => ({
+  type: 'UPDATE_PROJECTION_BACKLOG_SIZE',
+  value,
+});
+
+export const updateProjectionDarkMatter = value => ({
+  type: 'UPDATE_PROJECTION_DARK_MATTER',
   value,
 });

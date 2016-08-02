@@ -1,9 +1,5 @@
-@background-color: #FAFAFA;
-@stroke-color: #00A3BD;
-@stroke-width: 3px;
-@fill-color: #790f42;
-@reference-area-color: #9DDDE6;
-@reference-area-opacity: 0.5;
+@axis: #666;
+@dark-matter-opacity: 0.9;
 
 .projection-chart {
   width: 960px;
@@ -11,7 +7,7 @@
 
   .axis {
     font: 10px sans-serif;
-    color: #222;
+    color: @axis;
     path,
     line {
       fill: none;
@@ -20,7 +16,7 @@
   }
   .label {
     font: 10px sans-serif;
-    color: #333;
+    color: @axis;
   }
 
   .axis--x path,
@@ -29,9 +25,18 @@
   }
 
   .area {
-    fill: @fill-color;
+    fill: @completed;
     stroke: none;
   }
 
+  .backlog {
+    fill: @backlog;
+    stroke: none;
+  }
 
+  .dark-matter {
+    fill: @dark-matter;
+    stroke: none;
+    opacity: @dark-matter-opacity;
+  }
 }

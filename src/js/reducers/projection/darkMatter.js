@@ -1,4 +1,4 @@
-const initialState = 10;
+const initialState = 0;
 
 const darkMatter = (state = initialState, action) => {
   switch (action.type) {

@@ -2,6 +2,9 @@ const d3 = require('d3');
 import React from 'react';
 const makePoints = require('../../helpers/makePoints');
 
+const X_AXIS_MAX = 70;
+const TRANSITION_DURATION = 200;
+
 export default class ProjectionChart extends React.Component {
   constructor() {
     super();
@@ -15,12 +18,13 @@ export default class ProjectionChart extends React.Component {
     this.update();
     this.setXAxis();
     this.setYAxis();
-    this.setXAxisLabel('Sprint iterations');
-    this.setYAxisLabel('Stories');
+    // this.setXAxisLabel('Sprint iterations');
+    // this.setYAxisLabel('Stories');
   }
 
   componentDidUpdate() {
     this.update();
+    // this.testDot(this.props.projection);
   }
 
   componentWillUnmount() {
@@ -35,11 +39,10 @@ export default class ProjectionChart extends React.Component {
   }
 
   getScale() {
-    const lastPoint = this.points[this.points.length - 1];
     const size = this.getSize();
     return {
       x: d3.scaleLinear()
-        .domain([0, 100])
+        .domain([0, X_AXIS_MAX])
         .range([0, size.width]),
 
       y: d3.scaleLinear()
@@ -51,20 +54,27 @@ export default class ProjectionChart extends React.Component {
   setVis() {
     const size = this.getSize();
     this.vis = d3.select(this.chart).append('svg')
-        .attr('width', this.chart.clientWidth)
-        .attr('height', this.chart.clientHeight)
-        .append('g')
-        .attr('transform', `translate(${this.props.padding.left}, ${this.props.padding.top})`);
+      .attr('width', this.chart.clientWidth)
+      .attr('height', this.chart.clientHeight)
+      .append('g')
+      .attr('transform', `translate(${this.props.padding.left}, ${this.props.padding.top})`);
 
     this.vis.append('svg')
-        .attr('top', 0)
-        .attr('left', 0)
-        .attr('width', size.width)
-        .attr('height', size.height)
-        .attr('viewBox', `0 0 ${size.width} ${size.height}`)
-        .attr('class', 'line')
-        .append('path')
-          .attr('class', 'area');
+      .attr('top', 0)
+      .attr('left', 0)
+      .attr('width', size.width)
+      .attr('height', size.height)
+      .attr('viewBox', `0 0 ${size.width} ${size.height}`)
+      .attr('class', 'line');
+
+    this.vis.append('path')
+      .attr('class', 'area');
+
+    this.vis.append('path')
+      .attr('class', 'backlog');
+
+    this.vis.append('path')
+      .attr('class', 'dark-matter');
   }
 
   setYAxis() {
@@ -105,7 +115,11 @@ export default class ProjectionChart extends React.Component {
   }
 
   update() {
-    this.points = makePoints(this.props.projection);
+    const { projection } = this.props;
+    const { backlogSize, darkMatter } = projection;
+    this.points = makePoints(projection);
+    this.updateBacklog(backlogSize);
+    this.updateDarkMatter(backlogSize, darkMatter);
     this.updateCurve();
   }
 
@@ -119,8 +133,60 @@ export default class ProjectionChart extends React.Component {
 
     this.vis.select('path.area')
       .transition()
-      .duration(500)
+      .duration(TRANSITION_DURATION)
       .attr('d', area(this.points));
+  }
+
+  updateBacklog(backlogSize) {
+    const scale = this.getScale();
+
+    const area = d3.area()
+      .x(d => scale.x(d.x))
+      .y0(scale.y(backlogSize))
+      .y1(d => scale.y(d.y));
+
+    this.vis.select('path.backlog')
+      .transition()
+      .duration(TRANSITION_DURATION)
+      .attr('d', area(this.points));
+  }
+
+  updateDarkMatter(backlogSize, darkMatter) {
+    const scale = this.getScale();
+
+    const backlogSizeWithDarkMatter = backlogSize + backlogSize * (darkMatter / 100);
+
+    const area = d3.area()
+      .x(d => scale.x(d.x))
+      .y0(scale.y(backlogSizeWithDarkMatter))
+      .y1(scale.y(backlogSize));
+
+    this.vis.select('path.dark-matter')
+      .transition()
+      .duration(TRANSITION_DURATION)
+      .attr('d', area(this.points));
+  }
+
+  testDot(projection) {
+    const { backlogSize, darkMatter } = projection;
+
+    const yScale = this.getScale().y;
+
+    this.vis.append('circle')
+      .attr('cx', 0)
+      .attr('cy', yScale(backlogSize))
+      .attr('r', 10)
+      .style('opacity', 0.1)
+      .style('fill', 'aqua');
+
+    const backlogSizeWithDarkMatter = backlogSize + backlogSize * (darkMatter / 100);
+
+    this.vis.append('circle')
+      .attr('cx', 0)
+      .attr('cy', yScale(backlogSizeWithDarkMatter))
+      .attr('r', 10)
+      .style('opacity', 0.1)
+      .style('fill', 'tomato');
   }
 
   render() {
