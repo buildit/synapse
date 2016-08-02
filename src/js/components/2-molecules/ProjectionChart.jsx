@@ -12,8 +12,6 @@ export default class ProjectionChart extends React.Component {
 
   componentDidMount() {
     this.setVis();
-    // this.setXLabel('Weeks');
-    // this.setYLabel('Stories');
     this.update();
     this.setYAxis();
     this.setXAxis();
@@ -81,39 +79,8 @@ export default class ProjectionChart extends React.Component {
       .call(d3.axisBottom(xScale));
   }
 
-  setXLabel(xLabel) {
-    const size = this.getSize();
-    this.vis.append('text')
-        .attr('class', 'axis')
-        .text(xLabel)
-        .attr('x', size.width / 2)
-        .attr('y', size.height)
-        .attr('dy', '2.4em')
-        .style('text-anchor', 'middle');
-  }
-
-  setYLabel(yLabel) {
-    const size = this.getSize();
-    this.vis.append('g').append('text')
-        .attr('class', 'axis')
-        .text(yLabel)
-        .style('text-anchor', 'middle')
-        .attr('transform', `translate(-40 ${size.height / 2}) rotate(-90)`);
-  }
-
-  setMouseCallbacks() {
-    d3.select(this.chart)
-        .on('mousemove.drag', this.mouseMove)
-        .on('touchmove.drag', this.mouseMove)
-        .on('mouseup.drag', this.mouseUp)
-        .on('touchend.drag', this.mouseUp);
-  }
-
   update() {
-    const size = this.getSize();
     this.points = makePoints(this.props.projection);
-    console.log('points:', this.points);
-    // this.updateXTicks(size.height);
     this.updateCurve();
   }
 
@@ -134,32 +101,6 @@ export default class ProjectionChart extends React.Component {
     path.exit().remove();
     this.vis.select('path.area').attr('d', area(this.points));
   }
-
-  // updateXTicks(height) {
-  //   this.updateXAxisTicks(height);
-  // }
-  //
-  // updateXAxisTicks(height) {
-  //   const lastPoint = this.points[this.points.length - 1];
-  //   const scale = this.getScale();
-  //   scale.x.domain([0, lastPoint.x * this.props.projection.iterationLength]);
-  //   const tx = d => `translate(${scale.x(d)}, 0)`;
-  //   const gx = this.vis.selectAll('g.xaxis')
-  //       .data(scale.x.ticks(10), String)
-  //       .attr('transform', tx);
-  //   const gxe = gx.enter().insert('g', 'a')
-  //       .attr('class', 'xaxis')
-  //       .attr('transform', tx);
-  //   gxe.append('text')
-  //       .attr('class', 'axis')
-  //       .attr('y', height)
-  //       .attr('dy', '1em')
-  //       .attr('text-anchor', 'middle')
-  //       .text(d => d)
-  //       .on('mouseover', function mouseOver() { d3.select(this).style('font-weight', 'bold'); })
-  //       .on('mouseout', function mouseOut() { d3.select(this).style('font-weight', 'normal'); });
-  //   gx.exit().remove();
-  // }
 
   render() {
     return (
