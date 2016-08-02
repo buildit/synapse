@@ -5,32 +5,33 @@
 @reference-area-color: #9DDDE6;
 @reference-area-opacity: 0.5;
 
-rect {
-  fill: #fff;
-}
-
 .projection-chart {
   width: 960px;
   height: 500px;
-  font: 12px sans-serif;
 
   .axis {
-    font-size: 1.5em;
+    font: 10px sans-serif;
+    color: #222;
+    path,
+    line {
+      fill: none;
+      shape-rendering: crispEdges;
+    }
+  }
+  .label {
+    font: 10px sans-serif;
+    color: #333;
   }
 
-  circle, .area {
+  .axis--x path,
+  .axis--y path {
+    display: none;
+  }
+
+  .area {
     fill: @fill-color;
     stroke: none;
   }
 
-  .inverse-area, .dark-matter-area {
-    fill: @reference-area-color;
-    fill-opacity: @reference-area-opacity;
-  }
 
-  circle {
-    fill: @background-color;
-    fill-opacity: 1;
-    cursor: move;
-  }
 }

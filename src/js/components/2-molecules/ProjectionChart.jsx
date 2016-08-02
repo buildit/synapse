@@ -13,8 +13,10 @@ export default class ProjectionChart extends React.Component {
   componentDidMount() {
     this.setVis();
     this.update();
-    this.setYAxis();
     this.setXAxis();
+    this.setYAxis();
+    this.setXAxisLabel('Sprint iterations');
+    this.setYAxisLabel('Stories');
   }
 
   componentDidUpdate() {
@@ -53,13 +55,16 @@ export default class ProjectionChart extends React.Component {
         .attr('height', this.chart.clientHeight)
         .append('g')
         .attr('transform', `translate(${this.props.padding.left}, ${this.props.padding.top})`);
+
     this.vis.append('svg')
         .attr('top', 0)
         .attr('left', 0)
         .attr('width', size.width)
         .attr('height', size.height)
         .attr('viewBox', `0 0 ${size.width} ${size.height}`)
-        .attr('class', 'line');
+        .attr('class', 'line')
+        .append('path')
+          .attr('class', 'area');
   }
 
   setYAxis() {
@@ -79,6 +84,26 @@ export default class ProjectionChart extends React.Component {
       .call(d3.axisBottom(xScale));
   }
 
+  setXAxisLabel(label) {
+    const width = this.getSize().width;
+    const height = this.getSize().height;
+    this.vis.append('text')
+      .attr('class', 'x label')
+      .attr('text-anchor', 'end')
+      .attr('x', width)
+      .attr('y', height - 6)
+      .text(label);
+  }
+
+  setYAxisLabel(label) {
+    this.vis.append('text')
+      .attr('class', 'y label')
+      .attr('text-anchor', 'end')
+      .attr('y', 30)
+      .attr('transform', 'rotate(-90)')
+      .text(label);
+  }
+
   update() {
     this.points = makePoints(this.props.projection);
     this.updateCurve();
@@ -88,18 +113,14 @@ export default class ProjectionChart extends React.Component {
     const scale = this.getScale();
     const size = this.getSize();
     const area = d3.area()
-        .x(d => scale.x(d.x))
-        .y0(size.height)
-        .y1(d => scale.y(d.y));
+      .x(d => scale.x(d.x))
+      .y0(size.height)
+      .y1(d => scale.y(d.y));
 
-    const path = this.vis.select('svg')
-        .selectAll('path.area')
-        .data(area(this.points));
-
-    path.enter().append('path')
-        .attr('class', 'area');
-    path.exit().remove();
-    this.vis.select('path.area').attr('d', area(this.points));
+    this.vis.select('path.area')
+      .transition()
+      .duration(500)
+      .attr('d', area(this.points));
   }
 
   render() {
