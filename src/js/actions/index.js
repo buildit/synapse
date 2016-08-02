@@ -232,3 +232,23 @@ export const moveListItemDown = (section, list, index) => ({
   list,
   index,
 });
+
+export const updateProjectionVelocityStart = value => ({
+  type: 'UPDATE_PROJECTION_VELOCITY_START',
+  value,
+});
+
+export const updateProjectionVelocityEnd = value => ({
+  type: 'UPDATE_PROJECTION_VELOCITY_END',
+  value,
+});
+
+export const updateProjectionPeriodStart = value => ({
+  type: 'UPDATE_PROJECTION_PERIOD_START',
+  value,
+});
+
+export const updateProjectionPeriodEnd = value => ({
+  type: 'UPDATE_PROJECTION_PERIOD_END',
+  value,
+});
