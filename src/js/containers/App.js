@@ -9,11 +9,11 @@ import * as actionCreators from '../actions/index.js';
 const App = ({
   ui,
   onSwitchView,
-  resetProject,
-  dismissMessage,
   fetchProject,
   fetchProjects,
   fetchStatus,
+  resetProject,
+  dismissMessage,
   projectName }) => (
   <div className="container">
     <Header
@@ -41,11 +41,14 @@ App.propTypes = {
   fetchProject: PropTypes.func.isRequired,
   fetchProjects: PropTypes.func.isRequired,
   fetchStatus: PropTypes.func.isRequired,
+  resetProject: PropTypes.func.isRequired,
+  dismissMessage: PropTypes.func.isRequired,
+  projectName: PropTypes.string,
 };
 
 function mapStateToProps(state) {
   const projectName = state.appData.project ? state.appData.project.name : '';
-  console.log(state);
+  // console.log(state);
   const props = {
     ui: state.ui,
     appData: state.appData,

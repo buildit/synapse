@@ -168,7 +168,6 @@ const ui = (state = {
   }
 
   case SET_MESSAGE: {
-    console.log('setting message', action.message);
     return {
       ...state,
       message: action.message,
