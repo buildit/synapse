@@ -102,7 +102,6 @@ class Projection extends Component {
 }
 
 function mapStateToProps(state) {
-  // console.log(state.projection);
   const props = {
     title: state.appData.project.title,
     projection: state.projection,

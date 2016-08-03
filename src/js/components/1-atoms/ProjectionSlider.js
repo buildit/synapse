@@ -5,8 +5,7 @@ const ProjectionSlider = ({ label, legendClass, onInputChange, initialValue, min
   return (
     <div className="form-group">
       <span className={`legend ${legendClass}`}></span>
-      <label
-      >{label}: <span>{initialValue}</span></label>
+      <label>{label}: <span>{initialValue}</span></label>
       <input
         className="form-control"
         type="range"
@@ -34,6 +33,7 @@ export default ProjectionSlider;
 
 ProjectionSlider.propTypes = {
   label: PropTypes.string.isRequired,
+  legendClass: PropTypes.string,
   initialValue: PropTypes.number.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,

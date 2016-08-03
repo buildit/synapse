@@ -12,7 +12,8 @@ const makePoints = projection => {
   const backlogSizeWithDarkMatter = backlogSize + backlogSize * (darkMatter / 100);
 
   const periodMiddle =
-  (backlogSizeWithDarkMatter - (velocityStart * periodStart) - (velocityEnd * periodEnd)) / velocityMiddle;
+  (backlogSizeWithDarkMatter - (velocityStart * periodStart) - (velocityEnd * periodEnd))
+    / velocityMiddle;
 
   const p0 = () => ({
     x: 0,
