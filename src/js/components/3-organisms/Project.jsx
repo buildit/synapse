@@ -7,8 +7,6 @@ import formatDate from '../../helpers/formatDate';
 const Project = ({ project, onSwitchView }) => {
   return (
     <div>
-      <h1>{project.name}</h1>
-
       <Button
         label="Edit"
         onClick={() => {

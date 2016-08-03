@@ -30,6 +30,7 @@ const Body = ({
   addItemToSeverityList,
   moveListItemUp,
   moveListItemDown,
+  resetProject,
  }) => {
   switch (view) {
 
@@ -57,7 +58,10 @@ const Body = ({
     return (
       <EditProject
         project={appData.project}
-        onSwitchView={onSwitchView}
+        goHome={() => {
+          onSwitchView('listView');
+          resetProject();
+        }}
         saveFormData={saveFormData}
         onInputChange={onInputChange}
         initializeFormData={initializeFormData}
@@ -114,7 +118,7 @@ const Body = ({
         ;
   }
 
-  default: return <div>Nothing.</div>;
+  default: return <div></div>;
   }
 };
 
@@ -138,6 +142,7 @@ Body.propTypes = {
   addItemToSeverityList: PropTypes.func.isRequired,
   moveListItemUp: PropTypes.func.isRequired,
   moveListItemDown: PropTypes.func.isRequired,
+  resetProject: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

@@ -2,18 +2,28 @@ import React, {
   PropTypes,
 } from 'react';
 import { connect } from 'react-redux';
-// import ProjectList from '../components/4-ecosystems/ProjectList';
-// import Project from '../components/4-ecosystems/Project';
 import Body from '../components/4-ecosystems/Body';
-import Nav from '../components/2-molecules/Nav';
+import Header from '../components/2-molecules/Header';
 import * as actionCreators from '../actions/index.js';
-import navLinks from '../../nav.config.js';
 
-const App = ({ ui, onSwitchView, fetchProject, fetchProjects, fetchStatus }) => (
+const App = ({
+  ui,
+  onSwitchView,
+  resetProject,
+  dismissMessage,
+  fetchProject,
+  fetchProjects,
+  fetchStatus,
+  projectName }) => (
   <div className="container">
-    <Nav
-      onSwitchView={onSwitchView}
-      links={navLinks}
+    <Header
+      projectName={projectName}
+      goHome={() => {
+        onSwitchView('listView');
+        resetProject();
+      }}
+      message={ui.message}
+      dismissMessage={dismissMessage}
     />
     <Body
       view={ui.view}
@@ -34,10 +44,12 @@ App.propTypes = {
 };
 
 function mapStateToProps(state) {
-  // console.log(state);
+  const projectName = state.appData.project ? state.appData.project.name : '';
+  console.log(state);
   const props = {
     ui: state.ui,
     appData: state.appData,
+    projectName,
   };
   return props;
 }

@@ -1,6 +1,11 @@
+import {
+  SET_MESSAGE,
+} from '../actions/actions';
+
 const ui = (state = {
   view: 'listView',
   errorMessage: null,
+  message: '',
   formData: {
     demand: {},
     defect: {},
@@ -159,6 +164,14 @@ const ui = (state = {
     return {
       ...state,
       modalMessage: '',
+    };
+  }
+
+  case SET_MESSAGE: {
+    console.log('setting message', action.message);
+    return {
+      ...state,
+      message: action.message,
     };
   }
   default: return state;

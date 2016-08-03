@@ -6,14 +6,16 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/index.js';
 import ProjectionChart from '../2-molecules/ProjectionChart';
 import ProjectionSlider from '../1-atoms/ProjectionSlider';
+import Button from '../1-atoms/Button';
 
 class Projection extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.fetchProjection(this.props.id);
+  }
 
   render() {
     return (
       <div className="projection">
-        <h1>{this.props.projectName}</h1>
         <ProjectionChart
           projection={this.props.projection}
         />
@@ -96,6 +98,12 @@ class Projection extends Component {
             </div>
           </div>
         </div>
+        <Button
+          label="Save"
+          onClick={() => {
+            this.props.saveProjection(this.props.projection, this.props.id);
+          }}
+        />
       </div>
     );
   }
@@ -104,6 +112,7 @@ class Projection extends Component {
 function mapStateToProps(state) {
   const props = {
     title: state.appData.project.title,
+    id: state.appData.project.id,
     projection: state.projection,
   };
   return props;
@@ -114,4 +123,5 @@ export default connect(mapStateToProps, actionCreators)(Projection);
 Projection.propTypes = {
   projection: PropTypes.object.isRequired,
   updateProjectionVelocityStart: PropTypes.func.isRequired,
+  saveProjection: PropTypes.func.isRequired,
 };

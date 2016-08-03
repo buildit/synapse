@@ -17,7 +17,7 @@ class EditProject extends Component {
   render() {
     const onInputChange = this.props.onInputChange;
     const project = this.props.project;
-    const onSwitchView = this.props.onSwitchView;
+    const goHome = this.props.goHome;
     const saveFormData = this.props.saveFormData;
     const onListItemRemove = this.props.onListItemRemove;
     const addItemToDemandFlowList = this.props.addItemToDemandFlowList;
@@ -38,11 +38,10 @@ class EditProject extends Component {
           label="Cancel"
           onClick={(event) => {
             event.preventDefault();
-            onSwitchView('listView');
+            goHome();
           }}
         />
         <form>
-          <h1>{project.name}</h1>
           <Input
             label="ID"
             section="header"
@@ -345,7 +344,7 @@ class EditProject extends Component {
           label="Cancel"
           onClick={(event) => {
             event.preventDefault();
-            onSwitchView('listView');
+            goHome();
           }}
         />
       </div>
@@ -357,7 +356,7 @@ export default EditProject;
 
 EditProject.propTypes = {
   project: PropTypes.object.isRequired,
-  onSwitchView: PropTypes.func.isRequired,
+  goHome: PropTypes.func.isRequired,
   saveFormData: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
   initializeFormData: PropTypes.func.isRequired,

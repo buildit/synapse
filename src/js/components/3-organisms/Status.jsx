@@ -20,7 +20,6 @@ class Status extends Component {
     }
     return (
       <div>
-        <h1>{this.props.projectName} > status</h1>
         <Chart
           title="Demand"
           data={this.props.demandStatus}

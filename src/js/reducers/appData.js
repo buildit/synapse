@@ -5,6 +5,10 @@ import normalizeDefectData from '../helpers/normalizeDefectData';
 import normalizeEffortData from '../helpers/normalizeEffortData';
 import _ from 'lodash';
 
+import {
+  RESET_PROJECT,
+} from '../actions/actions';
+
 const appData = (state = {
   isFetching: false,
   starterProjectList: [],
@@ -130,6 +134,12 @@ const appData = (state = {
     return {
       ...state,
       project: starterProject,
+    };
+  }
+  case RESET_PROJECT: {
+    return {
+      ...state,
+      project: blankProject,
     };
   }
   default:

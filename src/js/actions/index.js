@@ -1,6 +1,14 @@
+import {
+  FETCH_PROJECTION_REQUEST,
+  SAVE_PROJECTION_REQUEST,
+  SET_MESSAGE,
+  RESET_PROJECT,
+} from './actions';
+
 import $ from 'jquery';
 const apiBaseUrl = api.baseUrl;
 const starterProjectsBaseApiUrl = starterProjectsApi.baseUrl;
+
 
 const requestProjects = () => (
   { type: 'FETCH_PROJECTS_REQUEST' }
@@ -96,6 +104,7 @@ export const fetchProject = (id) => (dispatch) => {
         });
       });
 };
+
 export const fetchStatus = (id) => (dispatch) => {
   const demandCall = $.get(`${apiBaseUrl}project/${id}/demand`);
   const defectCall = $.get(`${apiBaseUrl}project/${id}/defect`);
@@ -267,3 +276,60 @@ export const updateProjectionDarkMatter = value => ({
   type: 'UPDATE_PROJECTION_DARK_MATTER',
   value,
 });
+
+export const fetchProjection = (id) => (dispatch) => {
+  dispatch({
+    type: FETCH_PROJECTION_REQUEST,
+  });
+
+  return $.get(`${apiBaseUrl}project/${id}/forecast`)
+    .done(
+      projection => {
+        dispatch({
+          type: 'UPDATE_PROJECTION_BACKLOG_SIZE',
+          value: projection.backlogSize,
+        });
+      })
+      .fail(() => {
+        dispatch({
+          type: SET_MESSAGE,
+          message: `You're creating a new projection for project ${id}.`,
+        });
+      });
+};
+
+export const saveProjection = (projection, id) => dispatch => {
+  dispatch({
+    type: SAVE_PROJECTION_REQUEST,
+  });
+
+  return $.ajax({
+    type: 'POST',
+    url: `${apiBaseUrl}project/${id}/forecast`,
+    data: JSON.stringify(projection),
+    contentType: 'application/json',
+    dataType: 'json',
+  })
+    .always(response => {
+      if (response.status === 200) {
+        dispatch({
+          type: SET_MESSAGE,
+          message: `The projection for project ${id} was saved successfully.`,
+        });
+      } else {
+        dispatch({
+          type: SET_MESSAGE,
+          message: 'There was an error. We could not save the projection.',
+        });
+      }
+    });
+};
+
+export const dismissMessage = () => (
+  {
+    type: SET_MESSAGE,
+    message: '',
+  }
+);
+
+export const resetProject = () => ({ type: RESET_PROJECT });

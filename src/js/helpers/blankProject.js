@@ -1,5 +1,5 @@
 const blankProject = {
-  name: 'Blank project',
+  name: '',
   demand: {
     flow: [],
   },
