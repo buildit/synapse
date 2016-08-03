@@ -38,8 +38,7 @@ describe('Projection chart points maker', () => {
     assert.equal(points1[1].y, projection1.periodStart * projection1.velocityStart);
   });
 
-  it(`returns a third point where x value is calculated correctly...
-    yeah, not a great name for a test :/`, () => {
+  it('returns a third point where x value is calculated correctly', () => {
     const projection = {
       backlogSize: 6,
       darkMatter: 0,
@@ -73,6 +72,24 @@ describe('Projection chart points maker', () => {
     const points = makePoints(projection);
 
     assert.equal(points[2].y, 4);
+  });
+
+  it('handles dark matter', () => {
+    const projection = {
+      backlogSize: 10,
+      darkMatter: 50,
+      iterationLength: 0,
+
+      periodStart: 0,
+      periodEnd: 0,
+
+      velocityStart: 1,
+      velocityMiddle: 1,
+      velocityEnd: 1,
+    };
+    const points = makePoints(projection);
+
+    assert.equal(points[3].y, 15);
   });
 
   it('returns the correct end point', () => {
