@@ -113,7 +113,10 @@ const Body = ({
   case 'modalView': {
     return (
       <SaveConfirmationModal
-        onSwitchView={onSwitchView}
+        goHome={() => {
+          onSwitchView('listView');
+          resetProject();
+        }}
       />)
         ;
   }

@@ -4,7 +4,7 @@ import Button from '../1-atoms/Button';
 
 const SaveConfirmationModal = () => ({
   render() {
-    const onSwitchView = this.props.onSwitchView;
+    const goHome = this.props.goHome;
     return (
       <div className="static-modal">
         <Modal.Dialog>
@@ -19,10 +19,7 @@ const SaveConfirmationModal = () => ({
           <Modal.Footer>
             <Button
               label="Close"
-              onClick={(event) => {
-                event.preventDefault();
-                onSwitchView('listView');
-              }}
+              onClick={goHome}
             />
           </Modal.Footer>
 
@@ -36,5 +33,5 @@ const SaveConfirmationModal = () => ({
 export default SaveConfirmationModal;
 
 SaveConfirmationModal.propTypes = {
-  onSwitchView: React.PropTypes.func.isRequired,
+  goHome: React.PropTypes.func.isRequired,
 };
