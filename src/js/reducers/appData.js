@@ -52,7 +52,6 @@ const appData = (state = {
   }
   case 'FETCH_PROJECT_SUCCESS': {
     const project = normalizeProject(action.project);
-
     return {
       ...state,
       project,
@@ -78,6 +77,7 @@ const appData = (state = {
         .fill()
         .sort()
         .transform()
+        .seqSort()
         .getData();
 
     return {
