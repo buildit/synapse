@@ -165,22 +165,37 @@ export const fetchStatus = (id) => (dispatch) => {
   });
 };
 
-export const saveFormData = (project) => (dispatch) => (
-  $.ajax({
-    type: 'POST',
-    url: `${apiBaseUrl}project/${project.id}`,
-    data: JSON.stringify(project),
-    contentType: 'application/json',
-  })
-  .done(() => {
-    dispatch(onSwitchView('modalView'));
-    dispatch(showModal('SaveConfirmationModal', project));
-  })
-  .fail(response => {
-    dispatch(setErrorMessage(response.responseText));
-    dispatch(onSwitchView('error'));
-  })
-);
+export const saveFormData = (project) => (dispatch) => {
+  dispatch({
+    type: SET_MESSAGE,
+    message: `Saving ${project.name}...`,
+  });
+
+  return (
+    $.ajax({
+      type: 'POST',
+      url: `${apiBaseUrl}project/${project.id}`,
+      data: JSON.stringify(project),
+      contentType: 'application/json',
+    })
+    .done(() => {
+      dispatch(onSwitchView('modalView'));
+      dispatch(showModal('SaveConfirmationModal', project));
+      dispatch({
+        type: SET_MESSAGE,
+        message: '',
+      });
+    })
+    .fail(response => {
+      dispatch(setErrorMessage(response.responseText));
+      dispatch(onSwitchView('error'));
+      dispatch({
+        type: SET_MESSAGE,
+        message: '',
+      });
+    })
+  );
+};
 
 export const initializeNewProject = (harvestId) => ({
   type: 'INITIALIZE_NEW_PROJECT',
