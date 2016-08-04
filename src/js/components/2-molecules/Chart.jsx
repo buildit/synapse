@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import ReactHighcharts from 'react-highcharts';
 const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
 
-const Chart = ({ data, title, startDateInMS, endDateInMS }) => {
+const Chart = ({ data, title, yLabel = '', startDateInMS, endDateInMS }) => {
   const config = {
     chart: {
       type: 'area',
@@ -11,16 +11,13 @@ const Chart = ({ data, title, startDateInMS, endDateInMS }) => {
       text: title,
     },
     xAxis: {
-      title: {
-        text: 'Date',
-      },
       type: 'datetime',
       min: startDateInMS,
       max: endDateInMS,
     },
     yAxis: {
       title: {
-        text: 'Stories',
+        text: yLabel,
       },
     },
     series: data,
@@ -46,6 +43,9 @@ const Chart = ({ data, title, startDateInMS, endDateInMS }) => {
 Chart.propTypes = {
   data: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
+  yLabel: PropTypes.string,
+  startDateInMS: PropTypes.number.isRequired,
+  endDateInMS: PropTypes.number.isRequired,
 };
 
 export default Chart;

@@ -22,12 +22,13 @@ class Status extends Component {
       <div>
         <Chart
           title="Demand"
+          yLabel="Stories"
           data={this.props.demandStatus}
           startDateInMS={startDateInMS}
           endDateInMS={endDateInMS}
         />
         <div className="chartHolder">
-          <LineChart
+          <Chart
             title="Defect"
             yLabel="Severity"
             data={this.props.defectStatus}
