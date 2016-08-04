@@ -25,6 +25,7 @@ class Projection extends Component {
             <div className="col-md-3">
               <ProjectionSlider
                 label="Backlog"
+                unit="stories"
                 legendClass="backlog"
                 initialValue={this.props.projection.backlogSize}
                 min={10}
@@ -34,7 +35,8 @@ class Projection extends Component {
                 }}
               />
               <ProjectionSlider
-                label="Dark matter (%)"
+                label="Dark matter"
+                unit="%"
                 legendClass="dark-matter"
                 initialValue={this.props.projection.darkMatter}
                 min={0}
@@ -47,37 +49,8 @@ class Projection extends Component {
 
             <div className="col-md-3">
               <ProjectionSlider
-                label="Velocity start"
-                initialValue={this.props.projection.velocityStart}
-                min={1}
-                max={10}
-                onInputChange={value => {
-                  this.props.updateProjectionVelocityStart(parseInt(value, 10));
-                }}
-              />
-              <ProjectionSlider
-                label="Target velocity"
-                initialValue={this.props.projection.velocityMiddle}
-                min={1}
-                max={20}
-                onInputChange={value => {
-                  this.props.updateProjectionVelocityMiddle(parseInt(value, 10));
-                }}
-              />
-              <ProjectionSlider
-                label="Velocity end"
-                initialValue={this.props.projection.velocityEnd}
-                min={1}
-                max={10}
-                onInputChange={value => {
-                  this.props.updateProjectionVelocityEnd(parseInt(value, 10));
-                }}
-              />
-            </div>
-
-            <div className="col-md-3">
-              <ProjectionSlider
                 label="Ramp up period"
+                unit="iterations"
                 initialValue={this.props.projection.periodStart}
                 min={0}
                 max={30}
@@ -87,6 +60,7 @@ class Projection extends Component {
               />
               <ProjectionSlider
                 label="Ramp down period"
+                unit="iterations"
                 initialValue={this.props.projection.periodEnd}
                 min={0}
                 max={30}
@@ -94,8 +68,41 @@ class Projection extends Component {
                   this.props.updateProjectionPeriodEnd(parseInt(value, 10));
                 }}
               />
-
             </div>
+
+            <div className="col-md-3">
+              <ProjectionSlider
+                label="Velocity start"
+                unit="stories per iteration"
+                initialValue={this.props.projection.velocityStart}
+                min={1}
+                max={10}
+                onInputChange={value => {
+                  this.props.updateProjectionVelocityStart(parseInt(value, 10));
+                }}
+              />
+              <ProjectionSlider
+                label="Target velocity"
+                unit="stories per iteration"
+                initialValue={this.props.projection.velocityMiddle}
+                min={1}
+                max={20}
+                onInputChange={value => {
+                  this.props.updateProjectionVelocityMiddle(parseInt(value, 10));
+                }}
+              />
+              <ProjectionSlider
+                label="Velocity end"
+                unit="stories per iteration"
+                initialValue={this.props.projection.velocityEnd}
+                min={1}
+                max={10}
+                onInputChange={value => {
+                  this.props.updateProjectionVelocityEnd(parseInt(value, 10));
+                }}
+              />
+            </div>
+
           </div>
         </div>
         <Button
