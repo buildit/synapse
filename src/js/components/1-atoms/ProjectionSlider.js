@@ -11,7 +11,6 @@ const ProjectionSlider = ({ label, legendClass, onInputChange, initialValue, min
         <span className="unit">{unit}</span>
       </label>
       <input
-        className="form-control"
         type="range"
         min={min}
         max={max}

@@ -103,14 +103,16 @@ class Projection extends Component {
               />
             </div>
 
+            <div className="col-md-3">
+              <Button
+                label="Save"
+                onClick={() => {
+                  this.props.saveProjection(this.props.projection, this.props.id);
+                }}
+              />
+            </div>
           </div>
         </div>
-        <Button
-          label="Save"
-          onClick={() => {
-            this.props.saveProjection(this.props.projection, this.props.id);
-          }}
-        />
       </div>
     );
   }
