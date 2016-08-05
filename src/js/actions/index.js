@@ -3,6 +3,7 @@ import {
   SAVE_PROJECTION_REQUEST,
   SET_MESSAGE,
   RESET_PROJECT,
+  UPDATE_PROJECTION_ZOOM,
 } from './actions';
 
 import $ from 'jquery';
@@ -289,6 +290,12 @@ export const updateProjectionBacklogSize = value => ({
 
 export const updateProjectionDarkMatter = value => ({
   type: 'UPDATE_PROJECTION_DARK_MATTER',
+  value,
+});
+
+export const updateProjectionZoom = (axis, value) => ({
+  type: UPDATE_PROJECTION_ZOOM,
+  axis,
   value,
 });
 

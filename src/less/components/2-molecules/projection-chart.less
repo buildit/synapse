@@ -11,19 +11,17 @@
     color: @axis;
     path,
     line {
-      fill: none;
-      shape-rendering: crispEdges;
+      // fill: none;
+      // shape-rendering: crispEdges;
+      display: none;
     }
   }
+
   .label {
     font: 10px sans-serif;
     color: @axis;
   }
 
-  .axis--x path,
-  .axis--y path {
-    display: none;
-  }
 
   .area {
     fill: @completed;
