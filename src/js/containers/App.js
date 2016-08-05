@@ -48,7 +48,7 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   const projectName = state.appData.project ? state.appData.project.name : '';
-  console.log(state.appData);
+  // console.log(state.projectionZoom);
   const props = {
     ui: state.ui,
     appData: state.appData,

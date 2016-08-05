@@ -16,13 +16,17 @@ class Projection extends Component {
   render() {
     return (
       <div className="projection">
-        <ProjectionChart
-          projection={this.props.projection}
-        />
         <div className="container">
-          <div className="row sliders">
+          <div className="row">
+            <div className="col-md-9">
+              <ProjectionChart
+                projection={this.props.projection}
+                zoom={this.props.zoom}
+              />
+            </div>
 
-            <div className="col-md-3">
+            <div className="sliders col-md-3">
+
               <ProjectionSlider
                 label="Backlog"
                 unit="stories"
@@ -34,6 +38,7 @@ class Projection extends Component {
                   this.props.updateProjectionBacklogSize(parseInt(value, 10));
                 }}
               />
+
               <ProjectionSlider
                 label="Dark matter"
                 unit="%"
@@ -45,9 +50,7 @@ class Projection extends Component {
                   this.props.updateProjectionDarkMatter(parseInt(value, 10));
                 }}
               />
-            </div>
 
-            <div className="col-md-3">
               <ProjectionSlider
                 label="Ramp up period"
                 unit="iterations"
@@ -58,6 +61,7 @@ class Projection extends Component {
                   this.props.updateProjectionPeriodStart(parseInt(value, 10));
                 }}
               />
+
               <ProjectionSlider
                 label="Ramp down period"
                 unit="iterations"
@@ -68,9 +72,7 @@ class Projection extends Component {
                   this.props.updateProjectionPeriodEnd(parseInt(value, 10));
                 }}
               />
-            </div>
 
-            <div className="col-md-3">
               <ProjectionSlider
                 label="Velocity start"
                 unit="stories per iteration"
@@ -81,6 +83,7 @@ class Projection extends Component {
                   this.props.updateProjectionVelocityStart(parseInt(value, 10));
                 }}
               />
+
               <ProjectionSlider
                 label="Target velocity"
                 unit="stories per iteration"
@@ -91,6 +94,7 @@ class Projection extends Component {
                   this.props.updateProjectionVelocityMiddle(parseInt(value, 10));
                 }}
               />
+
               <ProjectionSlider
                 label="Velocity end"
                 unit="stories per iteration"
@@ -101,16 +105,69 @@ class Projection extends Component {
                   this.props.updateProjectionVelocityEnd(parseInt(value, 10));
                 }}
               />
-            </div>
 
-            <div className="col-md-3">
+              <ProjectionSlider
+                label="Velocity start"
+                unit="stories per iteration"
+                initialValue={this.props.projection.velocityStart}
+                min={1}
+                max={10}
+                onInputChange={value => {
+                  this.props.updateProjectionVelocityStart(parseInt(value, 10));
+                }}
+              />
+
+              <ProjectionSlider
+                label="Target velocity"
+                unit="stories per iteration"
+                initialValue={this.props.projection.velocityMiddle}
+                min={1}
+                max={20}
+                onInputChange={value => {
+                  this.props.updateProjectionVelocityMiddle(parseInt(value, 10));
+                }}
+              />
+
+              <ProjectionSlider
+                label="Velocity end"
+                unit="stories per iteration"
+                initialValue={this.props.projection.velocityEnd}
+                min={1}
+                max={10}
+                onInputChange={value => {
+                  this.props.updateProjectionVelocityEnd(parseInt(value, 10));
+                }}
+              />
+
+              <ProjectionSlider
+                label="Zoom Y"
+                initialValue={this.props.zoom.yAxisMax}
+                min={50}
+                max={1000}
+                onInputChange={value => {
+                  this.props.updateProjectionZoom('y', parseInt(value, 10));
+                }}
+              />
+
+              <ProjectionSlider
+                label="Zoom X"
+                initialValue={this.props.zoom.xAxisMax}
+                min={50}
+                max={400}
+                onInputChange={value => {
+                  this.props.updateProjectionZoom('x', parseInt(value, 10));
+                }}
+              />
+
               <Button
                 label="Save"
                 onClick={() => {
                   this.props.saveProjection(this.props.projection, this.props.id);
                 }}
               />
+
             </div>
+
           </div>
         </div>
       </div>
@@ -123,6 +180,7 @@ function mapStateToProps(state) {
     title: state.appData.project.title,
     id: state.appData.project.id,
     projection: state.projection,
+    zoom: state.projectionZoom,
   };
   return props;
 }
@@ -131,6 +189,7 @@ export default connect(mapStateToProps, actionCreators)(Projection);
 
 Projection.propTypes = {
   projection: PropTypes.object.isRequired,
+  zoom: PropTypes.object.isRequired,
   updateProjectionVelocityStart: PropTypes.func.isRequired,
   saveProjection: PropTypes.func.isRequired,
 };
