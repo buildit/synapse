@@ -1,6 +1,7 @@
 const d3 = require('d3');
 import React from 'react';
 const makePoints = require('../../helpers/makePoints');
+import moment from 'moment';
 
 const TRANSITION_DURATION = 200;
 
@@ -10,16 +11,19 @@ export default class ProjectionChart extends React.Component {
     this.points = null;
     this.chart = null;
     this.vis = null;
+    this.startDate = moment().format('DD-MMM-YY');
+    this.parseTime = d3.timeParse('%d-%b-%y');
   }
 
   componentDidMount() {
     this.setVis();
-    this.setXAxis();
+    this.setDateAxis();
     this.setYAxis();
+    this.update();
   }
 
   componentDidUpdate() {
-    this.setXAxis();
+    this.setDateAxis();
     this.setYAxis();
     this.update();
   }
@@ -37,9 +41,22 @@ export default class ProjectionChart extends React.Component {
 
   getScale() {
     const size = this.getSize();
+    const parseTime = this.parseTime;
+
+    const dateMin =
+      this.points ? parseTime(this.points[0].date) : parseTime('01-Jan-01');
+    const dateMax =
+      parseTime(
+        moment(this.props.zoom.xAxisMaxDate).format('DD-MMM-YY')
+      );
+
     return {
       x: d3.scaleLinear()
         .domain([0, this.props.zoom.xAxisMax])
+        .range([0, size.width]),
+
+      date: d3.scaleTime()
+        .domain([dateMin, dateMax])
         .range([0, size.width]),
 
       y: d3.scaleLinear()
@@ -99,16 +116,20 @@ export default class ProjectionChart extends React.Component {
         .call(d3.axisBottom(xScale));
   }
 
-  setXAxisLabel(label) {
-    const width = this.getSize().width;
+  setDateAxis() {
+    d3.select('.axis--date').remove();
+
+    const dateScale = this.getScale().date;
     const height = this.getSize().height;
-    this.vis.append('text')
-      .attr('class', 'x label')
-      .attr('text-anchor', 'end')
-      .attr('x', width)
-      .attr('y', height - 6)
-      .text(label);
+
+    this.vis.append('g')
+      .attr('class', 'axis-container')
+      .attr('transform', `translate(0, ${height - 6})`)
+        .append('g')
+        .attr('class', 'axis axis--date')
+        .call(d3.axisBottom(dateScale));
   }
+
 
   setYAxisLabel(label) {
     this.vis.append('text')
@@ -121,18 +142,22 @@ export default class ProjectionChart extends React.Component {
 
   update() {
     const { projection } = this.props;
-    const { backlogSize, darkMatter } = projection;
-    this.points = makePoints(projection);
+    const { backlogSize, darkMatter, iterationLength } = projection;
+    console.log('iterationLength:', projection.iterationLength);
+    this.points = makePoints(projection, this.startDate, iterationLength);
+    console.log('second point:', this.points[1].date);
+    this.updateCurve();
     this.updateBacklog(backlogSize);
     this.updateDarkMatter(backlogSize, darkMatter);
-    this.updateCurve();
   }
 
   updateCurve() {
+    const parseTime = this.parseTime;
     const scale = this.getScale();
     const size = this.getSize();
+
     const area = d3.area()
-      .x(d => scale.x(d.x))
+      .x(d => scale.date(parseTime(d.date)))
       .y0(size.height)
       .y1(d => scale.y(d.y));
 
@@ -143,10 +168,11 @@ export default class ProjectionChart extends React.Component {
   }
 
   updateBacklog(backlogSize) {
+    const parseTime = this.parseTime;
     const scale = this.getScale();
 
     const area = d3.area()
-      .x(d => scale.x(d.x))
+      .x(d => scale.date(parseTime(d.date)))
       .y0(scale.y(backlogSize))
       .y1(d => scale.y(d.y));
 
@@ -157,12 +183,13 @@ export default class ProjectionChart extends React.Component {
   }
 
   updateDarkMatter(backlogSize, darkMatter) {
+    const parseTime = this.parseTime;
     const scale = this.getScale();
 
     const backlogSizeWithDarkMatter = backlogSize + backlogSize * (darkMatter / 100);
 
     const area = d3.area()
-      .x(d => scale.x(d.x))
+      .x(d => scale.date(parseTime(d.date)))
       .y0(scale.y(backlogSizeWithDarkMatter))
       .y1(scale.y(backlogSize));
 
@@ -172,26 +199,23 @@ export default class ProjectionChart extends React.Component {
       .attr('d', area(this.points));
   }
 
-  testDot(projection) {
-    const { backlogSize, darkMatter } = projection;
+  testDot(points) {
+    if (points) {
+      console.log('date:', points[0].date);
 
-    const yScale = this.getScale().y;
+      const parseTime = this.parseTime;
+      console.log('parsed time:', parseTime(points[0].date));
 
-    this.vis.append('circle')
-      .attr('cx', 0)
-      .attr('cy', yScale(backlogSize))
+      const dateScale = this.getScale().date;
+      console.log('scaled time:', dateScale(parseTime(points[0].date)));
+
+      this.vis.append('circle')
+      .attr('cx', dateScale(parseTime(points[0].date)))
+      .attr('cy', 50)
       .attr('r', 10)
       .style('opacity', 0.1)
       .style('fill', 'aqua');
-
-    const backlogSizeWithDarkMatter = backlogSize + backlogSize * (darkMatter / 100);
-
-    this.vis.append('circle')
-      .attr('cx', 0)
-      .attr('cy', yScale(backlogSizeWithDarkMatter))
-      .attr('r', 10)
-      .style('opacity', 0.1)
-      .style('fill', 'tomato');
+    }
   }
 
   render() {

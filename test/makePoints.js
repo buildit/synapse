@@ -110,4 +110,80 @@ describe('Projection chart points maker', () => {
     assert.equal(points[3].x, 6);
     assert.equal(points[3].y, 6);
   });
+
+  it('the date of the first point is the given start date', () => {
+    const projection = {
+      backlogSize: 6,
+      darkMatter: 0,
+      iterationLength: 0,
+
+      periodStart: 2,
+      periodEnd: 2,
+
+      velocityStart: 1,
+      velocityMiddle: 1,
+      velocityEnd: 1,
+    };
+    const startDate = '15-Mar-07';
+    const points = makePoints(projection, startDate);
+
+    assert.equal(points[0].date, startDate);
+  });
+
+  it('the date for the second point is calculated correctly', () => {
+    const projection = {
+      backlogSize: 6,
+      darkMatter: 0,
+      iterationLength: 2,
+
+      periodStart: 2,
+      periodEnd: 2,
+
+      velocityStart: 1,
+      velocityMiddle: 1,
+      velocityEnd: 1,
+    };
+    const startDate = '01-Mar-07';
+    const points = makePoints(projection, startDate);
+
+    assert.equal(points[1].date, '29-Mar-07');
+  });
+
+  it('the date for the third point is calculated correctly', () => {
+    const projection = {
+      backlogSize: 6,
+      darkMatter: 0,
+      iterationLength: 2,
+
+      periodStart: 2,
+      periodEnd: 2,
+
+      velocityStart: 1,
+      velocityMiddle: 1,
+      velocityEnd: 1,
+    };
+    const startDate = '01-Mar-07';
+    const points = makePoints(projection, startDate);
+
+    assert.equal(points[2].date, '26-Apr-07');
+  });
+
+  it('the date for the last point is calculated correctly', () => {
+    const projection = {
+      backlogSize: 6,
+      darkMatter: 0,
+      iterationLength: 2,
+
+      periodStart: 2,
+      periodEnd: 2,
+
+      velocityStart: 1,
+      velocityMiddle: 1,
+      velocityEnd: 1,
+    };
+    const startDate = '01-Mar-07';
+    const points = makePoints(projection, startDate);
+
+    assert.equal(points[3].date, '24-May-07');
+  });
 });

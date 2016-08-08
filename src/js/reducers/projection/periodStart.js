@@ -1,4 +1,4 @@
-const initialState = 7;
+const initialState = 2;
 
 const periodStart = (state = initialState, action) => {
   switch (action.type) {

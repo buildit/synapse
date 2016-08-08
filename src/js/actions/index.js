@@ -4,6 +4,7 @@ import {
   SET_MESSAGE,
   RESET_PROJECT,
   UPDATE_PROJECTION_ZOOM,
+  UPDATE_PROJECTION_ITERATION_LENGTH,
 } from './actions';
 
 import $ from 'jquery';
@@ -296,6 +297,11 @@ export const updateProjectionDarkMatter = value => ({
 export const updateProjectionZoom = (axis, value) => ({
   type: UPDATE_PROJECTION_ZOOM,
   axis,
+  value,
+});
+
+export const updateProjectionIterationLength = value => ({
+  type: UPDATE_PROJECTION_ITERATION_LENGTH,
   value,
 });
 

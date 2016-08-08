@@ -1,4 +1,4 @@
-const initialState = 7;
+const initialState = 15;
 
 const velocityMiddle = (state = initialState, action) => {
   switch (action.type) {
