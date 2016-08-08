@@ -1,6 +1,7 @@
 const fillMissingCategories = require('./fillMissingCategories');
 const sortDemandData = require('./sortDemandData');
 const transformDemandData = require('./transformDemandData');
+const seqSortDemandData = require('./seqSortDemandData');
 
 
 const norm = function norm() {
@@ -39,6 +40,11 @@ const norm = function norm() {
 
   my.transform = function transform() {
     this.data = transformDemandData(this.data);
+    return my;
+  };
+
+  my.seqSort = function seqSort() {
+    seqSortDemandData(this.data);
     return my;
   };
 
