@@ -19,8 +19,6 @@ export default class ProjectionChart extends React.Component {
   }
 
   componentDidUpdate() {
-    this.xAxisMax = this.props.zoom.xAxisMax;
-    this.yAxisMax = this.props.zoom.yAxisMax;
     this.setXAxis();
     this.setYAxis();
     this.update();
@@ -92,7 +90,6 @@ export default class ProjectionChart extends React.Component {
 
     const xScale = this.getScale().x;
     const height = this.getSize().height;
-    const width = this.getSize().width;
 
     this.vis.append('g')
       .attr('class', 'axis-container')
@@ -174,18 +171,6 @@ export default class ProjectionChart extends React.Component {
       .duration(TRANSITION_DURATION)
       .attr('d', area(this.points));
   }
-
-  setXAxisMax(value) { this.xAxisMax = value; }
-
-  // setYAxisMax(mouseY) {
-  //   const position = isTopOrBottom(mouseY, this.chart.clientHeight);
-  //   if (position === 'top') {
-  //     this.yAxisMax *= 0.9;
-  //   }
-  //   if (position === 'bottom') {
-  //     this.yAxisMax *= 1.1;
-  //   }
-  // }
 
   testDot(projection) {
     const { backlogSize, darkMatter } = projection;

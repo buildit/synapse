@@ -20,6 +20,7 @@ const projectionZoom = (state = initialState, action) => {
         yAxisMax: action.value,
       };
     }
+    return state;
   }
   default: return state;
   }
