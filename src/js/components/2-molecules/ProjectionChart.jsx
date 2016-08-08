@@ -2,7 +2,6 @@ const d3 = require('d3');
 import React from 'react';
 const makePoints = require('../../helpers/makePoints');
 
-const X_AXIS_MAX = 70;
 const TRANSITION_DURATION = 200;
 
 export default class ProjectionChart extends React.Component {
@@ -15,16 +14,14 @@ export default class ProjectionChart extends React.Component {
 
   componentDidMount() {
     this.setVis();
-    this.update();
     this.setXAxis();
     this.setYAxis();
-    // this.setXAxisLabel('Sprint iterations');
-    // this.setYAxisLabel('Stories');
   }
 
   componentDidUpdate() {
+    this.setXAxis();
+    this.setYAxis();
     this.update();
-    // this.testDot(this.props.projection);
   }
 
   componentWillUnmount() {
@@ -33,7 +30,7 @@ export default class ProjectionChart extends React.Component {
 
   getSize() {
     return {
-      width: this.chart.clientWidth - this.props.padding.left - this.props.padding.right,
+      width: 800 - this.props.padding.left - this.props.padding.right,
       height: this.chart.clientHeight - this.props.padding.top - this.props.padding.bottom,
     };
   }
@@ -42,11 +39,11 @@ export default class ProjectionChart extends React.Component {
     const size = this.getSize();
     return {
       x: d3.scaleLinear()
-        .domain([0, X_AXIS_MAX])
+        .domain([0, this.props.zoom.xAxisMax])
         .range([0, size.width]),
 
       y: d3.scaleLinear()
-        .domain([500, 0])
+        .domain([this.props.zoom.yAxisMax, 0])
         .range([0, size.height]),
     };
   }
@@ -54,6 +51,7 @@ export default class ProjectionChart extends React.Component {
   setVis() {
     const size = this.getSize();
     this.vis = d3.select(this.chart).append('svg')
+      .attr('class', 'chart')
       .attr('width', this.chart.clientWidth)
       .attr('height', this.chart.clientHeight)
       .append('g')
@@ -78,6 +76,8 @@ export default class ProjectionChart extends React.Component {
   }
 
   setYAxis() {
+    d3.select('.axis--y').remove();
+
     const yScale = this.getScale().y;
     this.vis.append('g')
       .attr('class', 'axis axis--y')
@@ -86,12 +86,17 @@ export default class ProjectionChart extends React.Component {
   }
 
   setXAxis() {
+    d3.select('.axis--x').remove();
+
     const xScale = this.getScale().x;
     const height = this.getSize().height;
+
     this.vis.append('g')
-      .attr('class', 'axis axis--x')
+      .attr('class', 'axis-container')
       .attr('transform', `translate(0, ${height + 10})`)
-      .call(d3.axisBottom(xScale));
+        .append('g')
+        .attr('class', 'axis axis--x')
+        .call(d3.axisBottom(xScale));
   }
 
   setXAxisLabel(label) {
@@ -201,8 +206,9 @@ export default class ProjectionChart extends React.Component {
 ProjectionChart.propTypes = {
   projection: React.PropTypes.object.isRequired,
   padding: React.PropTypes.object,
+  zoom: React.PropTypes.object.isRequired,
 };
 
 ProjectionChart.defaultProps = {
-  padding: { top: 40, right: 30, bottom: 60, left: 70 },
+  padding: { top: 40, right: 30, bottom: 60, left: 60 },
 };
