@@ -77,7 +77,7 @@ const appData = (state = {
         .fill()
         .sort()
         .transform()
-        .seqSort()
+        .seqSort(state.project.demand.flow)
         .getData();
 
     return {

@@ -7,6 +7,18 @@ const Chart = ({ data, title, yLabel = '', startDateInMS, endDateInMS }) => {
     chart: {
       type: 'area',
     },
+    plotOptions: {
+      series: {
+        stacking: 'normal',
+      },
+      area: {
+        events: {
+          legendItemClick: function () {
+            return false; // <== returning false will cancel the default action
+          },
+        },
+      },
+    },
     title: {
       text: title,
     },
@@ -21,11 +33,6 @@ const Chart = ({ data, title, yLabel = '', startDateInMS, endDateInMS }) => {
       },
     },
     series: data,
-    plotOptions: {
-      series: {
-        stacking: 'normal',
-      },
-    },
     credits: {
       enabled: false,
     },

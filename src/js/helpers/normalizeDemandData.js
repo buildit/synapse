@@ -43,8 +43,8 @@ const norm = function norm() {
     return my;
   };
 
-  my.seqSort = function seqSort() {
-    seqSortDemandData(this.data);
+  my.seqSort = function seqSort(sortData) {
+    seqSortDemandData(sortData);
     return my;
   };
 

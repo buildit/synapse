@@ -1,3 +1,3 @@
-module.exports = (data) => {
-  console.log('data', data);
+module.exports = (sortData) => {
+  console.log('data', sortData);
 };

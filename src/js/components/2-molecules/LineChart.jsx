@@ -28,6 +28,11 @@ const LineChart = ({ title, yLabel, data, startDateInMS, endDateInMS }) => {
         marker: {
           enabled: false,
         },
+        events: {
+          legendItemClick: function () {
+            return false; // <== returning false will cancel the default action
+          },
+        },
       },
     },
     credits: {
