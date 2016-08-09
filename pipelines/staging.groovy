@@ -64,6 +64,8 @@ node {
 
       stage "Run Functional Tests"
         // wait until the app is deployed
+        convox.waitUntilDeployed("${appName}-staging")
+        convox.ensureSecurityGroupSet("${appName}-staging", env.CONVOX_SECURITYGROUP)
         // run Selenium tests
 
       stage "Promote Build to latest"
