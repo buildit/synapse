@@ -16,7 +16,7 @@ node {
 
         def domainName = "${env.MONGO_HOSTNAME}".substring(8)
         def registry = "https://006393696278.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
-        def appUrl = "http://synapse.${domainName}"
+        def appUrl = "http://synapse.staging.${domainName}"
         def appName = "synapse"
 
         // global for exception handling

@@ -17,8 +17,9 @@ node {
       convox = load "lib/convox.groovy"
       template = load "lib/template.groovy"
 
+      def domainName = "${env.MONGO_HOSTNAME}".substring(8)
       def appName = "synapse"
-      def appUrl = "http://synapse.riglet"
+      def appUrl = "http://synapse.${domainName}"
 
       // global for exception handling
       slackChannel = "synapse"
