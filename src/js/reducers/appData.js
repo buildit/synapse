@@ -76,8 +76,7 @@ const appData = (state = {
         .datum(action.statusData)
         .fill()
         .sort()
-        .transform()
-        .seqSort(state.project.demand.flow)
+        .transform(state.project.demand.flow)
         .getData();
 
     return {
@@ -109,6 +108,12 @@ const appData = (state = {
     return {
       ...state,
       effortStatus: normalizedEffortData,
+      isFetching: false,
+    };
+  }
+  case 'FETCH_FORECAST_SUCCESS': {
+    return {
+      ...state,
       isFetching: false,
     };
   }
