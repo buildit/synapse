@@ -14,15 +14,8 @@ const ProjectionSlider = ({ label, legendClass, onInputChange, initialValue, min
         type="range"
         min={min}
         max={max}
-        ref={node => {
-          input = node;
-          if (input) {
-            if (!input.value) {
-              input.value = initialValue;
-            }
-          }
-        }
-      }
+        value={initialValue}
+        ref={node => { input = node; }}
         onChange={() => {
           onInputChange(input.value);
         }

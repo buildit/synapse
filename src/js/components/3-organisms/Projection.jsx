@@ -141,7 +141,7 @@ class Projection extends Component {
                 onInputChange={value => {
                   this.props.updateProjectionZoom('date', value, 10);
                 }}
-                initialValue
+                initialValue={this.props.zoom.xAxisMaxDate}
               />
 
               <ProjectionSlider

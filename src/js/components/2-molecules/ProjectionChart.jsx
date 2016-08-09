@@ -143,9 +143,7 @@ export default class ProjectionChart extends React.Component {
   update() {
     const { projection } = this.props;
     const { backlogSize, darkMatter, iterationLength } = projection;
-    console.log('iterationLength:', projection.iterationLength);
     this.points = makePoints(projection, this.startDate, iterationLength);
-    console.log('second point:', this.points[1].date);
     this.updateCurve();
     this.updateBacklog(backlogSize);
     this.updateDarkMatter(backlogSize, darkMatter);
@@ -201,13 +199,10 @@ export default class ProjectionChart extends React.Component {
 
   testDot(points) {
     if (points) {
-      console.log('date:', points[0].date);
 
       const parseTime = this.parseTime;
-      console.log('parsed time:', parseTime(points[0].date));
 
       const dateScale = this.getScale().date;
-      console.log('scaled time:', dateScale(parseTime(points[0].date)));
 
       this.vis.append('circle')
       .attr('cx', dateScale(parseTime(points[0].date)))
