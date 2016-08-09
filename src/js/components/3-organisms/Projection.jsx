@@ -147,6 +147,7 @@ class Projection extends Component {
 
               <ProjectionSlider
                 label="Max Y"
+                legendClass="max-y"
                 initialValue={this.props.zoom.yAxisMax}
                 min={10}
                 max={500}

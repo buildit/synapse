@@ -125,7 +125,7 @@ export default class ProjectionChart extends React.Component {
 
     this.vis.append('g')
       .attr('class', 'axis-container')
-      .attr('transform', `translate(0, ${height})`)
+      .attr('transform', `translate(0, ${height + 20})`)
         .append('g')
         .attr('class', 'axis axis--date')
         .call(d3.axisBottom(dateScale));
@@ -146,7 +146,7 @@ export default class ProjectionChart extends React.Component {
 
     this.vis.append('g')
       .attr('class', 'completion-date')
-      .attr('transform', `translate(0, ${height + 50})`);
+      .attr('transform', `translate(0, ${height + 70})`);
   }
 
   updateCompletionDate(projectedCompletionDate) {
@@ -249,5 +249,5 @@ ProjectionChart.propTypes = {
 };
 
 ProjectionChart.defaultProps = {
-  padding: { top: 40, right: 30, bottom: 60, left: 60 },
+  padding: { top: 40, right: 30, bottom: 160, left: 60 },
 };

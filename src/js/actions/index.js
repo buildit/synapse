@@ -313,7 +313,6 @@ export const fetchProjection = (id) => (dispatch) => {
   return $.get(`${apiBaseUrl}project/${id}/forecast`)
     .done(
       projection => {
-        console.log('should update with this projection:', projection);
         dispatch({
           type: 'UPDATE_PROJECTION_BACKLOG_SIZE',
           value: projection.backlogSize,
