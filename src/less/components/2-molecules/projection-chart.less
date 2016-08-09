@@ -1,5 +1,5 @@
 @axis: #666;
-@dark-matter-opacity: 0.9;
+@dark-matter-opacity: 0.7;
 
 .projection-chart {
   width: 1100px;
@@ -11,8 +11,10 @@
     color: @axis;
     path,
     line {
-      // fill: none;
-      // shape-rendering: crispEdges;
+      fill: none;
+      stroke: @axis;
+    }
+    path {
       display: none;
     }
   }

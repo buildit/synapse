@@ -4,23 +4,31 @@ const ProjectionSlider = ({ label, legendClass, onInputChange, initialValue, min
   let input;
   return (
     <div className="projection-slider form-group">
-      <span className={`legend ${legendClass}`}></span>
-      <label>
-        <span className="slider-label">{label}</span>
-        <span className="value">{initialValue}</span>
-        <span className="unit">{unit}</span>
-      </label>
-      <input
-        type="range"
-        min={min}
-        max={max}
-        value={initialValue}
-        ref={node => { input = node; }}
-        onChange={() => {
-          onInputChange(input.value);
+      <div>
+        <span className={`legend ${legendClass}`}></span>
+        <label>
+          <span className="slider-label">{label}</span>
+        </label>
+      </div>
+
+      <div className="slider">
+        <input
+          type="range"
+          min={min}
+          max={max}
+          value={initialValue}
+          ref={node => { input = node; }}
+          onChange={() => {
+            onInputChange(input.value);
+          }
         }
-      }
-      />
+        />
+        <div>
+          <span className="value">{initialValue}</span>
+          <span className="unit">{unit}</span>
+        </div>
+      </div>
+
     </div>
     );
 };
