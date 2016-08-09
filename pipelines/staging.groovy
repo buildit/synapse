@@ -17,6 +17,8 @@ node {
         def registry = "https://006393696278.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
         def appUrl = "http://synapse.staging.riglet"
         def appName = "synapse"
+        def domainName = "${env.MONGO_HOSTNAME}".substring(8)
+        System.out.println("Domain Name: " + domainName)
 
         // global for exception handling
         slackChannel = "synapse"
