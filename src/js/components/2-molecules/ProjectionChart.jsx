@@ -19,6 +19,7 @@ export default class ProjectionChart extends React.Component {
     this.setVis();
     this.setDateAxis();
     this.setYAxis();
+    this.setCompletionDate();
     this.update();
   }
 
@@ -124,7 +125,7 @@ export default class ProjectionChart extends React.Component {
 
     this.vis.append('g')
       .attr('class', 'axis-container')
-      .attr('transform', `translate(0, ${height - 6})`)
+      .attr('transform', `translate(0, ${height})`)
         .append('g')
         .attr('class', 'axis axis--date')
         .call(d3.axisBottom(dateScale));
@@ -140,13 +141,32 @@ export default class ProjectionChart extends React.Component {
       .text(label);
   }
 
+  setCompletionDate() {
+    const height = this.getSize().height;
+
+    this.vis.append('g')
+      .attr('class', 'completion-date')
+      .attr('transform', `translate(0, ${height + 50})`);
+  }
+
+  updateCompletionDate(projectedCompletionDate) {
+    this.vis.select('.completion-date text')
+      .remove();
+
+    this.vis.select('.completion-date')
+      .append('text')
+      .text(`Projected completion date: ${projectedCompletionDate}`);
+  }
+
   update() {
     const { projection } = this.props;
     const { backlogSize, darkMatter, iterationLength } = projection;
+    const projectedCompletionDate = this.points ? moment(this.points[3].date).format('MMMM Do YYYY') : 'Calculating...';
     this.points = makePoints(projection, this.startDate, iterationLength);
     this.updateCurve();
     this.updateBacklog(backlogSize);
     this.updateDarkMatter(backlogSize, darkMatter);
+    this.updateCompletionDate(projectedCompletionDate);
   }
 
   updateCurve() {
