@@ -1,4 +1,4 @@
-const initialState = 300;
+const initialState = 100;
 
 const backlogSize = (state = initialState, action) => {
   switch (action.type) {

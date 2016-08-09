@@ -1,13 +1,20 @@
 import { UPDATE_PROJECTION_ZOOM } from '../actions/actions';
 
 const initialState = {
-  xAxisMax: 175,
-  yAxisMax: 475,
+  xAxisMax: 120,
+  xAxisMaxDate: '2016-12-31',
+  yAxisMax: 10,
 };
 
 const projectionZoom = (state = initialState, action) => {
   switch (action.type) {
   case UPDATE_PROJECTION_ZOOM: {
+    if (action.axis === 'date') {
+      return {
+        ...state,
+        xAxisMaxDate: action.value,
+      };
+    }
     if (action.axis === 'x') {
       return {
         ...state,
