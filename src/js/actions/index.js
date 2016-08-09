@@ -313,9 +313,44 @@ export const fetchProjection = (id) => (dispatch) => {
   return $.get(`${apiBaseUrl}project/${id}/forecast`)
     .done(
       projection => {
+        console.log('should update with this projection:', projection);
         dispatch({
           type: 'UPDATE_PROJECTION_BACKLOG_SIZE',
           value: projection.backlogSize,
+        });
+        dispatch({
+          type: 'UPDATE_PROJECTION_VELOCITY_START',
+          value: projection.velocityStart,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_VELOCITY_MIDDLE',
+          value: projection.velocityMiddle,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_VELOCITY_END',
+          value: projection.velocityEnd,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_PERIOD_START',
+          value: projection.periodStart,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_PERIOD_END',
+          value: projection.periodEnd,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_DARK_MATTER',
+          value: projection.darkMatter,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_ITERATION_LENGTH',
+          value: projection.iterationLength,
         });
       })
       .fail(() => {
@@ -330,6 +365,9 @@ export const saveProjection = (projection, id) => dispatch => {
   dispatch({
     type: SAVE_PROJECTION_REQUEST,
   });
+
+  // console.log('about to post this:', projection);
+  // console.log('for', id);
 
   return $.ajax({
     type: 'POST',
