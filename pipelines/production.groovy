@@ -14,6 +14,7 @@ node {
       ui = load "lib/ui.groovy"
       ecr = load "lib/ecr.groovy"
       slack = load "lib/slack.groovy"
+      convox = load "lib/convox.groovy"
       template = load "lib/template.groovy"
 
       def appName = "synapse"
