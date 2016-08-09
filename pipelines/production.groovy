@@ -9,7 +9,7 @@ node {
     stage "Set Up"
       checkout scm
 
-      sh "curl -L http://nexus.riglet:9000/nexus/service/local/repositories/staging/content/zips/jenkins-pipeline-libraries/jenkins-pipeline-libraries-${env.PIPELINE_LIBS_VERSION}.zip -o lib.zip && echo 'A' | unzip lib.zip"
+      sh "curl -L https://dl.bintray.com/buildit/maven/jenkins-pipeline-libraries-${env.PIPELINE_LIBS_VERSION}.zip -o lib.zip && echo 'A' | unzip lib.zip"
 
       ui = load "lib/ui.groovy"
       ecr = load "lib/ecr.groovy"
