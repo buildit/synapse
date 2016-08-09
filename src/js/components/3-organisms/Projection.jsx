@@ -35,7 +35,7 @@ class Projection extends Component {
                 legendClass="backlog"
                 initialValue={this.props.projection.backlogSize}
                 min={10}
-                max={600}
+                max={300}
                 onInputChange={value => {
                   this.props.updateProjectionBacklogSize(parseInt(value, 10));
                 }}
@@ -118,8 +118,9 @@ class Projection extends Component {
 
               <ProjectionSlider
                 label="Iteration length"
+                unit="week(s)"
                 initialValue={this.props.projection.iterationLength}
-                min={0}
+                min={1}
                 max={8}
                 onInputChange={value => {
                   this.props.updateProjectionIterationLength(parseInt(value, 10));
@@ -146,6 +147,7 @@ class Projection extends Component {
 
               <ProjectionSlider
                 label="Max Y"
+                legendClass="max-y"
                 initialValue={this.props.zoom.yAxisMax}
                 min={10}
                 max={500}
