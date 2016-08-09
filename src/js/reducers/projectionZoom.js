@@ -3,7 +3,7 @@ import { UPDATE_PROJECTION_ZOOM } from '../actions/actions';
 const initialState = {
   xAxisMax: 120,
   xAxisMaxDate: '2016-12-31',
-  yAxisMax: 10,
+  yAxisMax: 50,
 };
 
 const projectionZoom = (state = initialState, action) => {

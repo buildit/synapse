@@ -3,7 +3,7 @@ import React from 'react';
 const makePoints = require('../../helpers/makePoints');
 import moment from 'moment';
 
-const TRANSITION_DURATION = 200;
+const TRANSITION_DURATION = 100;
 
 export default class ProjectionChart extends React.Component {
   constructor() {
