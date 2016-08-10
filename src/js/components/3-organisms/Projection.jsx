@@ -14,7 +14,7 @@ class Projection extends Component {
   }
 
   render() {
-    let dateInput;
+    let value;
     return (
       <div className="projection">
         <div className="container">
@@ -48,6 +48,30 @@ class Projection extends Component {
                 max={100}
                 onInputChange={value => {
                   this.props.updateProjectionDarkMatter(parseInt(value, 10));
+                }}
+              />
+
+              <hr />
+
+                <ProjectionSlider
+                  label="Iteration length"
+                  unit="week(s)"
+                  initialValue={this.props.projection.iterationLength}
+                  min={1}
+                  max={8}
+                  onInputChange={value => {
+                    this.props.updateProjectionIterationLength(parseInt(value, 10));
+                  }}
+                />
+
+              <ProjectionSlider
+                label="Target velocity"
+                unit="stories per iteration"
+                initialValue={this.props.projection.velocityMiddle}
+                min={1}
+                max={20}
+                onInputChange={value => {
+                  this.props.updateProjectionVelocityMiddle(parseInt(value, 10));
                 }}
               />
 
@@ -96,32 +120,6 @@ class Projection extends Component {
                 max={10}
                 onInputChange={value => {
                   this.props.updateProjectionVelocityEnd(parseInt(value, 10));
-                }}
-              />
-
-              <hr />
-
-              <ProjectionSlider
-                label="Target velocity"
-                unit="stories per iteration"
-                initialValue={this.props.projection.velocityMiddle}
-                min={1}
-                max={20}
-                onInputChange={value => {
-                  this.props.updateProjectionVelocityMiddle(parseInt(value, 10));
-                }}
-              />
-
-              <hr />
-
-              <ProjectionSlider
-                label="Iteration length"
-                unit="week(s)"
-                initialValue={this.props.projection.iterationLength}
-                min={1}
-                max={8}
-                onInputChange={value => {
-                  this.props.updateProjectionIterationLength(parseInt(value, 10));
                 }}
               />
 
