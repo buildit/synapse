@@ -11,33 +11,30 @@ const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
 const cowsay = require('cowsay');
 const argv = require('yargs').argv;
+const configify = require('config-browserify')
 
 gulp.task('clean', () => (
   del(['dist'])
 ));
 
 gulp.task('config', ['clean'], () => {
-  const environment = argv.environment;
+  const environment = process.env.NODE_ENV;
+
   console.log(cowsay.say({
     text: `Setting up configuration\nfor ${environment} environment.`,
     e: 'oO',
     T: 'U ',
   }));
-  if (environment === 'production') {
-    gulp.src('./config/production.js')
-      .pipe(rename('config.js'))
-      .pipe(gulp.dest('./dist/js'));
-  } else {
-    gulp.src('./config/development.js')
-      .pipe(rename('config.js'))
-      .pipe(gulp.dest('./dist/js'));
-  }
+
+  gulp.src('./config/**/*.json')
+    .pipe(gulp.dest('./dist/config'));
 });
 
 gulp.task('js', ['clean'], () => (
   browserify({
     extensions: ['.jsx', '.js'],
     entries: 'src/js/index.js',
+    ignoreMissing: true,
   })
   .transform(babelify.configure({ presets: ['es2015', 'react', 'stage-2'] }))
   .bundle()

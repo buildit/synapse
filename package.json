@@ -4,8 +4,8 @@
   "description": "Management information dashboard.",
   "main": "dev-server.js",
   "scripts": {
-    "build": "gulp --environment development",
-    "build:production": "gulp --environment production",
+    "build": "NODE_ENV='development' gulp",
+    "build:production": "NODE_ENV='production' gulp",
     "lint": "eslint src/ test/ *.js",
     "start": "gulp server",
     "test": "jest --verbose",
@@ -44,6 +44,10 @@
       "enzyme"
     ]
   },
+  "browserify": {
+    "transform": "config-browserify",
+    "ignoreMissing": true
+  },
   "devDependencies": {
     "babel-core": "^6.10.4",
     "babel-eslint": "^6.1.0",
@@ -79,6 +83,7 @@
     "babelify": "^7.3.0",
     "bootstrap": "^3.3.6",
     "browserify": "^13.0.1",
+    "config-browserify": "^1.0.5",
     "d3": "^4.1.1",
     "es6-promise": "^3.2.1",
     "isomorphic-fetch": "^2.2.1",

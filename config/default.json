@@ -1,0 +1,10 @@
+{
+  "Client": {
+    "api": {
+      "baseUrl": "http://localhost:6565/"
+    },
+    "starterProjectsApi": {
+      "baseUrl": "http://localhost:6565/"
+    }
+  }
+}

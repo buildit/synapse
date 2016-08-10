@@ -3,3 +3,6 @@ nginx:
   image: 006393696278.dkr.ecr.us-west-2.amazonaws.com/synapse:${tag}
   ports:
     - 80
+  environment:
+    - NODE_ENV=production
+    - NODE_CONFIG={"api":{"baseUrl":"http://midas-api.${domain_name}/"},"starterProjectsApi":{"baseUrl":"http://midas-api.${domain_name}/"}}

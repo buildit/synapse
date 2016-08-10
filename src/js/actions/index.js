@@ -6,11 +6,11 @@ import {
   UPDATE_PROJECTION_ZOOM,
   UPDATE_PROJECTION_ITERATION_LENGTH,
 } from './actions';
-
+import config from 'config';
 import $ from 'jquery';
-const apiBaseUrl = api.baseUrl;
-const starterProjectsBaseApiUrl = starterProjectsApi.baseUrl;
 
+const apiBaseUrl = config.get('Client.api.baseUrl');
+const starterProjectsBaseApiUrl = config.get('Client.starterProjectsApi.baseUrl');
 
 const requestProjects = () => (
   { type: 'FETCH_PROJECTS_REQUEST' }
