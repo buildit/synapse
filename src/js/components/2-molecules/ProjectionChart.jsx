@@ -55,21 +55,16 @@ export default class ProjectionChart extends React.Component {
     const dateMin =
       this.points ? parseTime(this.points[0].date) : parseTime('01-Jan-01');
     const dateMax =
-      parseTime(
-        moment(this.props.zoom.xAxisMaxDate, 'YYYY-MM-DD').format('DD-MMM-YY')
-      );
+      this.points ? parseTime(this.points[3].date) : parseTime('01-Feb-01');
+    const yMax = d3.max(this.points, point => point.y);
 
     return {
-      x: d3.scaleLinear()
-        .domain([0, this.props.zoom.xAxisMax])
-        .range([0, size.width]),
-
       date: d3.scaleTime()
         .domain([dateMin, dateMax])
         .range([0, size.width]),
 
       y: d3.scaleLinear()
-        .domain([this.props.zoom.yAxisMax, 0])
+        .domain([yMax, 0])
         .range([0, size.height]),
     };
   }
@@ -254,7 +249,6 @@ export default class ProjectionChart extends React.Component {
 ProjectionChart.propTypes = {
   projection: React.PropTypes.object.isRequired,
   padding: React.PropTypes.object,
-  zoom: React.PropTypes.object.isRequired,
 };
 
 ProjectionChart.defaultProps = {
