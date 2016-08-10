@@ -18,11 +18,13 @@ gulp.task('clean', () => (
 
 gulp.task('config', ['clean'], () => {
   const environment = argv.environment;
+  /* eslint-disable no-console */
   console.log(cowsay.say({
     text: `Setting up configuration\nfor ${environment} environment.`,
     e: 'oO',
     T: 'U ',
   }));
+  /* eslint-enable no-console */
   if (environment === 'production') {
     gulp.src('./config/production.js')
       .pipe(rename('config.js'))
@@ -42,7 +44,9 @@ gulp.task('js', ['clean'], () => (
   .transform(babelify.configure({ presets: ['es2015', 'react', 'stage-2'] }))
   .bundle()
   .on('error', (err) => {
+    /* eslint-disable no-console */
     console.log(`Error: , ${err.message}`);
+    /* eslint-enable no-console */
   })
   .pipe(source('bundle.js'))
   .pipe(gulp.dest('dist/js'))
