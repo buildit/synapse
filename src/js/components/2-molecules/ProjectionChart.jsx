@@ -48,7 +48,7 @@ export default class ProjectionChart extends React.Component {
       this.points ? parseTime(this.points[0].date) : parseTime('01-Jan-01');
     const dateMax =
       parseTime(
-        moment(this.props.zoom.xAxisMaxDate).format('DD-MMM-YY')
+        moment(this.props.zoom.xAxisMaxDate, 'YYYY-MM-DD').format('DD-MMM-YY')
       );
 
     return {
@@ -161,7 +161,8 @@ export default class ProjectionChart extends React.Component {
   update() {
     const { projection } = this.props;
     const { backlogSize, darkMatter, iterationLength } = projection;
-    const projectedCompletionDate = this.points ? moment(this.points[3].date).format('MMMM Do YYYY') : 'Calculating...';
+    const projectedCompletionDate = this.points ?
+      moment(this.points[3].date, 'DD-MMM-YY').format('MMMM Do YYYY') : 'Calculating...';
     this.points = makePoints(projection, this.startDate, iterationLength);
     this.updateCurve();
     this.updateBacklog(backlogSize);
