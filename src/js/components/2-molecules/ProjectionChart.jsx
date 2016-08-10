@@ -16,6 +16,7 @@ export default class ProjectionChart extends React.Component {
   }
 
   componentDidMount() {
+    this.setPoints();
     this.setVis();
     this.setDateAxis();
     this.setYAxis();
@@ -24,6 +25,7 @@ export default class ProjectionChart extends React.Component {
   }
 
   componentDidUpdate() {
+    this.setPoints();
     this.setDateAxis();
     this.setYAxis();
     this.update();
@@ -31,6 +33,12 @@ export default class ProjectionChart extends React.Component {
 
   componentWillUnmount() {
     this.vis.remove();
+  }
+
+  setPoints() {
+    const { projection } = this.props;
+    const { iterationLength } = projection;
+    this.points = makePoints(projection, this.startDate, iterationLength);
   }
 
   getSize() {
@@ -161,11 +169,9 @@ export default class ProjectionChart extends React.Component {
   }
 
   update() {
-    const { projection } = this.props;
-    const { backlogSize, darkMatter, iterationLength } = projection;
+    const { backlogSize, darkMatter } = this.props.projection;
     const projectedCompletionDate = this.points ?
       moment(this.points[3].date, 'DD-MMM-YY').format('MMMM Do YYYY') : undefined;
-    this.points = makePoints(projection, this.startDate, iterationLength);
     this.updateCurve();
     this.updateBacklog(backlogSize);
     this.updateDarkMatter(backlogSize, darkMatter);
