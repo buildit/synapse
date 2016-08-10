@@ -10,6 +10,7 @@ const normalizeDemandData = data => (
         result.push({
           name: category,
           data: [],
+          // index:
         });
       }
       const count = datapoint.status[category];

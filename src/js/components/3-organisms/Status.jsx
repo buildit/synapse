@@ -24,6 +24,7 @@ class Status extends Component {
           title="Demand"
           yLabel="Stories"
           data={this.props.demandStatus}
+          forecastData={this.props.forecastStatus}
           startDateInMS={startDateInMS}
           endDateInMS={endDateInMS}
         />
@@ -58,6 +59,7 @@ Status.propTypes = {
   demandStatus: PropTypes.array.isRequired,
   defectStatus: PropTypes.array.isRequired,
   effortStatus: PropTypes.array.isRequired,
+  forecastStatus: PropTypes.array.isRequired,
 };
 
 export default Status;
