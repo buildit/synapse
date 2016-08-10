@@ -153,16 +153,18 @@ export default class ProjectionChart extends React.Component {
     this.vis.select('.completion-date text')
       .remove();
 
-    this.vis.select('.completion-date')
+    if (projectedCompletionDate) {
+      this.vis.select('.completion-date')
       .append('text')
       .text(`Projected completion date: ${projectedCompletionDate}`);
+    }
   }
 
   update() {
     const { projection } = this.props;
     const { backlogSize, darkMatter, iterationLength } = projection;
     const projectedCompletionDate = this.points ?
-      moment(this.points[3].date, 'DD-MMM-YY').format('MMMM Do YYYY') : 'Calculating...';
+      moment(this.points[3].date, 'DD-MMM-YY').format('MMMM Do YYYY') : undefined;
     this.points = makePoints(projection, this.startDate, iterationLength);
     this.updateCurve();
     this.updateBacklog(backlogSize);
