@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import ReactHighcharts from 'react-highcharts';
 const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
 
-const Chart = ({ data, title, yLabel = '', startDateInMS, endDateInMS }) => {
+const Chart = ({ data, forecastData, title, yLabel = '', startDateInMS, endDateInMS }) => {
   const config = {
     chart: {
       type: 'area',
@@ -49,6 +49,7 @@ const Chart = ({ data, title, yLabel = '', startDateInMS, endDateInMS }) => {
 
 Chart.propTypes = {
   data: PropTypes.array.isRequired,
+  forecastData: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
   yLabel: PropTypes.string,
   startDateInMS: PropTypes.number.isRequired,

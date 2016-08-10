@@ -96,6 +96,7 @@ const Body = ({
         demandStatus={appData.demandStatus}
         defectStatus={appData.defectStatus}
         effortStatus={appData.effortStatus}
+        forecastStatus={appData.forecastStatus}
       />
     );
   }

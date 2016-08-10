@@ -3,7 +3,6 @@ import {
   SAVE_PROJECTION_REQUEST,
   SET_MESSAGE,
   RESET_PROJECT,
-  UPDATE_PROJECTION_ZOOM,
   UPDATE_PROJECTION_ITERATION_LENGTH,
 } from './actions';
 import config from 'config';
@@ -111,6 +110,7 @@ export const fetchStatus = (id) => (dispatch) => {
   const demandCall = $.get(`${apiBaseUrl}project/${id}/demand`);
   const defectCall = $.get(`${apiBaseUrl}project/${id}/defect`);
   const effortCall = $.get(`${apiBaseUrl}project/${id}/effort`);
+  // const forecastCall = $.get(`${apiBaseUrl}project/${id}/forecast`);
   dispatch({
     type: 'FETCH_STATUS_REQUEST',
   });
@@ -165,6 +165,23 @@ export const fetchStatus = (id) => (dispatch) => {
       view: 'error',
     });
   });
+  // $.when(forecastCall)
+  // .done(statusForecastData => {
+  //   dispatch({
+  //     type: 'FETCH_FORECAST_SUCCESS',
+  //     statusForecastData,
+  //   });
+  // })
+  // .fail(() => {
+  //   dispatch({
+  //     type: 'FETCH_STATUS_FAILURE',
+  //     errorMessage: 'There was an error.',
+  //   });
+  //   dispatch({
+  //     type: 'SWITCH_VIEW',
+  //     view: 'error',
+  //   });
+  // });
 };
 
 export const saveFormData = (project) => (dispatch) => {
@@ -294,12 +311,6 @@ export const updateProjectionDarkMatter = value => ({
   value,
 });
 
-export const updateProjectionZoom = (axis, value) => ({
-  type: UPDATE_PROJECTION_ZOOM,
-  axis,
-  value,
-});
-
 export const updateProjectionIterationLength = value => ({
   type: UPDATE_PROJECTION_ITERATION_LENGTH,
   value,
@@ -317,6 +328,40 @@ export const fetchProjection = (id) => (dispatch) => {
           type: 'UPDATE_PROJECTION_BACKLOG_SIZE',
           value: projection.backlogSize,
         });
+        dispatch({
+          type: 'UPDATE_PROJECTION_VELOCITY_START',
+          value: projection.velocityStart,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_VELOCITY_MIDDLE',
+          value: projection.velocityMiddle,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_VELOCITY_END',
+          value: projection.velocityEnd,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_PERIOD_START',
+          value: projection.periodStart,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_PERIOD_END',
+          value: projection.periodEnd,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_DARK_MATTER',
+          value: projection.darkMatter,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_ITERATION_LENGTH',
+          value: projection.iterationLength,
+        });
       })
       .fail(() => {
         dispatch({
@@ -330,6 +375,9 @@ export const saveProjection = (projection, id) => dispatch => {
   dispatch({
     type: SAVE_PROJECTION_REQUEST,
   });
+
+  // console.log('about to post this:', projection);
+  // console.log('for', id);
 
   return $.ajax({
     type: 'POST',

@@ -3,7 +3,7 @@ import React from 'react';
 const makePoints = require('../../helpers/makePoints');
 import moment from 'moment';
 
-const TRANSITION_DURATION = 200;
+const TRANSITION_DURATION = 100;
 
 export default class ProjectionChart extends React.Component {
   constructor() {
@@ -16,13 +16,16 @@ export default class ProjectionChart extends React.Component {
   }
 
   componentDidMount() {
+    this.setPoints();
     this.setVis();
     this.setDateAxis();
     this.setYAxis();
+    this.setCompletionDate();
     this.update();
   }
 
   componentDidUpdate() {
+    this.setPoints();
     this.setDateAxis();
     this.setYAxis();
     this.update();
@@ -30,6 +33,12 @@ export default class ProjectionChart extends React.Component {
 
   componentWillUnmount() {
     this.vis.remove();
+  }
+
+  setPoints() {
+    const { projection } = this.props;
+    const { iterationLength } = projection;
+    this.points = makePoints(projection, this.startDate, iterationLength);
   }
 
   getSize() {
@@ -46,21 +55,16 @@ export default class ProjectionChart extends React.Component {
     const dateMin =
       this.points ? parseTime(this.points[0].date) : parseTime('01-Jan-01');
     const dateMax =
-      parseTime(
-        moment(this.props.zoom.xAxisMaxDate).format('DD-MMM-YY')
-      );
+      this.points ? parseTime(this.points[3].date) : parseTime('01-Feb-01');
+    const yMax = d3.max(this.points, point => point.y);
 
     return {
-      x: d3.scaleLinear()
-        .domain([0, this.props.zoom.xAxisMax])
-        .range([0, size.width]),
-
       date: d3.scaleTime()
         .domain([dateMin, dateMax])
         .range([0, size.width]),
 
       y: d3.scaleLinear()
-        .domain([this.props.zoom.yAxisMax, 0])
+        .domain([yMax, 0])
         .range([0, size.height]),
     };
   }
@@ -124,7 +128,7 @@ export default class ProjectionChart extends React.Component {
 
     this.vis.append('g')
       .attr('class', 'axis-container')
-      .attr('transform', `translate(0, ${height - 6})`)
+      .attr('transform', `translate(0, ${height + 20})`)
         .append('g')
         .attr('class', 'axis axis--date')
         .call(d3.axisBottom(dateScale));
@@ -140,13 +144,33 @@ export default class ProjectionChart extends React.Component {
       .text(label);
   }
 
+  setCompletionDate() {
+    const height = this.getSize().height;
+
+    this.vis.append('g')
+      .attr('class', 'completion-date')
+      .attr('transform', `translate(0, ${height + 70})`);
+  }
+
+  updateCompletionDate(projectedCompletionDate) {
+    this.vis.select('.completion-date text')
+      .remove();
+
+    if (projectedCompletionDate) {
+      this.vis.select('.completion-date')
+      .append('text')
+      .text(`Projected completion date: ${projectedCompletionDate}`);
+    }
+  }
+
   update() {
-    const { projection } = this.props;
-    const { backlogSize, darkMatter, iterationLength } = projection;
-    this.points = makePoints(projection, this.startDate, iterationLength);
+    const { backlogSize, darkMatter } = this.props.projection;
+    const projectedCompletionDate = this.points ?
+      moment(this.points[3].date, 'DD-MMM-YY').format('MMMM Do YYYY') : undefined;
     this.updateCurve();
     this.updateBacklog(backlogSize);
     this.updateDarkMatter(backlogSize, darkMatter);
+    this.updateCompletionDate(projectedCompletionDate);
   }
 
   updateCurve() {
@@ -225,9 +249,8 @@ export default class ProjectionChart extends React.Component {
 ProjectionChart.propTypes = {
   projection: React.PropTypes.object.isRequired,
   padding: React.PropTypes.object,
-  zoom: React.PropTypes.object.isRequired,
 };
 
 ProjectionChart.defaultProps = {
-  padding: { top: 40, right: 30, bottom: 60, left: 60 },
+  padding: { top: 40, right: 30, bottom: 160, left: 60 },
 };

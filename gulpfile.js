@@ -8,10 +8,7 @@ const less = require('gulp-less');
 const lesshint = require('gulp-lesshint');
 const source = require('vinyl-source-stream');
 const sourcemaps = require('gulp-sourcemaps');
-const rename = require('gulp-rename');
 const cowsay = require('cowsay');
-const argv = require('yargs').argv;
-const configify = require('config-browserify')
 
 gulp.task('clean', () => (
   del(['dist'])
@@ -20,11 +17,13 @@ gulp.task('clean', () => (
 gulp.task('config', ['clean'], () => {
   const environment = process.env.NODE_ENV;
 
+  /* eslint-disable no-console */
   console.log(cowsay.say({
     text: `Setting up configuration\nfor ${environment} environment.`,
     e: 'oO',
     T: 'U ',
   }));
+  /* eslint-enable no-console */
 
   gulp.src('./config/**/*.json')
     .pipe(gulp.dest('./dist/config'));
@@ -39,7 +38,9 @@ gulp.task('js', ['clean'], () => (
   .transform(babelify.configure({ presets: ['es2015', 'react', 'stage-2'] }))
   .bundle()
   .on('error', (err) => {
+    /* eslint-disable no-console */
     console.log(`Error: , ${err.message}`);
+    /* eslint-enable no-console */
   })
   .pipe(source('bundle.js'))
   .pipe(gulp.dest('dist/js'))
