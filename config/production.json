@@ -1,0 +1,10 @@
+{
+  "Client": {
+    "api": {
+      "baseUrl": "http://midas-api.buildit.tools/"
+    },
+    "starterProjectsApi": {
+      "baseUrl": "http://midas-api.buildit.tools/"
+    }
+  }
+}
