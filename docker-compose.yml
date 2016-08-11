@@ -1,5 +1,0 @@
-nginx:
-  restart: always
-  image: 006393696278.dkr.ecr.us-west-2.amazonaws.com/synapse:latest
-  ports:
-    - 80
