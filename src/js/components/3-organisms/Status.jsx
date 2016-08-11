@@ -35,7 +35,7 @@ class Status extends Component {
         <div className="chartHolder">
           <Chart
             title="Defect"
-            yLabel="Severity"
+            yLabel="Count"
             data={this.props.defectStatus}
             startDateInMS={startDateInMS}
             endDateInMS={endDateInMS}
@@ -44,7 +44,7 @@ class Status extends Component {
         <div className="chartHolder">
           <LineChart
             title="Effort"
-            yLabel="Activity"
+            yLabel="Person/Days"
             data={this.props.effortStatus}
             startDateInMS={startDateInMS}
             endDateInMS={endDateInMS}

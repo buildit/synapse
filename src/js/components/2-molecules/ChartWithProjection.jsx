@@ -9,7 +9,6 @@ const ChartWithProjection = ({
   yLabel = '',
   startDateInMS,
   endDateInMS }) => {
-    console.log(projectionData)
   const config = {
     chart: {
       type: 'area',
@@ -49,7 +48,9 @@ const ChartWithProjection = ({
   }
   return (
     <div>
-      <ReactHighcharts config={config} />
+      <div>
+        <ReactHighcharts config={config} />
+      </div>
     </div>
   );
 };
