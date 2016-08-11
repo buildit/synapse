@@ -15,7 +15,8 @@ node {
         template = load "lib/template.groovy"
 
         def domainName = "${env.MONGO_HOSTNAME}".substring(8)
-        def registry = "https://006393696278.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
+        def registryBase = "006393696278.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
+        def registry = "https://${registryBase}"
         def appUrl = "http://synapse.staging.${domainName}"
         def appName = "synapse"
 
@@ -56,7 +57,7 @@ node {
 
       stage "Deploy To AWS"
         def tmpFile = UUID.randomUUID().toString() + ".tmp"
-        def ymlData = template.transform(readFile("docker-compose.yml.template"), [tag :tag])
+        def ymlData = template.transform(readFile("docker-compose.yml.template"), [tag: tag, registry_base: registryBase])
         writeFile(file: tmpFile, text: ymlData)
 
         sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"

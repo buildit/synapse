@@ -20,6 +20,7 @@ node {
       def domainName = "${env.MONGO_HOSTNAME}".substring(8)
       def appName = "synapse"
       def appUrl = "http://synapse.${domainName}"
+      def registryBase = "006393696278.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
 
       // global for exception handling
       slackChannel = "synapse"
@@ -29,7 +30,7 @@ node {
       // global for exception handling
       tag = ui.selectTag(ecr.imageTags(appName, env.AWS_REGION))
       def tmpFile = UUID.randomUUID().toString() + ".tmp"
-      def ymlData = template.transform(readFile("docker-compose.yml.template"), [tag :tag])
+      def ymlData = template.transform(readFile("docker-compose.yml.template"), [tag: tag, registry_base: registryBase])
 
       writeFile(file: tmpFile, text: ymlData)
 
