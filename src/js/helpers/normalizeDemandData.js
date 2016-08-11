@@ -41,12 +41,6 @@ const norm = function norm() {
     this.data = transformDemandData(this.data);
     return my;
   };
-
-  my.seqSort = function seqSort(sortData) {
-    seqSortDemandData(sortData);
-    return my;
-  };
-
   my.fillGapsInDataSeries = function fillGapsInDataSeries() {
     return my;
   };
