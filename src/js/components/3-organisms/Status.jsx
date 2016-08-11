@@ -3,15 +3,19 @@ import React, {
   PropTypes,
 } from 'react';
 import Chart from '../2-molecules/Chart';
+import ChartWithProjection from '../2-molecules/ChartWithProjection';
 import LineChart from '../2-molecules/LineChart';
 import getDate from '../../helpers/getDate';
+const makePoints = require('../../helpers/makePoints');
 
 class Status extends Component {
   componentDidMount() {
     this.props.fetchStatus(this.props.projectId);
+    this.props.fetchProjection(this.props.projectId);
   }
 
   render() {
+    let projectionPoints = makePoints(this.props.projection, '10-Jan-16');
     let startDateInMS = 0;
     let endDateInMS = 0;
     if (this.props.project) {
@@ -20,11 +24,11 @@ class Status extends Component {
     }
     return (
       <div>
-        <Chart
+        <ChartWithProjection
           title="Demand"
           yLabel="Stories"
           data={this.props.demandStatus}
-          forecastData={this.props.forecastStatus}
+          projectionData={projectionPoints}
           startDateInMS={startDateInMS}
           endDateInMS={endDateInMS}
         />
@@ -53,13 +57,15 @@ class Status extends Component {
 
 Status.propTypes = {
   fetchStatus: PropTypes.func.isRequired,
+  fetchProjection: PropTypes.func.isRequired,
   projectName: PropTypes.string.isRequired,
   project: PropTypes.object.isRequired,
+  projection: PropTypes.array.isRequired,
+  projectionData: PropTypes.array.isRequired,
   projectId: PropTypes.string.isRequired,
   demandStatus: PropTypes.array.isRequired,
   defectStatus: PropTypes.array.isRequired,
   effortStatus: PropTypes.array.isRequired,
-  forecastStatus: PropTypes.array.isRequired,
 };
 
 export default Status;

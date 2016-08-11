@@ -111,12 +111,6 @@ const appData = (state = {
       isFetching: false,
     };
   }
-  case 'FETCH_FORECAST_SUCCESS': {
-    return {
-      ...state,
-      isFetching: false,
-    };
-  }
   case 'FETCH_STATUS_FAILURE': {
     return {
       ...state,

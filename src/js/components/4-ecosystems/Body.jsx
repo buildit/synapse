@@ -19,6 +19,7 @@ const Body = ({
   saveFormData,
   fetchStarterProjects,
   fetchStatus,
+  fetchProjection,
   initializeNewProject,
   onSwitchView,
   onInputChange,
@@ -31,6 +32,7 @@ const Body = ({
   moveListItemUp,
   moveListItemDown,
   resetProject,
+  projection,
  }) => {
   switch (view) {
 
@@ -90,13 +92,14 @@ const Body = ({
     return (
       <Status
         fetchStatus={fetchStatus}
+        fetchProjection={fetchProjection}
         projectId={appData.project.id}
         projectName={appData.project.name}
         project={appData.project}
+        projection={projection}
         demandStatus={appData.demandStatus}
         defectStatus={appData.defectStatus}
         effortStatus={appData.effortStatus}
-        forecastStatus={appData.forecastStatus}
       />
     );
   }
@@ -130,11 +133,13 @@ Body.propTypes = {
   view: PropTypes.string.isRequired,
   appData: PropTypes.object.isRequired,
   ui: PropTypes.object.isRequired,
+  projection: PropTypes.object.isRequired,
   fetchProjects: PropTypes.func.isRequired,
   fetchProject: PropTypes.func.isRequired,
   saveFormData: PropTypes.func.isRequired,
   fetchStarterProjects: PropTypes.func.isRequired,
   fetchStatus: PropTypes.func.isRequired,
+  fetchProjection: PropTypes.func.isRequired,
   initializeNewProject: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
   initializeFormData: PropTypes.func.isRequired,
@@ -153,6 +158,7 @@ function mapStateToProps(state) {
   const props = {
     ui: state.ui,
     appData: state.appData,
+    projection: state.projection,
   };
   return props;
 }

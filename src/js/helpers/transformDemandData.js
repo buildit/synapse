@@ -2,7 +2,7 @@ const categoryExists = require('./categoryExists');
 const findIndexOfCategory = require('./findIndexOfCategory');
 const getDate = require('./getDate');
 
-const normalizeDemandData = data => (
+const normalizeDemandData = (data) => (
   data.reduce((result, datapoint) => {
     const categories = Object.keys(datapoint.status);
     categories.forEach(category => {

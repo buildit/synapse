@@ -2,7 +2,14 @@ import React, { PropTypes } from 'react';
 import ReactHighcharts from 'react-highcharts';
 const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
 
-const Chart = ({ data, title, yLabel = '', startDateInMS, endDateInMS }) => {
+const ChartWithProjection = ({
+  data,
+  projectionData,
+  title,
+  yLabel = '',
+  startDateInMS,
+  endDateInMS }) => {
+    console.log(projectionData)
   const config = {
     chart: {
       type: 'area',
@@ -37,28 +44,6 @@ const Chart = ({ data, title, yLabel = '', startDateInMS, endDateInMS }) => {
       enabled: false,
     },
   };
-  const configProjection = {
-    chart: {
-      type: 'spline',
-    },
-    title: {
-      text: title,
-    },
-    xAxis: {
-      type: 'datetime',
-      min: startDateInMS,
-      max: endDateInMS,
-    },
-    yAxis: {
-      title: {
-        text: yLabel,
-      },
-    },
-    series: data,
-    credits: {
-      enabled: false,
-    },
-  };
   if (data.length < 1) {
     return <div>There is no {title} data for this project.</div>;
   }
@@ -69,7 +54,7 @@ const Chart = ({ data, title, yLabel = '', startDateInMS, endDateInMS }) => {
   );
 };
 
-Chart.propTypes = {
+ChartWithProjection.propTypes = {
   data: PropTypes.array.isRequired,
   projectionData: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
@@ -78,4 +63,4 @@ Chart.propTypes = {
   endDateInMS: PropTypes.number.isRequired,
 };
 
-export default Chart;
+export default ChartWithProjection;

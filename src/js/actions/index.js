@@ -111,7 +111,6 @@ export const fetchStatus = (id) => (dispatch) => {
   const demandCall = $.get(`${apiBaseUrl}project/${id}/demand`);
   const defectCall = $.get(`${apiBaseUrl}project/${id}/defect`);
   const effortCall = $.get(`${apiBaseUrl}project/${id}/effort`);
-  // const forecastCall = $.get(`${apiBaseUrl}project/${id}/forecast`);
   dispatch({
     type: 'FETCH_STATUS_REQUEST',
   });
@@ -166,25 +165,7 @@ export const fetchStatus = (id) => (dispatch) => {
       view: 'error',
     });
   });
-  // $.when(forecastCall)
-  // .done(statusForecastData => {
-  //   dispatch({
-  //     type: 'FETCH_FORECAST_SUCCESS',
-  //     statusForecastData,
-  //   });
-  // })
-  // .fail(() => {
-  //   dispatch({
-  //     type: 'FETCH_STATUS_FAILURE',
-  //     errorMessage: 'There was an error.',
-  //   });
-  //   dispatch({
-  //     type: 'SWITCH_VIEW',
-  //     view: 'error',
-  //   });
-  // });
 };
-
 export const saveFormData = (project) => (dispatch) => {
   dispatch({
     type: SET_MESSAGE,
