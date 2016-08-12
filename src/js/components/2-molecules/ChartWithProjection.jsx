@@ -43,7 +43,8 @@ const ChartWithProjection = ({
     chart: {
       type: 'spline',
       backgroundColor: null,
-      width: 1140
+      width: 600,
+      height: 200,
     },
     plotOptions: {
       marker: {
@@ -60,27 +61,20 @@ const ChartWithProjection = ({
         text: '',
       },
     },
-    xAxis: {
-      type: 'datetime',
-      min: startDateInMS,
-      max: endDateInMS,
-      title: {
-        text: '',
-      },
-      labels: {
-        enabled: false,
-      },
-    },
     yAxis: {
       gridLineWidth: 0,
       title: {
         text: yLabel,
       },
-      labels: {
-        enabled: false,
-      },
     },
-    series: data,
+    series: [{
+      data: [
+                [projectionData[0].x, projectionData[0].y],
+                [projectionData[1].x, projectionData[1].y],
+                [projectionData[2].x, projectionData[2].y],
+                [projectionData[3].x, projectionData[3].y],
+      ],
+    }],
     legend: {
       enabled: false,
     },
@@ -91,17 +85,10 @@ const ChartWithProjection = ({
   if (data.length < 1) {
     return <div>There is no {title} data for this project.</div>;
   }
-  $('#projectonButton').click(() => {
-    console.log("click")
-    $('#overlay').toggleClass('showOverlay');
-  });
   return (
     <div>
       <div>
         <ReactHighcharts config={config} />
-      </div>
-      <div className="projectionOverlay" id="overlay">
-        <ReactHighcharts config={configOverlay} />
       </div>
     </div>
   );
