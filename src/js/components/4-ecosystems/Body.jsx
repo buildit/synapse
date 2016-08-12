@@ -9,6 +9,7 @@ import Error from '../1-atoms/Error';
 import SaveConfirmationModal from '../2-molecules/SaveConfirmationModal';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/index.js';
+const filterListByIds = require('../../helpers/filterListByIds');
 
 const Body = ({
   appData,
@@ -33,6 +34,9 @@ const Body = ({
   moveListItemDown,
   resetProject,
   projection,
+  project,
+  projectList,
+  starterProjectList,
  }) => {
   switch (view) {
 
@@ -59,7 +63,7 @@ const Body = ({
   case 'editProject': {
     return (
       <EditProject
-        project={appData.project}
+        project={project}
         goHome={() => {
           onSwitchView('listView');
           resetProject();
@@ -82,9 +86,10 @@ const Body = ({
       <NewProjectList
         fetchStarterProjects={fetchStarterProjects}
         initializeNewProject={initializeNewProject}
-        starterProjects={appData.starterProjectList}
+        starterProjects={starterProjectList}
         isFetching={appData.isFetching}
         onSwitchView={onSwitchView}
+        projectList={projectList}
       />);
   }
 
@@ -152,13 +157,41 @@ Body.propTypes = {
   moveListItemUp: PropTypes.func.isRequired,
   moveListItemDown: PropTypes.func.isRequired,
   resetProject: PropTypes.func.isRequired,
+  project: PropTypes.object.isRequired,
+  projectList: PropTypes.array.isRequired,
+  starterProjectList: PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state) {
+  // Normalize api data before sending to components
+  const project = state.appData.project;
+  if (project) {
+    project.id = project.id ? project.id.toString() : '';
+  }
+  const projectList = state.appData.projectList.map(_project => {
+    const normalizedProject = _project;
+    normalizedProject.id = _project.id.toString();
+    return normalizedProject;
+  });
+  let starterProjectList = state.appData.starterProjectList.map(_project => {
+    const normalizedProject = _project;
+    normalizedProject.id = _project.id.toString();
+    return normalizedProject;
+  });
+
+  const existingProjectListIds = projectList.map(_project => _project.id);
+
+  starterProjectList = filterListByIds(starterProjectList, existingProjectListIds);
+
+  starterProjectList = starterProjectList.filter(_project => _project.status === 'Active');
+
   const props = {
     ui: state.ui,
     appData: state.appData,
     projection: state.projection,
+    project,
+    projectList,
+    starterProjectList,
   };
   return props;
 }
