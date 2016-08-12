@@ -31,6 +31,7 @@ const Body = ({
   moveListItemUp,
   moveListItemDown,
   resetProject,
+  project,
  }) => {
   switch (view) {
 
@@ -57,7 +58,7 @@ const Body = ({
   case 'editProject': {
     return (
       <EditProject
-        project={appData.project}
+        project={project}
         goHome={() => {
           onSwitchView('listView');
           resetProject();
@@ -147,12 +148,19 @@ Body.propTypes = {
   moveListItemUp: PropTypes.func.isRequired,
   moveListItemDown: PropTypes.func.isRequired,
   resetProject: PropTypes.func.isRequired,
+  project: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
+  const project = state.appData.project;
+  if (project) {
+    project.id = project.id ? project.id.toString() : '';
+  }
+
   const props = {
     ui: state.ui,
     appData: state.appData,
+    project,
   };
   return props;
 }
