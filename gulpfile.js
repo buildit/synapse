@@ -9,23 +9,30 @@ const lesshint = require('gulp-lesshint');
 const source = require('vinyl-source-stream');
 const sourcemaps = require('gulp-sourcemaps');
 const cowsay = require('cowsay');
+const template = require('gulp-template');
+const rename = require('gulp-rename');
 
 gulp.task('clean', () => (
   del(['dist'])
 ));
 
 gulp.task('config', ['clean'], () => {
-  const environment = process.env.NODE_ENV;
+  const environment = process.env.NODE_ENV || 'development';
+  const midasApiUrl = process.env.MIDAS_API_URL || 'http://localhost:6565/';
 
   /* eslint-disable no-console */
+  /* eslint-disable max-len */
   console.log(cowsay.say({
-    text: `Setting up configuration\nfor ${environment} environment.`,
+    text: `Setting up configuration\nfor ${environment} environment with midas-api url of ${midasApiUrl}.`,
     e: 'oO',
     T: 'U ',
   }));
+  /* eslint-enable max-len */
   /* eslint-enable no-console */
 
-  gulp.src('./config/**/*.json')
+  gulp.src('./config/gulp-template.json')
+    .pipe(template({ midasapiurl: `${midasApiUrl}` }))
+    .pipe(rename(`${environment}.json`))
     .pipe(gulp.dest('./dist/config'));
 });
 

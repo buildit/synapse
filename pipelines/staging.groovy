@@ -43,7 +43,7 @@ node {
         sh "npm run lint"
 
       stage "Build"
-        sh "npm run build:production"
+        sh "npm run build"
 
       stage "Docker Image Build"
         def tag = "${version}-${shortCommitHash}-${env.BUILD_NUMBER}"
