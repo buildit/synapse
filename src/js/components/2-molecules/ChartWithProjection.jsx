@@ -7,7 +7,7 @@ const ChartWithProjection = ({
   data,
   projectionData,
   title,
-  yLabel = '',
+  yLabel,
   startDateInMS,
   endDateInMS }) => {
   const config = {
@@ -33,6 +33,11 @@ const ChartWithProjection = ({
       type: 'datetime',
       min: startDateInMS,
       max: endDateInMS,
+    },
+    yAxis: {
+      title: {
+        text: yLabel,
+      },
     },
     series: data,
     credits: {
