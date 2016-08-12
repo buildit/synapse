@@ -3,7 +3,7 @@ import React, {
   PropTypes,
 } from 'react';
 import TableWithAction from '../2-molecules/TableWithAction';
-import blankProject from '../../helpers/blankProject';
+// import blankProject from '../../helpers/blankProject';
 
 class NewProjectList extends Component {
   componentDidMount() {
@@ -11,14 +11,20 @@ class NewProjectList extends Component {
   }
 
   render() {
-    const starterProjects = this.props.starterProjects.concat(blankProject);
+    const { starterProjects } = this.props;
+
+    // Should we have a "blank" starter project?
+    // starterProjects.push(blankProject);
+
     const onProjectCreateClick = (harvestId) => {
       this.props.initializeNewProject(harvestId);
       this.props.onSwitchView('editProject');
     };
+
     if (this.props.isFetching) {
       return <div>Fetching starter projects list...</div>;
     }
+
     return (
       <div>
         <TableWithAction
@@ -45,6 +51,7 @@ NewProjectList.propTypes = {
   initializeNewProject: PropTypes.func,
   starterProjects: PropTypes.array,
   isFetching: PropTypes.bool,
+  projectList: PropTypes.array,
 };
 
 export default NewProjectList;

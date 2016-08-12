@@ -9,13 +9,17 @@ import {
   RESET_PROJECT,
 } from '../actions/actions';
 
-const appData = (state = {
-  isFetching: false,
+const intialState = {
+  project: {},
+  projectList: [],
   starterProjectList: [],
   demandStatus: [],
   effortStatus: [],
   defectStatus: [],
-}, action) => {
+  isFetching: false,
+};
+
+const appData = (state = intialState, action) => {
   switch (action.type) {
   case 'FETCH_PROJECTS_REQUEST': {
     return {
