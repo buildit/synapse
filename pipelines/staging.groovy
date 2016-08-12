@@ -43,7 +43,7 @@ node {
         sh "npm run lint"
 
       stage "Build"
-        sh "npm run build"
+        sh "NODE_ENV='production' MIDAS_API_URL='http://midas-api.${domainName}' npm run build"
 
       stage "Docker Image Build"
         def tag = "${version}-${shortCommitHash}-${env.BUILD_NUMBER}"
