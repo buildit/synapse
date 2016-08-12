@@ -15,7 +15,7 @@ class Status extends Component {
   }
 
   render() {
-    let projectionPoints = makePoints(this.props.projection, '10-Jan-16');
+    let projectionPoints = makePoints(this.props.projection, '15-Nov-15');
     let startDateInMS = 0;
     let endDateInMS = 0;
     if (this.props.project) {
@@ -32,6 +32,9 @@ class Status extends Component {
           startDateInMS={startDateInMS}
           endDateInMS={endDateInMS}
         />
+        <div>
+          <button id="projectonButton">Projection</button>
+        </div>
         <div className="chartHolder">
           <Chart
             title="Defect"

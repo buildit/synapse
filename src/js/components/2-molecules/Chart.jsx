@@ -37,28 +37,6 @@ const Chart = ({ data, title, yLabel = '', startDateInMS, endDateInMS }) => {
       enabled: false,
     },
   };
-  const configProjection = {
-    chart: {
-      type: 'spline',
-    },
-    title: {
-      text: title,
-    },
-    xAxis: {
-      type: 'datetime',
-      min: startDateInMS,
-      max: endDateInMS,
-    },
-    yAxis: {
-      title: {
-        text: yLabel,
-      },
-    },
-    series: data,
-    credits: {
-      enabled: false,
-    },
-  };
   if (data.length < 1) {
     return <div>There is no {title} data for this project.</div>;
   }
