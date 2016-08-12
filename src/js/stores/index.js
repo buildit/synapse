@@ -6,6 +6,7 @@ const redux = require('redux');
 const addLoggingToDispatch = (store) => {
   /* eslint-disable no-console */
   const rawDispatch = store.dispatch;
+
   if (!console.group) {
     return rawDispatch;
   }

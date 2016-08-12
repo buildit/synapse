@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
-// import moment from 'moment';
 
-const Input = ({ label, section, property, onInputChange, initialValue = '' }) => {
+const defaultValue = '';
+
+const Input = ({ label, section, property, onInputChange, initialValue = defaultValue }) => {
   let input;
   return (
     <div className="form-group">
@@ -15,7 +16,7 @@ const Input = ({ label, section, property, onInputChange, initialValue = '' }) =
           input = node;
           if (input) {
             if (!input.value) {
-              input.value = initialValue;
+              input.value = initialValue ? initialValue.toString() : defaultValue;
             }
           }
         }

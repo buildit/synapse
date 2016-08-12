@@ -39,6 +39,7 @@ const ui = (state = {
   }
   case 'UPDATE_FORM_DATA': {
     const newFormData = state.formData;
+    newFormData.id = state.formData.id ? state.formData.id.toString() : '';
     switch (action.section) {
     case 'header': {
       newFormData[action.key] = action.value;
