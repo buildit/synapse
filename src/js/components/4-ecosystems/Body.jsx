@@ -90,6 +90,10 @@ const Body = ({
         isFetching={appData.isFetching}
         onSwitchView={onSwitchView}
         projectList={projectList}
+        goHome={() => {
+          onSwitchView('listView');
+          resetProject();
+        }}
       />);
   }
 

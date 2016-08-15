@@ -31,6 +31,10 @@ class NewProjectList extends Component {
           }
           }
         />
+        <Button
+          label="Cancel"
+          onClick={this.props.goHome}
+        />
         <TableWithAction
           tableData={starterProjects || []}
           visibleColumns={[
@@ -56,6 +60,7 @@ NewProjectList.propTypes = {
   starterProjects: PropTypes.array,
   isFetching: PropTypes.bool,
   projectList: PropTypes.array,
+  goHome: PropTypes.func,
 };
 
 export default NewProjectList;

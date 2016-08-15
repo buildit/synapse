@@ -123,7 +123,7 @@ const appData = (state = intialState, action) => {
   }
   case 'INITIALIZE_NEW_PROJECT': {
     const starterProject = blankProject;
-    if (action.harvestId) {
+    if (action.harvestIwd) {
       let harvestProject;
       state.starterProjectList.forEach(project => {
         if (project.id === action.harvestId) {
