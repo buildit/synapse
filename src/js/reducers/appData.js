@@ -123,17 +123,19 @@ const appData = (state = intialState, action) => {
   }
   case 'INITIALIZE_NEW_PROJECT': {
     const starterProject = blankProject;
-    let harvestProject;
-    state.starterProjectList.forEach(project => {
-      if (project.id === action.harvestId) {
-        harvestProject = project;
-      }
-    });
-    _.forIn(harvestProject, (value, key) => {
-      if (harvestProject[key]) {
-        starterProject[key] = harvestProject[key];
-      }
-    });
+    if (action.harvestId) {
+      let harvestProject;
+      state.starterProjectList.forEach(project => {
+        if (project.id === action.harvestId) {
+          harvestProject = project;
+        }
+      });
+      _.forIn(harvestProject, (value, key) => {
+        if (harvestProject[key]) {
+          starterProject[key] = harvestProject[key];
+        }
+      });
+    }
     return {
       ...state,
       project: starterProject,

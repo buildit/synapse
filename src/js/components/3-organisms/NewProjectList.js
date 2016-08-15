@@ -2,8 +2,8 @@ import React, {
   Component,
   PropTypes,
 } from 'react';
+import Button from '../1-atoms/Button';
 import TableWithAction from '../2-molecules/TableWithAction';
-// import blankProject from '../../helpers/blankProject';
 
 class NewProjectList extends Component {
   componentDidMount() {
@@ -12,9 +12,6 @@ class NewProjectList extends Component {
 
   render() {
     const { starterProjects } = this.props;
-
-    // Should we have a "blank" starter project?
-    // starterProjects.push(blankProject);
 
     const onProjectCreateClick = (harvestId) => {
       this.props.initializeNewProject(harvestId);
@@ -27,6 +24,13 @@ class NewProjectList extends Component {
 
     return (
       <div>
+        <Button
+          label="Create manually"
+          onClick={() => {
+            onProjectCreateClick(null);
+          }
+          }
+        />
         <TableWithAction
           tableData={starterProjects || []}
           visibleColumns={[
