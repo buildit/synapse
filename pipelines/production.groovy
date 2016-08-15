@@ -36,7 +36,7 @@ node {
 
     stage "Deploy to production"
       sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"
-      sh "convox env set NODE_ENV=production MIDAS_API_URL=http://midas-api.${domainName} --app ${appName}"
+      sh "convox env set NODE_ENV=production MIDAS_API_URL=http://midas-api.${domainName}/ --app ${appName}"
       sh "convox deploy --app ${appName} --description '${tag}' --file ${tmpFile}"
       sh "rm ${tmpFile}"
 
