@@ -122,8 +122,21 @@ const appData = (state = intialState, action) => {
     };
   }
   case 'INITIALIZE_NEW_PROJECT': {
-    const starterProject = blankProject;
-    if (action.harvestIwd) {
+    const starterProject = {
+      name: '',
+      demand: {
+        flow: [],
+      },
+      defect: {
+        flow: [],
+        severity: [],
+      },
+      effort: {
+        role: [],
+      },
+    };
+
+    if (action.harvestId) {
       let harvestProject;
       state.starterProjectList.forEach(project => {
         if (project.id === action.harvestId) {
