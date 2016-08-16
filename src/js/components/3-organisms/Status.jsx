@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import Chart from '../2-molecules/Chart';
 import ChartWithProjection from '../2-molecules/ChartWithProjection';
+import ChartD3Demand from '../2-molecules/ChartD3Demand';
 import LineChart from '../2-molecules/LineChart';
 import getDate from '../../helpers/getDate';
 const makePoints = require('../../helpers/makePoints');
@@ -24,14 +25,20 @@ class Status extends Component {
     }
     return (
       <div>
-        <ChartWithProjection
-          title="Demand"
-          yLabel="Stories"
-          data={this.props.demandStatus}
-          projectionData={projectionPoints}
-          startDateInMS={startDateInMS}
-          endDateInMS={endDateInMS}
-        />
+        <div className="demandChart">
+          <div className="info-box">
+            <span className="date"></span>
+            <p>
+              <span className="y1-label">To do</span>
+              <span className="y1"></span>
+            </p>
+            <p>
+              <span className="y2-label">Done</span>
+              <span className="y2"></span>
+            </p>
+          </div>
+          <ChartD3Demand />
+        </div>
         <div className="chartHolder">
           <Chart
             title="Defect"
