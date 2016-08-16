@@ -5,4 +5,4 @@ nginx:
     - 80
   environment:
     - NODE_ENV=production
-    - NODE_CONFIG={"Client":{"api":{"baseUrl":"http://midas-api.${domain_name}/"},"starterProjectsApi":{"baseUrl":"http://midas-api.${domain_name}/"}}}
+    - MIDAS_API_URL=http://midas-api.${domain_name}/

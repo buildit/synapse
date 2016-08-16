@@ -9,13 +9,17 @@ import {
   RESET_PROJECT,
 } from '../actions/actions';
 
-const appData = (state = {
-  isFetching: false,
+const intialState = {
+  project: {},
+  projectList: [],
   starterProjectList: [],
   demandStatus: [],
   effortStatus: [],
   defectStatus: [],
-}, action) => {
+  isFetching: false,
+};
+
+const appData = (state = intialState, action) => {
   switch (action.type) {
   case 'FETCH_PROJECTS_REQUEST': {
     return {
@@ -118,18 +122,33 @@ const appData = (state = {
     };
   }
   case 'INITIALIZE_NEW_PROJECT': {
-    const starterProject = blankProject;
-    let harvestProject;
-    state.starterProjectList.forEach(project => {
-      if (project.id === action.harvestId) {
-        harvestProject = project;
-      }
-    });
-    _.forIn(harvestProject, (value, key) => {
-      if (harvestProject[key]) {
-        starterProject[key] = harvestProject[key];
-      }
-    });
+    const starterProject = {
+      name: '',
+      demand: {
+        flow: [],
+      },
+      defect: {
+        flow: [],
+        severity: [],
+      },
+      effort: {
+        role: [],
+      },
+    };
+
+    if (action.harvestId) {
+      let harvestProject;
+      state.starterProjectList.forEach(project => {
+        if (project.id === action.harvestId) {
+          harvestProject = project;
+        }
+      });
+      _.forIn(harvestProject, (value, key) => {
+        if (harvestProject[key]) {
+          starterProject[key] = harvestProject[key];
+        }
+      });
+    }
     return {
       ...state,
       project: starterProject,

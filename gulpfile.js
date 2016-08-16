@@ -9,24 +9,32 @@ const lesshint = require('gulp-lesshint');
 const source = require('vinyl-source-stream');
 const sourcemaps = require('gulp-sourcemaps');
 const cowsay = require('cowsay');
+const template = require('gulp-template');
+const rename = require('gulp-rename');
+const environment = process.env.NODE_ENV || 'development';
 
 gulp.task('clean', () => (
   del(['dist'])
 ));
 
 gulp.task('config', ['clean'], () => {
-  const environment = process.env.NODE_ENV;
+  const midasApiUrl = process.env.MIDAS_API_URL || 'http://localhost:6565/';
 
   /* eslint-disable no-console */
+  /* eslint-disable max-len */
   console.log(cowsay.say({
-    text: `Setting up configuration\nfor ${environment} environment.`,
+    text: `Setting up configuration\nfor ${environment} environment with midas-api url of ${midasApiUrl}.`,
     e: 'oO',
     T: 'U ',
   }));
+  /* eslint-enable max-len */
   /* eslint-enable no-console */
 
-  gulp.src('./config/**/*.json')
-    .pipe(gulp.dest('./dist/config'));
+  gulp.src('./config/gulp-template.json')
+    .pipe(template({ midasapiurl: `${midasApiUrl}` }))
+    .pipe(rename('default.json'))
+    .pipe(gulp.dest('./dist/config'))
+    .pipe(gulp.dest('./config'));
 });
 
 gulp.task('js', ['clean'], () => (
@@ -72,6 +80,12 @@ gulp.task('less-lint', () => (
       .pipe(lesshint.reporter())
 ));
 
+gulp.task('clean-config', ['js'], () => (
+  del([
+    'config/default.json',
+  ])
+));
+
 gulp.task('watch', () => {
   gulp.watch('./src/less/**/*.less', ['css']);
   gulp.watch('./src/js/**/*.jsx', ['js']);
@@ -85,4 +99,4 @@ gulp.task('server', () => {
   });
 });
 
-gulp.task('default', ['config', 'js', 'css', 'html']);
+gulp.task('default', ['config', 'js', 'css', 'html', 'clean-config']);

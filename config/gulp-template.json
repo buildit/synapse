@@ -1,0 +1,10 @@
+{
+  "Client": {
+    "api": {
+      "baseUrl": "<%= midasapiurl %>"
+    },
+    "starterProjectsApi": {
+      "baseUrl": "<%= midasapiurl %>"
+    }
+  }
+}

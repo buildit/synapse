@@ -2,8 +2,8 @@ import React, {
   Component,
   PropTypes,
 } from 'react';
+import Button from '../1-atoms/Button';
 import TableWithAction from '../2-molecules/TableWithAction';
-import blankProject from '../../helpers/blankProject';
 
 class NewProjectList extends Component {
   componentDidMount() {
@@ -11,16 +11,30 @@ class NewProjectList extends Component {
   }
 
   render() {
-    const starterProjects = this.props.starterProjects.concat(blankProject);
+    const { starterProjects } = this.props;
+
     const onProjectCreateClick = (harvestId) => {
       this.props.initializeNewProject(harvestId);
       this.props.onSwitchView('editProject');
     };
+
     if (this.props.isFetching) {
       return <div>Fetching starter projects list...</div>;
     }
+
     return (
       <div>
+        <Button
+          label="Create manually"
+          onClick={() => {
+            onProjectCreateClick(null);
+          }
+          }
+        />
+        <Button
+          label="Cancel"
+          onClick={this.props.goHome}
+        />
         <TableWithAction
           tableData={starterProjects || []}
           visibleColumns={[
@@ -45,6 +59,8 @@ NewProjectList.propTypes = {
   initializeNewProject: PropTypes.func,
   starterProjects: PropTypes.array,
   isFetching: PropTypes.bool,
+  projectList: PropTypes.array,
+  goHome: PropTypes.func,
 };
 
 export default NewProjectList;

@@ -4,8 +4,7 @@
   "description": "Management information dashboard.",
   "main": "dev-server.js",
   "scripts": {
-    "build": "NODE_ENV='development' gulp",
-    "build:production": "NODE_ENV='production' gulp",
+    "build": "gulp",
     "lint": "eslint src/ test/ *.js",
     "start": "gulp server",
     "test": "jest --verbose",
@@ -70,6 +69,7 @@
     "gulp-lesshint": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
+    "gulp-template": "^4.0.0",
     "jest-cli": "^13.0.0",
     "react-addons-test-utils": "^15.1.0",
     "sinon": "^1.17.4",
