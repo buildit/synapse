@@ -3,11 +3,9 @@ import React, {
   PropTypes,
 } from 'react';
 import Chart from '../2-molecules/Chart';
-import ChartWithProjection from '../2-molecules/ChartWithProjection';
 import ChartD3Demand from '../2-molecules/ChartD3Demand';
 import LineChart from '../2-molecules/LineChart';
 import getDate from '../../helpers/getDate';
-const makePoints = require('../../helpers/makePoints');
 
 class Status extends Component {
   componentDidMount() {
@@ -16,7 +14,6 @@ class Status extends Component {
   }
 
   render() {
-    const projectionPoints = makePoints(this.props.projection, '15-Nov-15');
     let startDateInMS = 0;
     let endDateInMS = 0;
     if (this.props.project) {
@@ -37,7 +34,14 @@ class Status extends Component {
               <span className="y2"></span>
             </p>
           </div>
-          <ChartD3Demand />
+          <div>
+            <h4>Demand</h4>
+          </div>
+          <div>
+            <ChartD3Demand
+              data={this.props.demandStatus}
+            />
+          </div>
         </div>
         <div className="chartHolder">
           <Chart

@@ -33,12 +33,6 @@ export default class ChartD3DEmand extends React.Component {
     this.vis.remove();
   }
 
-  setPoints() {
-    // const { projection } = this.props;
-    // const { iterationLength } = projection;
-    // this.points = makePoints(projection, this.startDate, iterationLength);
-  }
-
   getSize() {
     return {
       width: 800 - this.props.padding.left - this.props.padding.right,
@@ -46,32 +40,11 @@ export default class ChartD3DEmand extends React.Component {
     };
   }
 
-  getScale() {
-    // const size = this.getSize();
-    // const parseTime = this.parseTime;
-    //
-    // const dateMin =
-    //   this.points ? parseTime(this.points[0].date) : parseTime('01-Jan-01');
-    // const dateMax =
-    //   this.points ? parseTime(this.points[3].date) : parseTime('01-Feb-01');
-    // const yMax = d3.max(this.points, point => point.y);
-    //
-    // return {
-    //   date: d3.scaleTime()
-    //     .domain([dateMin, dateMax])
-    //     .range([0, size.width]),
-    //
-    //   y: d3.scaleLinear()
-    //     .domain([yMax, 0])
-    //     .range([0, size.height]),
-    // };
-  }
-
   setVis() {
     this.vis = d3.select(this.chart).append('svg')
     .append('svg')
     .attr('width', '1140px')
-    .attr('height','400px')
+    .attr('height', '400px')
     .append('g')
     .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
 
@@ -100,7 +73,6 @@ export default class ChartD3DEmand extends React.Component {
   .y0(function(d) { return yScale(d[0]); })
   .y1(function(d) { return yScale(d[1]); });
 
-  console.log(this.chart)
   const chartName = this.chart;
 
   // CHART 1
@@ -202,6 +174,9 @@ export default class ChartD3DEmand extends React.Component {
   });
   }
   render() {
+    if (data.length < 1) {
+      return <div>There is no demand data for this project.</div>;
+    }
     return (
       <div
         ref={(c) => { this.chart = c; return false; }}
@@ -211,8 +186,8 @@ export default class ChartD3DEmand extends React.Component {
 }
 
 ChartD3DEmand.propTypes = {
-  // projection: React.PropTypes.object.isRequired,
   padding: React.PropTypes.object,
+  data: React.PropTypes.array.isRequired,
 };
 
 ChartD3DEmand.defaultProps = {
