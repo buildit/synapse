@@ -4,7 +4,7 @@ import moment from 'moment';
 import getXPosition from '../../helpers/getXPosition';
 import getY from '../../helpers/getY';
 const data = require('../../helpers/fake-data-area-chart')();
-
+console.log("data", data);
 const CONTAINER_WIDTH = 800;
 const CONTAINER_HEIGHT = 400;
 const CHART_HEIGHT = 200;
@@ -73,7 +73,6 @@ export default class ChartD3DEmand extends React.Component {
   .y0(function(d) { return yScale(d[0]); })
   .y1(function(d) { return yScale(d[1]); });
 
-  const chartName = this.chart;
 
   // CHART 1
   // Draw line

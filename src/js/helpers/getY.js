@@ -1,5 +1,5 @@
 module.exports = function getY(targetDate, data, key) {
-  if (!key) { key = 'value' }
+  // if (!key) { key = 'value' }
   let closestIndex = 0;
 
   function dateDifference(date1, date2) {

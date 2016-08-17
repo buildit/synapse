@@ -3,7 +3,7 @@ import React, {
   PropTypes,
 } from 'react';
 import Chart from '../2-molecules/Chart';
-import ChartD3Demand from '../2-molecules/ChartD3Demand';
+// import ChartD3Demand from '../2-molecules/ChartD3Demand';
 import LineChart from '../2-molecules/LineChart';
 import getDate from '../../helpers/getDate';
 
@@ -23,25 +23,7 @@ class Status extends Component {
     return (
       <div>
         <div className="demandChart">
-          <div className="info-box">
-            <span className="date"></span>
-            <p>
-              <span className="y1-label">To do</span>
-              <span className="y1"></span>
-            </p>
-            <p>
-              <span className="y2-label">Done</span>
-              <span className="y2"></span>
-            </p>
-          </div>
-          <div>
-            <h4>Demand</h4>
-          </div>
-          <div>
-            <ChartD3Demand
-              data={this.props.demandStatus}
-            />
-          </div>
+          Demand chart under refactoring.
         </div>
         <div className="chartHolder">
           <Chart
