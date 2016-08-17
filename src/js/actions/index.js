@@ -7,6 +7,7 @@ import {
 } from './actions';
 import config from 'config';
 import $ from 'jquery';
+const trimFormInputs = require('../helpers/trimFormInputs');
 
 const apiBaseUrl = config.get('Client.api.baseUrl');
 const starterProjectsBaseApiUrl = config.get('Client.starterProjectsApi.baseUrl');
@@ -171,11 +172,13 @@ export const saveFormData = (project) => (dispatch) => {
     message: `Saving ${project.name}...`,
   });
 
+  const trimmedProject = trimFormInputs(project);
+
   return (
     $.ajax({
       type: 'POST',
       url: `${apiBaseUrl}project/${project.id}`,
-      data: JSON.stringify(project),
+      data: JSON.stringify(trimmedProject),
       contentType: 'application/json',
     })
     .done(() => {
