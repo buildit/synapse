@@ -1,27 +1,54 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import Button from '../1-atoms/Button';
 
-const AddFlowItem = ({ onAddClick }) => {
-  let input;
-  return (
-    <div className="add-flow-item">
-      <span>Name</span>
-      <input
-        ref={node => {
-          input = node;
-        }}
-      />
-      <Button
-        label="Add"
-        onClick={event => {
-          event.preventDefault();
-          onAddClick(input.value);
-          input.value = '';
-        }}
-      />
-    </div>
-  );
-};
+class AddFlowItem extends Component {
+  constructor() {
+    super();
+    this.state = {
+      value: '',
+      isValid: false,
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick(event) {
+    event.preventDefault();
+    this.props.onAddClick(this.state.value);
+    this.setState({
+      value: '',
+      isValid: false,
+    });
+  }
+
+  isValid(value) {
+    return value !== '';
+  }
+
+  handleChange(event) {
+    this.setState({
+      value: event.target.value,
+      isValid: this.isValid(event.target.value),
+    });
+  }
+
+  render() {
+    return (
+      <div className="add-flow-item">
+        <span>Name</span>
+        <input
+          value={this.state.value}
+          onChange={this.handleChange}
+        />
+        <Button
+          label="Add"
+          onClick={this.onClick}
+          disabled={!this.state.isValid}
+        />
+      </div>
+    );
+  }
+}
 
 export default AddFlowItem;
 
