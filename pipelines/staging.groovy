@@ -17,12 +17,12 @@ node {
         def domainName = "${env.MONGO_HOSTNAME}".substring(8)
         def registryBase = "006393696278.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
         def registry = "https://${registryBase}"
-        def appUrl = "http://synapse.staging.${domainName}"
         def appName = "synapse"
 
         // global for exception handling
         slackChannel = "synapse"
         gitUrl = "https://bitbucket.org/digitalrigbitbucketteam/synapse"
+        appUrl = "http://synapse.staging.${domainName}"
 
       stage "Checkout"
         checkout scm
@@ -63,7 +63,6 @@ node {
         sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"
         sh "convox env set NODE_ENV=production MIDAS_API_URL=http://midas-api.${domainName}/ --app ${appName}-staging"
         sh "convox deploy --app ${appName}-staging --description '${tag}' --file ${tmpFile}"
-        slack.notify("Deployed to Staging", "Commit <${gitUrl}/commits/\'${shortCommitHash}\'|\'${shortCommitHash}\'> has been deployed to <${appUrl}|${appUrl}>\n\n${commitMessage}", "good", "http://i296.photobucket.com/albums/mm200/kingzain/the_eye_of_sauron_by_stirzocular-d86f0oo_zpslnqbwhv2.png", slackChannel)
 
       stage "Run Functional Tests"
         // wait until the app is deployed
@@ -75,6 +74,7 @@ node {
         docker.withRegistry(registry) {
           image.push("latest")
         }
+        slack.notify("Deployed to Staging", "Commit <${gitUrl}/commits/\'${shortCommitHash}\'|\'${shortCommitHash}\'> has been deployed to <${appUrl}|${appUrl}>\n\n${commitMessage}", "good", "http://i296.photobucket.com/albums/mm200/kingzain/the_eye_of_sauron_by_stirzocular-d86f0oo_zpslnqbwhv2.png", slackChannel)
     }
     catch (err) {
       currentBuild.result = "FAILURE"

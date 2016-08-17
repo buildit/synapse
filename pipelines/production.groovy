@@ -19,12 +19,12 @@ node {
 
       def domainName = "${env.MONGO_HOSTNAME}".substring(8)
       def appName = "synapse"
-      def appUrl = "http://synapse.${domainName}"
       def registryBase = "006393696278.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
 
       // global for exception handling
       slackChannel = "synapse"
       gitUrl = "https://bitbucket.org/digitalrigbitbucketteam/synapse"
+      appUrl = "http://synapse.${domainName}"
 
     stage "Write docker-compose"
       // global for exception handling
@@ -40,11 +40,10 @@ node {
       sh "convox deploy --app ${appName} --description '${tag}' --file ${tmpFile}"
       sh "rm ${tmpFile}"
 
-      slack.notify("Deployed to Production", "Tag <${gitUrl}/commits/tag/\'${tag}\'|\'${tag}\'> has been deployed to <${appUrl}|${appUrl}>", "good", "http://i296.photobucket.com/albums/mm200/kingzain/the_eye_of_sauron_by_stirzocular-d86f0oo_zpslnqbwhv2.png", slackChannel)
-
       // wait until the app is deployed
       convox.waitUntilDeployed("${appName}")
       convox.ensureSecurityGroupSet("${appName}", env.CONVOX_SECURITYGROUP)
+      slack.notify("Deployed to Production", "Tag <${gitUrl}/commits/tag/\'${tag}\'|\'${tag}\'> has been deployed to <${appUrl}|${appUrl}>", "good", "http://i296.photobucket.com/albums/mm200/kingzain/the_eye_of_sauron_by_stirzocular-d86f0oo_zpslnqbwhv2.png", slackChannel)
   }
   catch (err) {
     currentBuild.result = "FAILURE"
