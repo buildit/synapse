@@ -7,9 +7,7 @@
     "build": "gulp",
     "lint": "eslint src/ test/ *.js",
     "start": "gulp server",
-    "test": "jest --verbose",
-    "test:changed": "jest --verbose -o",
-    "test:mocha": "mocha",
+    "test": "mocha",
     "test-it-the-other-way": "node standalone-test.js"
   },
   "pre-commit": [
@@ -22,27 +20,6 @@
   "author": "Buildit",
   "license": "MIT",
   "homepage": "https://bitbucket.org/digitalrigbitbucketteam/synapse#readme",
-  "jest": {
-    "collectCoverage": true,
-    "collectCoverageOnlyFrom": {
-      "src/js/containers/App.js": true
-    },
-    "moduleFileExtensions": [
-      "jsx",
-      "js",
-      "json",
-      "node"
-    ],
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "testRegex": "jest-tests/.*",
-    "unmockedModulePathPatterns": [
-      "react",
-      "react-dom",
-      "react-addons-test-utils",
-      "fbjs",
-      "enzyme"
-    ]
-  },
   "browserify": {
     "transform": "config-browserify",
     "ignoreMissing": true
@@ -50,7 +27,6 @@
   "devDependencies": {
     "babel-core": "^6.10.4",
     "babel-eslint": "^6.1.0",
-    "babel-jest": "^13.0.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "chai": "^3.5.0",
@@ -70,7 +46,6 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-template": "^4.0.0",
-    "jest-cli": "^13.0.0",
     "react-addons-test-utils": "^15.1.0",
     "sinon": "^1.17.4",
     "vinyl-source-stream": "^1.1.0",
