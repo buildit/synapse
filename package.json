@@ -8,10 +8,13 @@
     "lint": "eslint src/ test/ *.js",
     "start": "gulp server",
     "test": "mocha",
-    "test-it-the-other-way": "node standalone-test.js"
+    "test-it-the-other-way": "node standalone-test.js",
+    "validate": "npm ls"
   },
   "pre-commit": [
-    "lint"
+    "lint",
+    "test",
+    "validate"
   ],
   "repository": {
     "type": "git",
@@ -46,6 +49,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-template": "^4.0.0",
+    "precommit-hook": "^3.0.0",
     "react-addons-test-utils": "^15.1.0",
     "sinon": "^1.17.4",
     "vinyl-source-stream": "^1.1.0",
