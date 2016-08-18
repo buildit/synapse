@@ -2,59 +2,35 @@ import React, {
   Component,
   PropTypes,
 } from 'react';
-import Chart from '../2-molecules/Chart';
-// import ChartD3Demand from '../2-molecules/ChartD3Demand';
-import LineChart from '../2-molecules/LineChart';
-import getDate from '../../helpers/getDate';
+import StatusChart from '../2-molecules/StatusChart';
 
 class Status extends Component {
   componentDidMount() {
     this.props.fetchStatus(this.props.projectId);
-    this.props.fetchProjection(this.props.projectId);
   }
 
   render() {
-    let startDateInMS = 0;
-    let endDateInMS = 0;
-    if (this.props.project) {
-      startDateInMS = getDate.utc(this.props.project.startDate);
-      endDateInMS = getDate.utc(this.props.project.endDate);
-    }
+    const demandCategories = this.props.project.demand.flow.map(item => (item.name));
+    const defectCategories = this.props.project.defect.severity.map(item => (item.name));
+    const effortCategories = this.props.project.effort.role.map(item => (item.name));
+
     return (
-      <div>
-        <div className="demandChart">
-          Demand chart under refactoring.
-        </div>
-        <div className="chartHolder">
-          <Chart
-            title="Defect"
-            yLabel="Count"
-            data={this.props.defectStatus}
-            startDateInMS={startDateInMS}
-            endDateInMS={endDateInMS}
-          />
-        </div>
-        <div className="chartHolder">
-          <LineChart
-            title="Effort"
-            yLabel="Person/Days"
-            data={this.props.effortStatus}
-            startDateInMS={startDateInMS}
-            endDateInMS={endDateInMS}
-          />
-        </div>
-      </div>
+      <StatusChart
+        data={this.props.demandStatus}
+        defectStatus={this.props.defectStatus}
+        demandCategories={demandCategories}
+        defectCategories={defectCategories}
+        effortCategories={effortCategories}
+      />
     );
   }
+
 }
 
 Status.propTypes = {
   fetchStatus: PropTypes.func.isRequired,
-  fetchProjection: PropTypes.func.isRequired,
   projectName: PropTypes.string.isRequired,
   project: PropTypes.object.isRequired,
-  projection: PropTypes.array.isRequired,
-  projectionData: PropTypes.array.isRequired,
   projectId: PropTypes.string.isRequired,
   demandStatus: PropTypes.array.isRequired,
   defectStatus: PropTypes.array.isRequired,

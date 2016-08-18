@@ -1,16 +1,17 @@
 import blankProject from '../helpers/blankProject';
 import normalizeProject from '../helpers/normalizeProject';
-import normalizeDemandData from '../helpers/normalizeDemandData';
-import normalizeDefectData from '../helpers/normalizeDefectData';
-import normalizeEffortData from '../helpers/normalizeEffortData';
 import _ from 'lodash';
 
 import {
   RESET_PROJECT,
 } from '../actions/actions';
 
-const intialState = {
-  project: {},
+const initialState = {
+  project: {
+    demand: {
+      flow: [],
+    },
+  },
   projectList: [],
   starterProjectList: [],
   demandStatus: [],
@@ -19,7 +20,7 @@ const intialState = {
   isFetching: false,
 };
 
-const appData = (state = intialState, action) => {
+const appData = (state = initialState, action) => {
   switch (action.type) {
   case 'FETCH_PROJECTS_REQUEST': {
     return {
@@ -74,47 +75,31 @@ const appData = (state = intialState, action) => {
       isFetching: true,
     };
   }
-  case 'FETCH_STATUS_SUCCESS': {
-    const normalizedStatusData =
-      normalizeDemandData()
-        .datum(action.statusData)
-        .fill()
-        .sort()
-        .transform(state.project.demand.flow)
-        .getData();
 
+  case 'FETCH_STATUS_SUCCESS': {
     return {
       ...state,
-      demandStatus: normalizedStatusData,
+      demandStatus: action.statusData,
       isFetching: false,
     };
   }
+
   case 'FETCH_DEFECT_SUCCESS': {
-    const normalizedDefectData =
-      normalizeDefectData()
-        .datum(action.statusDefectData)
-        .sort()
-        .transform()
-        .getData();
     return {
       ...state,
-      defectStatus: normalizedDefectData,
+      defectStatus: action.statusDefectData,
       isFetching: false,
     };
   }
+
   case 'FETCH_EFFORT_SUCCESS': {
-    const normalizedEffortData =
-      normalizeEffortData()
-        .datum(action.statusEffortData)
-        .sort()
-        .transform()
-        .getData();
     return {
       ...state,
-      effortStatus: normalizedEffortData,
+      effortStatus: action.statusEffortData,
       isFetching: false,
     };
   }
+
   case 'FETCH_STATUS_FAILURE': {
     return {
       ...state,
@@ -122,21 +107,8 @@ const appData = (state = intialState, action) => {
     };
   }
   case 'INITIALIZE_NEW_PROJECT': {
-    const starterProject = {
-      name: '',
-      demand: {
-        flow: [],
-      },
-      defect: {
-        flow: [],
-        severity: [],
-      },
-      effort: {
-        role: [],
-      },
-    };
-
-    if (action.harvestId) {
+    const starterProject = blankProject;
+    if (action.harvestIwd) {
       let harvestProject;
       state.starterProjectList.forEach(project => {
         if (project.id === action.harvestId) {

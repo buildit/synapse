@@ -10,6 +10,7 @@ import SaveConfirmationModal from '../2-molecules/SaveConfirmationModal';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/index.js';
 const filterListByIds = require('../../helpers/filterListByIds');
+const transformStatusData = require('../../helpers/transformStatusData');
 
 const Body = ({
   appData,
@@ -37,6 +38,9 @@ const Body = ({
   project,
   projectList,
   starterProjectList,
+  demandStatus,
+  defectStatus,
+  effortStatus,
  }) => {
   switch (view) {
 
@@ -106,9 +110,9 @@ const Body = ({
         projectName={appData.project.name}
         project={appData.project}
         projection={projection}
-        demandStatus={appData.demandStatus}
-        defectStatus={appData.defectStatus}
-        effortStatus={appData.effortStatus}
+        demandStatus={demandStatus}
+        defectStatus={defectStatus}
+        effortStatus={effortStatus}
       />
     );
   }
@@ -164,6 +168,9 @@ Body.propTypes = {
   project: PropTypes.object.isRequired,
   projectList: PropTypes.array.isRequired,
   starterProjectList: PropTypes.array.isRequired,
+  demandStatus: PropTypes.array.isRequired,
+  defectStatus: PropTypes.array.isRequired,
+  effortStatus: PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -189,6 +196,13 @@ function mapStateToProps(state) {
 
   starterProjectList = starterProjectList.filter(_project => _project.status === 'Active');
 
+  const demandStatus = transformStatusData(state.appData.demandStatus, 'status');
+  const defectStatus = transformStatusData(state.appData.defectStatus, 'severity');
+  const effortStatus = transformStatusData(state.appData.effortStatus, 'activity');
+
+  console.log("effort" , effortStatus);
+  console.log("defect" , defectStatus);
+
   const props = {
     ui: state.ui,
     appData: state.appData,
@@ -196,6 +210,9 @@ function mapStateToProps(state) {
     project,
     projectList,
     starterProjectList,
+    demandStatus,
+    defectStatus,
+    effortStatus,
   };
   return props;
 }

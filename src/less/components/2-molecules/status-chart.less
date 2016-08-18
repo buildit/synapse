@@ -1,0 +1,46 @@
+@axis: #666;
+
+.status-chart {
+ .chart-container {
+   svg.chart {
+     height: 2500px;
+   }
+  //  * {
+  //    outline: 1px solid pink;
+  //  }
+   width: 800px;
+   height: 500px;
+    .axis {
+      font: 10px sans-serif;
+      color: @axis;
+      path,
+      line {
+        fill: none;
+        stroke: @axis;
+      }
+      path {
+        display: none;
+      }
+    }
+
+    .label {
+      font: 10px sans-serif;
+      color: @axis;
+    }
+
+    .area {
+      fill: @completed;
+      stroke: none;
+    }
+
+    .legend {
+      .legend-item {
+        font-size: 1rem;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+        padding: 0.3rem;
+        color: white;
+      }
+    }
+  }
+}
