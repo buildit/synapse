@@ -11,7 +11,7 @@ class NewProjectList extends Component {
   }
 
   render() {
-    const { starterProjects } = this.props;
+    const { starterProjects, setIsNewProject } = this.props;
 
     const onProjectCreateClick = (harvestId) => {
       this.props.initializeNewProject(harvestId);
@@ -27,6 +27,7 @@ class NewProjectList extends Component {
         <Button
           label="Create manually"
           onClick={() => {
+            setIsNewProject(true);
             onProjectCreateClick(null);
           }
           }
@@ -61,6 +62,7 @@ NewProjectList.propTypes = {
   isFetching: PropTypes.bool,
   projectList: PropTypes.array,
   goHome: PropTypes.func,
+  setIsNewProject: PropTypes.func.isRequired,
 };
 
 export default NewProjectList;

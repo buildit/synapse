@@ -2,12 +2,14 @@ import React, { PropTypes } from 'react';
 
 const defaultValue = '';
 
-const Input = ({ label, section, property, onInputChange, initialValue = defaultValue }) => {
+const Input = ({ label, section, property, onInputChange, initialValue = defaultValue,
+  disabled = false }) => {
   let input;
   return (
     <div className="form-group">
       <label htmlFor={`${section}${property}`}>{label}</label>
       <input
+        disabled={disabled}
         className="form-control"
         type="text"
         id={`${section}${property}`}
@@ -39,4 +41,5 @@ Input.propTypes = {
   type: PropTypes.string,
   initialValue: PropTypes.string,
   onInputChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 };

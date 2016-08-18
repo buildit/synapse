@@ -4,13 +4,14 @@ import Button from '../1-atoms/Button';
 import Table from '../2-molecules/Table';
 import formatDate from '../../helpers/formatDate';
 
-const Project = ({ project, onSwitchView }) => {
+const Project = ({ project, onSwitchView, setIsNewProject }) => {
   return (
     <div>
       <Button
         label="Edit"
         onClick={() => {
           onSwitchView('editProject');
+          setIsNewProject(false);
         }}
       />
       <Button
@@ -156,6 +157,7 @@ const Project = ({ project, onSwitchView }) => {
 
 Project.propTypes = {
   project: React.PropTypes.object.isRequired,
+  setIsNewProject: React.PropTypes.func.isRequired,
 };
 
 export default Project;

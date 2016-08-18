@@ -38,6 +38,8 @@ const Body = ({
   project,
   projectList,
   starterProjectList,
+  isNewProject,
+  setIsNewProject,
   demandStatus,
   defectStatus,
   effortStatus,
@@ -60,6 +62,7 @@ const Body = ({
       <Project
         project={appData.project}
         onSwitchView={onSwitchView}
+        setIsNewProject={setIsNewProject}
       />
   );
   }
@@ -82,6 +85,7 @@ const Body = ({
         addItemToSeverityList={addItemToSeverityList}
         moveListItemUp={moveListItemUp}
         moveListItemDown={moveListItemDown}
+        isNewProject={isNewProject}
       />);
   }
 
@@ -98,6 +102,7 @@ const Body = ({
           onSwitchView('listView');
           resetProject();
         }}
+        setIsNewProject={setIsNewProject}
       />);
   }
 
@@ -171,6 +176,8 @@ Body.propTypes = {
   demandStatus: PropTypes.array.isRequired,
   defectStatus: PropTypes.array.isRequired,
   effortStatus: PropTypes.array.isRequired,
+  isNewProject: PropTypes.bool.isRequired,
+  setIsNewProject: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -200,9 +207,6 @@ function mapStateToProps(state) {
   const defectStatus = transformStatusData(state.appData.defectStatus, 'severity');
   const effortStatus = transformStatusData(state.appData.effortStatus, 'activity');
 
-  console.log("effort" , effortStatus);
-  console.log("defect" , defectStatus);
-
   const props = {
     ui: state.ui,
     appData: state.appData,
@@ -210,6 +214,7 @@ function mapStateToProps(state) {
     project,
     projectList,
     starterProjectList,
+    isNewProject: state.isNewProject,
     demandStatus,
     defectStatus,
     effortStatus,

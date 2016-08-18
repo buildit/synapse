@@ -7,11 +7,7 @@ import {
 } from '../actions/actions';
 
 const initialState = {
-  project: {
-    demand: {
-      flow: [],
-    },
-  },
+  project: {},
   projectList: [],
   starterProjectList: [],
   demandStatus: [],
@@ -107,8 +103,21 @@ const appData = (state = initialState, action) => {
     };
   }
   case 'INITIALIZE_NEW_PROJECT': {
-    const starterProject = blankProject;
-    if (action.harvestIwd) {
+    const starterProject = {
+      name: '',
+      demand: {
+        flow: [],
+      },
+      defect: {
+        flow: [],
+        severity: [],
+      },
+      effort: {
+        role: [],
+      },
+    };
+
+    if (action.harvestId) {
       let harvestProject;
       state.starterProjectList.forEach(project => {
         if (project.id === action.harvestId) {

@@ -26,6 +26,7 @@ class EditProject extends Component {
     const addItemToSeverityList = this.props.addItemToSeverityList;
     const moveListItemUp = this.props.moveListItemUp;
     const moveListItemDown = this.props.moveListItemDown;
+    const isNewProject = this.props.isNewProject;
     return (
       <div>
         <Button
@@ -48,6 +49,7 @@ class EditProject extends Component {
             property="id"
             onInputChange={onInputChange}
             initialValue={project.id}
+            disabled={!isNewProject}
           />
           <Input
             label="Name"
@@ -367,4 +369,5 @@ EditProject.propTypes = {
   addItemToSeverityList: PropTypes.func.isRequired,
   moveListItemUp: PropTypes.func.isRequired,
   moveListItemDown: PropTypes.func.isRequired,
+  isNewProject: PropTypes.bool.isRequired,
 };
