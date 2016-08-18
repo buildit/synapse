@@ -48,6 +48,7 @@ class EditProject extends Component {
             property="id"
             onInputChange={onInputChange}
             initialValue={project.id}
+            disabled
           />
           <Input
             label="Name"
