@@ -4,6 +4,7 @@ import {
   SET_MESSAGE,
   RESET_PROJECT,
   UPDATE_PROJECTION_ITERATION_LENGTH,
+  SET_IS_NEW_PROJECT,
 } from './actions';
 import config from 'config';
 import $ from 'jquery';
@@ -393,3 +394,10 @@ export const dismissMessage = () => (
 );
 
 export const resetProject = () => ({ type: RESET_PROJECT });
+
+export const setIsNewProject = value => (
+  {
+    type: SET_IS_NEW_PROJECT,
+    value,
+  }
+);

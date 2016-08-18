@@ -37,6 +37,8 @@ const Body = ({
   project,
   projectList,
   starterProjectList,
+  isNewProject,
+  setIsNewProject,
  }) => {
   switch (view) {
 
@@ -56,6 +58,7 @@ const Body = ({
       <Project
         project={appData.project}
         onSwitchView={onSwitchView}
+        setIsNewProject={setIsNewProject}
       />
   );
   }
@@ -78,6 +81,7 @@ const Body = ({
         addItemToSeverityList={addItemToSeverityList}
         moveListItemUp={moveListItemUp}
         moveListItemDown={moveListItemDown}
+        isNewProject={isNewProject}
       />);
   }
 
@@ -94,6 +98,7 @@ const Body = ({
           onSwitchView('listView');
           resetProject();
         }}
+        setIsNewProject={setIsNewProject}
       />);
   }
 
@@ -164,6 +169,8 @@ Body.propTypes = {
   project: PropTypes.object.isRequired,
   projectList: PropTypes.array.isRequired,
   starterProjectList: PropTypes.array.isRequired,
+  isNewProject: PropTypes.bool.isRequired,
+  setIsNewProject: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -196,6 +203,7 @@ function mapStateToProps(state) {
     project,
     projectList,
     starterProjectList,
+    isNewProject: state.isNewProject,
   };
   return props;
 }

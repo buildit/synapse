@@ -9,7 +9,7 @@ import {
   RESET_PROJECT,
 } from '../actions/actions';
 
-const intialState = {
+const intitialState = {
   project: {},
   projectList: [],
   starterProjectList: [],
@@ -19,7 +19,7 @@ const intialState = {
   isFetching: false,
 };
 
-const appData = (state = intialState, action) => {
+const appData = (state = intitialState, action) => {
   switch (action.type) {
   case 'FETCH_PROJECTS_REQUEST': {
     return {
