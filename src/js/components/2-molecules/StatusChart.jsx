@@ -10,8 +10,8 @@ export default class StatusChart extends React.Component {
     this.parseTime = d3.timeParse('%d-%b-%y');
     this.yOffset = {
       demand: 0,
-      defect: 500,
-      effort: 950,
+      defect: 450,
+      effort: 900,
     };
   }
 
@@ -65,7 +65,13 @@ export default class StatusChart extends React.Component {
     // }, []);
     //
     // const maxY = maxYs.reduce((max, current) => (current > max ? current : max), 0);
-    const maxY = 500;
+    let maxY = 200;
+    if (this.props.projectId === 'P001') {
+      maxY = 500;
+    }
+    if (this.props.projectId === 'P003') {
+      maxY = 140;
+    }
     return {
       date: d3.scaleTime()
         .domain(d3.extent(dates))
@@ -141,7 +147,7 @@ export default class StatusChart extends React.Component {
     );
   }
 
-  updateCurve(yOffset, data = [], categories, name) {
+  updateCurve(yOffset, data = [], categories) {
     const parseTime = this.parseTime;
     const xScale = this.getScale(yOffset, data, categories).date;
     const yScale = this.getScale(yOffset, data, categories).y;
