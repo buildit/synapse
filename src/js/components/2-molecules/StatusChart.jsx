@@ -18,9 +18,9 @@ export default class StatusChart extends React.Component {
   componentDidMount() {
     this.setVis();
 
-    this.setDateAxis(this.yOffset.demand, this.props.data, this.props.demandCategories);
-    this.setDateAxis(this.yOffset.defect, this.props.data, this.props.demandCategories);
-    this.setDateAxis(this.yOffset.effort, this.props.data, this.props.demandCategories);
+    this.setDateAxis(this.yOffset.demand, this.props.data, this.props.demandCategories, 'demand');
+    this.setDateAxis(this.yOffset.defect, this.props.data, this.props.defectCategories, 'defect');
+    this.setDateAxis(this.yOffset.effort, this.props.data, this.props.effortCategories, 'effort');
 
     this.setYAxisLabel(this.yOffset.demand, 'Stories');
     this.setYAxisLabel(this.yOffset.defect, 'Count');
@@ -33,8 +33,8 @@ export default class StatusChart extends React.Component {
 
   componentDidUpdate() {
     this.setDateAxis(this.yOffset.demand, this.props.data, this.props.demandCategories);
-    this.setDateAxis(this.yOffset.defect, this.props.data, this.props.demandCategories);
-    this.setDateAxis(this.yOffset.effort, this.props.data, this.props.demandCategories);
+    this.setDateAxis(this.yOffset.defect, this.props.data, this.props.defectCategories);
+    this.setDateAxis(this.yOffset.effort, this.props.data, this.props.effortCategories);
 
     this.setYAxis(this.yOffset.demand);
     this.setYAxis(this.yOffset.defect);
@@ -65,7 +65,6 @@ export default class StatusChart extends React.Component {
     // }, []);
     //
     // const maxY = maxYs.reduce((max, current) => (current > max ? current : max), 0);
-const maxY = 500
     return {
       date: d3.scaleTime()
         .domain(d3.extent(dates))
@@ -96,15 +95,15 @@ const maxY = 500
       .call(d3.axisLeft(yScale));
   }
 
-  setDateAxis(yOffset = 0, data, categories) {
+  setDateAxis(yOffset = 0, data, categories, name) {
     const dateScale = this.getScale(yOffset, data, categories).date;
     const height = this.getSize().height;
-
     this.vis.append('g')
       .attr('class', 'axis-container')
       .attr('transform', `translate(0, ${height + 20 + yOffset})`)
         .append('g')
         .attr('class', 'axis axis--date')
+        .attr('id', name)
         .call(d3.axisBottom(dateScale));
   }
 
@@ -119,6 +118,10 @@ const maxY = 500
   }
 
   update() {
+    d3.select('#demand').remove();
+    d3.select('#defect').remove();
+    d3.select('#effort').remove();
+
     let yRangeDemand = '0';
     let yRangeDefect = '0';
     let yRangeEffort = '0';
@@ -130,10 +133,14 @@ const maxY = 500
       yRangeDemand = 200;
       yRangeDefect = 100;
       yRangeEffort = 15;
+    } else if (this.props.projectId === 'TEST1') {
+      yRangeDemand = 400;
+      yRangeDefect = 100;
+      yRangeEffort = 150;
     } else {
       yRangeDemand = 400;
       yRangeDefect = 400;
-      yRangeEffort = 15;
+      yRangeEffort = 10;
     }
     this.updateCurve(
       this.yOffset.demand,
