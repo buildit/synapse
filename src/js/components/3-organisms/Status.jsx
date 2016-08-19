@@ -15,13 +15,19 @@ class Status extends Component {
     const effortCategories = this.props.project.effort.role.map(item => (item.name));
 
     return (
-      <StatusChart
-        data={this.props.demandStatus}
-        defectStatus={this.props.defectStatus}
-        demandCategories={demandCategories}
-        defectCategories={defectCategories}
-        effortCategories={effortCategories}
-      />
+      <div>
+        <div>
+          <StatusChart
+            data={this.props.demandStatus}
+            defectStatus={this.props.defectStatus}
+            effortStatus={this.props.effortStatus}
+            demandCategories={demandCategories}
+            defectCategories={defectCategories}
+            effortCategories={effortCategories}
+            projectId={this.props.projectId}
+          />
+        </div>
+      </div>
     );
   }
 

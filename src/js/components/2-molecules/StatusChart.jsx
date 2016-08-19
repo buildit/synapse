@@ -18,9 +18,9 @@ export default class StatusChart extends React.Component {
   componentDidMount() {
     this.setVis();
 
-    this.setDateAxis(this.yOffset.demand, this.props.data, this.props.demandCategories);
-    this.setDateAxis(this.yOffset.defect, this.props.data, this.props.demandCategories);
-    this.setDateAxis(this.yOffset.effort, this.props.data, this.props.demandCategories);
+    // this.setDateAxis(this.yOffset.demand, this.props.data, this.props.demandCategories);
+    // this.setDateAxis(this.yOffset.defect, this.props.data, this.props.demandCategories);
+    // this.setDateAxis(this.yOffset.effort, this.props.data, this.props.demandCategories);
 
     this.setYAxisLabel(this.yOffset.demand, 'Stories');
     this.setYAxisLabel(this.yOffset.defect, 'Count');
@@ -54,28 +54,25 @@ export default class StatusChart extends React.Component {
     };
   }
 
-  getScale(yOffset = 0, data = [], categories = []) {
+  getScale(yOffset = 0, data = [], categories = [], yRange) {
     const size = this.getSize();
     const dates = data.map(datapoint => this.parseTime(datapoint.date));
-
     // const maxYs = data.reduce((maxes, dataPoint) => {
     //   const dataPointMax = categories.reduce((sumAtPoint, category) => (
     //     sumAtPoint + dataPoint[category]
     //   ), 0);
     //   return maxes.concat(dataPointMax);
     // }, []);
-
+    //
     // const maxY = maxYs.reduce((max, current) => (current > max ? current : max), 0);
-
-    const maxY = 500;
-
+const maxY = 500
     return {
       date: d3.scaleTime()
         .domain(d3.extent(dates))
         .range([0, size.width]),
 
       y: d3.scaleLinear()
-        .domain([maxY, 0])
+        .domain([yRange, 0])
         .range([yOffset, size.height + yOffset]),
     };
   }
@@ -122,29 +119,48 @@ export default class StatusChart extends React.Component {
   }
 
   update() {
+    let yRangeDemand = '0';
+    let yRangeDefect = '0';
+    let yRangeEffort = '0';
+    if (this.props.projectId === 'P001') {
+      yRangeDemand = 500;
+      yRangeDefect = 600;
+      yRangeEffort = 15;
+    } else if (this.props.projectId === 'P003') {
+      yRangeDemand = 200;
+      yRangeDefect = 100;
+      yRangeEffort = 15;
+    } else {
+      yRangeDemand = 400;
+      yRangeDefect = 400;
+      yRangeEffort = 15;
+    }
     this.updateCurve(
       this.yOffset.demand,
       this.props.data,
-      this.props.demandCategories
+      this.props.demandCategories,
+      yRangeDemand
     );
 
     this.updateCurve(
       this.yOffset.defect,
       this.props.defectStatus,
-      this.props.defectCategories
+      this.props.defectCategories,
+      yRangeDefect
     );
 
     this.updateCurve(
       this.yOffset.effort,
       this.props.effortStatus,
-      this.props.effortCategories
+      this.props.effortCategories,
+      yRangeEffort
     );
   }
 
-  updateCurve(yOffset, data = [], categories) {
+  updateCurve(yOffset, data = [], categories, yRange) {
     const parseTime = this.parseTime;
     const xScale = this.getScale(yOffset, data, categories).date;
-    const yScale = this.getScale(yOffset, data, categories).y;
+    const yScale = this.getScale(yOffset, data, categories, yRange).y;
 
     const area = d3.area()
       .x(d => xScale(parseTime(d.data.date)))
@@ -168,7 +184,7 @@ export default class StatusChart extends React.Component {
 
       layer.append('path')
         .attr('class', 'area')
-        .style('fill', (d, i) => d3.schemeCategory10[i])
+        .style('fill', (d, i) => d3.schemeCategory20[i])
         .attr('d', area);
     }
 
@@ -183,7 +199,7 @@ export default class StatusChart extends React.Component {
         .attr('cx', 20)
         .attr('cy', (d, i) => yOffset + 20 + i * 12)
         .attr('stroke', 'none')
-        .attr('fill', (d, i) => d3.schemeCategory10[i]);
+        .attr('fill', (d, i) => d3.schemeCategory20[i]);
 
     legend.selectAll('.legend-item')
       .data(stack(data))
@@ -195,30 +211,34 @@ export default class StatusChart extends React.Component {
         .text(d => d.key);
   }
 
-  updateCurveLine(yOffset, data = [], categories) {
+  updateCurveLine(yOffset, data = [], categories, yRange) {
     const parseTime = this.parseTime;
     const xScale = this.getScale(yOffset, data, categories).date;
-    const yScale = this.getScale(yOffset, data, categories).y;
+    const yScale = this.getScale(yOffset, data, categories, yRange).y;
 
-    const area = d3.line()
+    const area = d3.area()
       .x(d => xScale(parseTime(d.data.date)))
       .y0(d => yScale(d[0] || 0))
       .y1(d => yScale(d[1] || 0));
 
+    const stack = d3.stack()
+      .keys(categories)
+      .order(d3.stackOrderReverse)
+      .offset(d3.stackOffsetNone);
 
     if (data.length > 0) {
       const stackContainer = this.vis.append('g')
-        .attr('class', 'line');
+        .attr('class', 'stack');
 
       const layer = stackContainer.selectAll('.layer')
-        .data(data)
+        .data(stack(data))
         .enter()
         .append('g')
         .attr('class', 'layer');
 
       layer.append('path')
         .attr('class', 'area')
-        .style('fill', (d, i) => d3.schemeCategory10[i])
+        .style('fill', (d, i) => d3.schemeCategory20[i])
         .attr('d', area);
     }
 
@@ -233,7 +253,7 @@ export default class StatusChart extends React.Component {
         .attr('cx', 20)
         .attr('cy', (d, i) => yOffset + 20 + i * 12)
         .attr('stroke', 'none')
-        .attr('fill', (d, i) => d3.schemeCategory10[i]);
+        .attr('fill', (d, i) => d3.schemeCategory20[i]);
 
     legend.selectAll('.legend-item')
       .data(stack(data))
@@ -265,6 +285,7 @@ StatusChart.propTypes = {
   demandCategories: React.PropTypes.array.isRequired,
   defectCategories: React.PropTypes.array.isRequired,
   effortCategories: React.PropTypes.array.isRequired,
+  projectId: React.PropTypes.string.isRequired,
 };
 
 StatusChart.defaultProps = {
