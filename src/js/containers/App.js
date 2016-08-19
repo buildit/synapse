@@ -44,6 +44,7 @@ App.propTypes = {
   resetProject: PropTypes.func.isRequired,
   dismissMessage: PropTypes.func.isRequired,
   projectName: PropTypes.string,
+  updateProject: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

@@ -5,6 +5,7 @@ import {
   RESET_PROJECT,
   UPDATE_PROJECTION_ITERATION_LENGTH,
   SET_IS_NEW_PROJECT,
+  UPDATE_PROJECT_REQUEST,
 } from './actions';
 import config from 'config';
 import $ from 'jquery';
@@ -361,9 +362,6 @@ export const saveProjection = (projection, id) => dispatch => {
     type: SAVE_PROJECTION_REQUEST,
   });
 
-  // console.log('about to post this:', projection);
-  // console.log('for', id);
-
   return $.ajax({
     type: 'POST',
     url: `${apiBaseUrl}project/${id}/forecast`,
@@ -381,6 +379,33 @@ export const saveProjection = (projection, id) => dispatch => {
         dispatch({
           type: SET_MESSAGE,
           message: 'There was an error. We could not save the projection.',
+        });
+      }
+    });
+};
+
+export const updateProject = project => dispatch => {
+  dispatch({
+    type: UPDATE_PROJECT_REQUEST,
+  });
+
+  return $.ajax({
+    type: 'PUT',
+    url: `${apiBaseUrl}project/${project.id}`,
+    data: JSON.stringify(project),
+    contentType: 'application/json',
+    dataType: 'json',
+  })
+    .always(response => {
+      if (response.status === 200) {
+        dispatch({
+          type: SET_MESSAGE,
+          message: `Project ${project.id} was saved successfully.`,
+        });
+      } else {
+        dispatch({
+          type: SET_MESSAGE,
+          message: 'There was an error. We could not save the project.',
         });
       }
     });

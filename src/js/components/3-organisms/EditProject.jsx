@@ -27,12 +27,17 @@ class EditProject extends Component {
     const moveListItemUp = this.props.moveListItemUp;
     const moveListItemDown = this.props.moveListItemDown;
     const isNewProject = this.props.isNewProject;
+    const updateProject = this.props.updateProject;
     return (
       <div>
         <Button
           label="Save"
           onClick={() => {
-            saveFormData(project);
+            if (isNewProject) {
+              saveFormData(project);
+            } else {
+              updateProject(project);
+            }
           }}
         />
         <Button
@@ -370,4 +375,5 @@ EditProject.propTypes = {
   moveListItemUp: PropTypes.func.isRequired,
   moveListItemDown: PropTypes.func.isRequired,
   isNewProject: PropTypes.bool.isRequired,
+  updateProject: PropTypes.func.isRequired,
 };

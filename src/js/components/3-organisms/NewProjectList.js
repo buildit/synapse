@@ -15,6 +15,7 @@ class NewProjectList extends Component {
 
     const onProjectCreateClick = (harvestId) => {
       this.props.initializeNewProject(harvestId);
+      setIsNewProject(true);
       this.props.onSwitchView('editProject');
     };
 
@@ -27,7 +28,6 @@ class NewProjectList extends Component {
         <Button
           label="Create manually"
           onClick={() => {
-            setIsNewProject(true);
             onProjectCreateClick(null);
           }
           }

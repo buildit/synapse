@@ -43,6 +43,7 @@ const Body = ({
   demandStatus,
   defectStatus,
   effortStatus,
+  updateProject,
  }) => {
   switch (view) {
 
@@ -86,6 +87,7 @@ const Body = ({
         moveListItemUp={moveListItemUp}
         moveListItemDown={moveListItemDown}
         isNewProject={isNewProject}
+        updateProject={updateProject}
       />);
   }
 
@@ -178,6 +180,7 @@ Body.propTypes = {
   effortStatus: PropTypes.array.isRequired,
   isNewProject: PropTypes.bool.isRequired,
   setIsNewProject: PropTypes.func.isRequired,
+  updateProject: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -201,7 +204,7 @@ function mapStateToProps(state) {
 
   starterProjectList = filterListByIds(starterProjectList, existingProjectListIds);
 
-  starterProjectList = starterProjectList.filter(_project => _project.status === 'Active');
+  starterProjectList = starterProjectList.filter(_project => _project.status);
 
   const demandStatus = transformStatusData(state.appData.demandStatus, 'status');
   const defectStatus = transformStatusData(state.appData.defectStatus, 'severity');
