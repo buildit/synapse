@@ -18,9 +18,9 @@ export default class StatusChart extends React.Component {
   componentDidMount() {
     this.setVis();
 
-    // this.setDateAxis(this.yOffset.demand, this.props.data, this.props.demandCategories);
-    // this.setDateAxis(this.yOffset.defect, this.props.data, this.props.demandCategories);
-    // this.setDateAxis(this.yOffset.effort, this.props.data, this.props.demandCategories);
+    this.setDateAxis(this.yOffset.demand, this.props.data, this.props.demandCategories);
+    this.setDateAxis(this.yOffset.defect, this.props.data, this.props.demandCategories);
+    this.setDateAxis(this.yOffset.effort, this.props.data, this.props.demandCategories);
 
     this.setYAxisLabel(this.yOffset.demand, 'Stories');
     this.setYAxisLabel(this.yOffset.defect, 'Count');
