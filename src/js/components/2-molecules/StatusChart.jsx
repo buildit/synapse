@@ -140,7 +140,7 @@ export default class StatusChart extends React.Component {
       this.props.defectCategories
     );
 
-    this.updateCurve(
+    this.updateCurveLine(
       this.yOffset.effort,
       this.props.effortStatus,
       this.props.effortCategories
@@ -201,37 +201,87 @@ export default class StatusChart extends React.Component {
         .text(d => d.key);
   }
 
-  updateCurveLine(yOffset, data = [], categories, yRange) {
-    const parseTime = this.parseTime;
-    const xScale = this.getScale(yOffset, data, categories).date;
-    const yScale = this.getScale(yOffset, data, categories, yRange).y;
+  updateCurveLine(yOffset, data = [], categories) {
+    const dates = data.map(item => (item.date));
+    const values = data.map(item => (item.value));
+    console.log("values", values);
 
-    const area = d3.area()
-      .x(d => xScale(parseTime(d.data.date)))
-      .y0(d => yScale(d[0] || 0))
-      .y1(d => yScale(d[1] || 0));
+    const margin = { top: 20, right: 20, bottom: 40, left: 50 };
+    const width = 600 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
+
+    const xScale = d3.scaleTime()
+        .domain(d3.extent(dates))
+        .range([0, width]);
+
+    const yScale = d3.scaleLinear()
+        .domain(d3.extent(values))
+        .range([height, 0]);
+
+    const svg =
+        d3.select(this.chart)
+          .append('svg')
+          .attr('width', width + margin.left + margin.right)
+          .attr('height', height + margin.top + margin.bottom)
+          .append('g')
+          .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
+
+      /* x axis */
+    const chart1 = svg.append('g')
+        .attr('class', 'axis axis--x')
+        .attr('transform', 'translate(0, ' + (height + 10) + ')')
+        .call(d3.axisBottom(xScale));
+
+      /* y axis */
+    svg.append('g')
+        .attr('class', 'axis axis--y')
+        .attr('transform', 'translate(20, 0)')
+        .call(d3.axisLeft(yScale));
+
+    const line = d3.line()
+        .curve(d3.curveCardinal.tension(0.1))
+        .x(function(d) {
+          return xScale(d.date);
+        })
+        .y(function(d) {
+          return yScale(d.value);
+        });
+
+    console.log('data:', data);
+    svg.append('path')
+       .datum(data)
+       .attr('class', 'line')
+       .attr('d', line);
+
+    // const parseTime = this.parseTime;
+    // const xScale = this.getScale(yOffset, data, categories).date;
+    // const yScale = this.getScale(yOffset, data, categories).y;
+
+    // const area = d3.area()
+    //   .x(d => xScale(parseTime(d.data.date)))
+    //   .y0(d => yScale(d[0] || 0))
+    //   .y1(d => yScale(d[1] || 0));
 
     const stack = d3.stack()
       .keys(categories)
       .order(d3.stackOrderReverse)
       .offset(d3.stackOffsetNone);
 
-    if (data.length > 0) {
-      const stackContainer = this.vis.append('g')
-        .attr('class', 'stack');
-
-      const layer = stackContainer.selectAll('.layer')
-        .data(stack(data))
-        .enter()
-        .append('g')
-        .attr('class', 'layer');
-
-      layer.append('path')
-        .attr('class', 'area')
-        .style('stroke', (d, i) => d3.schemeCategory20[i])
-        .style('fill', 'none')
-        .attr('d', area);
-    }
+    // if (data.length > 0) {
+    //   const stackContainer = this.vis.append('g')
+    //     .attr('class', 'stack');
+    //
+    //   const layer = stackContainer.selectAll('.layer')
+    //     .data(stack(data))
+    //     .enter()
+    //     .append('g')
+    //     .attr('class', 'layer');
+    //
+    //   layer.append('path')
+    //     .attr('class', 'area')
+    //     .style('fill', (d, i) => d3.schemeCategory20[i])
+    //     .attr('d', area);
+    // }
 
     const legend = this.vis.append('g')
       .attr('class', 'legend');
