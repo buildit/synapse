@@ -11,7 +11,6 @@ export default class ProjectionChart extends React.Component {
     this.points = null;
     this.chart = null;
     this.vis = null;
-    this.startDate = moment().format('DD-MMM-YY');
     this.parseTime = d3.timeParse('%d-%b-%y');
   }
 
@@ -37,8 +36,10 @@ export default class ProjectionChart extends React.Component {
 
   setPoints() {
     const { projection } = this.props;
+    const startDate = moment(this.props.projection.startDate, 'YYYY MM DD').format('DD-MMM-YY');
     const { iterationLength } = projection;
-    this.points = makePoints(projection, this.startDate, iterationLength);
+    this.points = makePoints(projection, startDate, iterationLength);
+    console.table(this.points);
   }
 
   getSize() {
@@ -223,7 +224,6 @@ export default class ProjectionChart extends React.Component {
 
   testDot(points) {
     if (points) {
-
       const parseTime = this.parseTime;
 
       const dateScale = this.getScale().date;
@@ -249,6 +249,7 @@ export default class ProjectionChart extends React.Component {
 ProjectionChart.propTypes = {
   projection: React.PropTypes.object.isRequired,
   padding: React.PropTypes.object,
+  startDate: React.PropTypes.string,
 };
 
 ProjectionChart.defaultProps = {

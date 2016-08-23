@@ -6,6 +6,7 @@ import {
   UPDATE_PROJECTION_ITERATION_LENGTH,
   SET_IS_NEW_PROJECT,
   UPDATE_PROJECT_REQUEST,
+  UPDATE_PROJECTION_START_DATE,
 } from './actions';
 import config from 'config';
 import $ from 'jquery';
@@ -302,6 +303,11 @@ export const updateProjectionIterationLength = value => ({
   value,
 });
 
+export const updateProjectionStartDate = value => ({
+  type: UPDATE_PROJECTION_START_DATE,
+  value,
+});
+
 export const fetchProjection = (id) => (dispatch) => {
   dispatch({
     type: FETCH_PROJECTION_REQUEST,
@@ -347,6 +353,11 @@ export const fetchProjection = (id) => (dispatch) => {
         dispatch({
           type: 'UPDATE_PROJECTION_ITERATION_LENGTH',
           value: projection.iterationLength,
+        });
+
+        dispatch({
+          type: UPDATE_PROJECTION_START_DATE,
+          value: projection.startDate,
         });
       })
       .fail(() => {

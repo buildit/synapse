@@ -7,6 +7,8 @@ import * as actionCreators from '../../actions/index.js';
 import ProjectionChart from '../2-molecules/ProjectionChart';
 import ProjectionSlider from '../1-atoms/ProjectionSlider';
 import Button from '../1-atoms/Button';
+import DateInput from '../1-atoms/DateInput';
+
 
 class Projection extends Component {
   componentDidMount() {
@@ -120,6 +122,14 @@ class Projection extends Component {
                 max={10}
                 onInputChange={value => {
                   this.props.updateProjectionVelocityEnd(parseInt(value, 10));
+                }}
+              />
+
+              <DateInput
+                label="Start date"
+                initialValue={this.props.projection.startDate}
+                onInputChange={dateValue => {
+                  this.props.updateProjectionStartDate(dateValue);
                 }}
               />
 
