@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Input from '../1-atoms/Input';
-import DateInput from '../1-atoms/DateInput';
+import ProjectDateInput from '../1-atoms/ProjectDateInput';
 import Button from '../1-atoms/Button';
 import EditableFlowTable from '../2-molecules/EditableFlowTable';
 import EditableRoleTable from '../2-molecules/EditableRoleTable';
@@ -91,14 +91,14 @@ class EditProject extends Component {
             onInputChange={onInputChange}
             initialValue={project.description}
           />
-          <DateInput
+          <ProjectDateInput
             label="Start date"
             section="header"
             property="startDate"
             onInputChange={onInputChange}
             initialValue={project.startDate}
           />
-          <DateInput
+          <ProjectDateInput
             label="End date"
             section="header"
             property="endDate"

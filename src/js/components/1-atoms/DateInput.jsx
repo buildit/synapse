@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const DateInput = ({ label, section, property, onInputChange, initialValue = '' }) => {
+const DateInput = ({ label, onInputChange, initialValue = '' }) => {
   let input;
   return (
     <div className="form-group">
@@ -8,19 +8,11 @@ const DateInput = ({ label, section, property, onInputChange, initialValue = '' 
       <input
         className="form-control"
         type="date"
-        id={`${section}${property}`}
         placeholder={label}
-        ref={node => {
-          input = node;
-          if (input) {
-            if (!input.value) {
-              input.value = initialValue;
-            }
-          }
-        }
-      }
+        value={initialValue}
+        ref={node => { input = node; }}
         onChange={() => {
-          onInputChange(section, property, input.value);
+          onInputChange(input.value);
         }
       }
       />
@@ -31,8 +23,6 @@ const DateInput = ({ label, section, property, onInputChange, initialValue = '' 
 export default DateInput;
 
 DateInput.propTypes = {
-  section: PropTypes.string,
-  property: PropTypes.string,
   label: PropTypes.string,
   type: PropTypes.string,
   initialValue: PropTypes.string,

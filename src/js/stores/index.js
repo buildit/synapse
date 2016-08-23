@@ -1,3 +1,5 @@
+const isLogging = false;
+
 import thunkMiddleware from 'redux-thunk';
 import reducers from '../reducers';
 
@@ -7,9 +9,10 @@ const addLoggingToDispatch = (store) => {
   /* eslint-disable no-console */
   const rawDispatch = store.dispatch;
 
-  if (!console.group) {
-    return rawDispatch;
-  }
+  if (!isLogging) return rawDispatch;
+
+  // Make sure the browser supports this crazee stuff.
+  if (!console.group) return rawDispatch;
 
   return (action) => {
     console.group(action.type);
