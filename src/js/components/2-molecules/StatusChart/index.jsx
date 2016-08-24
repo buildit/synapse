@@ -129,6 +129,7 @@ export default class StatusChart extends React.Component {
     const defectID = 'defectChart';
     const effortID = 'effortChart';
 
+
     this.updateArea(
       this.yOffset.demand,
       this.props.data,
@@ -143,7 +144,7 @@ export default class StatusChart extends React.Component {
       defectID
     );
 
-    this.updateArea(
+    this.updateLine(
       this.yOffset.effort,
       this.props.effortStatus,
       this.props.effortCategories,
@@ -152,6 +153,62 @@ export default class StatusChart extends React.Component {
   }
 
   updateArea(yOffset, data = [], categories, chartID) {
+    const width = this.getSize().width;
+    const dateScale = dateScaleCreator(yOffset, data, width);
+    const yScale = yScaleCreator(yOffset, data, categories);
+
+    const area = d3.area()
+      .curve(d3.curveCardinal)
+      .x(d => dateScale(parseTime(d.data.date)))
+      .y0(d => yScale(d[0] || 0))
+      .y1(d => yScale(d[1] || 0));
+
+    const stack = d3.stack()
+      .keys(categories)
+      .order(d3.stackOrderReverse)
+      .offset(d3.stackOffsetNone);
+
+    if (data.length > 0) {
+      const stackContainer = this.vis.append('g')
+      .attr('id', chartID)
+      .attr('class', 'stack');
+
+      const layer = stackContainer.selectAll('.layer')
+        .data(stack(data))
+        .enter()
+        .append('g')
+        .attr('class', 'layer');
+
+      layer.append('path')
+        .attr('class', 'area')
+        .style('fill', (d, i) => d3.schemeCategory20[i])
+        .attr('d', area);
+    }
+
+    const legend = this.vis.append('g')
+      .attr('class', 'legend');
+
+    legend.selectAll('.legend-item')
+      .data(stack(data))
+      .enter()
+      .append('circle')
+        .attr('r', 5)
+        .attr('cx', 20)
+        .attr('cy', (d, i) => yOffset + 20 + i * 12)
+        .attr('stroke', 'none')
+        .attr('fill', (d, i) => d3.schemeCategory20[i]);
+
+    legend.selectAll('.legend-item')
+      .data(stack(data))
+      .enter()
+      .append('text')
+        .attr('class', 'legend-item')
+        .attr('x', 30)
+        .attr('y', (d, i) => yOffset + 24 + i * 12)
+        .text(d => d.key);
+  }
+
+  updateLine(yOffset, data = [], categories, chartID) {
     const width = this.getSize().width;
     const dateScale = dateScaleCreator(yOffset, data, width);
     const yScale = yScaleCreator(yOffset, data, categories);
@@ -228,6 +285,7 @@ StatusChart.propTypes = {
   defectCategories: React.PropTypes.array.isRequired,
   effortCategories: React.PropTypes.array.isRequired,
   projectId: React.PropTypes.string.isRequired,
+  projectionPoints: React.PropTypes.array.isRequired,
 };
 
 StatusChart.defaultProps = {
