@@ -3,6 +3,8 @@ import React from 'react';
 import yScaleCreator from './y-scale';
 import dateScaleCreator from './date-scale';
 import parseTime from './parse-time';
+import Button from '../../1-atoms/Button';
+import $ from 'jquery';
 
 export default class StatusChart extends React.Component {
   constructor() {
@@ -158,7 +160,7 @@ export default class StatusChart extends React.Component {
     const yScale = yScaleCreator(yOffset, data, categories);
 
     const area = d3.area()
-      .curve(d3.curveCardinal)
+      // curve(d3.curveCardinal)
       .x(d => dateScale(parseTime(d.data.date)))
       .y0(d => yScale(d[0] || 0))
       .y1(d => yScale(d[1] || 0));
@@ -214,7 +216,7 @@ export default class StatusChart extends React.Component {
     const yScale = yScaleCreator(yOffset, data, categories);
 
     const area = d3.area()
-      .curve(d3.curveCardinal)
+      // .curve(d3.curveCardinal)
       .x(d => dateScale(parseTime(d.data.date)))
       .y0(d => yScale(d[0] || 0))
       .y1(d => yScale(d[1] || 0));
@@ -264,9 +266,66 @@ export default class StatusChart extends React.Component {
         .text(d => d.key);
   }
 
+  updateProjection() {
+    if ($('#projection').is(':visible')) {
+      d3.select('#projection').remove();
+    } else {
+      const projectionArray = this.props.projectionPoints;
+      const dates = projectionArray.map(item => (parseTime(item.date)));
+      const values = projectionArray.map(item => (item.y));
+
+
+      const margin = { top: 100, right: 0, bottom: 0, left: 0 };
+      const width = 600 - margin.left - margin.right;
+      const height = 200;
+
+      const xScale = d3.scaleTime()
+      .domain(d3.extent(dates))
+      .range([0, width]);
+
+      const yScale = d3.scaleLinear()
+      .domain(d3.extent(values))
+      .range([height, 0]);
+
+      const svg =
+      d3.select('#demandChart')
+        .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('id', 'projection')
+        .attr('className', 'projection ')
+        .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+
+      const line = d3.line()
+      .curve(d3.curveCardinal.tension(0.1))
+      .x(function(d) {
+        return xScale(parseTime(d.date));
+      })
+      .y(function(d) {
+        return yScale(d.y);
+      });
+
+
+      svg.append('path')
+     .datum(projectionArray)
+     .attr('class', 'line')
+     .style('stroke-dasharray', ('4, 4'))
+     .attr('d', line);
+    }
+  }
+
   render() {
     return (
       <div className="status-chart">
+        <div>
+          <Button
+            label="Projection"
+            onClick={() => {
+              this.updateProjection();
+            }}
+          />
+        </div>
         <div
           className="chart-container"
           ref={(c) => { this.chart = c; return false; }}

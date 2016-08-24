@@ -15,9 +15,12 @@ class Status extends Component {
     const demandCategories = this.props.project.demand.flow.map(item => (item.name));
     const defectCategories = this.props.project.defect.severity.map(item => (item.name));
     const effortCategories = this.props.project.effort.role.map(item => (item.name));
+    const projectStartDate = moment('2015-10-29', 'YYYY MM DD').format('DD-MMM-YY');
 
     const { projection } = this.props;
     const startDate = moment(this.props.projection.startDate, 'YYYY MM DD').format('DD-MMM-YY');
+
+    // console.log('Difference is ', startDate.diff(projectStartDate, 'days'), 'days');
     const { iterationLength } = projection;
     const projectionPoints = makePoints(projection, startDate, iterationLength);
 
@@ -50,6 +53,7 @@ Status.propTypes = {
   defectStatus: PropTypes.array.isRequired,
   effortStatus: PropTypes.array.isRequired,
   projection: React.PropTypes.object.isRequired,
+  projectionPoints: PropTypes.array.isRequired,
   startDate: React.PropTypes.string,
 };
 

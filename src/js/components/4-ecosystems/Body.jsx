@@ -44,6 +44,7 @@ const Body = ({
   defectStatus,
   effortStatus,
   updateProject,
+  projectionPoints,
  }) => {
   switch (view) {
 
@@ -120,6 +121,7 @@ const Body = ({
         demandStatus={demandStatus}
         defectStatus={defectStatus}
         effortStatus={effortStatus}
+        projectionPoints={projectionPoints}
       />
     );
   }
@@ -181,6 +183,7 @@ Body.propTypes = {
   isNewProject: PropTypes.bool.isRequired,
   setIsNewProject: PropTypes.func.isRequired,
   updateProject: PropTypes.func.isRequired,
+  projectionPoints: PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state) {
