@@ -35,9 +35,9 @@ export default class StatusChart extends React.Component {
     this.setYAxisLabel(this.yOffset.defect, 'Count');
     this.setYAxisLabel(this.yOffset.effort, 'Person/Days');
 
-    this.setYAxis(this.yOffset.demand, demandStatus, demandCategories);
-    this.setYAxis(this.yOffset.defect, defectStatus, defectCategories);
-    this.setYAxis(this.yOffset.effort, effortStatus, effortCategories);
+    this.setYAxis(this.yOffset.demand, demandStatus, demandCategories, 'demandY');
+    this.setYAxis(this.yOffset.defect, defectStatus, defectCategories, 'defectY');
+    this.setYAxis(this.yOffset.effort, effortStatus, effortCategories, 'effortY');
   }
 
   componentDidUpdate() {
@@ -51,9 +51,9 @@ export default class StatusChart extends React.Component {
     this.setDateAxis(this.yOffset.defect, this.props.data, this.props.defectCategories, 'defect');
     this.setDateAxis(this.yOffset.effort, this.props.data, this.props.effortCategories, 'effort');
 
-    this.setYAxis(this.yOffset.demand, demandStatus, demandCategories);
-    this.setYAxis(this.yOffset.defect, defectStatus, defectCategories);
-    this.setYAxis(this.yOffset.effort, effortStatus, effortCategories);
+    this.setYAxis(this.yOffset.demand, demandStatus, demandCategories, 'demandY');
+    this.setYAxis(this.yOffset.defect, defectStatus, defectCategories, 'defectY');
+    this.setYAxis(this.yOffset.effort, effortStatus, effortCategories, 'effortY');
 
     this.update();
   }
@@ -80,11 +80,12 @@ export default class StatusChart extends React.Component {
       .attr('class', 'area');
   }
 
-  setYAxis(yOffset = 0, data, categories) {
+  setYAxis(yOffset = 0, data, categories, name) {
     const yScale = yScaleCreator(yOffset, data, categories);
     this.vis.append('g')
       .attr('class', 'axis axis--y')
       .attr('transform', 'translate(-20, 0)')
+      .attr('id', name)
       .call(d3.axisLeft(yScale));
   }
 
@@ -116,26 +117,41 @@ export default class StatusChart extends React.Component {
     d3.select('#defect').remove();
     d3.select('#effort').remove();
 
+    d3.select('#demandChart').remove();
+    d3.select('#defectChart').remove();
+    d3.select('#effortChart').remove();
+
+    d3.select('#demandY').remove();
+    d3.select('#defectY').remove();
+    d3.select('#effortY').remove();
+
+    const demandID = 'demandChart';
+    const defectID = 'defectChart';
+    const effortID = 'effortChart';
+
     this.updateArea(
       this.yOffset.demand,
       this.props.data,
-      this.props.demandCategories
+      this.props.demandCategories,
+      demandID
     );
 
     this.updateArea(
       this.yOffset.defect,
       this.props.defectStatus,
-      this.props.defectCategories
+      this.props.defectCategories,
+      defectID
     );
 
     this.updateArea(
       this.yOffset.effort,
       this.props.effortStatus,
-      this.props.effortCategories
+      this.props.effortCategories,
+      effortID
     );
   }
 
-  updateArea(yOffset, data = [], categories) {
+  updateArea(yOffset, data = [], categories, chartID) {
     const width = this.getSize().width;
     const dateScale = dateScaleCreator(yOffset, data, width);
     const yScale = yScaleCreator(yOffset, data, categories);
@@ -153,7 +169,8 @@ export default class StatusChart extends React.Component {
 
     if (data.length > 0) {
       const stackContainer = this.vis.append('g')
-        .attr('class', 'stack');
+      .attr('id', chartID)
+      .attr('class', 'stack');
 
       const layer = stackContainer.selectAll('.layer')
         .data(stack(data))
