@@ -13,6 +13,7 @@ export default class StatusChart extends React.Component {
     this.chart = null;
     this.chartEffort = null;
     this.vis = null;
+    this.projectionScale = null;
     this.yOffset = {
       demand: 0,
       defect: 450,
@@ -89,6 +90,7 @@ export default class StatusChart extends React.Component {
       .attr('transform', 'translate(-20, 0)')
       .attr('id', name)
       .call(d3.axisLeft(yScale));
+      console.log(yScale)
   }
 
   setDateAxis(yOffset = 0, data, categories, name) {
@@ -269,6 +271,7 @@ export default class StatusChart extends React.Component {
   }
 
   updateProjection() {
+    console.log("projection scale",this.projectionScale)
     if ($('#projection').is(':visible')) {
       d3.select('#projection').remove();
     } else {
