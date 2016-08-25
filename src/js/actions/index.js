@@ -64,7 +64,7 @@ export const fetchProjects = () => (dispatch) => {
       dispatch(receiveProjects(response));
     })
     .fail(response => {
-      dispatch(setErrorMessage(response.responseText));
+      dispatch(setErrorMessage('We could not fetch the projects.'));
       dispatch(onSwitchView('error'));
     });
 };
@@ -85,18 +85,23 @@ export const fetchProject = (id) => (dispatch) => {
   dispatch({
     type: 'FETCH_PROJECT_REQUEST',
   });
-
   return $.get(`${apiBaseUrl}project/${id}`)
     .done(
       data => {
-        dispatch({
-          type: 'FETCH_PROJECT_SUCCESS',
-          project: data[0],
-        });
-        dispatch({
-          type: 'SWITCH_VIEW',
-          view: 'projectView',
-        });
+        const project = data[0];
+        if (project) {
+          dispatch({
+            type: 'FETCH_PROJECT_SUCCESS',
+            project,
+          });
+          dispatch({
+            type: 'SWITCH_VIEW',
+            view: 'projectView',
+          });
+        } else {
+          dispatch(setErrorMessage('We could not fetch the project.'));
+          dispatch(onSwitchView('error'));
+        }
       })
       .fail(() => {
         dispatch({
@@ -111,8 +116,12 @@ export const fetchProject = (id) => (dispatch) => {
 };
 
 export const fetchStatus = (id) => (dispatch) => {
+  // const fakeApiBase = 'https://tonicdev.io/billyzac/57befb878bec6b13001152a9/branches/master';
+  // const demandCall = $.get(`${fakeApiBase}/demand`);
   const demandCall = $.get(`${apiBaseUrl}project/${id}/demand`);
+  // const defectCall = $.get(`${fakeApiBase}/defect`);
   const defectCall = $.get(`${apiBaseUrl}project/${id}/defect`);
+  // const effortCall = $.get(`${fakeApiBase}/effort`);
   const effortCall = $.get(`${apiBaseUrl}project/${id}/effort`);
   dispatch({
     type: 'FETCH_STATUS_REQUEST',
@@ -125,14 +134,8 @@ export const fetchStatus = (id) => (dispatch) => {
     });
   })
   .fail(() => {
-    dispatch({
-      type: 'FETCH_STATUS_FAILURE',
-      errorMessage: 'There was an error.',
-    });
-    dispatch({
-      type: 'SWITCH_VIEW',
-      view: 'error',
-    });
+    dispatch(setErrorMessage('We could not fetch the demand data.'));
+    dispatch(onSwitchView('error'));
   });
   $.when(defectCall)
   .done(statusDefectData => {
@@ -142,14 +145,8 @@ export const fetchStatus = (id) => (dispatch) => {
     });
   })
   .fail(() => {
-    dispatch({
-      type: 'FETCH_STATUS_FAILURE',
-      errorMessage: 'There was an error.',
-    });
-    dispatch({
-      type: 'SWITCH_VIEW',
-      view: 'error',
-    });
+    dispatch(setErrorMessage('We could not fetch the defect data.'));
+    dispatch(onSwitchView('error'));
   });
   $.when(effortCall)
   .done(statusEffortData => {
@@ -159,14 +156,8 @@ export const fetchStatus = (id) => (dispatch) => {
     });
   })
   .fail(() => {
-    dispatch({
-      type: 'FETCH_STATUS_FAILURE',
-      errorMessage: 'There was an error.',
-    });
-    dispatch({
-      type: 'SWITCH_VIEW',
-      view: 'error',
-    });
+    dispatch(setErrorMessage('We could not fetch the effort data.'));
+    dispatch(onSwitchView('error'));
   });
 };
 export const saveFormData = (project) => (dispatch) => {
