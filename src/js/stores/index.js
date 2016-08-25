@@ -1,4 +1,4 @@
-const isLogging = true;
+const isLogging = false;
 
 import thunkMiddleware from 'redux-thunk';
 import reducers from '../reducers';
