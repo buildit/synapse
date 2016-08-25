@@ -216,7 +216,7 @@ export default class StatusChart extends React.Component {
     const yScale = yScaleCreator(yOffset, data, categories);
 
     const area = d3.area()
-      // .curve(d3.curveCardinal)
+      .curve(d3.curveBasis)
       .x(d => dateScale(parseTime(d.data.date)))
       .y0(d => yScale(d[0] || 0))
       .y1(d => yScale(d[1] || 0));
@@ -239,7 +239,9 @@ export default class StatusChart extends React.Component {
 
       layer.append('path')
         .attr('class', 'area')
-        .style('fill', (d, i) => d3.schemeCategory20[i])
+        .style('fill', 'transparent')
+        .style('stroke', (d, i) => d3.schemeCategory20[i])
+        .style('stroke-width', 2)
         .attr('d', area);
     }
 
