@@ -5,6 +5,7 @@ import React, {
 import StatusChart from '../2-molecules/StatusChart';
 const makePoints = require('../../helpers/makePoints');
 import moment from 'moment';
+let projectionStartDate = '';
 
 class Status extends Component {
   componentDidMount() {
@@ -15,10 +16,12 @@ class Status extends Component {
     const demandCategories = this.props.project.demand.flow.map(item => (item.name));
     const defectCategories = this.props.project.defect.severity.map(item => (item.name));
     const effortCategories = this.props.project.effort.role.map(item => (item.name));
+    if (this.props.demandStatus[0]) {
+      projectionStartDate = moment(this.props.demandStatus[0].date);
+    }
 
     const { projection } = this.props;
-    const startDate = moment(this.props.projection.startDate, 'YYYY MM DD').format('DD-MMM-YY');
-
+    const startDate = moment(projectionStartDate, 'YYYY MM DD').format('DD-MMM-YY');
     const { iterationLength } = projection;
     const projectionPoints = makePoints(projection, startDate, iterationLength);
 

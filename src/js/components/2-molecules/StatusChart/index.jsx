@@ -90,7 +90,6 @@ export default class StatusChart extends React.Component {
       .attr('transform', 'translate(-20, 0)')
       .attr('id', name)
       .call(d3.axisLeft(yScale));
-      console.log(yScale)
   }
 
   setDateAxis(yOffset = 0, data, categories, name) {
@@ -243,7 +242,7 @@ export default class StatusChart extends React.Component {
         .attr('class', 'area')
         .style('fill', 'transparent')
         .style('stroke', (d, i) => d3.schemeCategory20[i])
-        .style('stroke-width', 2)
+        .style('stroke-width', 1)
         .attr('d', area);
     }
 
@@ -271,17 +270,16 @@ export default class StatusChart extends React.Component {
   }
 
   updateProjection() {
-    console.log("projection scale",this.projectionScale)
     if ($('#projection').is(':visible')) {
       d3.select('#projection').remove();
     } else {
       const projectionArray = this.props.projectionPoints;
-      const dates = projectionArray.map(item => (parseTime(item.date)));
+      const dates = this.props.data.map(item => (parseTime(item.date)));
       const values = projectionArray.map(item => (item.y));
 
 
       const margin = { top: 100, right: 0, bottom: 0, left: 0 };
-      const width = 600 - margin.left - margin.right;
+      const width = this.getSize().width;
       const height = 200;
 
       const xScale = d3.scaleTime()
