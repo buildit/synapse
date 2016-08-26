@@ -83,7 +83,7 @@ const appData = (state = initialState, action) => {
   case 'FETCH_DEFECT_SUCCESS': {
     return {
       ...state,
-      defectStatus: action.statusDefectData,
+      defectStatus: action.statusData,
       isFetching: false,
     };
   }
@@ -91,7 +91,7 @@ const appData = (state = initialState, action) => {
   case 'FETCH_EFFORT_SUCCESS': {
     return {
       ...state,
-      effortStatus: action.statusEffortData,
+      effortStatus: action.statusData,
       isFetching: false,
     };
   }

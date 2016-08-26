@@ -11,6 +11,7 @@ import {
 import config from 'config';
 import $ from 'jquery';
 const trimFormInputs = require('../helpers/trimFormInputs');
+const isValid = require('../helpers/isValid');
 
 const apiBaseUrl = config.get('Client.api.baseUrl');
 const starterProjectsBaseApiUrl = config.get('Client.starterProjectsApi.baseUrl');
@@ -63,8 +64,8 @@ export const fetchProjects = () => (dispatch) => {
     .done(response => {
       dispatch(receiveProjects(response));
     })
-    .fail(response => {
-      dispatch(setErrorMessage(response.responseText));
+    .fail(() => {
+      dispatch(setErrorMessage('We could not fetch the projects.'));
       dispatch(onSwitchView('error'));
     });
 };
@@ -85,18 +86,23 @@ export const fetchProject = (id) => (dispatch) => {
   dispatch({
     type: 'FETCH_PROJECT_REQUEST',
   });
-
   return $.get(`${apiBaseUrl}project/${id}`)
     .done(
       data => {
-        dispatch({
-          type: 'FETCH_PROJECT_SUCCESS',
-          project: data[0],
-        });
-        dispatch({
-          type: 'SWITCH_VIEW',
-          view: 'projectView',
-        });
+        const project = data[0];
+        if (project) {
+          dispatch({
+            type: 'FETCH_PROJECT_SUCCESS',
+            project,
+          });
+          dispatch({
+            type: 'SWITCH_VIEW',
+            view: 'projectView',
+          });
+        } else {
+          dispatch(setErrorMessage('We could not fetch the project.'));
+          dispatch(onSwitchView('error'));
+        }
       })
       .fail(() => {
         dispatch({
@@ -119,54 +125,51 @@ export const fetchStatus = (id) => (dispatch) => {
   });
   $.when(demandCall)
   .done(statusData => {
-    dispatch({
-      type: 'FETCH_STATUS_SUCCESS',
-      statusData,
-    });
+    if (isValid(statusData, 'demand-status-data')) {
+      dispatch({
+        type: 'FETCH_STATUS_SUCCESS',
+        statusData,
+      });
+    } else {
+      dispatch(setErrorMessage('The demand data received from the API was improperly formatted.'));
+      dispatch(onSwitchView('error'));
+    }
   })
   .fail(() => {
-    dispatch({
-      type: 'FETCH_STATUS_FAILURE',
-      errorMessage: 'There was an error.',
-    });
-    dispatch({
-      type: 'SWITCH_VIEW',
-      view: 'error',
-    });
+    dispatch(setErrorMessage('We could not fetch the demand data.'));
+    dispatch(onSwitchView('error'));
   });
   $.when(defectCall)
-  .done(statusDefectData => {
-    dispatch({
-      type: 'FETCH_DEFECT_SUCCESS',
-      statusDefectData,
-    });
+  .done(statusData => {
+    if (isValid(statusData, 'defect-status-data')) {
+      dispatch({
+        type: 'FETCH_DEFECT_SUCCESS',
+        statusData,
+      });
+    } else {
+      dispatch(setErrorMessage('The defect data received from the API was improperly formatted.'));
+      dispatch(onSwitchView('error'));
+    }
   })
   .fail(() => {
-    dispatch({
-      type: 'FETCH_STATUS_FAILURE',
-      errorMessage: 'There was an error.',
-    });
-    dispatch({
-      type: 'SWITCH_VIEW',
-      view: 'error',
-    });
+    dispatch(setErrorMessage('We could not fetch the defect data.'));
+    dispatch(onSwitchView('error'));
   });
   $.when(effortCall)
-  .done(statusEffortData => {
-    dispatch({
-      type: 'FETCH_EFFORT_SUCCESS',
-      statusEffortData,
-    });
+  .done(statusData => {
+    if (isValid(statusData, 'effort-status-data')) {
+      dispatch({
+        type: 'FETCH_EFFORT_SUCCESS',
+        statusData,
+      });
+    } else {
+      dispatch(setErrorMessage('The effort data received from the API was improperly formatted.'));
+      dispatch(onSwitchView('error'));
+    }
   })
   .fail(() => {
-    dispatch({
-      type: 'FETCH_STATUS_FAILURE',
-      errorMessage: 'There was an error.',
-    });
-    dispatch({
-      type: 'SWITCH_VIEW',
-      view: 'error',
-    });
+    dispatch(setErrorMessage('We could not fetch the effort data.'));
+    dispatch(onSwitchView('error'));
   });
 };
 export const saveFormData = (project) => (dispatch) => {
