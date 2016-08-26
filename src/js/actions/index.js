@@ -105,14 +105,8 @@ export const fetchProject = (id) => (dispatch) => {
         }
       })
       .fail(() => {
-        dispatch({
-          type: 'FETCH_PROJECT_FAILURE',
-          errorMessage: 'There was an error.',
-        });
-        dispatch({
-          type: 'SWITCH_VIEW',
-          view: 'error',
-        });
+        dispatch(setErrorMessage('We could not fetch the project.'));
+        dispatch(onSwitchView('error'));
       });
 };
 
@@ -120,9 +114,12 @@ export const fetchStatus = (id) => (dispatch) => {
   const demandCall = $.get(`${apiBaseUrl}project/${id}/demand`);
   const defectCall = $.get(`${apiBaseUrl}project/${id}/defect`);
   const effortCall = $.get(`${apiBaseUrl}project/${id}/effort`);
-  dispatch({
-    type: 'FETCH_STATUS_REQUEST',
-  });
+
+  const fetchFailureMessage = `It seems that the data service is unresponsive.
+    Please check the data service and make sure it's up and running.`;
+
+  dispatch({ type: 'FETCH_STATUS_REQUEST' });
+
   $.when(demandCall)
   .done(statusData => {
     if (isValid(statusData, 'demand-status-data')) {
@@ -136,7 +133,7 @@ export const fetchStatus = (id) => (dispatch) => {
     }
   })
   .fail(() => {
-    dispatch(setErrorMessage('We could not fetch the demand data.'));
+    dispatch(setErrorMessage(fetchFailureMessage));
     dispatch(onSwitchView('error'));
   });
   $.when(defectCall)
@@ -152,7 +149,7 @@ export const fetchStatus = (id) => (dispatch) => {
     }
   })
   .fail(() => {
-    dispatch(setErrorMessage('We could not fetch the defect data.'));
+    dispatch(setErrorMessage(fetchFailureMessage));
     dispatch(onSwitchView('error'));
   });
   $.when(effortCall)
@@ -168,7 +165,7 @@ export const fetchStatus = (id) => (dispatch) => {
     }
   })
   .fail(() => {
-    dispatch(setErrorMessage('We could not fetch the effort data.'));
+    dispatch(setErrorMessage(fetchFailureMessage));
     dispatch(onSwitchView('error'));
   });
 };
