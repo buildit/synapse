@@ -2,6 +2,7 @@ import React, {
   Component,
   PropTypes,
 } from 'react';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/';
 import Button from '../1-atoms/Button';
@@ -13,8 +14,9 @@ class ProjectList extends Component {
   }
 
   render() {
-    const onProjectViewClick = id => {
-      this.props.fetchProject(id);
+    const onProjectViewClick = projectId => {
+      this.props.fetchProject(projectId);
+      browserHistory.push(`/${projectId}`);
     };
 
     if (this.props.isFetching) {
@@ -22,6 +24,12 @@ class ProjectList extends Component {
     }
     return (
       <div>
+        <Button
+          label="New"
+          onClick={() => {
+            browserHistory.push('/new');
+          }}
+        />
         <TableWithAction
           tableData={this.props.projectList || []}
           visibleColumns={[
@@ -37,32 +45,6 @@ class ProjectList extends Component {
         />
       </div>
     );
-
-
-
-    // return (
-    //   <div>
-    //     <Button
-    //       label="New"
-    //       onClick={() => {
-    //         this.props.onSwitchView('newProjectList');
-    //       }}
-    //     />
-    //     <TableWithAction
-    //       tableData={this.props.projects || []}
-    //       visibleColumns={[
-    //         'name',
-    //         'portfolio',
-    //         'program',
-    //         'status',
-    //         'description',
-    //       ]}
-    //       rowKey={'id'}
-    //       onActionClick={onProjectViewClick}
-    //       actionLabel="View"
-    //     />
-    //   </div>
-    // );
   }
 }
 
@@ -74,13 +56,10 @@ ProjectList.propTypes = {
   isFetching: PropTypes.bool,
 };
 
-const mapStateToProps = state => {
-  return (
-    {
-      projectList: state.appData.projectList,
-    }
-  );
-}
-
+const mapStateToProps = state => (
+  {
+    projectList: state.appData.projectList,
+  }
+);
 
 export default connect(mapStateToProps, actionCreators)(ProjectList);

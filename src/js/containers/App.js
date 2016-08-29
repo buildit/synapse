@@ -1,65 +1,48 @@
 import React, {
   PropTypes,
 } from 'react';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import Body from '../components/4-ecosystems/Body';
 import Header from '../components/2-molecules/Header';
 import * as actionCreators from '../actions/index.js';
-import ProjectLink from '../components/1-atoms/ProjectLink';
 
 const App = ({
-  params,
-  ui,
-  onSwitchView,
-  fetchProject,
-  fetchProjects,
-  fetchStatus,
+  message,
   resetProject,
   dismissMessage,
-  projectName }) => {
-  return (
+  projectName,
+  children,
+ }) => (
   <div className="container">
-    <ProjectLink id="something">Click me</ProjectLink>
     <Header
       projectName={projectName}
       goHome={() => {
-        onSwitchView('listView');
+        browserHistory.push('/');
         resetProject();
       }}
-      message={ui.message}
+      message={message}
       dismissMessage={dismissMessage}
     />
-    <Body
-      projectId={params.projectId || ''}
-      view={ui.view}
-      fetchProject={fetchProject}
-      fetchProjects={fetchProjects}
-      fetchStatus={fetchStatus}
-    />
+    {children}
   </div>
-)};
+);
 
 App.propTypes = {
-  ui: PropTypes.object.isRequired,
-  appData: PropTypes.object.isRequired,
-  onSwitchView: PropTypes.func.isRequired,
-  fetchProject: PropTypes.func.isRequired,
-  fetchProjects: PropTypes.func.isRequired,
-  fetchStatus: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
   resetProject: PropTypes.func.isRequired,
   dismissMessage: PropTypes.func.isRequired,
   projectName: PropTypes.string,
   updateProject: PropTypes.func.isRequired,
+  children: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
   const projectName = state.appData.project ? state.appData.project.name : '';
-  const props = {
-    ui: state.ui,
+  return {
+    message: state.ui.message,
     appData: state.appData,
     projectName,
   };
-  return props;
 }
 
 export default connect(mapStateToProps, actionCreators)(App);

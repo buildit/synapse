@@ -83,6 +83,7 @@ const ui = (state = {
     newList = newList.slice(0, action.index).concat(newList.slice(action.index + 1));
     const newFormData = state.formData;
     newFormData[action.section][action.list] = newList;
+    newFormData.newAppendage = 'thumb';
     return {
       ...state,
       formData: newFormData,

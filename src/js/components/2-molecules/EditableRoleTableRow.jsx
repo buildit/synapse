@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import Link from '../1-atoms/Link';
 import Icon from '../1-atoms/Icon';
 
 const EditableRoleTableRow = React.createClass({

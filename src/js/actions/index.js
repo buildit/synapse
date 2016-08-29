@@ -115,6 +115,11 @@ export const fetchStatus = (id) => (dispatch) => {
   const defectCall = $.get(`${apiBaseUrl}project/${id}/defect`);
   const effortCall = $.get(`${apiBaseUrl}project/${id}/effort`);
 
+  // These endpoints provide simplified status data, which is helpful for testing.
+  // const demandCall = $.get('https://tonicdev.io/billyzac/57befb878bec6b13001152a9/branches/master/demand');
+  // const defectCall = $.get('https://tonicdev.io/billyzac/57befb878bec6b13001152a9/branches/master/defect');
+  // const effortCall = $.get('https://tonicdev.io/billyzac/57befb878bec6b13001152a9/branches/master/effort');
+
   const fetchFailureMessage = `It seems that the data service is unresponsive.
     Please check the data service and make sure it's up and running.`;
 

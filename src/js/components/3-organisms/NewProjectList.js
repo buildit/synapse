@@ -2,6 +2,9 @@ import React, {
   Component,
   PropTypes,
 } from 'react';
+import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
+import * as actionCreators from '../../actions/';
 import Button from '../1-atoms/Button';
 import TableWithAction from '../2-molecules/TableWithAction';
 
@@ -16,7 +19,11 @@ class NewProjectList extends Component {
     const onProjectCreateClick = (harvestId) => {
       this.props.initializeNewProject(harvestId);
       setIsNewProject(true);
-      this.props.onSwitchView('editProject');
+      if (harvestId) {
+        browserHistory.push(`${harvestId}/edit`);
+      } else {
+        browserHistory.push('new-project/edit');
+      }
     };
 
     if (this.props.isFetching) {
@@ -34,7 +41,9 @@ class NewProjectList extends Component {
         />
         <Button
           label="Cancel"
-          onClick={this.props.goHome}
+          onClick={() => {
+            browserHistory.push('/');
+          }}
         />
         <TableWithAction
           tableData={starterProjects || []}
@@ -60,9 +69,13 @@ NewProjectList.propTypes = {
   initializeNewProject: PropTypes.func,
   starterProjects: PropTypes.array,
   isFetching: PropTypes.bool,
-  projectList: PropTypes.array,
-  goHome: PropTypes.func,
   setIsNewProject: PropTypes.func.isRequired,
 };
 
-export default NewProjectList;
+const mapStateToProps = state => (
+  {
+    starterProjects: state.appData.starterProjectList,
+  }
+);
+
+export default connect(mapStateToProps, actionCreators)(NewProjectList);

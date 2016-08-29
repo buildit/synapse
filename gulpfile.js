@@ -12,6 +12,7 @@ const cowsay = require('cowsay');
 const template = require('gulp-template');
 const rename = require('gulp-rename');
 const environment = process.env.NODE_ENV || 'development';
+const history = require('connect-history-api-fallback');
 
 gulp.task('clean', () => (
   del(['dist'])
@@ -96,6 +97,11 @@ gulp.task('server', () => {
     root: 'dist',
     port: 3000,
     livereload: true,
+    middleware: () => (
+      [
+        history({}),
+      ]
+    ),
   });
 });
 

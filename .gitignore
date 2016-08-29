@@ -19,3 +19,6 @@ errorShots/
 
 # Logs
 *.log
+
+# Editor stuff
+.tern-project

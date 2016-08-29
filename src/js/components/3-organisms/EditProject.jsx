@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
+import * as actionCreators from '../../actions/';
 import Input from '../1-atoms/Input';
 import ProjectDateInput from '../1-atoms/ProjectDateInput';
 import Button from '../1-atoms/Button';
@@ -17,7 +20,6 @@ class EditProject extends Component {
   render() {
     const onInputChange = this.props.onInputChange;
     const project = this.props.project;
-    const goHome = this.props.goHome;
     const saveFormData = this.props.saveFormData;
     const onListItemRemove = this.props.onListItemRemove;
     const addItemToDemandFlowList = this.props.addItemToDemandFlowList;
@@ -28,6 +30,13 @@ class EditProject extends Component {
     const moveListItemDown = this.props.moveListItemDown;
     const isNewProject = this.props.isNewProject;
     const updateProject = this.props.updateProject;
+    const resetProject = this.props.resetProject;
+
+    const goHome = () => {
+      browserHistory.push('/'); // Should this be handled in a redux action?
+      resetProject();
+    };
+
     return (
       <div>
         <Button
@@ -42,8 +51,7 @@ class EditProject extends Component {
         />
         <Button
           label="Cancel"
-          onClick={(event) => {
-            event.preventDefault();
+          onClick={() => {
             goHome();
           }}
         />
@@ -344,7 +352,11 @@ class EditProject extends Component {
         <Button
           label="Save"
           onClick={() => {
-            saveFormData(project);
+            if (isNewProject) {
+              saveFormData(project);
+            } else {
+              updateProject(project);
+            }
           }}
         />
         <Button
@@ -359,11 +371,8 @@ class EditProject extends Component {
   }
 }
 
-export default EditProject;
-
 EditProject.propTypes = {
   project: PropTypes.object.isRequired,
-  goHome: PropTypes.func.isRequired,
   saveFormData: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
   initializeFormData: PropTypes.func.isRequired,
@@ -374,6 +383,18 @@ EditProject.propTypes = {
   addItemToSeverityList: PropTypes.func.isRequired,
   moveListItemUp: PropTypes.func.isRequired,
   moveListItemDown: PropTypes.func.isRequired,
-  isNewProject: PropTypes.bool.isRequired,
   updateProject: PropTypes.func.isRequired,
+  resetProject: PropTypes.func.isRequired,
+  isNewProject: PropTypes.bool.isRequired,
 };
+
+const mapStateToProps = state => ({
+  project: state.appData.project,
+  isNewProject: state.isNewProject,
+
+  // Passing this down as a prop for one reason only: to trigger the render to update.
+  ui: state.ui,
+  // Sheesh.
+});
+
+export default connect(mapStateToProps, actionCreators)(EditProject);

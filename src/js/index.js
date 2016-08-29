@@ -1,19 +1,15 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, browserHistory } from 'react-router';
 import configureStore from './stores';
-import ProjectList from './components/3-organisms/ProjectList';
-import Project from './components/3-organisms/Project';
+import routes from './routes';
 
 const store = configureStore();
 
 render(
   <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path="/" component={ProjectList} />
-      <Route path="/(:projectId)" component={Project} />
-    </Router>
+    <Router routes={routes} history={browserHistory} />
   </Provider>,
   document.getElementById('app')
 );
