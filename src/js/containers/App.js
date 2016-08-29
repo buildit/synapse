@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 import Body from '../components/4-ecosystems/Body';
 import Header from '../components/2-molecules/Header';
 import * as actionCreators from '../actions/index.js';
+import ProjectLink from '../components/1-atoms/ProjectLink';
 
 const App = ({
+  params,
   ui,
   onSwitchView,
   fetchProject,
@@ -14,8 +16,10 @@ const App = ({
   fetchStatus,
   resetProject,
   dismissMessage,
-  projectName }) => (
+  projectName }) => {
+  return (
   <div className="container">
+    <ProjectLink id="something">Click me</ProjectLink>
     <Header
       projectName={projectName}
       goHome={() => {
@@ -26,13 +30,14 @@ const App = ({
       dismissMessage={dismissMessage}
     />
     <Body
+      projectId={params.projectId || ''}
       view={ui.view}
       fetchProject={fetchProject}
       fetchProjects={fetchProjects}
       fetchStatus={fetchStatus}
     />
   </div>
-);
+)};
 
 App.propTypes = {
   ui: PropTypes.object.isRequired,

@@ -1,7 +1,7 @@
 import React from 'react';
 import TableCell from '../1-atoms/TableCell';
 import TableHeaderCell from '../1-atoms/TableHeaderCell';
-import Link from '../1-atoms/Link';
+import ProjectLink from '../1-atoms/ProjectLink';
 
 const TableWithAction = ({ tableData, visibleColumns, rowKey, onActionClick, actionLabel }) => {
   let headerRow = [];
@@ -18,13 +18,11 @@ const TableWithAction = ({ tableData, visibleColumns, rowKey, onActionClick, act
       bodyRow.push(<TableCell key={i + key} cellValue={cellValue} />);
     }
     bodyRow.push(<td key={`link-${i}`}>
-      <Link
-        label={actionLabel}
-        id={`link-${i}`}
-        onClick={() => {
-          onActionClick(tableData[i][rowKey]);
-        }}
-      />
+      <ProjectLink
+        id={tableData[i][rowKey]}
+      >
+        View
+      </ProjectLink>
     </td>);
     bodyRows.push(<tr
       id={tableData[i][rowKey]}
