@@ -9,12 +9,10 @@ import TableWithAction from '../2-molecules/TableWithAction';
 
 class ProjectList extends Component {
   componentDidMount() {
-    console.log('this.props.fetchProjects', this.props.fetchProjects);
     this.props.fetchProjects();
   }
 
   render() {
-    console.log('this.props.projectList', this.props.projectList);
     const onProjectViewClick = id => {
       this.props.fetchProject(id);
     };
@@ -77,7 +75,6 @@ ProjectList.propTypes = {
 };
 
 const mapStateToProps = state => {
-  console.log('state', state);
   return (
     {
       projectList: state.appData.projectList,

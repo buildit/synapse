@@ -11,7 +11,7 @@
     "test-it-the-other-way": "node standalone-test.js",
     "validate": "npm ls"
   },
-  "pre-commit": [
+  "pre-commit#master": [
     "lint",
     "test",
     "validate"
