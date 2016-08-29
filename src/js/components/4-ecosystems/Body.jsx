@@ -13,6 +13,7 @@ const filterListByIds = require('../../helpers/filterListByIds');
 const transformStatusData = require('../../helpers/transformStatusData');
 
 const Body = ({
+  projectId,
   appData,
   ui,
   view,
@@ -46,6 +47,7 @@ const Body = ({
   updateProject,
   projectionPoints,
  }) => {
+   console.log('projectId', projectId);
   switch (view) {
 
   case 'listView': {
