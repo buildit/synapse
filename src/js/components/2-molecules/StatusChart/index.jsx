@@ -319,8 +319,10 @@ export default class StatusChart extends React.Component {
   }
 
   render() {
+    console.log("projection data",this.props.projectionData)
     return (
       <div className="status-chart">
+
         <div>
           <Button
             label="Projection"
@@ -348,6 +350,7 @@ StatusChart.propTypes = {
   effortCategories: React.PropTypes.array.isRequired,
   projectId: React.PropTypes.string.isRequired,
   projectionPoints: React.PropTypes.array.isRequired,
+  projectionData: React.PropTypes.array.isRequired,
 };
 
 StatusChart.defaultProps = {

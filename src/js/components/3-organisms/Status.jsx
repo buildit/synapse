@@ -5,6 +5,8 @@ import React, {
 import StatusChart from '../2-molecules/StatusChart';
 const makePoints = require('../../helpers/makePoints');
 import moment from 'moment';
+let demandEndDate = '';
+let demandEndDateIndex = '';
 
 class Status extends Component {
   componentDidMount() {
@@ -15,6 +17,12 @@ class Status extends Component {
     const demandCategories = this.props.project.demand.flow.map(item => (item.name));
     const defectCategories = this.props.project.defect.severity.map(item => (item.name));
     const effortCategories = this.props.project.effort.role.map(item => (item.name));
+    if (this.props.demandStatus) {
+      demandEndDateIndex = (this.props.demandStatus.length) - 1;
+    }
+    if (this.props.demandStatus[demandEndDateIndex]) {
+      demandEndDate = moment(this.props.demandStatus[demandEndDateIndex].date, 'DD-MMM-YY');
+    }
     const projectionOverlayStartDate = moment(
       this.props.projection.startDate,
       'YYYY MM DD').format('DD-MMM-YY'
@@ -24,6 +32,8 @@ class Status extends Component {
 
     const { iterationLength } = projection;
     const projectionPoints = makePoints(projection, projectionOverlayStartDate, iterationLength);
+    const endProjectionDate = moment(projectionPoints[3].date, 'DD-MMM-YY');
+    const diffInDays = endProjectionDate.diff(demandEndDate, 'days');
 
     return (
       <div>
@@ -37,6 +47,8 @@ class Status extends Component {
             effortCategories={effortCategories}
             projectId={this.props.projectId}
             projectionPoints={projectionPoints}
+            projectionData={this.props.projection}
+            diffInDays={diffInDays}
           />
         </div>
       </div>
@@ -56,6 +68,9 @@ Status.propTypes = {
   projection: React.PropTypes.object.isRequired,
   projectionPoints: PropTypes.array.isRequired,
   startDate: React.PropTypes.string,
+  projectionData: PropTypes.array.isRequired,
+  demandEnDate: React.PropTypes.string,
+  diffInDays: PropTypes.string.isRequired,
 };
 
 export default Status;
