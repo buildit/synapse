@@ -83,7 +83,6 @@ const mapStateToProps = state => {
   const defectStatus = transformStatusData(state.appData.defectStatus, 'severity');
   const effortStatus = transformStatusData(state.appData.effortStatus, 'activity');
 
-  console.log('state', state);
   return {
     project: state.appData.project,
     projection: state.projection,
