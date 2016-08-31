@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/';
 import Button from '../1-atoms/Button';
-import TableWithAction from '../2-molecules/TableWithAction';
+import ProjectsTable from '../2-molecules/ProjectsTable';
 
 class ProjectList extends Component {
   componentDidMount() {
@@ -14,14 +14,10 @@ class ProjectList extends Component {
   }
 
   render() {
-    const onProjectViewClick = projectId => {
-      this.props.fetchProject(projectId);
-      browserHistory.push(`/${projectId}`);
-    };
-
     if (this.props.isFetching) {
       return <div>Fetching project list...</div>;
     }
+
     return (
       <div>
         <Button
@@ -30,7 +26,7 @@ class ProjectList extends Component {
             browserHistory.push('/new');
           }}
         />
-        <TableWithAction
+        <ProjectsTable
           tableData={this.props.projectList || []}
           visibleColumns={[
             'name',
@@ -40,8 +36,6 @@ class ProjectList extends Component {
             'description',
           ]}
           rowKey={'id'}
-          onActionClick={onProjectViewClick}
-          actionLabel="View"
         />
       </div>
     );

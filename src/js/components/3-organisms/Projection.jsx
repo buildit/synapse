@@ -12,10 +12,12 @@ import DateInput from '../1-atoms/DateInput';
 
 class Projection extends Component {
   componentDidMount() {
-    this.props.fetchProjection(this.props.id);
+    const { projectId } = this.props.params;
+    this.props.fetchProjection(projectId);
   }
 
   render() {
+    const { projectId } = this.props.params;
     let value;
     return (
       <div className="projection">
@@ -136,7 +138,7 @@ class Projection extends Component {
               <Button
                 label="Save"
                 onClick={() => {
-                  this.props.saveProjection(this.props.projection, this.props.id);
+                  this.props.saveProjection(this.props.projection, projectId);
                 }}
               />
 
@@ -151,8 +153,6 @@ class Projection extends Component {
 
 function mapStateToProps(state) {
   const props = {
-    title: state.appData.project.title,
-    id: state.appData.project.id,
     projection: state.projection,
   };
   return props;
@@ -164,4 +164,5 @@ Projection.propTypes = {
   projection: PropTypes.object.isRequired,
   updateProjectionVelocityStart: PropTypes.func.isRequired,
   saveProjection: PropTypes.func.isRequired,
+  params: React.PropTypes.object.isRequired,
 };

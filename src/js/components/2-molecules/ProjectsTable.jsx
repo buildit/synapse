@@ -1,9 +1,9 @@
 import React from 'react';
-import Button from '../1-atoms/Button';
+import RouteLink from '../1-atoms/RouteLink';
 import TableCell from '../1-atoms/TableCell';
 import TableHeaderCell from '../1-atoms/TableHeaderCell';
 
-const TableWithAction = ({ tableData, visibleColumns, rowKey, onActionClick, actionLabel }) => {
+const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
   let headerRow = [];
   let bodyRows = [];
 
@@ -12,19 +12,32 @@ const TableWithAction = ({ tableData, visibleColumns, rowKey, onActionClick, act
   }
 
   for (let i = 0; i < tableData.length; i++) {
+    const projectId = tableData[i][rowKey];
     let bodyRow = [];
+
     for (const key of visibleColumns) {
       let cellValue = tableData[i][key];
       bodyRow.push(<TableCell key={i + key} cellValue={cellValue} />);
     }
-    bodyRow.push(<td key={`link-${i}`}>
-      <Button
-        label={actionLabel}
-        onClick={() => {
-          onActionClick(tableData[i][rowKey]);
-        }}
-      />
-    </td>);
+
+    bodyRow.push(
+      <td key={`view-${projectId}`}>
+        <RouteLink
+          route={`${projectId}`}
+          label="View"
+        />
+      </td>
+    );
+
+    bodyRow.push(
+      <td key={`projection-${projectId}`}>
+        <RouteLink
+          route={`${projectId}/projection`}
+          label="Projection"
+        />
+      </td>
+    );
+
     bodyRows.push(<tr
       id={tableData[i][rowKey]}
       key={tableData[i][rowKey]}
@@ -46,9 +59,9 @@ const TableWithAction = ({ tableData, visibleColumns, rowKey, onActionClick, act
   );
 };
 
-export default TableWithAction;
+export default ProjectsTable;
 
-TableWithAction.propTypes = {
+ProjectsTable.propTypes = {
   tableData: React.PropTypes.array.isRequired,
   visibleColumns: React.PropTypes.array.isRequired,
   rowKey: React.PropTypes.string.isRequired,
