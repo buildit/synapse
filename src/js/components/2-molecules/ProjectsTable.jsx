@@ -38,6 +38,15 @@ const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
       </td>
     );
 
+    bodyRow.push(
+      <td key={`status-${projectId}`}>
+        <RouteLink
+          route={`${projectId}/status`}
+          label="Status"
+        />
+      </td>
+    );
+
     bodyRows.push(<tr
       id={tableData[i][rowKey]}
       key={tableData[i][rowKey]}
