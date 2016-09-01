@@ -3,44 +3,18 @@ import React, {
   PropTypes,
 } from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import * as actionCreators from '../../actions/';
 import StatusChart from '../2-molecules/StatusChart';
 import transformStatusData from '../../helpers/transformStatusData';
-import makePoints from '../../helpers/makePoints';
-let demandEndDate = '';
-let demandEndDateIndex = '';
 
 class Status extends Component {
-  componentDidMount() {
-    console.log('this.props', this.props);
+  componentWillMount() {
     const { projectId } = this.props.params;
     this.props.fetchStatus(projectId);
-    this.props.fetchProjection(projectId);
+    this.props.fetchProject(projectId);
   }
 
   render() {
-    const demandCategories = this.props.project.demand.flow.map(item => (item.name));
-    const defectCategories = this.props.project.defect.severity.map(item => (item.name));
-    const effortCategories = this.props.project.effort.role.map(item => (item.name));
-    if (this.props.demandStatus) {
-      demandEndDateIndex = (this.props.demandStatus.length) - 1;
-    }
-    if (this.props.demandStatus[demandEndDateIndex]) {
-      demandEndDate = moment(this.props.demandStatus[demandEndDateIndex].date, 'DD-MMM-YY');
-    }
-    const projectionOverlayStartDate = moment(
-      this.props.projection.startDate,
-      'YYYY MM DD').format('DD-MMM-YY'
-    );
-
-    const { projection } = this.props;
-
-    const { iterationLength } = projection;
-    const projectionPoints = makePoints(projection, projectionOverlayStartDate, iterationLength);
-    const endProjectionDate = moment(projectionPoints[3].date, 'DD-MMM-YY');
-    const diffInDays = endProjectionDate.diff(demandEndDate, 'days');
-
     return (
       <div>
         <div>
@@ -48,12 +22,9 @@ class Status extends Component {
             data={this.props.demandStatus}
             defectStatus={this.props.defectStatus}
             effortStatus={this.props.effortStatus}
-            demandCategories={demandCategories}
-            defectCategories={defectCategories}
-            effortCategories={effortCategories}
-            projectionPoints={projectionPoints}
-            projectionData={this.props.projection}
-            diffInDays={diffInDays}
+            demandCategories={this.props.demandCategories}
+            defectCategories={this.props.defectCategories}
+            effortCategories={this.props.effortCategories}
           />
         </div>
       </div>
@@ -64,18 +35,15 @@ class Status extends Component {
 
 Status.propTypes = {
   fetchStatus: PropTypes.func.isRequired,
-  projectName: PropTypes.string.isRequired,
+  fetchProject: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,
-  projectId: PropTypes.string.isRequired,
   demandStatus: PropTypes.array.isRequired,
   defectStatus: PropTypes.array.isRequired,
   effortStatus: PropTypes.array.isRequired,
-  projection: React.PropTypes.object.isRequired,
-  projectionPoints: PropTypes.array.isRequired,
-  startDate: React.PropTypes.string,
-  projectionData: PropTypes.array.isRequired,
-  demandEnDate: React.PropTypes.string,
-  diffInDays: PropTypes.string.isRequired,
+  demandCategories: PropTypes.array.isRequired,
+  defectCategories: PropTypes.array.isRequired,
+  effortCategories: PropTypes.array.isRequired,
+  params: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -83,12 +51,19 @@ const mapStateToProps = state => {
   const defectStatus = transformStatusData(state.appData.defectStatus, 'severity');
   const effortStatus = transformStatusData(state.appData.effortStatus, 'activity');
 
+  const demandCategories = state.appData.project.demand.flow.map(item => (item.name));
+  const defectCategories = state.appData.project.defect.severity.map(item => (item.name));
+  const effortCategories = state.appData.project.effort.role.map(item => (item.name));
+
+
   return {
     project: state.appData.project,
-    projection: state.projection,
     demandStatus,
     defectStatus,
     effortStatus,
+    demandCategories,
+    defectCategories,
+    effortCategories,
   };
 };
 

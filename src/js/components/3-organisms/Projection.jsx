@@ -19,6 +19,7 @@ class Projection extends Component {
   render() {
     const { projectId } = this.props.params;
     let value;
+
     return (
       <div className="projection">
         <div className="container">
@@ -161,8 +162,8 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, actionCreators)(Projection);
 
 Projection.propTypes = {
+  params: PropTypes.object.isRequired,
   projection: PropTypes.object.isRequired,
-  updateProjectionVelocityStart: PropTypes.func.isRequired,
   saveProjection: PropTypes.func.isRequired,
   params: React.PropTypes.object.isRequired,
 };
