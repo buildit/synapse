@@ -6,18 +6,20 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/';
 import Button from '../1-atoms/Button';
-import TableWithAction from '../2-molecules/TableWithAction';
+import NewProjectsTable from '../2-molecules/NewProjectsTable';
+import normalizeProject from '../../helpers/normalizeProject';
+import filterListByIds from '../../helpers/filterListByIds';
 
 class NewProjectList extends Component {
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchStarterProjects();
   }
 
   render() {
-    const { starterProjects, setIsNewProject } = this.props;
+    const { starterProjectList, setIsNewProject, initializeNewProject } = this.props;
 
-    const onProjectCreateClick = (harvestId) => {
-      this.props.initializeNewProject(harvestId);
+    const onProjectCreateClick = harvestId => {
+      initializeNewProject(harvestId);
       setIsNewProject(true);
       if (harvestId) {
         browserHistory.push(`${harvestId}/edit`);
@@ -45,8 +47,8 @@ class NewProjectList extends Component {
             browserHistory.push('/');
           }}
         />
-        <TableWithAction
-          tableData={starterProjects || []}
+        <NewProjectsTable
+          tableData={starterProjectList || []}
           visibleColumns={[
             'name',
             'portfolio',
@@ -55,8 +57,7 @@ class NewProjectList extends Component {
             'description',
           ]}
           rowKey={'id'}
-          onActionClick={onProjectCreateClick}
-          actionLabel="Create"
+          onProjectCreateClick={onProjectCreateClick}
         />
       </div>
     );
@@ -65,17 +66,30 @@ class NewProjectList extends Component {
 
 NewProjectList.propTypes = {
   fetchStarterProjects: PropTypes.func,
-  onSwitchView: PropTypes.func,
   initializeNewProject: PropTypes.func,
-  starterProjects: PropTypes.array,
+  starterProjectList: PropTypes.array.isRequired,
   isFetching: PropTypes.bool,
   setIsNewProject: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => (
+const mapStateToProps = state => {
+  // Normalize the raw Harvest project data
+  let starterProjectList =
+    state.appData.starterProjectList.map(_project => (normalizeProject(_project)));
+
+
+  // Remove projects already in Synapse
+  const existingProjectListIds = state.appData.projectList.map(_project => _project.id);
+  starterProjectList = filterListByIds(starterProjectList, existingProjectListIds);
+
+  // Show only Active projects
+  starterProjectList = starterProjectList.filter(_project => _project.status === 'Active');
+
+  return (
   {
-    starterProjects: state.appData.starterProjectList,
+    starterProjectList,
   }
-);
+  );
+};
 
 export default connect(mapStateToProps, actionCreators)(NewProjectList);

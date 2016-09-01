@@ -11,6 +11,7 @@ import EditableSeverityTable from '../2-molecules/EditableSeverityTable';
 import AddFlowItem from '../2-molecules/AddFlowItem';
 import AddRoleItem from '../2-molecules/AddRoleItem';
 import AddSeverityItem from '../2-molecules/AddSeverityItem';
+import normalizeProject from '../../helpers/normalizeProject';
 
 class EditProject extends Component {
   componentWillMount() {
@@ -388,13 +389,17 @@ EditProject.propTypes = {
   isNewProject: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
-  project: state.appData.project,
-  isNewProject: state.isNewProject,
+const mapStateToProps = state => {
+  const project = normalizeProject(state.appData.project);
+  return ({
+    project,
+    isNewProject: state.isNewProject,
 
-  // Passing this down as a prop for one reason only: to trigger the render to update.
-  ui: state.ui,
-  // Sheesh.
-});
+    // Passing this down as a prop for one reason only: to trigger the render to update.
+    ui: state.ui,
+    // Sheesh.
+  });
+};
+
 
 export default connect(mapStateToProps, actionCreators)(EditProject);

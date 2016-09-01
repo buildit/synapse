@@ -28,10 +28,6 @@ const receiveProjects = (response) => (
   }
 );
 
-const requestStarterProjects = () => (
-  { type: 'FETCH_STARTER_PROJECTS_REQUEST' }
-);
-
 const receiveStarterProjects = (response) => (
   {
     type: 'FETCH_STARTER_PROJECTS_RECEIVE',
@@ -82,14 +78,17 @@ export const fetchProjects = () => (dispatch) => {
 };
 
 export const fetchStarterProjects = () => (dispatch) => {
-  dispatch(requestStarterProjects());
+  dispatch({
+    type: 'FETCH_STARTER_PROJECTS_REQUEST',
+  });
+
   return $.get(`${starterProjectsBaseApiUrl}harvest_project/`)
     .done(response => {
       dispatch(receiveStarterProjects(response));
     })
     .fail(response => {
       dispatch(setErrorMessage(response.responseText));
-      dispatch(onSwitchView('error'));
+      dispatch(switchLocation('error'));
     });
 };
 
@@ -112,12 +111,12 @@ export const fetchProject = (id) => (dispatch) => {
           });
         } else {
           dispatch(setErrorMessage('We could not fetch the project.'));
-          dispatch(onSwitchView('error'));
+          dispatch(switchLocation('error'));
         }
       })
       .fail(() => {
         dispatch(setErrorMessage('We could not fetch the project.'));
-        dispatch(onSwitchView('error'));
+        dispatch(switchLocation('error'));
       });
 };
 

@@ -1,9 +1,8 @@
 import React from 'react';
-import RouteLink from '../1-atoms/RouteLink';
 import TableCell from '../1-atoms/TableCell';
 import TableHeaderCell from '../1-atoms/TableHeaderCell';
 
-const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
+const NewProjectsTable = ({ tableData, visibleColumns, rowKey, onProjectCreateClick }) => {
   let headerRow = [];
   let bodyRows = [];
 
@@ -21,29 +20,14 @@ const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
     }
 
     bodyRow.push(
-      <td key={`view-${projectId}`}>
-        <RouteLink
-          route={`${projectId}`}
-          label="View"
-        />
-      </td>
-    );
-
-    bodyRow.push(
-      <td key={`projection-${projectId}`}>
-        <RouteLink
-          route={`${projectId}/projection`}
-          label="Projection"
-        />
-      </td>
-    );
-
-    bodyRow.push(
-      <td key={`status-${projectId}`}>
-        <RouteLink
-          route={`${projectId}/status`}
-          label="Status"
-        />
+      <td key={`create-${projectId}`}>
+        <span
+          onClick={() => {
+            onProjectCreateClick(projectId);
+          }}
+        >
+          Create
+        </span>
       </td>
     );
 
@@ -68,10 +52,11 @@ const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
   );
 };
 
-export default ProjectsTable;
+export default NewProjectsTable;
 
-ProjectsTable.propTypes = {
+NewProjectsTable.propTypes = {
   tableData: React.PropTypes.array.isRequired,
   visibleColumns: React.PropTypes.array.isRequired,
   rowKey: React.PropTypes.string.isRequired,
+  onProjectCreateClick: React.PropTypes.func.isRequired,
 };
