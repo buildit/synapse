@@ -270,7 +270,6 @@ export default class StatusChart extends React.Component {
   }
 
   updateProjection() {
-    console.log('yo');
     if ($('#projection').is(':visible')) {
       d3.select('#projection').remove();
     } else {
@@ -320,7 +319,6 @@ export default class StatusChart extends React.Component {
   }
 
   render() {
-    console.log("projection data",this.props.projectionData)
     return (
       <div className="status-chart">
 
@@ -349,8 +347,8 @@ StatusChart.propTypes = {
   demandCategories: React.PropTypes.array.isRequired,
   defectCategories: React.PropTypes.array.isRequired,
   effortCategories: React.PropTypes.array.isRequired,
-  projectionPoints: React.PropTypes.array.isRequired,
-  projectionData: React.PropTypes.array.isRequired,
+  // projectionPoints: React.PropTypes.array.isRequired,
+  // projectionData: React.PropTypes.array.isRequired,
 };
 
 StatusChart.defaultProps = {

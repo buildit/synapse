@@ -6,10 +6,12 @@ import Project from './components/3-organisms/Project';
 import EditProject from './components/3-organisms/EditProject';
 import Projection from './components/3-organisms/Projection';
 import Status from './components/3-organisms/Status';
+import Error from './components/1-atoms/Error';
 
 module.exports = (
   <Route path="/" component={App}>
     <IndexRoute component={ProjectList} />
+    <Route path="/error" component={Error} />
     <Route path="/:projectId" component={Project} />
     <Route path="/:projectId/edit" component={EditProject} />
     <Route path="/:projectId/projection" component={Projection} />

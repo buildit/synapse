@@ -7,7 +7,7 @@ import {
 } from '../actions/actions';
 
 const initialState = {
-  project: {},
+  project: blankProject,
   projectList: [],
   starterProjectList: [],
   demandStatus: [],
