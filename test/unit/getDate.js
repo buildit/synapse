@@ -1,4 +1,4 @@
-const getDate = require('../src/js/helpers/getDate');
+const getDate = require('../../src/js/helpers/getDate');
 const should = require('chai').should();
 
 describe('Function that converts sting yyyy-mm-dd to UTC numeric value', () => {

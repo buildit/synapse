@@ -1,4 +1,4 @@
-const isValid = require('../src/js/helpers/isValid');
+const isValid = require('../../src/js/helpers/isValid');
 const should = require('chai').should();
 
 describe('Data validity checker', () => {

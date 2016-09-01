@@ -1,4 +1,4 @@
-const trimFormInputs = require('../src/js/helpers/trimFormInputs');
+const trimFormInputs = require('../../src/js/helpers/trimFormInputs');
 /* eslint-disable no-unused-vars */
 const should = require('chai').should();
 /* eslint-enable no-unused-vars */

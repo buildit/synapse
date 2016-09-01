@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const filterListByIds = require('../src/js/helpers/filterListByIds');
+const filterListByIds = require('../../src/js/helpers/filterListByIds');
 
 describe('List filter', () => {
   it('filters out items that match the ids when ids contains one id', () => {
