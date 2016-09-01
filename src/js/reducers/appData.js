@@ -7,7 +7,7 @@ import {
 } from '../actions/actions';
 
 const initialState = {
-  project: {},
+  project: blankProject,
   projectList: [],
   starterProjectList: [],
   demandStatus: [],
@@ -52,6 +52,8 @@ const appData = (state = initialState, action) => {
     };
   }
   case 'FETCH_PROJECT_SUCCESS': {
+    // Probably don't need normalize here
+    // since we're doing it in mapStateToProps wherever the data is rendered.
     const project = normalizeProject(action.project);
     return {
       ...state,
@@ -130,6 +132,7 @@ const appData = (state = initialState, action) => {
         }
       });
     }
+    console.log('starterProject', starterProject);
     return {
       ...state,
       project: starterProject,

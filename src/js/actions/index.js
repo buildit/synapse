@@ -10,6 +10,7 @@ import {
 } from './actions';
 import config from 'config';
 import $ from 'jquery';
+import { browserHistory } from 'react-router';
 const trimFormInputs = require('../helpers/trimFormInputs');
 const isValid = require('../helpers/isValid');
 
@@ -27,10 +28,6 @@ const receiveProjects = (response) => (
   }
 );
 
-const requestStarterProjects = () => (
-  { type: 'FETCH_STARTER_PROJECTS_REQUEST' }
-);
-
 const receiveStarterProjects = (response) => (
   {
     type: 'FETCH_STARTER_PROJECTS_RECEIVE',
@@ -45,10 +42,20 @@ const setErrorMessage = (message) => (
   }
 );
 
-export const onSwitchView = view => ({
-  type: 'SWITCH_VIEW',
-  view,
-});
+export const onSwitchView = view => {
+  /* eslint-disable no-console */
+  console.log('onSwitchView has been deprecated. Please use switchLocation instead.');
+  /* eslint-enable no-console */
+  return ({
+    type: 'SWITCH_VIEW',
+    view,
+  });
+};
+
+export const switchLocation = location => {
+  // This probably isn't the right way to do this.
+  browserHistory.push(location);
+};
 
 export const showModal = (modal, project) => ({
   type: 'SHOW_MODAL', modal, project,
@@ -71,14 +78,17 @@ export const fetchProjects = () => (dispatch) => {
 };
 
 export const fetchStarterProjects = () => (dispatch) => {
-  dispatch(requestStarterProjects());
+  dispatch({
+    type: 'FETCH_STARTER_PROJECTS_REQUEST',
+  });
+
   return $.get(`${starterProjectsBaseApiUrl}harvest_project/`)
     .done(response => {
       dispatch(receiveStarterProjects(response));
     })
     .fail(response => {
       dispatch(setErrorMessage(response.responseText));
-      dispatch(onSwitchView('error'));
+      dispatch(switchLocation('error'));
     });
 };
 
@@ -101,12 +111,12 @@ export const fetchProject = (id) => (dispatch) => {
           });
         } else {
           dispatch(setErrorMessage('We could not fetch the project.'));
-          dispatch(onSwitchView('error'));
+          dispatch(switchLocation('error'));
         }
       })
       .fail(() => {
         dispatch(setErrorMessage('We could not fetch the project.'));
-        dispatch(onSwitchView('error'));
+        dispatch(switchLocation('error'));
       });
 };
 
@@ -133,13 +143,16 @@ export const fetchStatus = (id) => (dispatch) => {
         statusData,
       });
     } else {
+      // Don't know why this is not being set.
       dispatch(setErrorMessage('The demand data received from the API was improperly formatted.'));
-      dispatch(onSwitchView('error'));
+
+      // But this works -- it does go to the error route. Hm.
+      dispatch(switchLocation('/error'));
     }
   })
   .fail(() => {
     dispatch(setErrorMessage(fetchFailureMessage));
-    dispatch(onSwitchView('error'));
+    dispatch(switchLocation('/error'));
   });
   $.when(defectCall)
   .done(statusData => {
@@ -150,12 +163,12 @@ export const fetchStatus = (id) => (dispatch) => {
       });
     } else {
       dispatch(setErrorMessage('The defect data received from the API was improperly formatted.'));
-      dispatch(onSwitchView('error'));
+      dispatch(switchLocation('/error'));
     }
   })
   .fail(() => {
     dispatch(setErrorMessage(fetchFailureMessage));
-    dispatch(onSwitchView('error'));
+    dispatch(switchLocation('/error'));
   });
   $.when(effortCall)
   .done(statusData => {
@@ -166,12 +179,12 @@ export const fetchStatus = (id) => (dispatch) => {
       });
     } else {
       dispatch(setErrorMessage('The effort data received from the API was improperly formatted.'));
-      dispatch(onSwitchView('error'));
+      dispatch(switchLocation('/error'));
     }
   })
   .fail(() => {
     dispatch(setErrorMessage(fetchFailureMessage));
-    dispatch(onSwitchView('error'));
+    dispatch(switchLocation('/error'));
   });
 };
 export const saveFormData = (project) => (dispatch) => {

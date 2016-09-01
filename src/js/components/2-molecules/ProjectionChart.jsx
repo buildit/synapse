@@ -39,7 +39,6 @@ export default class ProjectionChart extends React.Component {
     const startDate = moment(this.props.projection.startDate, 'YYYY MM DD').format('DD-MMM-YY');
     const { iterationLength } = projection;
     this.points = makePoints(projection, startDate, iterationLength);
-    console.table(this.points);
   }
 
   getSize() {
