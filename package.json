@@ -9,6 +9,7 @@
     "start": "gulp server",
     "test": "mocha --recursive test/unit",
     "test:acceptance": "mocha --timeout 30000 --require co-mocha --require babel-register --require babel-polyfill --recursive test/acceptance/specs",
+    "test:acceptance:ci": "mocha --timeout 30000 --require co-mocha --require babel-register --require babel-polyfill --recursive --reporter mocha-jenkins-reporter -O junit_report_path=./reports/acceptance-test-results.xml,junit_report_name=\"Acceptance Tests\",junit_report_stack=1 test/acceptance/specs",
     "validate": "npm ls"
   },
   "pre-commit#master": [
@@ -55,6 +56,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-template": "^4.0.0",
     "mocha": "^3.0.2",
+    "mocha-jenkins-reporter": "^0.2.6",
     "precommit-hook": "^3.0.0",
     "react-addons-test-utils": "^15.1.0",
     "selenium-webdriver": "^3.0.0-beta-2",

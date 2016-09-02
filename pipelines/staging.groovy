@@ -69,6 +69,13 @@ node {
         convox.waitUntilDeployed("${appName}-staging")
         convox.ensureSecurityGroupSet("${appName}-staging", env.CONVOX_SECURITYGROUP)
         // run Selenium tests
+        try {
+          sh 'URL=http://synapse.staging.buildit.tools/# xvfb-run -d -s "-screen 0 1280x1024x16" npm run test:acceptance:ci'
+        }
+        finally {
+          archiveArtifacts allowEmptyArchive: true, artifacts: 'screenshots/*.png'
+          junit 'reports/acceptance-test-results.xml'
+        }
 
       stage "Promote Build to latest"
         docker.withRegistry(registry) {
