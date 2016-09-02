@@ -62,17 +62,10 @@ npm run test
 ```
 
 ##### Acceptance Test
-There needs to be a Selenium server running for our UI tests to work. To install a standalone Selenium server:
+You need to first have the Synapse app running and that app needs to be appropriately connected to a valid MI REST API service.
 ```
-curl -O http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
+npm run test:acceptance
 ```
-
-Then, to run it:
-```
-java -jar selenium-server-standalone-2.53.0.jar
-```
-
-The local server also needs to be running the site at the client url specified in `config/development.json`. This site what the tests look at.
 
 #### Analysis
 Code Analysis:
