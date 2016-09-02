@@ -33,11 +33,17 @@ node {
         def version = npm.getVersion()
 
       stage "Install"
+        sh "node --version"
         sh "npm install"
 
       stage "Test"
-        sh "node --version"
-        sh "npm run test"
+        try {
+          sh "npm run test:ci"
+        }
+        finally {
+          junit 'reports/test-results.xml'
+          publishHTML(target: [reportDir: 'reports', reportFiles: 'test-results.html', reportName: 'Test Results'])
+        }
 
       stage "Analysis"
         sh "npm run lint"
