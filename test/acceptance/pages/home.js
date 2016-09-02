@@ -7,6 +7,7 @@ export default class HomePage {
     this.elements = {
       app: By.css('#app'),
       table: By.css('.table'),
+      button: By.css('button'),
     };
     this.driver = driver;
   }
@@ -26,5 +27,9 @@ export default class HomePage {
 
   hasTable() {
     return this.driver.findElement(this.elements.table).isDisplayed();
+  }
+
+  hasButton() {
+    return this.driver.findElement(this.elements.button).isDisplayed();
   }
 }

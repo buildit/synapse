@@ -12,6 +12,7 @@ describe('Home Page', () => {
     expect(yield driver.getTitle()).to.equal('Synapse');
     expect(yield homePage.hasApp()).to.be.true;
     expect(yield homePage.hasTable()).to.be.true;
+    expect(yield homePage.hasButton()).to.be.true;
   });
   /* eslint-enable no-unused-expressions */
 });
