@@ -4,6 +4,7 @@ import React, {
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Header from '../components/2-molecules/Header';
+import Footer from '../components/2-molecules/Footer';
 import * as actionCreators from '../actions/index.js';
 
 const App = ({
@@ -24,6 +25,7 @@ const App = ({
       dismissMessage={dismissMessage}
     />
     {children}
+    <Footer />
   </div>
 );
 
