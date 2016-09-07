@@ -4,6 +4,7 @@ import yScaleCreator from './y-scale';
 import dateScaleCreator from './date-scale';
 import parseTime from './parse-time';
 import Button from '../../1-atoms/Button';
+import renderProjection from './renderProjection';
 import $ from 'jquery';
 
 export default class StatusChart extends React.Component {
@@ -116,6 +117,11 @@ export default class StatusChart extends React.Component {
   }
 
   update() {
+    const width = this.getSize().width;
+    const dateScale = dateScaleCreator(0, this.props.data, width);
+    const yScale = yScaleCreator(0, this.props.data, this.props.demandCategories);
+    renderProjection(this.props.projectionData, dateScale, yScale);
+
     d3.select('#demand').remove();
     d3.select('#defect').remove();
     d3.select('#effort').remove();
@@ -131,7 +137,6 @@ export default class StatusChart extends React.Component {
     const demandID = 'demandChart';
     const defectID = 'defectChart';
     const effortID = 'effortChart';
-
 
     this.updateArea(
       this.yOffset.demand,

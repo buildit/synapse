@@ -12,6 +12,7 @@ class Status extends Component {
     const { projectId } = this.props.params;
     this.props.fetchStatus(projectId);
     this.props.fetchProject(projectId);
+    this.props.fetchProjection(projectId);
   }
 
   render() {
@@ -25,6 +26,7 @@ class Status extends Component {
             demandCategories={this.props.demandCategories}
             defectCategories={this.props.defectCategories}
             effortCategories={this.props.effortCategories}
+            projectionData={this.props.projection}
           />
         </div>
       </div>
@@ -36,7 +38,9 @@ class Status extends Component {
 Status.propTypes = {
   fetchStatus: PropTypes.func.isRequired,
   fetchProject: PropTypes.func.isRequired,
+  fetchProjection: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,
+  projection: PropTypes.object.isRequired,
   demandStatus: PropTypes.array.isRequired,
   defectStatus: PropTypes.array.isRequired,
   effortStatus: PropTypes.array.isRequired,
@@ -64,6 +68,7 @@ const mapStateToProps = state => {
     demandCategories,
     defectCategories,
     effortCategories,
+    projection: state.projection,
   };
 };
 
