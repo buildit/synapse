@@ -56,12 +56,14 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-template": "^4.0.0",
+    "gulp-util": "^3.0.7",
     "mocha": "^3.0.2",
     "mocha-jenkins-reporter": "^0.2.6",
     "precommit-hook": "^3.0.0",
     "react-addons-test-utils": "^15.1.0",
     "selenium-webdriver": "^3.0.0-beta-2",
     "sinon": "^1.17.4",
+    "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
