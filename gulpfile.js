@@ -1,8 +1,10 @@
 const babelify = require('babelify');
 const browserify = require('browserify');
+const buffer = require('vinyl-buffer');
 const connect = require('gulp-connect');
 const del = require('del');
 const gulp = require('gulp');
+const gutil = require('gulp-util');
 const html5lint = require('gulp-html5-lint');
 const less = require('gulp-less');
 const lesshint = require('gulp-lesshint');
@@ -44,14 +46,13 @@ gulp.task('js', ['clean'], () => (
     entries: 'src/js/index.js',
     ignoreMissing: true,
   })
-  .transform(babelify.configure({ presets: ['es2015', 'react', 'stage-2'] }))
+  .transform(babelify.configure({ presets: ['es2015', 'react', 'stage-2'], sourceMaps: true }))
   .bundle()
-  .on('error', (err) => {
-    /* eslint-disable no-console */
-    console.log(`Error: , ${err.message}`);
-    /* eslint-enable no-console */
-  })
   .pipe(source('bundle.js'))
+  .pipe(buffer())
+  .pipe(sourcemaps.init({ loadMaps: true }))
+    .on('error', gutil.log)
+  .pipe(sourcemaps.write('./maps'))
   .pipe(gulp.dest('dist/js'))
 ));
 
@@ -74,7 +75,7 @@ gulp.task('css', ['clean', 'less-lint'], () => (
 ));
 
 gulp.task('less-lint', () => (
-  gulp.src('./src/less/*.less')
+  gulp.src('./src/less/**/*.less')
       .pipe(lesshint({
           // Options
       }))
