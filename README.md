@@ -11,12 +11,16 @@ NOTE: Except for build status, these other badges currently do not seem to be wo
 ## What is Synapse?
 Synapse is a management information dashboard that provides metrics on projects.
 The dashboard shows:
+
 - **Project List** - List of all projects currently being tracked. You can also
 add new projects from here.
+
 - **Project Details** - Specifics concerning a given project such as start and
 dates, demand flow, etc... Projects can be edited.
+
 - **Project Status** - Graphical view of a given project showing demand, defect
 and effort over time.
+
 - **Project Projection** - A graphical view of a projects projected forecast with
 the ability to adjust various factors to change the projection.
 
@@ -72,6 +76,13 @@ Code Analysis:
 ```
 npm run lint
 ```
+
+#### Version
+You need to run the following to version and tag the application. You use 'major' to bump the versions major number, 'minor' to bump the version minor version and 'patch' to bump the version patch number.
+```
+npm version patch -m "SYNAPSE-XX #comment Some version related comment"
+```
+
 #### Deploy
 Deployment happens through Jenkins Pipeline workflow.
 
