@@ -27,12 +27,12 @@ class Status extends Component {
             defectCategories={this.props.defectCategories}
             effortCategories={this.props.effortCategories}
             projectionData={this.props.projection}
+            hasProjection={this.props.hasProjection}
           />
         </div>
       </div>
     );
   }
-
 }
 
 Status.propTypes = {
@@ -48,6 +48,7 @@ Status.propTypes = {
   defectCategories: PropTypes.array.isRequired,
   effortCategories: PropTypes.array.isRequired,
   params: PropTypes.object.isRequired,
+  hasProjection: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -69,6 +70,7 @@ const mapStateToProps = state => {
     defectCategories,
     effortCategories,
     projection: state.projection,
+    hasProjection: state.hasProjection,
   };
 };
 
