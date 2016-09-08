@@ -7,6 +7,7 @@ import {
   SET_IS_NEW_PROJECT,
   UPDATE_PROJECT_REQUEST,
   UPDATE_PROJECTION_START_DATE,
+  SET_HAS_PROJECTION,
 } from './actions';
 import config from 'config';
 import $ from 'jquery';
@@ -377,11 +378,21 @@ export const fetchProjection = (id) => (dispatch) => {
           type: UPDATE_PROJECTION_START_DATE,
           value: projection.startDate,
         });
+
+        dispatch({
+          type: SET_HAS_PROJECTION,
+          value: true,
+        });
       })
       .fail(() => {
         dispatch({
           type: SET_MESSAGE,
           message: `You're creating a new projection for project ${id}.`,
+        });
+
+        dispatch({
+          type: SET_HAS_PROJECTION,
+          value: false,
         });
       });
 };

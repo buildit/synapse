@@ -4,6 +4,7 @@ import yScaleCreator from './y-scale';
 import dateScaleCreator from './date-scale';
 import parseTime from './parse-time';
 import Button from '../../1-atoms/Button';
+import renderProjection from './renderProjection';
 import $ from 'jquery';
 
 export default class StatusChart extends React.Component {
@@ -131,7 +132,6 @@ export default class StatusChart extends React.Component {
     const demandID = 'demandChart';
     const defectID = 'defectChart';
     const effortID = 'effortChart';
-
 
     this.updateArea(
       this.yOffset.demand,
@@ -270,58 +270,18 @@ export default class StatusChart extends React.Component {
   }
 
   updateProjection() {
-    if ($('#projection').is(':visible')) {
-      d3.select('#projection').remove();
-    } else {
-      const projectionArray = this.props.projectionPoints;
-      const dates = this.props.data.map(item => (parseTime(item.date)));
-      const values = projectionArray.map(item => (item.y));
-
-
-      const margin = { top: 100, right: 0, bottom: 0, left: 0 };
-      const width = this.getSize().width;
-      const height = 200;
-
-      const xScale = d3.scaleTime()
-      .domain(d3.extent(dates))
-      .range([0, width]);
-
-      const yScale = d3.scaleLinear()
-      .domain(d3.extent(values))
-      .range([height, 0]);
-
-      const svg =
-      d3.select('#demandChart')
-        .append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-        .append('g')
-        .attr('id', 'projection')
-        .attr('className', 'projection ')
-        .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
-
-      const line = d3.line()
-      .curve(d3.curveCardinal.tension(0.1))
-      .x(function(d) {
-        return xScale(parseTime(d.date));
-      })
-      .y(function(d) {
-        return yScale(d.y);
-      });
-
-
-      svg.append('path')
-     .datum(projectionArray)
-     .attr('class', 'line')
-     .style('stroke-dasharray', ('4, 4'))
-     .attr('d', line);
-    }
+    const width = this.getSize().width;
+    const yScale = yScaleCreator(0, this.props.data, this.props.demandCategories);
+    const demandStatusDates = this.props.data.map(dataPoint => parseTime(dataPoint.date));
+    const demandDateMinMax = d3.extent(demandStatusDates);
+    renderProjection(this.props.projectionData, width, yScale, demandDateMinMax);
   }
 
   render() {
-    return (
-      <div className="status-chart">
+    let showProjectionButton;
 
+    if (this.props.hasProjection) {
+      showProjectionButton = (
         <div>
           <Button
             label="Projection"
@@ -329,7 +289,16 @@ export default class StatusChart extends React.Component {
               this.updateProjection();
             }}
           />
-        </div>
+        </div>);
+    } else {
+      showProjectionButton = (
+        <div></div>
+      );
+    }
+
+    return (
+      <div className="status-chart">
+        {showProjectionButton}
         <div
           className="chart-container"
           ref={(c) => { this.chart = c; return false; }}
@@ -348,7 +317,8 @@ StatusChart.propTypes = {
   defectCategories: React.PropTypes.array.isRequired,
   effortCategories: React.PropTypes.array.isRequired,
   // projectionPoints: React.PropTypes.array.isRequired,
-  // projectionData: React.PropTypes.array.isRequired,
+  projectionData: React.PropTypes.object,
+  hasProjection: React.PropTypes.bool.isRequired,
 };
 
 StatusChart.defaultProps = {
