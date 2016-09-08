@@ -10,6 +10,7 @@ module.exports = (width, yScale, dateMinMax) => {
   const dateScale = dateScaleGenerator(dateMinMax, width);
 
   return d3.line()
+    .curve(d3.curveCardinal.tension(0.1))
     .x(d => (
       dateScale(parseTime(d.date))
     ))

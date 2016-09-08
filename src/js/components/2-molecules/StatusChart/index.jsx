@@ -5,7 +5,7 @@ import dateScaleCreator from './date-scale';
 import parseTime from './parse-time';
 import Button from '../../1-atoms/Button';
 import renderProjection from './renderProjection';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 export default class StatusChart extends React.Component {
   constructor() {

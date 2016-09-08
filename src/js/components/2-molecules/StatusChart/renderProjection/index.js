@@ -11,5 +11,6 @@ module.exports = (data, width, yScale, dateMinMax) => {
     .append('path')
     .attr('class', 'projectionLine')
     .datum(points)
+    .style('stroke-dasharray', ('4, 4'))
     .attr('d', line);
 };
