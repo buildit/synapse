@@ -16,9 +16,15 @@ const App = ({
   <div className="container">
     <Header
       projectName={projectName}
-      goHome={() => {
+      onLogoClick={() => {
+        // Navigate to home screen. Should this be first or last?
         browserHistory.push('/');
+
+        // reset the project in the state tree
         resetProject();
+
+        // reset the message.
+        dismissMessage();
       }}
       message={message}
       dismissMessage={dismissMessage}
