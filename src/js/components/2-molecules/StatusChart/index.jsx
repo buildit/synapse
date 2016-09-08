@@ -272,12 +272,8 @@ export default class StatusChart extends React.Component {
 
   updateProjection() {
     if ($('#projectionLine').is(':visible')) {
-      showProjectionText = 'Show Projection';
-      d3.select('#projectionButton')
-      .append('text');
       d3.select('#projectionLine').remove();
     } else {
-      showProjectionText = 'Hide Projection';
       const width = this.getSize().width;
       const yScale = yScaleCreator(0, this.props.data, this.props.demandCategories);
       const demandStatusDates = this.props.data.map(dataPoint => parseTime(dataPoint.date));
@@ -288,7 +284,7 @@ export default class StatusChart extends React.Component {
 
   render() {
     let showProjectionButton;
-    showProjectionText = 'Show Projection';
+    showProjectionText = 'Projection';
     if (this.props.hasProjection) {
       showProjectionButton = (
         <div>
