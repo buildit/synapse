@@ -5,7 +5,8 @@ import dateScaleCreator from './date-scale';
 import parseTime from './parse-time';
 import Button from '../../1-atoms/Button';
 import renderProjection from './renderProjection';
-// import $ from 'jquery';
+import $ from 'jquery';
+let showProjectionText;
 
 export default class StatusChart extends React.Component {
   constructor() {
@@ -270,21 +271,30 @@ export default class StatusChart extends React.Component {
   }
 
   updateProjection() {
-    const width = this.getSize().width;
-    const yScale = yScaleCreator(0, this.props.data, this.props.demandCategories);
-    const demandStatusDates = this.props.data.map(dataPoint => parseTime(dataPoint.date));
-    const demandDateMinMax = d3.extent(demandStatusDates);
-    renderProjection(this.props.projectionData, width, yScale, demandDateMinMax);
+    if ($('#projectionLine').is(':visible')) {
+      showProjectionText = 'Show Projection';
+      d3.select('#projectionButton')
+      .append('text');
+      d3.select('#projectionLine').remove();
+    } else {
+      showProjectionText = 'Hide Projection';
+      const width = this.getSize().width;
+      const yScale = yScaleCreator(0, this.props.data, this.props.demandCategories);
+      const demandStatusDates = this.props.data.map(dataPoint => parseTime(dataPoint.date));
+      const demandDateMinMax = d3.extent(demandStatusDates);
+      renderProjection(this.props.projectionData, width, yScale, demandDateMinMax);
+    }
   }
 
   render() {
     let showProjectionButton;
-
+    showProjectionText = 'Show Projection';
     if (this.props.hasProjection) {
       showProjectionButton = (
         <div>
           <Button
-            label="Projection"
+            id={'projectionButton'}
+            label={showProjectionText}
             onClick={() => {
               this.updateProjection();
             }}
@@ -316,6 +326,7 @@ StatusChart.propTypes = {
   demandCategories: React.PropTypes.array.isRequired,
   defectCategories: React.PropTypes.array.isRequired,
   effortCategories: React.PropTypes.array.isRequired,
+  showProjectionText: React.PropTypes.string.isRequired,
   // projectionPoints: React.PropTypes.array.isRequired,
   projectionData: React.PropTypes.object,
   hasProjection: React.PropTypes.bool.isRequired,

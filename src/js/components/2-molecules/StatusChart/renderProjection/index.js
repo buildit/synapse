@@ -10,7 +10,8 @@ module.exports = (data, width, yScale, dateMinMax) => {
   d3.select('#demandChart')
     .append('path')
     .attr('class', 'projectionLine')
+    .attr('id', 'projectionLine')
     .datum(points)
-    .style('stroke-dasharray', ('4, 4'))
+    .style('stroke-dasharray', ('3, 3'))
     .attr('d', line);
 };
