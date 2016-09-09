@@ -132,7 +132,6 @@ const appData = (state = initialState, action) => {
         }
       });
     }
-    console.log('starterProject', starterProject);
     return {
       ...state,
       project: starterProject,
