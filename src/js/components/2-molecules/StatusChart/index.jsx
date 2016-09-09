@@ -271,15 +271,15 @@ export default class StatusChart extends React.Component {
   }
 
   updateProjection() {
-    if ($('#projectionLine').is(':visible')) {
-      d3.select('#projectionLine').remove();
-    } else {
-      const width = this.getSize().width;
-      const yScale = yScaleCreator(0, this.props.data, this.props.demandCategories);
-      const demandStatusDates = this.props.data.map(dataPoint => parseTime(dataPoint.date));
-      const demandDateMinMax = d3.extent(demandStatusDates);
-      renderProjection(this.props.projectionData, width, yScale, demandDateMinMax);
-    }
+    const width = this.getSize().width;
+    const yScale = yScaleCreator(0, this.props.data, this.props.demandCategories);
+    const demandStatusDates = this.props.data.map(dataPoint => parseTime(dataPoint.date));
+    const demandDateMinMax = d3.extent(demandStatusDates);
+    renderProjection(this.props.projectionData, width, yScale, demandDateMinMax);
+  }
+
+  toggleProjectionLineVisibility() {
+    $('#projectionLine').toggleClass('projectLineVisible');
   }
 
   render() {
@@ -293,6 +293,7 @@ export default class StatusChart extends React.Component {
             label={showProjectionText}
             onClick={() => {
               this.updateProjection();
+              this.toggleProjectionLineVisibility();
             }}
           />
         </div>);
