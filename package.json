@@ -90,10 +90,5 @@
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
     "sum-values-in-object": "^1.0.5"
-  },
-  "pre-commit": [
-    "lint",
-    "validate",
-    "test"
-  ]
+  }
 }

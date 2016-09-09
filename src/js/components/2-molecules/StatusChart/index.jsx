@@ -3,10 +3,7 @@ import React from 'react';
 import yScaleCreator from './y-scale';
 import dateScaleCreator from './date-scale';
 import parseTime from './parse-time';
-import Button from '../../1-atoms/Button';
 import renderProjection from './renderProjection';
-import $ from 'jquery';
-let showProjectionText;
 
 export default class StatusChart extends React.Component {
   constructor() {
@@ -20,6 +17,9 @@ export default class StatusChart extends React.Component {
       demand: 0,
       defect: 450,
       effort: 900,
+    };
+    this.state = {
+      isProjectionVisible: false,
     };
   }
 
@@ -154,6 +154,8 @@ export default class StatusChart extends React.Component {
       this.props.effortCategories,
       effortID
     );
+
+    this.updateProjection();
   }
 
   updateArea(yOffset, data = [], categories, chartID) {
@@ -275,37 +277,19 @@ export default class StatusChart extends React.Component {
     const yScale = yScaleCreator(0, this.props.data, this.props.demandCategories);
     const demandStatusDates = this.props.data.map(dataPoint => parseTime(dataPoint.date));
     const demandDateMinMax = d3.extent(demandStatusDates);
-    renderProjection(this.props.projectionData, width, yScale, demandDateMinMax);
-  }
-
-  toggleProjectionLineVisibility() {
-    $('#projectionLine').toggleClass('projectLineVisible');
+    if (this.props.hasProjection) {
+      renderProjection(
+        this.props.projectionData,
+        width,
+        yScale,
+        demandDateMinMax
+      );
+    }
   }
 
   render() {
-    let showProjectionButton;
-    showProjectionText = 'Projection';
-    if (this.props.hasProjection) {
-      showProjectionButton = (
-        <div>
-          <Button
-            id={'projectionButton'}
-            label={showProjectionText}
-            onClick={() => {
-              this.updateProjection();
-              this.toggleProjectionLineVisibility();
-            }}
-          />
-        </div>);
-    } else {
-      showProjectionButton = (
-        <div></div>
-      );
-    }
-
     return (
       <div className="status-chart">
-        {showProjectionButton}
         <div
           className="chart-container"
           ref={(c) => { this.chart = c; return false; }}
@@ -323,8 +307,6 @@ StatusChart.propTypes = {
   demandCategories: React.PropTypes.array.isRequired,
   defectCategories: React.PropTypes.array.isRequired,
   effortCategories: React.PropTypes.array.isRequired,
-  showProjectionText: React.PropTypes.string.isRequired,
-  // projectionPoints: React.PropTypes.array.isRequired,
   projectionData: React.PropTypes.object,
   hasProjection: React.PropTypes.bool.isRequired,
 };
