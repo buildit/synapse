@@ -26,8 +26,9 @@ class Status extends Component {
             demandCategories={this.props.demandCategories}
             defectCategories={this.props.defectCategories}
             effortCategories={this.props.effortCategories}
-            projectionData={this.props.projection}
+            projection={this.props.projection}
             hasProjection={this.props.hasProjection}
+            allDates={this.props.allDates}
           />
         </div>
       </div>
@@ -59,7 +60,6 @@ const mapStateToProps = state => {
   const demandCategories = state.appData.project.demand.flow.map(item => (item.name));
   const defectCategories = state.appData.project.defect.severity.map(item => (item.name));
   const effortCategories = state.appData.project.effort.role.map(item => (item.name));
-
 
   return {
     project: state.appData.project,

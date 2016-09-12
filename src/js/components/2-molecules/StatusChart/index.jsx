@@ -1,13 +1,15 @@
 const d3 = require('d3');
 import React from 'react';
 import yScaleCreator from './y-scale';
-import dateScaleCreator from './date-scale';
+import dateScaleCreator from './date-scale-creator';
 import parseTime from './parse-time';
 import renderProjection from './renderProjection';
+import moment from 'moment';
+import makePoints from '../../../helpers/makePoints';
 
 export default class StatusChart extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.points = null;
     this.chart = null;
     this.chartEffort = null;
@@ -18,9 +20,8 @@ export default class StatusChart extends React.Component {
       defect: 450,
       effort: 900,
     };
-    this.state = {
-      isProjectionVisible: false,
-    };
+    this.state = { isProjectionVisible: false };
+    this.dateScale = dateScaleCreator();
   }
 
   componentDidMount() {
@@ -51,6 +52,8 @@ export default class StatusChart extends React.Component {
       defectStatus, effortStatus,
      } = this.props;
     const demandStatus = this.props.data;
+
+    this.updateDateScale();
 
     this.setDateAxis(this.yOffset.demand, this.props.data, this.props.demandCategories, 'demand');
     this.setDateAxis(this.yOffset.defect, this.props.data, this.props.defectCategories, 'defect');
@@ -96,15 +99,14 @@ export default class StatusChart extends React.Component {
 
   setDateAxis(yOffset = 0, data, categories, name) {
     const height = this.getSize().height;
-    const width = this.getSize().width;
-    const dateScale = dateScaleCreator(yOffset, data, width);
+
     this.vis.append('g')
       .attr('class', 'axis-container')
       .attr('transform', `translate(0, ${height + 20 + yOffset})`)
         .append('g')
         .attr('class', 'axis axis--date')
         .attr('id', name)
-        .call(d3.axisBottom(dateScale));
+        .call(d3.axisBottom(this.dateScale));
   }
 
   setYAxisLabel(yOffset, label) {
@@ -159,13 +161,11 @@ export default class StatusChart extends React.Component {
   }
 
   updateArea(yOffset, data = [], categories, chartID) {
-    const width = this.getSize().width;
-    const dateScale = dateScaleCreator(yOffset, data, width);
     const yScale = yScaleCreator(yOffset, data, categories);
 
     const area = d3.area()
       // curve(d3.curveCardinal)
-      .x(d => dateScale(parseTime(d.data.date)))
+      .x(d => this.dateScale(parseTime(d.data.date)))
       .y0(d => yScale(d[0] || 0))
       .y1(d => yScale(d[1] || 0));
 
@@ -214,14 +214,30 @@ export default class StatusChart extends React.Component {
         .text(d => d.key);
   }
 
-  updateLine(yOffset, data = [], categories, chartID) {
+  updateDateScale() {
     const width = this.getSize().width;
-    const dateScale = dateScaleCreator(yOffset, data, width);
+    const demandDates = this.props.data.map(datapoint => datapoint.date);
+    const defectDates = this.props.defectStatus.map(datapoint => datapoint.date);
+    const effortDates = this.props.effortStatus.map(datapoint => datapoint.date);
+    const projectionStartDate =
+      moment(this.props.projection.startDate, 'YYYY MM DD').format('DD-MMM-YY');
+    const projectionPoints = makePoints(this.props.projection, projectionStartDate);
+    const projectionDates = projectionPoints.map(datapoint => datapoint.date);
+
+    let allDates = [].concat(demandDates, defectDates, effortDates);
+
+    if (this.state.isProjectionVisible) {
+      allDates = allDates.concat(projectionDates);
+    }
+    this.dateScale = dateScaleCreator(allDates, width);
+  }
+
+  updateLine(yOffset, data = [], categories, chartID) {
     const yScale = yScaleCreator(yOffset, data, categories);
 
     const area = d3.area()
       .curve(d3.curveBasis)
-      .x(d => dateScale(parseTime(d.data.date)))
+      .x(d => this.dateScale(parseTime(d.data.date)))
       .y0(d => yScale(d[0] || 0))
       .y1(d => yScale(d[1] || 0));
 
@@ -273,17 +289,21 @@ export default class StatusChart extends React.Component {
   }
 
   updateProjection() {
-    const width = this.getSize().width;
     const yScale = yScaleCreator(0, this.props.data, this.props.demandCategories);
-    const demandStatusDates = this.props.data.map(dataPoint => parseTime(dataPoint.date));
-    const demandDateMinMax = d3.extent(demandStatusDates);
+    const onShowProjectionClick = () => {
+      const isProjectionVisible = !this.state.isProjectionVisible;
+      this.setState({
+        isProjectionVisible,
+      });
+    };
     if (this.props.hasProjection) {
-      renderProjection(
-        this.props.projectionData,
-        width,
+      renderProjection({
+        data: this.props.projection,
         yScale,
-        demandDateMinMax
-      );
+        dateScale: this.dateScale,
+        onShowProjectionClick,
+        isProjectionVisible: this.state.isProjectionVisible,
+      });
     }
   }
 
@@ -307,7 +327,7 @@ StatusChart.propTypes = {
   demandCategories: React.PropTypes.array.isRequired,
   defectCategories: React.PropTypes.array.isRequired,
   effortCategories: React.PropTypes.array.isRequired,
-  projectionData: React.PropTypes.object,
+  projection: React.PropTypes.object,
   hasProjection: React.PropTypes.bool.isRequired,
 };
 
