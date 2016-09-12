@@ -3,7 +3,7 @@
 // returns a scaling function that maps from a date to an integer.
 // If no params are passed, it uses the default values
 // listed here to create the scaling function.
-// Expects dates in this form: '01-Jan-96' (which is determined by parseTime)
+// Expects dates in this form: '01-Jan-96' (The format is determined by parseTime.)
 
 
 const d3 = require('d3');

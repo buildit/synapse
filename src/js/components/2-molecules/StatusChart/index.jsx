@@ -225,10 +225,10 @@ export default class StatusChart extends React.Component {
     const projectionDates = projectionPoints.map(datapoint => datapoint.date);
 
     let allDates = [].concat(demandDates, defectDates, effortDates);
-
     if (this.state.isProjectionVisible) {
       allDates = allDates.concat(projectionDates);
     }
+    // console.log('after', d3.extent(parsedDates));
     this.dateScale = dateScaleCreator(allDates, width);
   }
 

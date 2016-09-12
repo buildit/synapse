@@ -27,7 +27,13 @@ module.exports = ({ data, dateScale, yScale, onShowProjectionClick, isProjection
       const projectionLine = d3.selectAll('.projectionLine');
       const projectionLineButton = d3.selectAll('.projectionLineButton');
 
-      if (isProjectionVisible) {
+      // For some reason, I needed to reverse the logic in order to get
+      // the show/hide to behave correctly.
+      // That is why it says "When not visible, show it."
+      // This render seems to be one step behind the React component's state.
+      // Or something. Just guessing.    ~Zac
+
+      if (!isProjectionVisible) {
         projectionLine.attr('opacity', 1);
         projectionLineButton.text('Hide projection');
       } else {
