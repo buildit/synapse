@@ -3,10 +3,10 @@ import lineGenerator from './line-generator';
 import makePoints from '../../../../helpers/makePoints';
 import moment from 'moment';
 
-module.exports = (data, width, yScale, dateMinMax) => {
+module.exports = ({ data, dateScale, yScale, onShowProjectionClick, isProjectionVisible }) => {
   const startDate = moment(data.startDate, 'YYYY MM DD').format('DD-MMM-YY');
   const points = makePoints(data, startDate);
-  const line = lineGenerator(width, yScale, dateMinMax);
+  const line = lineGenerator(dateScale, yScale);
   d3.select('#demandChart')
     .append('path')
     .attr('class', 'projectionLine')
@@ -22,11 +22,12 @@ module.exports = (data, width, yScale, dateMinMax) => {
     .attr('y', -20)
     .text('Show projection')
     .on('click', () => {
+      onShowProjectionClick();
+
       const projectionLine = d3.selectAll('.projectionLine');
       const projectionLineButton = d3.selectAll('.projectionLineButton');
-      const projectionLineOpacity = parseInt(projectionLine.attr('opacity'), 10);
 
-      if (projectionLineOpacity === 0) {
+      if (isProjectionVisible) {
         projectionLine.attr('opacity', 1);
         projectionLineButton.text('Hide projection');
       } else {
