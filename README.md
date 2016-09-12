@@ -29,7 +29,7 @@ Staging Environment: [Synapse Staging](http://synapse.staging.buildit.tools)
 
 Production Environment: [Synapse Production](http://synapse.buildit.tools)
 
-### Journey of the project (internal link)
+### Journey of the project ([Midas Journey](MidasJourney.md))
 
 ### Getting Started (how to run it, build, deploy, test, analysis)
 #### Prereqs
