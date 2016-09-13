@@ -7,32 +7,41 @@ import * as actionCreators from '../../actions/';
 import StatusChart from '../2-molecules/StatusChart';
 import transformStatusData from '../../helpers/transformStatusData';
 
+// TODO: Move this to separate file. Abstract to handle an array of arrays.
+const dataExists = ({ demandStatus, defectStatus, effortStatus }) => (
+  demandStatus.length > 0
+  // || defectStatus.length > 0
+  // || effortStatus.length > 0
+);
+
 class Status extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { projectId } = this.props.params;
+    // TODO: Make these fetches one promise so React doesn't fire every time data comes back.
+    //  Then can do dataExists the right way, looking for any data.
     this.props.fetchStatus(projectId);
     this.props.fetchProject(projectId);
     this.props.fetchProjection(projectId);
   }
 
   render() {
-    return (
-      <div>
-        <div>
-          <StatusChart
-            data={this.props.demandStatus}
-            defectStatus={this.props.defectStatus}
-            effortStatus={this.props.effortStatus}
-            demandCategories={this.props.demandCategories}
-            defectCategories={this.props.defectCategories}
-            effortCategories={this.props.effortCategories}
-            projection={this.props.projection}
-            hasProjection={this.props.hasProjection}
-            allDates={this.props.allDates}
-          />
-        </div>
-      </div>
+    let component = <div>Loading...</div>;
+    if (dataExists(this.props)) {
+      component = (
+        <StatusChart
+          data={this.props.demandStatus}
+          defectStatus={this.props.defectStatus}
+          effortStatus={this.props.effortStatus}
+          demandCategories={this.props.demandCategories}
+          defectCategories={this.props.defectCategories}
+          effortCategories={this.props.effortCategories}
+          projection={this.props.projection}
+          hasProjection={this.props.hasProjection}
+        />
     );
+    }
+
+    return component;
   }
 }
 
