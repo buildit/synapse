@@ -84,7 +84,6 @@
     "react": "^15.1.0",
     "react-bootstrap": "^0.29.5",
     "react-dom": "^15.1.0",
-    "react-highcharts": "^9.0.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.7.0",
     "redux": "^3.5.2",
