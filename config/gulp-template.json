@@ -1,5 +1,5 @@
 {
-  "Client": {
+  "parameters": {
     "api": {
       "baseUrl": "<%= midasapiurl %>"
     },
