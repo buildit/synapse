@@ -2,6 +2,7 @@
 const setChart = require('./setChart');
 const renderYAxis = require('./renderYAxis');
 const renderYAxisLabel = require('./renderYAxisLabel');
+const renderDemandChart = require('./renderDemandChart');
 import dateScaleCreator from '../dateScaleCreator';
 import yScaleCreator from '../yScaleCreator';
 import getChartableDates from './getChartableDates';
@@ -72,5 +73,14 @@ module.exports = (props, containerElement) => {
   renderYAxisLabel(chartContainer, DEMAND_Y_LABEL, DEMAND_Y_OFFSET);
   renderYAxisLabel(chartContainer, DEFECT_Y_LABEL, DEFECT_Y_OFFSET);
   // renderYAxisLabel(chartContainer, EFFORT_Y_LABEL, EFFORT_Y_OFFSET);
-  
+
+  // Render the demand chart
+  renderDemandChart(
+    chartContainer,
+    data,
+    demandCategories,
+    demandYScale,
+    dateScale,
+    'demandChart'
+  );
 };
