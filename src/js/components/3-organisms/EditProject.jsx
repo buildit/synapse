@@ -58,14 +58,6 @@ class EditProject extends Component {
         />
         <form>
           <Input
-            label="ID"
-            section="header"
-            property="id"
-            onInputChange={onInputChange}
-            initialValue={project.id}
-            disabled={!isNewProject}
-          />
-          <Input
             label="Name"
             section="header"
             property="name"
@@ -85,13 +77,6 @@ class EditProject extends Component {
             property="portfolio"
             onInputChange={onInputChange}
             initialValue={project.portfolio}
-          />
-          <Input
-            label="Status"
-            section="header"
-            property="status"
-            onInputChange={onInputChange}
-            initialValue={project.status}
           />
           <Input
             label="Description"
@@ -114,14 +99,6 @@ class EditProject extends Component {
             onInputChange={onInputChange}
             initialValue={project.endDate}
           />
-          <Input
-            label="Phase"
-            section="header"
-            property="phase"
-            onInputChange={onInputChange}
-            initialValue={project.phase}
-          />
-
           <h2>Demand</h2>
           <Input
             label="Demand source"

@@ -122,7 +122,7 @@ const appData = (state = initialState, action) => {
     if (action.harvestId) {
       let harvestProject;
       state.starterProjectList.forEach(project => {
-        if (project.id === action.harvestId) {
+        if (project.name === action.harvestId) {
           harvestProject = project;
         }
       });

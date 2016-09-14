@@ -8,7 +8,7 @@ import * as actionCreators from '../../actions/';
 import Button from '../1-atoms/Button';
 import NewProjectsTable from '../2-molecules/NewProjectsTable';
 import normalizeProject from '../../helpers/normalizeProject';
-import filterListByIds from '../../helpers/filterListByIds';
+// import filterListByIds from '../../helpers/filterListByIds';
 
 class NewProjectList extends Component {
   componentWillMount() {
@@ -53,10 +53,9 @@ class NewProjectList extends Component {
             'name',
             'portfolio',
             'program',
-            'status',
             'description',
           ]}
-          rowKey={'id'}
+          rowKey={'name'}
           onProjectCreateClick={onProjectCreateClick}
         />
       </div>
@@ -74,16 +73,8 @@ NewProjectList.propTypes = {
 
 const mapStateToProps = state => {
   // Normalize the raw Harvest project data
-  let starterProjectList =
+  const starterProjectList =
     state.appData.starterProjectList.map(_project => (normalizeProject(_project)));
-
-
-  // Remove projects already in Synapse
-  const existingProjectListIds = state.appData.projectList.map(_project => _project.id);
-  starterProjectList = filterListByIds(starterProjectList, existingProjectListIds);
-
-  // Show only Active projects
-  starterProjectList = starterProjectList.filter(_project => _project.status === 'Active');
 
   return (
   {

@@ -30,15 +30,12 @@ class Project extends Component {
           route={`${project.name}/status`}
           label="Status"
         />
-        <Text label="ID" content={project.id} />
         <Text label="Name" content={project.name} />
         <Text label="Description" content={project.description} />
         <Text label="Portfolio" content={project.portfolio} />
         <Text label="Program" content={project.program} />
-        <Text label="Status" content={project.status} />
         <Text label="Start date" content={formatDate(project.startDate)} />
         <Text label="End date" content={formatDate(project.endDate)} />
-        <Text label="Phase" content={project.phase} />
 
         <div className="subsection">
           <h2>Demand</h2>

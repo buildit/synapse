@@ -83,7 +83,7 @@ export const fetchStarterProjects = () => (dispatch) => {
     type: 'FETCH_STARTER_PROJECTS_REQUEST',
   });
 
-  return $.get(`${starterProjectsBaseApiUrl}harvest_project/`)
+  return $.get(`${starterProjectsBaseApiUrl}v1/project?status=available`)
     .done(response => {
       dispatch(receiveStarterProjects(response));
     })
@@ -100,7 +100,8 @@ export const fetchProject = (name) => (dispatch) => {
   return $.get(`${apiBaseUrl}v1/project/${name}`)
     .done(
       data => {
-        const project = data[0];
+        // console.log("data",data[0]);
+        const project = data;
         if (project) {
           dispatch({
             type: 'FETCH_PROJECT_SUCCESS',
