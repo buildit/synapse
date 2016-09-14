@@ -15,7 +15,9 @@ import { browserHistory } from 'react-router';
 const trimFormInputs = require('../helpers/trimFormInputs');
 const isValid = require('../helpers/isValid');
 
+/* eslint-disable import/no-unresolved */
 const defaultConfig = require('./default.json');
+/* eslint-enable import/no-unresolved */
 const apiBaseUrl = defaultConfig.parameters.api.baseUrl;
 const starterProjectsBaseApiUrl = defaultConfig.parameters.starterProjectsApi.baseUrl;
 
