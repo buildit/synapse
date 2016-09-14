@@ -16,6 +16,7 @@ import normalizeProject from '../../helpers/normalizeProject';
 class EditProject extends Component {
   componentWillMount() {
     this.props.initializeFormData(this.props.project);
+    console.log(this.props.project)
   }
 
   render() {
@@ -169,13 +170,6 @@ class EditProject extends Component {
 
           <h2>Defect</h2>
           <Input
-            label="Defect source"
-            section="defect"
-            property="source"
-            onInputChange={onInputChange}
-            initialValue={project.defect.source}
-          />
-          <Input
             label="Defect source URL"
             section="defect"
             property="url"
@@ -209,30 +203,6 @@ class EditProject extends Component {
             property="password"
             onInputChange={onInputChange}
             initialValue={project.defect.password}
-          />
-          <h3>Defect flow</h3>
-          <EditableFlowTable
-            items={project.defect.flow}
-            removeItem={
-              (i) => {
-                onListItemRemove('defect', 'flow', i);
-              }
-            }
-            moveItemUp={
-              (i) => {
-                moveListItemUp('defect', 'flow', i);
-              }
-            }
-            moveItemDown={
-              (i) => {
-                moveListItemDown('defect', 'flow', i);
-              }
-            }
-          />
-          <AddFlowItem
-            onAddClick={(name) => {
-              addItemToDefectFlowList(name);
-            }}
           />
           <h3>Defect severity</h3>
           <EditableSeverityTable

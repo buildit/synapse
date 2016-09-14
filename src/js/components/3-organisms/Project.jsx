@@ -15,7 +15,7 @@ class Project extends Component {
 
   render() {
     const { project } = this.props;
-
+    console.log("project name",project.name)
     return (
       <div>
         <RouteLink

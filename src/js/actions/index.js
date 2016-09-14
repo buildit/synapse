@@ -17,6 +17,7 @@ const isValid = require('../helpers/isValid');
 
 const apiBaseUrl = config.get('Client.api.baseUrl');
 const starterProjectsBaseApiUrl = config.get('Client.starterProjectsApi.baseUrl');
+const errorHelper = require('../helpers/errorHelper');
 
 const requestProjects = () => (
   { type: 'FETCH_PROJECTS_REQUEST' }
@@ -100,7 +101,6 @@ export const fetchProject = (name) => (dispatch) => {
   return $.get(`${apiBaseUrl}v1/project/${name}`)
     .done(
       data => {
-        // console.log("data",data[0]);
         const project = data;
         if (project) {
           dispatch({
@@ -200,7 +200,7 @@ export const saveFormData = (project) => (dispatch) => {
   return (
     $.ajax({
       type: 'POST',
-      url: `${apiBaseUrl}project/${project.id}`,
+      url: `${apiBaseUrl}v1/project/${project.name}`,
       data: JSON.stringify(trimmedProject),
       contentType: 'application/json',
     })
@@ -213,12 +213,8 @@ export const saveFormData = (project) => (dispatch) => {
       });
     })
     .fail(response => {
-      dispatch(setErrorMessage(response.responseText));
-      dispatch(onSwitchView('error'));
-      dispatch({
-        type: SET_MESSAGE,
-        message: '',
-      });
+      dispatch(setErrorMessage(errorHelper(response)));
+      dispatch(switchLocation('/error'));
     })
   );
 };
@@ -426,13 +422,14 @@ export const saveProjection = (projection, id) => dispatch => {
 };
 
 export const updateProject = project => dispatch => {
+  console.log(project.name)
   dispatch({
     type: UPDATE_PROJECT_REQUEST,
   });
 
   return $.ajax({
     type: 'PUT',
-    url: `${apiBaseUrl}project/${project.id}`,
+    url: `${apiBaseUrl}v1/project/${project.name}`,
     data: JSON.stringify(project),
     contentType: 'application/json',
     dataType: 'json',
@@ -441,7 +438,7 @@ export const updateProject = project => dispatch => {
       if (response.status === 200) {
         dispatch({
           type: SET_MESSAGE,
-          message: `Project ${project.id} was saved successfully.`,
+          message: `Project ${project.name} was saved successfully.`,
         });
       } else {
         dispatch({
