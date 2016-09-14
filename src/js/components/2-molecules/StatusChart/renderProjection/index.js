@@ -1,5 +1,5 @@
 const d3 = require('d3');
-import lineGenerator from './line-generator';
+import lineGenerator from './lineGenerator';
 import makePoints from '../../../../helpers/makePoints';
 import moment from 'moment';
 

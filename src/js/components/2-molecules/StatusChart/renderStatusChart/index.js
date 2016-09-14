@@ -1,5 +1,5 @@
 const setChart = require('./setChart');
-import dateScaleCreator from '../date-scale-creator';
+import dateScaleCreator from '../dateScaleCreator';
 import yScaleCreator from '../yScaleCreator';
 import getChartableDates from './getChartableDates';
 import getChartableValues from './getChartableValues';

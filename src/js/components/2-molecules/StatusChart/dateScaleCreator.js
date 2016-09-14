@@ -10,7 +10,7 @@
 
 
 const d3 = require('d3');
-import parseTime from './parse-time';
+import parseTime from './parseTime';
 
 const DEFAULT_DATE_RANGE = [parseTime('01-Jan-96'), parseTime('01-Jan-97')];
 const DEFAULT_WIDTH = 1200;
