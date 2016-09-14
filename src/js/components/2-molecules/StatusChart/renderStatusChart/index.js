@@ -1,4 +1,7 @@
+// const d3 = require('d3');
 const setChart = require('./setChart');
+const renderYAxis = require('./renderYAxis');
+const renderYAxisLabel = require('./renderYAxisLabel');
 import dateScaleCreator from '../dateScaleCreator';
 import yScaleCreator from '../yScaleCreator';
 import getChartableDates from './getChartableDates';
@@ -7,12 +10,16 @@ import getChartableDemandValues from './getChartableDemandValues';
 import {
   PADDING,
   WIDTH,
+  HEIGHT,
   DEMAND_Y_OFFSET,
   DEFECT_Y_OFFSET,
   EFFORT_Y_OFFSET,
+  DEMAND_Y_LABEL,
+  DEFECT_Y_LABEL,
+  EFFORT_Y_LABEL,
 } from './config';
 
-module.exports = (props, chartContainer) => {
+module.exports = (props, containerElement) => {
   const { data,
     defectStatus,
     effortStatus,
@@ -25,7 +32,7 @@ module.exports = (props, chartContainer) => {
   const isProjectionVisible = true; // TODO: Drive this by the d3 UI
 
   // Set up chart container
-  setChart(chartContainer, WIDTH, PADDING);
+  const chartContainer = setChart(containerElement, WIDTH, HEIGHT, PADDING);
 
   // Prepare data to be usable by the scale generators
   const dates = getChartableDates(
@@ -55,4 +62,15 @@ module.exports = (props, chartContainer) => {
   const demandYScale = yScaleCreator(DEMAND_Y_OFFSET, demandValues);
   const defectYScale = yScaleCreator(DEFECT_Y_OFFSET, defectValues);
   const effortYScale = yScaleCreator(EFFORT_Y_OFFSET, effortValues);
+
+  // Render the axes
+  renderYAxis(chartContainer, DEMAND_Y_LABEL, demandYScale);
+  renderYAxis(chartContainer, DEFECT_Y_LABEL, defectYScale);
+  // renderYAxis(chartContainer, EFFORT_Y_LABEL, effortYScale); // This one not placed correctly.
+
+  // Render the axis labels
+  renderYAxisLabel(chartContainer, DEMAND_Y_LABEL, DEMAND_Y_OFFSET);
+  renderYAxisLabel(chartContainer, DEFECT_Y_LABEL, DEFECT_Y_OFFSET);
+  // renderYAxisLabel(chartContainer, EFFORT_Y_LABEL, EFFORT_Y_OFFSET);
+  
 };
