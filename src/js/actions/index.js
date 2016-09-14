@@ -68,7 +68,7 @@ export const hideModal = (modal) => ({
 
 export const fetchProjects = () => (dispatch) => {
   dispatch(requestProjects());
-  return $.get(`${apiBaseUrl}project/`)
+  return $.get(`${apiBaseUrl}v1/project/`)
     .done(response => {
       dispatch(receiveProjects(response));
     })
@@ -93,11 +93,11 @@ export const fetchStarterProjects = () => (dispatch) => {
     });
 };
 
-export const fetchProject = (id) => (dispatch) => {
+export const fetchProject = (name) => (dispatch) => {
   dispatch({
     type: 'FETCH_PROJECT_REQUEST',
   });
-  return $.get(`${apiBaseUrl}project/${id}`)
+  return $.get(`${apiBaseUrl}v1/project/${name}`)
     .done(
       data => {
         const project = data[0];
@@ -121,10 +121,10 @@ export const fetchProject = (id) => (dispatch) => {
       });
 };
 
-export const fetchStatus = (id) => (dispatch) => {
-  const demandCall = $.get(`${apiBaseUrl}project/${id}/demand`);
-  const defectCall = $.get(`${apiBaseUrl}project/${id}/defect`);
-  const effortCall = $.get(`${apiBaseUrl}project/${id}/effort`);
+export const fetchStatus = (name) => (dispatch) => {
+  const demandCall = $.get(`${apiBaseUrl}v1/project/${name}/demand/summary`);
+  const defectCall = $.get(`${apiBaseUrl}v1/project/${name}/defect/summary`);
+  const effortCall = $.get(`${apiBaseUrl}v1/project/${name}/effort/summary`);
 
   // These endpoints provide simplified status data, which is helpful for testing.
   // const demandCall = $.get('https://tonicdev.io/billyzac/57befb878bec6b13001152a9/branches/master/demand');
@@ -327,12 +327,12 @@ export const updateProjectionStartDate = value => ({
   value,
 });
 
-export const fetchProjection = (id) => (dispatch) => {
+export const fetchProjection = (name) => (dispatch) => {
   dispatch({
     type: FETCH_PROJECTION_REQUEST,
   });
 
-  return $.get(`${apiBaseUrl}project/${id}/forecast`)
+  return $.get(`${apiBaseUrl}v1/project/${name}/projection/summary`)
     .done(
       projection => {
         dispatch({
@@ -387,7 +387,7 @@ export const fetchProjection = (id) => (dispatch) => {
       .fail(() => {
         dispatch({
           type: SET_MESSAGE,
-          message: `You're creating a new projection for project ${id}.`,
+          message: `You're creating a new projection for project ${name}.`,
         });
 
         dispatch({

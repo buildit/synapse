@@ -19,15 +19,15 @@ class Project extends Component {
     return (
       <div>
         <RouteLink
-          route={`${project.id}/edit`}
+          route={`${project.name}/edit`}
           label="Edit"
         />
         <RouteLink
-          route={`${project.id}/projection`}
+          route={`${project.name}/projection`}
           label="Projection"
         />
         <RouteLink
-          route={`${project.id}/status`}
+          route={`${project.name}/status`}
           label="Status"
         />
         <Text label="ID" content={project.id} />

@@ -36,7 +36,7 @@ class ProjectList extends Component {
             'status',
             'description',
           ]}
-          rowKey={'id'}
+          rowKey={'name'}
         />
         <Footer />
       </div>
