@@ -329,51 +329,51 @@ export const fetchProjection = (name) => (dispatch) => {
     type: FETCH_PROJECTION_REQUEST,
   });
 
-  return $.get(`${apiBaseUrl}v1/project/${name}/projection/summary`)
+  return $.get(`${apiBaseUrl}v1/project/${name}`)
     .done(
-      projection => {
+      project => {
         dispatch({
           type: 'UPDATE_PROJECTION_BACKLOG_SIZE',
-          value: projection.backlogSize,
+          value: project.projection.backlogSize,
         });
         dispatch({
           type: 'UPDATE_PROJECTION_VELOCITY_START',
-          value: projection.velocityStart,
+          value: project.projection.startVelocity,
         });
 
         dispatch({
           type: 'UPDATE_PROJECTION_VELOCITY_MIDDLE',
-          value: projection.velocityMiddle,
+          value: project.projection.targetVelocity,
         });
 
         dispatch({
           type: 'UPDATE_PROJECTION_VELOCITY_END',
-          value: projection.velocityEnd,
+          value: project.projection.endVelocity,
         });
 
         dispatch({
           type: 'UPDATE_PROJECTION_PERIOD_START',
-          value: projection.periodStart,
+          value: project.projection.startIterations,
         });
 
         dispatch({
           type: 'UPDATE_PROJECTION_PERIOD_END',
-          value: projection.periodEnd,
+          value: project.projection.endIterations,
         });
 
         dispatch({
           type: 'UPDATE_PROJECTION_DARK_MATTER',
-          value: projection.darkMatter,
+          value: project.projection.darkMatterPercentage,
         });
 
         dispatch({
           type: 'UPDATE_PROJECTION_ITERATION_LENGTH',
-          value: projection.iterationLength,
+          value: project.projection.iterationLength,
         });
 
         dispatch({
           type: UPDATE_PROJECTION_START_DATE,
-          value: projection.startDate,
+          value: project.projection.startDate,
         });
 
         dispatch({
@@ -394,35 +394,46 @@ export const fetchProjection = (name) => (dispatch) => {
       });
 };
 
-export const saveProjection = (projection, id) => dispatch => {
+export const saveProjection = (projection, name) => dispatch => {
+  const projectionToSave = {
+    backlogSize: projection.backlogSize,
+    darkMatterPercentage: projection.darkMatter,
+    iterationLength: projection.iterationLength,
+    startVelocity: projection.velocityStart,
+    targetVelocity: projection.velocityMiddle,
+    startIterations: projection.periodStart,
+    endIterations: projection.periodEnd,
+    endVelocity: projection.velocityEnd,
+    startDate: projection.startDate,
+  };
   dispatch({
     type: SAVE_PROJECTION_REQUEST,
   });
 
   return $.ajax({
-    type: 'POST',
-    url: `${apiBaseUrl}project/${id}/forecast`,
-    data: JSON.stringify(projection),
+    type: 'PUT',
+    url: `${apiBaseUrl}v1/project/${name}/projection`,
+    data: JSON.stringify(projectionToSave),
     contentType: 'application/json',
     dataType: 'json',
   })
-    .always(response => {
-      if (response.status === 200) {
-        dispatch({
-          type: SET_MESSAGE,
-          message: `The projection for project ${id} was saved successfully.`,
-        });
-      } else {
-        dispatch({
-          type: SET_MESSAGE,
-          message: 'There was an error. We could not save the projection.',
-        });
-      }
+  .done(() => {
+    console.log("done")
+    dispatch({
+      type: SET_MESSAGE,
+      message: `The projection for project ${name} was saved successfully.`,
     });
+  })
+  .fail(response => {
+    console.log("fail", response)
+    dispatch({
+      type: SET_MESSAGE,
+      message: 'There was an error. We could not save the projection.',
+    });
+  });
 };
 
 export const updateProject = project => dispatch => {
-  console.log(project.name)
   dispatch({
     type: UPDATE_PROJECT_REQUEST,
   });
@@ -434,19 +445,18 @@ export const updateProject = project => dispatch => {
     contentType: 'application/json',
     dataType: 'json',
   })
-    .always(response => {
-      if (response.status === 200) {
-        dispatch({
-          type: SET_MESSAGE,
-          message: `Project ${project.name} was saved successfully.`,
-        });
-      } else {
-        dispatch({
-          type: SET_MESSAGE,
-          message: 'There was an error. We could not save the project.',
-        });
-      }
+  .done(() => {
+    dispatch({
+      type: SET_MESSAGE,
+      message: `The form data for project ${name} was saved successfully.`,
     });
+  })
+  .fail(response => {
+    dispatch({
+      type: SET_MESSAGE,
+      message: 'There was an error. We could not save the project.',
+    });
+  });
 };
 
 export const dismissMessage = () => (

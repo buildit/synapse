@@ -19,7 +19,6 @@ class Projection extends Component {
   render() {
     const { projectId } = this.props.params;
     let value;
-
     return (
       <div className="projection">
         <div className="container">

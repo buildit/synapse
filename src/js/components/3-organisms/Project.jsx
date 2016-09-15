@@ -15,7 +15,6 @@ class Project extends Component {
 
   render() {
     const { project } = this.props;
-    console.log("project name",project.name)
     return (
       <div>
         <RouteLink
@@ -57,12 +56,8 @@ class Project extends Component {
             content={project.demand.authPolicy}
           />
           <Text
-            label="Username"
-            content={project.demand.username}
-          />
-          <Text
-            label="Password"
-            content="********"
+            label="Auth Data"
+            content={project.demand.userData}
           />
 
           <h3>Flow</h3>
@@ -93,12 +88,8 @@ class Project extends Component {
             content={project.defect.authPolicy}
           />
           <Text
-            label="Username"
-            content={project.defect.username}
-          />
-          <Text
-            label="Password"
-            content="********"
+            label="Auth Data"
+            content={project.defect.userData}
           />
 
           <h3>Flow</h3>
@@ -136,12 +127,8 @@ class Project extends Component {
             content={project.effort.authPolicy}
           />
           <Text
-            label="Username"
-            content={project.effort.username}
-          />
-          <Text
-            label="Password"
-            content="********"
+            label="Auth Data"
+            content={project.effort.userData}
           />
 
           <h3>Roles</h3>

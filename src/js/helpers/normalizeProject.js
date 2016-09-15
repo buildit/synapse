@@ -30,7 +30,6 @@ const normalizeProject = project => {
 
   if (!normalizedProject.defect) {
     normalizedProject.defect = {
-      flow: [],
       severity: [],
     };
   }
