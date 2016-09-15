@@ -87,7 +87,7 @@ node {
         docker.withRegistry(registry) {
           image.push("latest")
         }
-        slack.notify("Deployed to Staging", "Commit <${gitUrl}/commits/${shortCommitHash}|${shortCommitHash}> has been deployed to <${appUrl}|${appUrl}>\n\n${commitMessage}", "good", "https://3e72372a-a-551982af-s-sites.googlegroups.com/a/umn.edu/synapse/home/tumblr_inline_mxzqz2h6s61r41umo.jpg?attachauth=ANoY7crn3NWukDP8A4TAaqItkX3d5pvCuER1hFCxlSg97TpbKswdfUPQTHfL0qEuz8mCTssKwIPFsmZqyBqA9hRRh1J2XVmpGS9sdPXaglbay4zOVrqeMMwJlQQpuzxon_Y7ZseON7bIZuN_uEH4MQA4z9G-LQqc0Ijrhsk1gMz41RkvMuyrTdvwgZGczL1cDBTKTWCgt-cY3js1QWmObRxcyHxiYGXo3tTmoausJva7fIad7drCuWw%3D&attredirects=0", slackChannel)
+        slack.notify("Deployed to Staging", "Commit <${gitUrl}/commits/${shortCommitHash}|${shortCommitHash}> has been deployed to <${appUrl}|${appUrl}>\n\n${commitMessage}", "good", "https://3e72372a-a-551982af-s-sites.googlegroups.com/a/umn.edu/synapse/home/tumblr_inline_mxzqz2h6s61r41umo.jpg", slackChannel)
     }
     catch (err) {
       currentBuild.result = "FAILURE"
