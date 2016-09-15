@@ -1,6 +1,6 @@
 export const PADDING = { top: 40, right: 30, bottom: 160, left: 70 };
 export const WIDTH = 1000;
-export const HEIGHT = 1500;
+export const HEIGHT = 2500;
 export const INDIVIDUAL_CHART_HEIGHT = 300;
 
 // TODO: Set these offsets based on presence of respective data.

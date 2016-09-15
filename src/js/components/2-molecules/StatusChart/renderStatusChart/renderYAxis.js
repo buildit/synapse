@@ -2,6 +2,7 @@ const d3 = require('d3');
 const removeElement = require('./removeElement');
 
 module.exports = (containerElement, id, yScale) => {
+  debugger;
   removeElement(id);
   return (
     containerElement

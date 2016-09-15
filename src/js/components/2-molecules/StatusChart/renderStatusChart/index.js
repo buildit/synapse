@@ -3,8 +3,7 @@ const setChart = require('./setChart');
 const renderDateAxis = require('./renderDateAxis');
 const renderYAxis = require('./renderYAxis');
 const renderYAxisLabel = require('./renderYAxisLabel');
-const renderDateAxisLabel = require('./renderDateAxisLabel');
-const renderDemandChart = require('./renderDemandChart');
+const renderStackedAreaChart = require('./renderStackedAreaChart');
 const renderProjection = require('./renderProjection');
 const setProjectionButton = require('./setProjectionButton');
 const toggleProjectionButton = require('./toggleProjectionButton');
@@ -19,10 +18,10 @@ import {
   HEIGHT,
   DEMAND_Y_OFFSET,
   DEFECT_Y_OFFSET,
-  // EFFORT_Y_OFFSET,
+  EFFORT_Y_OFFSET,
   DEMAND_Y_LABEL,
   DEFECT_Y_LABEL,
-  // EFFORT_Y_LABEL,
+  EFFORT_Y_LABEL,
   Y_AXIS_ID,
   DATE_AXIS_ID,
   INDIVIDUAL_CHART_HEIGHT,
@@ -40,20 +39,31 @@ module.exports = (props, containerElement) => {
    } = props;
 
   let demandChart;
+  let defectChart;
+  let effortChart;
   let demandValues;
+  let defectValues;
+  let effortValues;
   let demandYScale;
+  let defectYScale;
+  let effortYScale;
   let chartableDates;
   let dateScale;
   let isProjectionVisible = false;
 
-  const prepareYScale = () => {
+  const prepareYScales = () => {
     demandValues = getChartableDemandValues(
       data,
       demandCategories,
       projection,
       isProjectionVisible
     );
+    defectValues = getChartableValues(defectStatus, defectCategories);
+    effortValues = getChartableValues(effortStatus, effortCategories);
+
     demandYScale = yScaleCreator(DEMAND_Y_OFFSET, demandValues);
+    defectYScale = yScaleCreator(DEFECT_Y_OFFSET, defectValues);
+    effortYScale = yScaleCreator(EFFORT_Y_OFFSET, effortValues);
   };
 
   const prepareDateScale = () => {
@@ -69,7 +79,9 @@ module.exports = (props, containerElement) => {
   };
 
   const render = () => {
-    demandChart = renderDemandChart(
+    const chartContainer = setChart(containerElement, WIDTH, HEIGHT, PADDING);
+
+    demandChart = renderStackedAreaChart(
       chartContainer,
       data,
       demandCategories,
@@ -78,22 +90,56 @@ module.exports = (props, containerElement) => {
       'demandChart'
     );
 
+    defectChart = renderStackedAreaChart(
+      chartContainer,
+      defectStatus,
+      defectCategories,
+      defectYScale,
+      dateScale,
+      'defectChart'
+    );
+
+    // effortChart = renderStackedAreaChart(
+    //   chartContainer,
+    //   effortStatus,
+    //   effortCategories,
+    //   effortYScale,
+    //   dateScale,
+    //   'effortChart'
+    // );
+
+
     // Render the axes and labels
-    renderYAxis(demandChart, Y_AXIS_ID, demandYScale);
-    renderYAxisLabel(demandChart, DEMAND_Y_LABEL);
+    renderYAxis(demandChart, `${Y_AXIS_ID}-demand`, demandYScale);
+    renderYAxisLabel(demandChart, DEMAND_Y_LABEL, DEMAND_Y_OFFSET);
     renderDateAxis(
       demandChart,
-      DATE_AXIS_ID,
+      `${DATE_AXIS_ID}-demand`,
       dateScale,
       DEMAND_Y_OFFSET,
       INDIVIDUAL_CHART_HEIGHT);
+
+    renderYAxis(defectChart, `${Y_AXIS_ID}-defect`, defectYScale);
+    renderYAxisLabel(defectChart, DEFECT_Y_LABEL, DEFECT_Y_OFFSET);
+    renderDateAxis(
+      defectChart,
+      `${DATE_AXIS_ID}-defect`,
+      dateScale,
+      DEFECT_Y_OFFSET,
+      INDIVIDUAL_CHART_HEIGHT);
+
+    // renderYAxis(effortChart, `${Y_AXIS_ID}-effort`, effortYScale);
+    // renderYAxisLabel(effortChart, EFFORT_Y_LABEL);
+    // renderDateAxis(
+    //   effortChart,
+    //   `${DATE_AXIS_ID}-effort`,
+    //   dateScale,
+    //   EFFORT_Y_OFFSET,
+    //   INDIVIDUAL_CHART_HEIGHT);
   };
 
-  const chartContainer = setChart(containerElement, WIDTH, HEIGHT, PADDING);
-
   prepareDateScale();
-  prepareYScale();
-
+  prepareYScales();
   render();
 
   const projectionButton = setProjectionButton(chartContainer);
@@ -105,8 +151,7 @@ module.exports = (props, containerElement) => {
     toggleProjectionButton(projectionButton, isProjectionVisible);
 
     prepareDateScale();
-    prepareYScale();
-
+    prepareYScales();
     render();
 
     if (isProjectionVisible) {
