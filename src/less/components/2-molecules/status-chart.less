@@ -1,13 +1,37 @@
 @axis: #666;
 
-.status-chart * {
-  outline: 1px solid pink;
-}
+// outline everything for debugging
+// .status-chart * {
+//   outline: 1px solid pink;
+// }
 
 .status-chart {
+  .axis {
+    font: 10px sans-serif;
+    color: @axis;
+    path,
+    line {
+      fill: none;
+      stroke: @axis;
+    }
+    path {
+      display: none;
+    }
+  }
   .label {
     font: 10px sans-serif;
     color: @axis;
+  }
+  .projection-line {
+    fill: none;
+    stroke: black;
+    stroke-width: 5;
+  }
+  .projection-button {
+    cursor: pointer;
+    &:hover {
+      font-weight:bold;;
+    }
   }
 }
 
@@ -21,18 +45,7 @@
 //   //  }
 //    width: 950px;
 //    height: 500px;
-//     .axis {
-//       font: 10px sans-serif;
-//       color: @axis;
-//       path,
-//       line {
-//         fill: none;
-//         stroke: @axis;
-//       }
-//       path {
-//         display: none;
-//       }
-//     }
+
 //
 //     .label {
 //       font: 10px sans-serif;
@@ -54,17 +67,6 @@
 //       }
 //     }
 //
-//     .projectionLine {
-//       fill: none;
-//       stroke: black;
-//       stroke-width: 5;
-//     }
-//     .projectionLineButton {
-//       cursor: pointer;
-//       &:hover {
-//         font-weight:bold;;
-//       }
-//     }
 //   }
 // }
 //

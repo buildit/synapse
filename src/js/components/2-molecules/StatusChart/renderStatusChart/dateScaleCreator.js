@@ -18,6 +18,7 @@ const DEFAULT_WIDTH = 1200;
 const dateScaleCreator = (dates, width) => {
   if (dates && width) {
     const parsedDates = dates.map(date => parseTime(date));
+    console.log(d3.extent(parsedDates));
     return d3.scaleTime()
       .domain(d3.extent(parsedDates))
       .range([0, width]);

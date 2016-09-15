@@ -11,7 +11,7 @@ const DEFAULT_VALUE_RANGE = [0, 100];
 const yScaleCreator = (yOffset, values) => {
   if (values.length > 1) {
     return d3.scaleLinear()
-      .domain(d3.extent(values))
+      .domain([0, d3.max(values)])
       .range([yOffset + CHART_HEIGHT, yOffset]);
   }
   return d3.scaleLinear()

@@ -1,11 +1,10 @@
-module.exports = (containerElement, label, yOffset) => (
+module.exports = (containerElement, label) => (
   containerElement
     .append('g')
+    .attr('transform', 'translate(-55, 140)')
       .append('text')
+      .attr('transform', 'rotate(-90)')
       .attr('class', 'y label')
       .attr('text-anchor', 'end')
-      .attr('y', -20)
-      .attr('x', -(yOffset + 140))
-      .attr('transform', 'rotate(-90)')
       .text(label)
 );

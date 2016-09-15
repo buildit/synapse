@@ -1,5 +1,7 @@
 module.exports = (projectionButton, isProjectionVisible) => {
-  isProjectionVisible ?
-    projectionButton.text('Hide projection') :
+  if (isProjectionVisible) {
+    projectionButton.text('Hide projection');
+  } else {
     projectionButton.text('Show projection');
+  }
 };

@@ -11,7 +11,7 @@ module.exports = ({ data, dateScale, yScale }) => {
 
   d3.select('#demandChart')
     .append('path')
-    .attr('class', 'projectionLine')
+    .attr('class', 'projection-line')
     .attr('id', 'projectionLine')
     .attr('opacity', 1)
     .datum(points)

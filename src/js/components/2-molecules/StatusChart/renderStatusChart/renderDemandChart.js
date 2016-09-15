@@ -1,4 +1,5 @@
 const d3 = require('d3');
+const removeElement = require('./removeElement');
 import parseTime from './parseTime';
 
 module.exports = (
@@ -9,6 +10,8 @@ module.exports = (
   dateScale,
   chartID
 ) => {
+  removeElement(chartID);
+
   const area = d3.area()
     .x(d => dateScale(parseTime(d.data.date)))
     .y0(d => yScale(d[0] || 0))
@@ -34,5 +37,7 @@ module.exports = (
       .attr('class', 'area')
       .style('fill', (d, i) => d3.schemeCategory20[i])
       .attr('d', area);
+
+    return stackContainer;
   }
 };

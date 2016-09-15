@@ -1,7 +1,9 @@
 // const d3 = require('d3');
 const setChart = require('./setChart');
+const renderDateAxis = require('./renderDateAxis');
 const renderYAxis = require('./renderYAxis');
 const renderYAxisLabel = require('./renderYAxisLabel');
+const renderDateAxisLabel = require('./renderDateAxisLabel');
 const renderDemandChart = require('./renderDemandChart');
 const renderProjection = require('./renderProjection');
 const setProjectionButton = require('./setProjectionButton');
@@ -17,10 +19,14 @@ import {
   HEIGHT,
   DEMAND_Y_OFFSET,
   DEFECT_Y_OFFSET,
-  EFFORT_Y_OFFSET,
+  // EFFORT_Y_OFFSET,
   DEMAND_Y_LABEL,
   DEFECT_Y_LABEL,
-  EFFORT_Y_LABEL,
+  // EFFORT_Y_LABEL,
+  Y_AXIS_ID,
+  DATE_AXIS_ID,
+  INDIVIDUAL_CHART_HEIGHT,
+  DATE_LABEL,
 } from './config';
 
 module.exports = (props, containerElement) => {
@@ -33,67 +39,76 @@ module.exports = (props, containerElement) => {
     effortCategories,
    } = props;
 
-  let isProjectionVisible = true; // TODO: Drive this by the d3 UI
+  let demandChart;
+  let demandValues;
+  let demandYScale;
+  let chartableDates;
+  let dateScale;
+  let isProjectionVisible = false;
 
-  // Set up chart container
+  const prepareYScale = () => {
+    demandValues = getChartableDemandValues(
+      data,
+      demandCategories,
+      projection,
+      isProjectionVisible
+    );
+    demandYScale = yScaleCreator(DEMAND_Y_OFFSET, demandValues);
+  };
+
+  const prepareDateScale = () => {
+    chartableDates = getChartableDates(
+      data,
+      defectStatus,
+      effortStatus,
+      projection,
+      WIDTH,
+      isProjectionVisible
+    );
+    dateScale = dateScaleCreator(chartableDates, WIDTH);
+  };
+
+  const render = () => {
+    demandChart = renderDemandChart(
+      chartContainer,
+      data,
+      demandCategories,
+      demandYScale,
+      dateScale,
+      'demandChart'
+    );
+
+    // Render the axes and labels
+    renderYAxis(demandChart, Y_AXIS_ID, demandYScale);
+    renderYAxisLabel(demandChart, DEMAND_Y_LABEL);
+    renderDateAxis(
+      demandChart,
+      DATE_AXIS_ID,
+      dateScale,
+      DEMAND_Y_OFFSET,
+      INDIVIDUAL_CHART_HEIGHT);
+  };
+
   const chartContainer = setChart(containerElement, WIDTH, HEIGHT, PADDING);
 
-  // Prepare data to be usable by the scale generators
-  const dates = getChartableDates(
-    data,
-    defectStatus,
-    effortStatus,
-    projection,
-    WIDTH,
-    isProjectionVisible
-  );
+  prepareDateScale();
+  prepareYScale();
 
-  // Create the dateScale function
-  const dateScale = dateScaleCreator(dates, WIDTH);
-
-  // Prepare values to be usable by the y Scale generator
-  // debugger;
-  const demandValues = getChartableDemandValues(
-    data,
-    demandCategories,
-    projection,
-    isProjectionVisible
-  );
-  const defectValues = getChartableValues(defectStatus, defectCategories);
-  const effortValues = getChartableValues(effortStatus, effortCategories);
-
-  // Create the 3 yScale functions
-  const demandYScale = yScaleCreator(DEMAND_Y_OFFSET, demandValues);
-  const defectYScale = yScaleCreator(DEFECT_Y_OFFSET, defectValues);
-  const effortYScale = yScaleCreator(EFFORT_Y_OFFSET, effortValues);
-
-  // Render the axes
-  renderYAxis(chartContainer, DEMAND_Y_LABEL, demandYScale);
-  renderYAxis(chartContainer, DEFECT_Y_LABEL, defectYScale);
-  // renderYAxis(chartContainer, EFFORT_Y_LABEL, effortYScale); // This one not placed correctly.
-
-  // Render the axis labels
-  renderYAxisLabel(chartContainer, DEMAND_Y_LABEL, DEMAND_Y_OFFSET);
-  renderYAxisLabel(chartContainer, DEFECT_Y_LABEL, DEFECT_Y_OFFSET);
-  // renderYAxisLabel(chartContainer, EFFORT_Y_LABEL, EFFORT_Y_OFFSET);
-
-  // Render the charts
-  renderDemandChart(
-    chartContainer,
-    data,
-    demandCategories,
-    demandYScale,
-    dateScale,
-    'demandChart'
-  );
+  render();
 
   const projectionButton = setProjectionButton(chartContainer);
+
+  // Event listeners
   projectionButton.on('click', () => {
-    console.log(isProjectionVisible);
     isProjectionVisible = !isProjectionVisible;
+
     toggleProjectionButton(projectionButton, isProjectionVisible);
-    // reset demandYScale conditionally
-    // renderDemandChart();
+
+    prepareDateScale();
+    prepareYScale();
+
+    render();
+
     if (isProjectionVisible) {
       renderProjection({
         data: projection,
