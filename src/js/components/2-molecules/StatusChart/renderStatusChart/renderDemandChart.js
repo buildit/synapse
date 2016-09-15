@@ -1,5 +1,5 @@
 const d3 = require('d3');
-import parseTime from '../parseTime';
+import parseTime from './parseTime';
 
 module.exports = (
   containerElement,

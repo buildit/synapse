@@ -3,8 +3,11 @@ const setChart = require('./setChart');
 const renderYAxis = require('./renderYAxis');
 const renderYAxisLabel = require('./renderYAxisLabel');
 const renderDemandChart = require('./renderDemandChart');
-import dateScaleCreator from '../dateScaleCreator';
-import yScaleCreator from '../yScaleCreator';
+const renderProjection = require('./renderProjection');
+const setProjectionButton = require('./setProjectionButton');
+const toggleProjectionButton = require('./toggleProjectionButton');
+import dateScaleCreator from './dateScaleCreator';
+import yScaleCreator from './yScaleCreator';
 import getChartableDates from './getChartableDates';
 import getChartableValues from './getChartableValues';
 import getChartableDemandValues from './getChartableDemandValues';
@@ -30,7 +33,7 @@ module.exports = (props, containerElement) => {
     effortCategories,
    } = props;
 
-  const isProjectionVisible = true; // TODO: Drive this by the d3 UI
+  let isProjectionVisible = true; // TODO: Drive this by the d3 UI
 
   // Set up chart container
   const chartContainer = setChart(containerElement, WIDTH, HEIGHT, PADDING);
@@ -74,7 +77,7 @@ module.exports = (props, containerElement) => {
   renderYAxisLabel(chartContainer, DEFECT_Y_LABEL, DEFECT_Y_OFFSET);
   // renderYAxisLabel(chartContainer, EFFORT_Y_LABEL, EFFORT_Y_OFFSET);
 
-  // Render the demand chart
+  // Render the charts
   renderDemandChart(
     chartContainer,
     data,
@@ -83,4 +86,20 @@ module.exports = (props, containerElement) => {
     dateScale,
     'demandChart'
   );
+
+  const projectionButton = setProjectionButton(chartContainer);
+  projectionButton.on('click', () => {
+    console.log(isProjectionVisible);
+    isProjectionVisible = !isProjectionVisible;
+    toggleProjectionButton(projectionButton, isProjectionVisible);
+    // reset demandYScale conditionally
+    // renderDemandChart();
+    if (isProjectionVisible) {
+      renderProjection({
+        data: projection,
+        yScale: demandYScale,
+        dateScale,
+      });
+    }
+  });
 };
