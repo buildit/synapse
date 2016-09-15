@@ -38,6 +38,7 @@ module.exports = (props, containerElement) => {
     effortCategories,
    } = props;
 
+  const chartContainer = setChart(containerElement, WIDTH, HEIGHT, PADDING);
   let demandChart;
   let defectChart;
   let effortChart;
@@ -79,8 +80,6 @@ module.exports = (props, containerElement) => {
   };
 
   const render = () => {
-    const chartContainer = setChart(containerElement, WIDTH, HEIGHT, PADDING);
-
     demandChart = renderStackedAreaChart(
       chartContainer,
       data,
