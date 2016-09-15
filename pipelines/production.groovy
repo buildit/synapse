@@ -43,11 +43,11 @@ node {
       // wait until the app is deployed
       convox.waitUntilDeployed("${appName}")
       convox.ensureSecurityGroupSet("${appName}", env.CONVOX_SECURITYGROUP)
-      slack.notify("Deployed to Production", "Tag <${gitUrl}/commits/tag/${tag}|${tag}> has been deployed to <${appUrl}|${appUrl}>", "good", "http://i296.photobucket.com/albums/mm200/kingzain/the_eye_of_sauron_by_stirzocular-d86f0oo_zpslnqbwhv2.png", slackChannel)
+      slack.notify("Deployed to Production", "Tag <${gitUrl}/commits/tag/${tag}|${tag}> has been deployed to <${appUrl}|${appUrl}>", "good", "https://3e72372a-a-551982af-s-sites.googlegroups.com/a/umn.edu/synapse/home/tumblr_inline_mxzqz2h6s61r41umo.jpg?attachauth=ANoY7crn3NWukDP8A4TAaqItkX3d5pvCuER1hFCxlSg97TpbKswdfUPQTHfL0qEuz8mCTssKwIPFsmZqyBqA9hRRh1J2XVmpGS9sdPXaglbay4zOVrqeMMwJlQQpuzxon_Y7ZseON7bIZuN_uEH4MQA4z9G-LQqc0Ijrhsk1gMz41RkvMuyrTdvwgZGczL1cDBTKTWCgt-cY3js1QWmObRxcyHxiYGXo3tTmoausJva7fIad7drCuWw%3D&attredirects=0", slackChannel)
   }
   catch (err) {
     currentBuild.result = "FAILURE"
-    slack.notify("Error while deploying to Production", "Tag <${gitUrl}/commits/tag/${tag}|${tag}> failed to deploy to <${appUrl}|${appUrl}>", "danger", "http://i296.photobucket.com/albums/mm200/kingzain/the_eye_of_sauron_by_stirzocular-d86f0oo_zpslnqbwhv2.png", slackChannel)
+    slack.notify("Error while deploying to Production", "Tag <${gitUrl}/commits/tag/${tag}|${tag}> failed to deploy to <${appUrl}|${appUrl}>", "danger", "http://jonlieffmd.com/wp-content/uploads/2014/12/bigstock-Synapse-6391577.jpg", slackChannel)
     throw err
   }
 }
