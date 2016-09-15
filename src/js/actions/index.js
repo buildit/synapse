@@ -9,14 +9,17 @@ import {
   UPDATE_PROJECTION_START_DATE,
   SET_HAS_PROJECTION,
 } from './actions';
-import config from 'config';
 import $ from 'jquery';
 import { browserHistory } from 'react-router';
+
 const trimFormInputs = require('../helpers/trimFormInputs');
 const isValid = require('../helpers/isValid');
 
-const apiBaseUrl = config.get('Client.api.baseUrl');
-const starterProjectsBaseApiUrl = config.get('Client.starterProjectsApi.baseUrl');
+/* eslint-disable import/no-unresolved */
+const defaultConfig = require('./default.json');
+/* eslint-enable import/no-unresolved */
+const apiBaseUrl = defaultConfig.parameters.api.baseUrl;
+const starterProjectsBaseApiUrl = defaultConfig.parameters.starterProjectsApi.baseUrl;
 
 const requestProjects = () => (
   { type: 'FETCH_PROJECTS_REQUEST' }

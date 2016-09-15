@@ -1,26 +1,22 @@
-const babelify = require('babelify');
-const browserify = require('browserify');
-const buffer = require('vinyl-buffer');
 const connect = require('gulp-connect');
+const cowsay = require('cowsay');
 const del = require('del');
+const environment = process.env.NODE_ENV || 'development';
 const gulp = require('gulp');
-const gutil = require('gulp-util');
+const history = require('connect-history-api-fallback');
 const html5lint = require('gulp-html5-lint');
 const less = require('gulp-less');
 const lesshint = require('gulp-lesshint');
-const source = require('vinyl-source-stream');
-const sourcemaps = require('gulp-sourcemaps');
-const cowsay = require('cowsay');
-const template = require('gulp-template');
 const rename = require('gulp-rename');
-const environment = process.env.NODE_ENV || 'development';
-const history = require('connect-history-api-fallback');
+const sourcemaps = require('gulp-sourcemaps');
+const template = require('gulp-template');
+const webpack = require('gulp-webpack');
 
 gulp.task('clean', () => (
   del(['dist'])
 ));
 
-gulp.task('config', ['clean'], () => {
+gulp.task('config', ['clean'], (callback) => {
   const midasApiUrl = process.env.MIDAS_API_URL || 'http://localhost:6565/';
 
   /* eslint-disable no-console */
@@ -36,25 +32,44 @@ gulp.task('config', ['clean'], () => {
   gulp.src('./config/gulp-template.json')
     .pipe(template({ midasapiurl: `${midasApiUrl}` }))
     .pipe(rename('default.json'))
-    .pipe(gulp.dest('./dist/config'))
-    .pipe(gulp.dest('./config'));
+    .pipe(gulp.dest('./src/js/actions'))
+    .on('end', callback);
 });
 
-gulp.task('js', ['clean'], () => (
-  browserify({
-    extensions: ['.jsx', '.js'],
-    entries: 'src/js/index.js',
-    ignoreMissing: true,
-  })
-  .transform(babelify.configure({ presets: ['es2015', 'react', 'stage-2'], sourceMaps: true }))
-  .bundle()
-  .pipe(source('bundle.js'))
-  .pipe(buffer())
-  .pipe(sourcemaps.init({ loadMaps: true }))
-    .on('error', gutil.log)
-  .pipe(sourcemaps.write('./maps'))
-  .pipe(gulp.dest('dist/js'))
-));
+gulp.task('js', ['config'], (callback) => {
+  gulp
+    .src('./src/js/index.js')
+    .pipe(webpack(
+      {
+        output: {
+          filename: './js/bundle.js',
+        },
+        devtool: 'source-map',
+        resolve: {
+          modulesDirectories: ['node_modules', './src/js/'],
+          extensions: ['', '.js', '.jsx'],
+        },
+        module: {
+          loaders: [{
+            test: /\.(js|jsx)/,
+            exclude: /node_modules/,
+            cacheable: true,
+            loader: 'babel-loader',
+            query: {
+              presets: ['es2015', 'react'],
+            },
+          }, {
+            test: /.json/,
+            exclude: [/node_modules/, /config/],
+            cacheable: true,
+            loader: 'json-loader',
+          }],
+        },
+      }
+    ))
+    .pipe(gulp.dest('./dist'))
+    .on('end', callback);
+});
 
 gulp.task('html', ['clean'], () => (
   gulp.src('./src/**/*.html')
@@ -84,7 +99,7 @@ gulp.task('less-lint', () => (
 
 gulp.task('clean-config', ['js'], () => (
   del([
-    'config/default.json',
+    './src/js/actions/default.json',
   ])
 ));
 
