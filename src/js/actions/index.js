@@ -415,17 +415,15 @@ export const saveProjection = (projection, name) => dispatch => {
     url: `${apiBaseUrl}v1/project/${name}/projection`,
     data: JSON.stringify(projectionToSave),
     contentType: 'application/json',
-    dataType: 'json',
+    // dataType: 'json',
   })
   .done(() => {
-    console.log("done")
     dispatch({
       type: SET_MESSAGE,
       message: `The projection for project ${name} was saved successfully.`,
     });
   })
   .fail(response => {
-    console.log("fail", response)
     dispatch({
       type: SET_MESSAGE,
       message: 'There was an error. We could not save the projection.',
