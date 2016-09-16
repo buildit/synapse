@@ -17,7 +17,7 @@ class Project extends Component {
     const { project } = this.props;
 
     return (
-      <div>
+      <div className="project-view">
         <RouteLink
           route={`${project.id}/edit`}
           label="Edit"
