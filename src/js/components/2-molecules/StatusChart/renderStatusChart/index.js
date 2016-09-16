@@ -98,14 +98,14 @@ module.exports = (props, containerElement) => {
       'defectChart'
     );
 
-    // effortChart = renderStackedAreaChart(
-    //   chartContainer,
-    //   effortStatus,
-    //   effortCategories,
-    //   effortYScale,
-    //   dateScale,
-    //   'effortChart'
-    // );
+    effortChart = renderStackedAreaChart(
+      chartContainer,
+      effortStatus,
+      effortCategories,
+      effortYScale,
+      dateScale,
+      'effortChart'
+    );
 
 
     // Render the axes and labels
@@ -127,14 +127,14 @@ module.exports = (props, containerElement) => {
       DEFECT_Y_OFFSET,
       INDIVIDUAL_CHART_HEIGHT);
 
-    // renderYAxis(effortChart, `${Y_AXIS_ID}-effort`, effortYScale);
-    // renderYAxisLabel(effortChart, EFFORT_Y_LABEL);
-    // renderDateAxis(
-    //   effortChart,
-    //   `${DATE_AXIS_ID}-effort`,
-    //   dateScale,
-    //   EFFORT_Y_OFFSET,
-    //   INDIVIDUAL_CHART_HEIGHT);
+    renderYAxis(effortChart, `${Y_AXIS_ID}-effort`, effortYScale);
+    renderYAxisLabel(effortChart, EFFORT_Y_LABEL);
+    renderDateAxis(
+      effortChart,
+      `${DATE_AXIS_ID}-effort`,
+      dateScale,
+      EFFORT_Y_OFFSET,
+      INDIVIDUAL_CHART_HEIGHT);
   };
 
   prepareDateScale();

@@ -7,26 +7,15 @@ import * as actionCreators from '../../actions/';
 import StatusChart from '../2-molecules/StatusChart';
 import transformStatusData from '../../helpers/transformStatusData';
 
-// TODO: Move this to separate file. Abstract to handle an array of arrays.
-const dataExists = ({ demandStatus, defectStatus, effortStatus }) => (
-  demandStatus.length > 0
-  // || defectStatus.length > 0
-  // || effortStatus.length > 0
-);
-
 class Status extends Component {
   componentDidMount() {
     const { projectId } = this.props.params;
-    // TODO: Make these fetches one promise so React doesn't fire every time data comes back.
-    //  Then can do dataExists the right way, looking for any data.
-    this.props.fetchStatus(projectId);
-    this.props.fetchProject(projectId);
-    this.props.fetchProjection(projectId);
+    this.props.fetchAllStatusData(projectId)
   }
 
   render() {
     let component = <div>Loading...</div>;
-    if (dataExists(this.props)) {
+    if (!this.props.isFetching && this.props.project.name) {
       component = (
         <StatusChart
           data={this.props.demandStatus}
@@ -46,7 +35,7 @@ class Status extends Component {
 }
 
 Status.propTypes = {
-  fetchStatus: PropTypes.func.isRequired,
+  fetchAllStatusData: PropTypes.func.isRequired,
   fetchProject: PropTypes.func.isRequired,
   fetchProjection: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,
@@ -62,9 +51,11 @@ Status.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const demandStatus = transformStatusData(state.appData.demandStatus, 'status');
-  const defectStatus = transformStatusData(state.appData.defectStatus, 'severity');
-  const effortStatus = transformStatusData(state.appData.effortStatus, 'activity');
+  console.log(state.isFetching);
+
+  const demandStatus = transformStatusData(state.appData.status.demand, 'status');
+  const defectStatus = transformStatusData(state.appData.status.defect, 'severity');
+  const effortStatus = transformStatusData(state.appData.status.effort, 'activity');
 
   const demandCategories = state.appData.project.demand.flow.map(item => (item.name));
   const defectCategories = state.appData.project.defect.severity.map(item => (item.name));
@@ -80,6 +71,7 @@ const mapStateToProps = state => {
     effortCategories,
     projection: state.projection,
     hasProjection: state.hasProjection,
+    isFetching: state.isFetching,
   };
 };
 

@@ -11,6 +11,7 @@ import {
 } from './actions';
 import $ from 'jquery';
 import { browserHistory } from 'react-router';
+const fetch = require('./fetch');
 
 const trimFormInputs = require('../helpers/trimFormInputs');
 const isValid = require('../helpers/isValid');
@@ -124,73 +125,91 @@ export const fetchProject = (id) => (dispatch) => {
       });
 };
 
-export const fetchStatus = (id) => (dispatch) => {
-  const demandCall = $.get(`${apiBaseUrl}project/${id}/demand`);
-  const defectCall = $.get(`${apiBaseUrl}project/${id}/defect`);
-  const effortCall = $.get(`${apiBaseUrl}project/${id}/effort`);
+export const fetchAllStatusData = projectId => dispatch => {
+  console.log('preparing to fetch status stuff')
+  dispatch({ type: 'FETCH_START' });  
 
-  // These endpoints provide simplified status data, which is helpful for testing.
-  // const demandCall = $.get('https://tonicdev.io/billyzac/57befb878bec6b13001152a9/branches/master/demand');
-  // const defectCall = $.get('https://tonicdev.io/billyzac/57befb878bec6b13001152a9/branches/master/defect');
-  // const effortCall = $.get('https://tonicdev.io/billyzac/57befb878bec6b13001152a9/branches/master/effort');
+  return Promise.all([
+    fetch(`${apiBaseUrl}project/${projectId}/demand`),
+    fetch(`${apiBaseUrl}project/${projectId}/defect`),
+    fetch(`${apiBaseUrl}project/${projectId}/effort`),
+    fetch(`${apiBaseUrl}project/${projectId}/forecast`),
+    fetch(`${apiBaseUrl}project/${projectId}`),
+  ]).then(data => {
+    const demand = JSON.parse(data[0]);
+    const defect = JSON.parse(data[1]);
+    const effort = JSON.parse(data[2]);
+    const projection = JSON.parse(data[3]);
+    const project = JSON.parse(data[4])[0];
 
-  const fetchFailureMessage = `It seems that the data service is unresponsive.
-    Please check the data service and make sure it's up and running.`;
+    dispatch(fetchStatusSuccess({
+      demand, 
+      defect,
+      effort, 
+    }));
 
-  dispatch({ type: 'FETCH_STATUS_REQUEST' });
+    dispatch({
+      type: 'UPDATE_PROJECTION_BACKLOG_SIZE',
+      value: projection.backlogSize,
+    });
+    dispatch({
+      type: 'UPDATE_PROJECTION_VELOCITY_START',
+          value: projection.velocityStart,
+        });
 
-  $.when(demandCall)
-  .done(statusData => {
-    if (isValid(statusData, 'demand-status-data')) {
-      dispatch({
-        type: 'FETCH_STATUS_SUCCESS',
-        statusData,
-      });
-    } else {
-      // Don't know why this is not being set.
-      dispatch(setErrorMessage('The demand data received from the API was improperly formatted.'));
+        dispatch({
+          type: 'UPDATE_PROJECTION_VELOCITY_MIDDLE',
+          value: projection.velocityMiddle,
+        });
 
-      // But this works -- it does go to the error route. Hm.
-      dispatch(switchLocation('/error'));
-    }
+        dispatch({
+          type: 'UPDATE_PROJECTION_VELOCITY_END',
+          value: projection.velocityEnd,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_PERIOD_START',
+          value: projection.periodStart,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_PERIOD_END',
+          value: projection.periodEnd,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_DARK_MATTER',
+          value: projection.darkMatter,
+        });
+
+        dispatch({
+          type: 'UPDATE_PROJECTION_ITERATION_LENGTH',
+          value: projection.iterationLength,
+        });
+
+        dispatch({
+          type: UPDATE_PROJECTION_START_DATE,
+          value: projection.startDate,
+        });
+
+   dispatch({
+      type: 'FETCH_PROJECT_SUCCESS',
+      project,     
+    });  
+
+   dispatch({
+      type: 'FETCH_END',
+   });  
+
   })
-  .fail(() => {
-    dispatch(setErrorMessage(fetchFailureMessage));
-    dispatch(switchLocation('/error'));
-  });
-  $.when(defectCall)
-  .done(statusData => {
-    if (isValid(statusData, 'defect-status-data')) {
-      dispatch({
-        type: 'FETCH_DEFECT_SUCCESS',
-        statusData,
-      });
-    } else {
-      dispatch(setErrorMessage('The defect data received from the API was improperly formatted.'));
-      dispatch(switchLocation('/error'));
-    }
-  })
-  .fail(() => {
-    dispatch(setErrorMessage(fetchFailureMessage));
-    dispatch(switchLocation('/error'));
-  });
-  $.when(effortCall)
-  .done(statusData => {
-    if (isValid(statusData, 'effort-status-data')) {
-      dispatch({
-        type: 'FETCH_EFFORT_SUCCESS',
-        statusData,
-      });
-    } else {
-      dispatch(setErrorMessage('The effort data received from the API was improperly formatted.'));
-      dispatch(switchLocation('/error'));
-    }
-  })
-  .fail(() => {
-    dispatch(setErrorMessage(fetchFailureMessage));
-    dispatch(switchLocation('/error'));
-  });
-};
+  
+}
+
+const fetchStatusSuccess = status => ({
+  type: 'FETCH_STATUS_SUCCESS',
+  status,
+});
+
 export const saveFormData = (project) => (dispatch) => {
   dispatch({
     type: SET_MESSAGE,

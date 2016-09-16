@@ -13,8 +13,12 @@ const initialState = {
   demandStatus: [],
   effortStatus: [],
   defectStatus: [],
-  isFetching: false,
-};
+  status: {
+    demand: [],
+    defect: [],
+    effort: [],
+  },
+  isFetching: false, };
 
 const appData = (state = initialState, action) => {
   switch (action.type) {
@@ -67,7 +71,7 @@ const appData = (state = initialState, action) => {
       isFetching: false,
     };
   }
-  case 'FETCH_STATUS_REQUEST': {
+  case 'FETCH_STATUS_START': {
     return {
       ...state,
       isFetching: true,
@@ -75,17 +79,15 @@ const appData = (state = initialState, action) => {
   }
 
   case 'FETCH_STATUS_SUCCESS': {
+console.log(status)
     return {
       ...state,
-      demandStatus: action.statusData,
+      status: action.status,
       isFetching: false,
     };
   }
 
-  case 'FETCH_DEFECT_SUCCESS': {
-    return {
-      ...state,
-      defectStatus: action.statusData,
+  case 'FETCH_DEFECT_SUCCESS': { return { ...state, defectStatus: action.statusData,
       isFetching: false,
     };
   }
