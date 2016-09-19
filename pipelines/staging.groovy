@@ -67,7 +67,7 @@ node {
         writeFile(file: tmpFile, text: ymlData)
 
         sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"
-        sh "convox env set NODE_ENV=production MIDAS_API_URL=http://midas-api.${domainName}/ --app ${appName}-staging"
+        sh "convox env set NODE_ENV=production MIDAS_API_URL=http://eolas.staging.${domainName}/ --app ${appName}-staging"
         sh "convox deploy --app ${appName}-staging --description '${tag}' --file ${tmpFile}"
 
       stage "Run Functional Tests"
