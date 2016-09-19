@@ -25,7 +25,6 @@ import {
   Y_AXIS_ID,
   DATE_AXIS_ID,
   INDIVIDUAL_CHART_HEIGHT,
-  DATE_LABEL,
 } from './config';
 
 module.exports = (props, containerElement) => {

@@ -1,12 +1,12 @@
 const xhr = require('xhr');
 
-module.exports = function (uri) {
-  return new Promise(function (resolve, reject) {
-    xhr(uri, function (err, res, body) {
-      if (err) return reject(err)
-      if (res.statusCode !== 200) return reject(new Error(body))
-      resolve(body)
-    });
+// Is there a better way to structure this function so it has an explcit return value?
+/* eslint-disable consistent-return */
+module.exports = uri => new Promise((resolve, reject) => {
+  xhr(uri, (err, res, body) => {
+    if (err) return reject(err);
+    if (res.statusCode !== 200) return reject(new Error(body));
+    resolve(body);
   });
-};
-
+});
+/* eslint-enable consistent-return */

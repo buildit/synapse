@@ -18,7 +18,8 @@ const initialState = {
     defect: [],
     effort: [],
   },
-  isFetching: false, };
+  isFetching: false,
+};
 
 const appData = (state = initialState, action) => {
   switch (action.type) {
@@ -79,7 +80,6 @@ const appData = (state = initialState, action) => {
   }
 
   case 'FETCH_STATUS_SUCCESS': {
-console.log(status)
     return {
       ...state,
       status: action.status,

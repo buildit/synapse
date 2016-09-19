@@ -14,7 +14,6 @@ import { browserHistory } from 'react-router';
 const fetch = require('./fetch');
 
 const trimFormInputs = require('../helpers/trimFormInputs');
-const isValid = require('../helpers/isValid');
 
 /* eslint-disable import/no-unresolved */
 const defaultConfig = require('./default.json');
@@ -125,9 +124,13 @@ export const fetchProject = (id) => (dispatch) => {
       });
 };
 
+const fetchStatusSuccess = status => ({
+  type: 'FETCH_STATUS_SUCCESS',
+  status,
+});
+
 export const fetchAllStatusData = projectId => dispatch => {
-  console.log('preparing to fetch status stuff')
-  dispatch({ type: 'FETCH_START' });  
+  dispatch({ type: 'FETCH_START' });
 
   return Promise.all([
     fetch(`${apiBaseUrl}project/${projectId}/demand`),
@@ -143,9 +146,9 @@ export const fetchAllStatusData = projectId => dispatch => {
     const project = JSON.parse(data[4])[0];
 
     dispatch(fetchStatusSuccess({
-      demand, 
+      demand,
       defect,
-      effort, 
+      effort,
     }));
 
     dispatch({
@@ -154,61 +157,54 @@ export const fetchAllStatusData = projectId => dispatch => {
     });
     dispatch({
       type: 'UPDATE_PROJECTION_VELOCITY_START',
-          value: projection.velocityStart,
-        });
+      value: projection.velocityStart,
+    });
 
-        dispatch({
-          type: 'UPDATE_PROJECTION_VELOCITY_MIDDLE',
-          value: projection.velocityMiddle,
-        });
+    dispatch({
+      type: 'UPDATE_PROJECTION_VELOCITY_MIDDLE',
+      value: projection.velocityMiddle,
+    });
 
-        dispatch({
-          type: 'UPDATE_PROJECTION_VELOCITY_END',
-          value: projection.velocityEnd,
-        });
+    dispatch({
+      type: 'UPDATE_PROJECTION_VELOCITY_END',
+      value: projection.velocityEnd,
+    });
 
-        dispatch({
-          type: 'UPDATE_PROJECTION_PERIOD_START',
-          value: projection.periodStart,
-        });
+    dispatch({
+      type: 'UPDATE_PROJECTION_PERIOD_START',
+      value: projection.periodStart,
+    });
 
-        dispatch({
-          type: 'UPDATE_PROJECTION_PERIOD_END',
-          value: projection.periodEnd,
-        });
+    dispatch({
+      type: 'UPDATE_PROJECTION_PERIOD_END',
+      value: projection.periodEnd,
+    });
 
-        dispatch({
-          type: 'UPDATE_PROJECTION_DARK_MATTER',
-          value: projection.darkMatter,
-        });
+    dispatch({
+      type: 'UPDATE_PROJECTION_DARK_MATTER',
+      value: projection.darkMatter,
+    });
 
-        dispatch({
-          type: 'UPDATE_PROJECTION_ITERATION_LENGTH',
-          value: projection.iterationLength,
-        });
+    dispatch({
+      type: 'UPDATE_PROJECTION_ITERATION_LENGTH',
+      value: projection.iterationLength,
+    });
 
-        dispatch({
-          type: UPDATE_PROJECTION_START_DATE,
-          value: projection.startDate,
-        });
+    dispatch({
+      type: UPDATE_PROJECTION_START_DATE,
+      value: projection.startDate,
+    });
 
-   dispatch({
+    dispatch({
       type: 'FETCH_PROJECT_SUCCESS',
-      project,     
-    });  
+      project,
+    });
 
-   dispatch({
+    dispatch({
       type: 'FETCH_END',
-   });  
-
-  })
-  
-}
-
-const fetchStatusSuccess = status => ({
-  type: 'FETCH_STATUS_SUCCESS',
-  status,
-});
+    });
+  });
+};
 
 export const saveFormData = (project) => (dispatch) => {
   dispatch({
