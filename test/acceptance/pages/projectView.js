@@ -12,12 +12,12 @@ export default class ProjectView {
       projectionLink: By.css(`a[href="${projectName}/projection"]`),
       statusLink: By.css(`a[href="${projectName}/status"]`),
     };
-    driver.manage().timeouts().implicitlyWait(100000);
+    driver.manage().timeouts().implicitlyWait(10000);
     this.driver = driver;
   }
 
   waitUntilReady() {
-    return this.driver.wait(until.elementLocated(this.elements.projectView));
+    return this.driver.wait(until.elementLocated(this.elements.projectView), 10000);
   }
 
   navigate() {

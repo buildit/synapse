@@ -36,7 +36,7 @@ export default class HomePage {
 
   selectProject(name) {
     const namedProject = this.driver.wait(
-      until.elementLocated(this.elements.projectWithName(name)), 5000);
+      until.elementLocated(this.elements.projectWithName(name)), 10000);
     return namedProject.click();
   }
 }
