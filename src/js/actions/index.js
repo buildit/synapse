@@ -20,6 +20,7 @@ const defaultConfig = require('./default.json');
 /* eslint-enable import/no-unresolved */
 const apiBaseUrl = defaultConfig.parameters.api.baseUrl;
 const starterProjectsBaseApiUrl = defaultConfig.parameters.starterProjectsApi.baseUrl;
+const errorHelper = require('../helpers/errorHelper');
 
 const requestProjects = () => (
   { type: 'FETCH_PROJECTS_REQUEST' }
@@ -71,7 +72,7 @@ export const hideModal = (modal) => ({
 
 export const fetchProjects = () => (dispatch) => {
   dispatch(requestProjects());
-  return $.get(`${apiBaseUrl}project/`)
+  return $.get(`${apiBaseUrl}v1/project/`)
     .done(response => {
       dispatch(receiveProjects(response));
     })
@@ -86,7 +87,7 @@ export const fetchStarterProjects = () => (dispatch) => {
     type: 'FETCH_STARTER_PROJECTS_REQUEST',
   });
 
-  return $.get(`${starterProjectsBaseApiUrl}harvest_project/`)
+  return $.get(`${starterProjectsBaseApiUrl}v1/project?status=available`)
     .done(response => {
       dispatch(receiveStarterProjects(response));
     })
@@ -96,14 +97,14 @@ export const fetchStarterProjects = () => (dispatch) => {
     });
 };
 
-export const fetchProject = (id) => (dispatch) => {
+export const fetchProject = name => dispatch => {
   dispatch({
     type: 'FETCH_PROJECT_REQUEST',
   });
-  return $.get(`${apiBaseUrl}project/${id}`)
+  return $.get(`${apiBaseUrl}v1/project/${name}`)
     .done(
       data => {
-        const project = data[0];
+        const project = data;
         if (project) {
           dispatch({
             type: 'FETCH_PROJECT_SUCCESS',
@@ -129,21 +130,19 @@ const fetchStatusSuccess = status => ({
   status,
 });
 
-export const fetchAllStatusData = projectId => dispatch => {
+export const fetchAllStatusData = name => dispatch => {
   dispatch({ type: 'FETCH_START' });
 
   return Promise.all([
-    fetch(`${apiBaseUrl}project/${projectId}/demand`),
-    fetch(`${apiBaseUrl}project/${projectId}/defect`),
-    fetch(`${apiBaseUrl}project/${projectId}/effort`),
-    fetch(`${apiBaseUrl}project/${projectId}/forecast`),
-    fetch(`${apiBaseUrl}project/${projectId}`),
+    fetch(`${apiBaseUrl}v1/project/${name}/demand/summary`),
+    fetch(`${apiBaseUrl}v1/project/${name}/defect/summary`),
+    fetch(`${apiBaseUrl}v1/project/${name}/effort/summary`),
+    fetch(`${apiBaseUrl}v1/project/${name}`),
   ]).then(data => {
     const demand = JSON.parse(data[0]);
     const defect = JSON.parse(data[1]);
     const effort = JSON.parse(data[2]);
-    const projection = JSON.parse(data[3]);
-    const project = JSON.parse(data[4])[0];
+    const project = JSON.parse(data[3]);
 
     dispatch(fetchStatusSuccess({
       demand,
@@ -151,49 +150,56 @@ export const fetchAllStatusData = projectId => dispatch => {
       effort,
     }));
 
-    dispatch({
-      type: 'UPDATE_PROJECTION_BACKLOG_SIZE',
-      value: projection.backlogSize,
-    });
-    dispatch({
-      type: 'UPDATE_PROJECTION_VELOCITY_START',
-      value: projection.velocityStart,
-    });
+    if (project.projection) {
+      dispatch({
+        type: 'UPDATE_PROJECTION_BACKLOG_SIZE',
+        value: project.projection.backlogSize,
+      });
+      dispatch({
+        type: 'UPDATE_PROJECTION_VELOCITY_START',
+        value: project.projection.startVelocity,
+      });
 
-    dispatch({
-      type: 'UPDATE_PROJECTION_VELOCITY_MIDDLE',
-      value: projection.velocityMiddle,
-    });
+      dispatch({
+        type: 'UPDATE_PROJECTION_VELOCITY_MIDDLE',
+        value: project.projection.targetVelocity,
+      });
 
-    dispatch({
-      type: 'UPDATE_PROJECTION_VELOCITY_END',
-      value: projection.velocityEnd,
-    });
+      dispatch({
+        type: 'UPDATE_PROJECTION_VELOCITY_END',
+        value: project.projection.endVelocity,
+      });
 
-    dispatch({
-      type: 'UPDATE_PROJECTION_PERIOD_START',
-      value: projection.periodStart,
-    });
+      dispatch({
+        type: 'UPDATE_PROJECTION_PERIOD_START',
+        value: project.projection.startIterations,
+      });
 
-    dispatch({
-      type: 'UPDATE_PROJECTION_PERIOD_END',
-      value: projection.periodEnd,
-    });
+      dispatch({
+        type: 'UPDATE_PROJECTION_PERIOD_END',
+        value: project.projection.endIterations,
+      });
 
-    dispatch({
-      type: 'UPDATE_PROJECTION_DARK_MATTER',
-      value: projection.darkMatter,
-    });
+      dispatch({
+        type: 'UPDATE_PROJECTION_DARK_MATTER',
+        value: project.projection.darkMatterPercentage,
+      });
 
-    dispatch({
-      type: 'UPDATE_PROJECTION_ITERATION_LENGTH',
-      value: projection.iterationLength,
-    });
+      dispatch({
+        type: 'UPDATE_PROJECTION_ITERATION_LENGTH',
+        value: project.projection.iterationLength,
+      });
 
-    dispatch({
-      type: UPDATE_PROJECTION_START_DATE,
-      value: projection.startDate,
-    });
+      dispatch({
+        type: UPDATE_PROJECTION_START_DATE,
+        value: project.projection.startDate,
+      });
+
+      dispatch({
+        type: SET_HAS_PROJECTION,
+        value: true,
+      });
+    }
 
     dispatch({
       type: 'FETCH_PROJECT_SUCCESS',
@@ -217,7 +223,7 @@ export const saveFormData = (project) => (dispatch) => {
   return (
     $.ajax({
       type: 'POST',
-      url: `${apiBaseUrl}project/${project.id}`,
+      url: `${apiBaseUrl}v1/project/${project.name}`,
       data: JSON.stringify(trimmedProject),
       contentType: 'application/json',
     })
@@ -230,12 +236,8 @@ export const saveFormData = (project) => (dispatch) => {
       });
     })
     .fail(response => {
-      dispatch(setErrorMessage(response.responseText));
-      dispatch(onSwitchView('error'));
-      dispatch({
-        type: SET_MESSAGE,
-        message: '',
-      });
+      dispatch(setErrorMessage(errorHelper(response)));
+      dispatch(switchLocation('/error'));
     })
   );
 };
@@ -345,56 +347,56 @@ export const updateProjectionStartDate = value => ({
   value,
 });
 
-export const fetchProjection = (id) => (dispatch) => {
+export const fetchProjection = name => (dispatch) => {
   dispatch({
     type: FETCH_PROJECTION_REQUEST,
   });
 
-  return $.get(`${apiBaseUrl}project/${id}/forecast`)
+  return $.get(`${apiBaseUrl}v1/project/${name}`)
     .done(
-      projection => {
+      project => {
         dispatch({
           type: 'UPDATE_PROJECTION_BACKLOG_SIZE',
-          value: projection.backlogSize,
+          value: project.projection.backlogSize,
         });
         dispatch({
           type: 'UPDATE_PROJECTION_VELOCITY_START',
-          value: projection.velocityStart,
+          value: project.projection.startVelocity,
         });
 
         dispatch({
           type: 'UPDATE_PROJECTION_VELOCITY_MIDDLE',
-          value: projection.velocityMiddle,
+          value: project.projection.targetVelocity,
         });
 
         dispatch({
           type: 'UPDATE_PROJECTION_VELOCITY_END',
-          value: projection.velocityEnd,
+          value: project.projection.endVelocity,
         });
 
         dispatch({
           type: 'UPDATE_PROJECTION_PERIOD_START',
-          value: projection.periodStart,
+          value: project.projection.startIterations,
         });
 
         dispatch({
           type: 'UPDATE_PROJECTION_PERIOD_END',
-          value: projection.periodEnd,
+          value: project.projection.endIterations,
         });
 
         dispatch({
           type: 'UPDATE_PROJECTION_DARK_MATTER',
-          value: projection.darkMatter,
+          value: project.projection.darkMatterPercentage,
         });
 
         dispatch({
           type: 'UPDATE_PROJECTION_ITERATION_LENGTH',
-          value: projection.iterationLength,
+          value: project.projection.iterationLength,
         });
 
         dispatch({
           type: UPDATE_PROJECTION_START_DATE,
-          value: projection.startDate,
+          value: project.projection.startDate,
         });
 
         dispatch({
@@ -405,7 +407,7 @@ export const fetchProjection = (id) => (dispatch) => {
       .fail(() => {
         dispatch({
           type: SET_MESSAGE,
-          message: `You're creating a new projection for project ${id}.`,
+          message: `You're creating a new projection for project ${name}.`,
         });
 
         dispatch({
@@ -415,31 +417,41 @@ export const fetchProjection = (id) => (dispatch) => {
       });
 };
 
-export const saveProjection = (projection, id) => dispatch => {
+export const saveProjection = (projection, name) => dispatch => {
+  const projectionToSave = {
+    backlogSize: projection.backlogSize,
+    darkMatterPercentage: projection.darkMatter,
+    iterationLength: projection.iterationLength,
+    startVelocity: projection.velocityStart,
+    targetVelocity: projection.velocityMiddle,
+    startIterations: projection.periodStart,
+    endIterations: projection.periodEnd,
+    endVelocity: projection.velocityEnd,
+    startDate: projection.startDate,
+  };
   dispatch({
     type: SAVE_PROJECTION_REQUEST,
   });
 
   return $.ajax({
-    type: 'POST',
-    url: `${apiBaseUrl}project/${id}/forecast`,
-    data: JSON.stringify(projection),
+    type: 'PUT',
+    url: `${apiBaseUrl}v1/project/${name}/projection`,
+    data: JSON.stringify(projectionToSave),
     contentType: 'application/json',
-    dataType: 'json',
+    // dataType: 'json',
   })
-    .always(response => {
-      if (response.status === 200) {
-        dispatch({
-          type: SET_MESSAGE,
-          message: `The projection for project ${id} was saved successfully.`,
-        });
-      } else {
-        dispatch({
-          type: SET_MESSAGE,
-          message: 'There was an error. We could not save the projection.',
-        });
-      }
+  .done(() => {
+    dispatch({
+      type: SET_MESSAGE,
+      message: `The projection for project ${name} was saved successfully.`,
     });
+  })
+  .fail(() => {
+    dispatch({
+      type: SET_MESSAGE,
+      message: 'There was an error. We could not save the projection.',
+    });
+  });
 };
 
 export const updateProject = project => dispatch => {
@@ -449,24 +461,23 @@ export const updateProject = project => dispatch => {
 
   return $.ajax({
     type: 'PUT',
-    url: `${apiBaseUrl}project/${project.id}`,
+    url: `${apiBaseUrl}v1/project/${project.name}`,
     data: JSON.stringify(project),
     contentType: 'application/json',
     dataType: 'json',
   })
-    .always(response => {
-      if (response.status === 200) {
-        dispatch({
-          type: SET_MESSAGE,
-          message: `Project ${project.id} was saved successfully.`,
-        });
-      } else {
-        dispatch({
-          type: SET_MESSAGE,
-          message: 'There was an error. We could not save the project.',
-        });
-      }
+  .done(() => {
+    dispatch({
+      type: SET_MESSAGE,
+      message: `The form data for project ${name} was saved successfully.`,
     });
+  })
+  .fail(() => {
+    dispatch({
+      type: SET_MESSAGE,
+      message: 'There was an error. We could not save the project.',
+    });
+  });
 };
 
 export const dismissMessage = () => (

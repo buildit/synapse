@@ -13,6 +13,7 @@ const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
 
   for (let i = 0; i < tableData.length; i++) {
     const projectId = tableData[i][rowKey];
+    console.log(projectId)
     let bodyRow = [];
 
     for (const key of visibleColumns) {

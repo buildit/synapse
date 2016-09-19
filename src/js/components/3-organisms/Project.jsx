@@ -15,30 +15,26 @@ class Project extends Component {
 
   render() {
     const { project } = this.props;
-
     return (
       <div className="project-view">
         <RouteLink
-          route={`${project.id}/edit`}
+          route={`${project.name}/edit`}
           label="Edit"
         />
         <RouteLink
-          route={`${project.id}/projection`}
+          route={`${project.name}/projection`}
           label="Projection"
         />
         <RouteLink
-          route={`${project.id}/status`}
+          route={`${project.name}/status`}
           label="Status"
         />
-        <Text label="ID" content={project.id} />
         <Text label="Name" content={project.name} />
         <Text label="Description" content={project.description} />
         <Text label="Portfolio" content={project.portfolio} />
         <Text label="Program" content={project.program} />
-        <Text label="Status" content={project.status} />
         <Text label="Start date" content={formatDate(project.startDate)} />
         <Text label="End date" content={formatDate(project.endDate)} />
-        <Text label="Phase" content={project.phase} />
 
         <div className="subsection">
           <h2>Demand</h2>
@@ -60,12 +56,8 @@ class Project extends Component {
             content={project.demand.authPolicy}
           />
           <Text
-            label="Username"
-            content={project.demand.username}
-          />
-          <Text
-            label="Password"
-            content="********"
+            label="Auth Data"
+            content={project.demand.userData}
           />
 
           <h3>Flow</h3>
@@ -96,12 +88,8 @@ class Project extends Component {
             content={project.defect.authPolicy}
           />
           <Text
-            label="Username"
-            content={project.defect.username}
-          />
-          <Text
-            label="Password"
-            content="********"
+            label="Auth Data"
+            content={project.defect.userData}
           />
 
           <h3>Flow</h3>
@@ -139,12 +127,8 @@ class Project extends Component {
             content={project.effort.authPolicy}
           />
           <Text
-            label="Username"
-            content={project.effort.username}
-          />
-          <Text
-            label="Password"
-            content="********"
+            label="Auth Data"
+            content={project.effort.userData}
           />
 
           <h3>Roles</h3>

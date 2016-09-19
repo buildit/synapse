@@ -3,12 +3,14 @@ import { url } from '../global';
 
 export default class ProjectView {
   constructor(driver) {
-    this.url = `${url}/TEST1`;
+    const projectNameUrlEncoded = 'Test%20Project%201';
+    const projectName = 'Test Project 1';
+    this.url = `${url}/${projectNameUrlEncoded}`;
     this.elements = {
       projectView: By.css('.project-view'),
-      editLink: By.css('a[href="TEST1/edit"]'),
-      projectionLink: By.css('a[href="TEST1/projection"]'),
-      statusLink: By.css('a[href="TEST1/status"]'),
+      editLink: By.css(`a[href="${projectName}/edit"]`),
+      projectionLink: By.css(`a[href="${projectName}/projection"]`),
+      statusLink: By.css(`a[href="${projectName}/status"]`),
     };
     this.driver = driver;
   }

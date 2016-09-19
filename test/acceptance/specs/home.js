@@ -19,7 +19,7 @@ describe('Home Page', () => {
 
   it('Can navigate to the Project View page', function* foo() {
     // setup
-    const projectName = 'TEST1';
+    const projectName = 'Test Project 1';
 
     // act
     homePage.selectProject(projectName);

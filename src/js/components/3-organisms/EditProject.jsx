@@ -5,9 +5,7 @@ import * as actionCreators from '../../actions/';
 import Input from '../1-atoms/Input';
 import ProjectDateInput from '../1-atoms/ProjectDateInput';
 import Button from '../1-atoms/Button';
-import EditableFlowTable from '../2-molecules/EditableFlowTable';
-import EditableRoleTable from '../2-molecules/EditableRoleTable';
-import EditableSeverityTable from '../2-molecules/EditableSeverityTable';
+import EditableArrayTable from '../2-molecules/EditableArrayTable';
 import AddFlowItem from '../2-molecules/AddFlowItem';
 import AddRoleItem from '../2-molecules/AddRoleItem';
 import AddSeverityItem from '../2-molecules/AddSeverityItem';
@@ -58,14 +56,6 @@ class EditProject extends Component {
         />
         <form>
           <Input
-            label="ID"
-            section="header"
-            property="id"
-            onInputChange={onInputChange}
-            initialValue={project.id}
-            disabled={!isNewProject}
-          />
-          <Input
             label="Name"
             section="header"
             property="name"
@@ -85,13 +75,6 @@ class EditProject extends Component {
             property="portfolio"
             onInputChange={onInputChange}
             initialValue={project.portfolio}
-          />
-          <Input
-            label="Status"
-            section="header"
-            property="status"
-            onInputChange={onInputChange}
-            initialValue={project.status}
           />
           <Input
             label="Description"
@@ -114,14 +97,6 @@ class EditProject extends Component {
             onInputChange={onInputChange}
             initialValue={project.endDate}
           />
-          <Input
-            label="Phase"
-            section="header"
-            property="phase"
-            onInputChange={onInputChange}
-            initialValue={project.phase}
-          />
-
           <h2>Demand</h2>
           <Input
             label="Demand source"
@@ -152,21 +127,14 @@ class EditProject extends Component {
             initialValue={project.demand.authPolicy}
           />
           <Input
-            label="Demand username"
+            label="Auth Data"
             section="demand"
-            property="username"
+            property="userData"
             onInputChange={onInputChange}
-            initialValue={project.demand.username}
-          />
-          <Input
-            label="Demand password"
-            section="demand"
-            property="password"
-            onInputChange={onInputChange}
-            initialValue={project.demand.password}
+            initialValue={project.demand.userData}
           />
           <h3>Demand flow</h3>
-          <EditableFlowTable
+          <EditableArrayTable
             items={project.demand.flow}
             removeItem={
               (i) => {
@@ -192,13 +160,6 @@ class EditProject extends Component {
 
           <h2>Defect</h2>
           <Input
-            label="Defect source"
-            section="defect"
-            property="source"
-            onInputChange={onInputChange}
-            initialValue={project.defect.source}
-          />
-          <Input
             label="Defect source URL"
             section="defect"
             property="url"
@@ -220,45 +181,28 @@ class EditProject extends Component {
             initialValue={project.defect.authPolicy}
           />
           <Input
-            label="Defect username"
+            label="Auth Data"
             section="defect"
-            property="username"
+            property="userData"
             onInputChange={onInputChange}
-            initialValue={project.defect.username}
+            initialValue={project.defect.userData}
           />
           <Input
-            label="Defect password"
+            label="Entry State"
             section="defect"
-            property="password"
+            property="entryStata"
             onInputChange={onInputChange}
-            initialValue={project.defect.password}
+            initialValue={project.defect.entryState}
           />
-          <h3>Defect flow</h3>
-          <EditableFlowTable
-            items={project.defect.flow}
-            removeItem={
-              (i) => {
-                onListItemRemove('defect', 'flow', i);
-              }
-            }
-            moveItemUp={
-              (i) => {
-                moveListItemUp('defect', 'flow', i);
-              }
-            }
-            moveItemDown={
-              (i) => {
-                moveListItemDown('defect', 'flow', i);
-              }
-            }
-          />
-          <AddFlowItem
-            onAddClick={(name) => {
-              addItemToDefectFlowList(name);
-            }}
+          <Input
+            label="Exit State"
+            section="defect"
+            property="exitState"
+            onInputChange={onInputChange}
+            initialValue={project.defect.exitState}
           />
           <h3>Defect severity</h3>
-          <EditableSeverityTable
+          <EditableArrayTable
             items={project.defect.severity}
             removeItem={
               (i) => {
@@ -312,21 +256,14 @@ class EditProject extends Component {
             initialValue={project.effort.authPolicy}
           />
           <Input
-            label="Effort username"
+            label="Auth Data"
             section="effort"
-            property="username"
+            property="userData"
             onInputChange={onInputChange}
-            initialValue={project.effort.username}
-          />
-          <Input
-            label="Effort password"
-            section="effort"
-            property="password"
-            onInputChange={onInputChange}
-            initialValue={project.effort.password}
+            initialValue={project.effort.userData}
           />
           <h3>Roles</h3>
-          <EditableRoleTable
+          <EditableArrayTable
             items={project.effort.role}
             removeItem={
               (i) => {

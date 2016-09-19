@@ -164,12 +164,12 @@ export default class ProjectionChart extends React.Component {
   }
 
   update() {
-    const { backlogSize, darkMatter } = this.props.projection;
+    const { backlogSize, darkMatterPercentage } = this.props.projection;
     const projectedCompletionDate = this.points ?
       moment(this.points[3].date, 'DD-MMM-YY').format('MMMM Do YYYY') : undefined;
     this.updateCurve();
     this.updateBacklog(backlogSize);
-    this.updateDarkMatter(backlogSize, darkMatter);
+    this.updateDarkMatter(backlogSize, darkMatterPercentage);
     this.updateCompletionDate(projectedCompletionDate);
   }
 
@@ -204,11 +204,11 @@ export default class ProjectionChart extends React.Component {
       .attr('d', area(this.points));
   }
 
-  updateDarkMatter(backlogSize, darkMatter) {
+  updateDarkMatter(backlogSize, darkMatterPercentage) {
     const parseTime = this.parseTime;
     const scale = this.getScale();
 
-    const backlogSizeWithDarkMatter = backlogSize + backlogSize * (darkMatter / 100);
+    const backlogSizeWithDarkMatter = backlogSize + backlogSize * (darkMatterPercentage / 100);
 
     const area = d3.area()
       .x(d => scale.date(parseTime(d.date)))
