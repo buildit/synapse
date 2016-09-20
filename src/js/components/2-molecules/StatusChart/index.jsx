@@ -12,8 +12,6 @@ class StatusChart extends Component {
   }
 
   render() {
-    console.log('rendering StatusChart')
-console.log(this.props)
     return (
       <div className="status-chart">
         <div

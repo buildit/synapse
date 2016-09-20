@@ -127,7 +127,7 @@ module.exports = (props, containerElement) => {
       INDIVIDUAL_CHART_HEIGHT);
 
     renderYAxis(effortChart, `${Y_AXIS_ID}-effort`, effortYScale);
-    renderYAxisLabel(effortChart, EFFORT_Y_LABEL);
+    renderYAxisLabel(effortChart, EFFORT_Y_LABEL, EFFORT_Y_OFFSET);
     renderDateAxis(
       effortChart,
       `${DATE_AXIS_ID}-effort`,
