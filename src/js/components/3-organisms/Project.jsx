@@ -63,8 +63,8 @@ class Project extends Component {
           <h3>Flow</h3>
           <Table
             tableData={project.demand.flow}
-            visibleColumns={['sequence', 'name']}
-            rowKey="sequence"
+            visibleColumns={['name']}
+            rowKey="name"
           />
         </div>
 
@@ -92,18 +92,11 @@ class Project extends Component {
             content={project.defect.userData}
           />
 
-          <h3>Flow</h3>
-          <Table
-            tableData={project.defect.flow}
-            visibleColumns={['sequence', 'name']}
-            rowKey="name"
-          />
-
           <h3>Severity</h3>
           <Table
             tableData={project.defect.severity}
-            visibleColumns={['sequence', 'name', 'groupWith']}
-            rowKey="sequence"
+            visibleColumns={['name', 'groupWith']}
+            rowKey="name"
           />
         </div>
 
