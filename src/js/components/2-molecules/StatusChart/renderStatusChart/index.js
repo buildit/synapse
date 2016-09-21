@@ -1,5 +1,6 @@
 // const d3 = require('d3');
 const setChart = require('./setChart');
+const renderLegend = require('./renderLegend');
 const renderDateAxis = require('./renderDateAxis');
 const renderYAxis = require('./renderYAxis');
 const renderYAxisLabel = require('./renderYAxisLabel');
@@ -106,6 +107,27 @@ module.exports = (props, containerElement) => {
       'effortChart'
     );
 
+    renderLegend(
+      demandChart,
+      data,
+      demandCategories,
+      demandYScale,
+      INDIVIDUAL_CHART_HEIGHT
+    );
+    renderLegend(
+      defectChart,
+      defectStatus,
+      defectCategories,
+      defectYScale,
+      INDIVIDUAL_CHART_HEIGHT
+    );
+    renderLegend(
+      effortChart,
+      effortStatus,
+      effortCategories,
+      effortYScale,
+      INDIVIDUAL_CHART_HEIGHT
+    );
 
     // Render the axes and labels
     renderYAxis(demandChart, `${Y_AXIS_ID}-demand`, demandYScale);
