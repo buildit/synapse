@@ -24,3 +24,6 @@ errorShots/
 
 # Editor stuff
 .tern-project
+
+# React-Storybook
+storybook

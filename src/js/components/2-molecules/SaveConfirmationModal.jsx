@@ -19,6 +19,7 @@ const SaveConfirmationModal = () => ({
           <Modal.Footer>
             <Button
               label="Close"
+              cssClasses="button btn btn-primary"
               onClick={goHome}
             />
           </Modal.Footer>

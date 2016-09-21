@@ -40,6 +40,7 @@ class EditProject extends Component {
       <div>
         <Button
           label="Save"
+          cssClasses="button btn btn-primary"
           onClick={() => {
             if (isNewProject) {
               saveFormData(project);
@@ -50,6 +51,7 @@ class EditProject extends Component {
         />
         <Button
           label="Cancel"
+          cssClasses="button btn btn-secondary"
           onClick={() => {
             goHome();
           }}
@@ -289,6 +291,7 @@ class EditProject extends Component {
         </form>
         <Button
           label="Save"
+          cssClasses="button btn btn-primary"
           onClick={() => {
             if (isNewProject) {
               saveFormData(project);
@@ -299,6 +302,7 @@ class EditProject extends Component {
         />
         <Button
           label="Cancel"
+          cssClasses="button btn btn-secondary"
           onClick={(event) => {
             event.preventDefault();
             goHome();

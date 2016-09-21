@@ -36,6 +36,7 @@ class NewProjectList extends Component {
       <div>
         <Button
           label="Create manually"
+          cssClasses="button btn btn-primary"
           onClick={() => {
             onProjectCreateClick(null);
           }
@@ -43,6 +44,7 @@ class NewProjectList extends Component {
         />
         <Button
           label="Cancel"
+          cssClasses="button btn btn-secondary"
           onClick={() => {
             browserHistory.push('/');
           }}
