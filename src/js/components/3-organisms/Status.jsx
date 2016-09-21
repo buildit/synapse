@@ -3,18 +3,23 @@ import React, {
   PropTypes,
 } from 'react';
 import { connect } from 'react-redux';
-import * as actionCreators from '../../actions/';
+import { fetchAllStatusData } from '../../actions/fetchAllStatusData';
 import StatusChart from '../2-molecules/StatusChart';
 import transformStatusData from '../../helpers/transformStatusData';
 
 class Status extends Component {
   componentDidMount() {
     const { projectId } = this.props.params;
-    this.props.fetchAllStatusData(projectId)
+    this.props.fetchAllStatusData(projectId);
   }
 
   render() {
-    let component = <div>Loading...</div>;
+    let component = <div></div>;
+
+    if (this.props.isFetching) {
+      component = <div>Loading...</div>;
+    }
+
     if (!this.props.isFetching && this.props.project.name) {
       component = (
         <StatusChart
@@ -36,8 +41,6 @@ class Status extends Component {
 
 Status.propTypes = {
   fetchAllStatusData: PropTypes.func.isRequired,
-  fetchProject: PropTypes.func.isRequired,
-  fetchProjection: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,
   projection: PropTypes.object.isRequired,
   demandStatus: PropTypes.array.isRequired,
@@ -48,6 +51,7 @@ Status.propTypes = {
   effortCategories: PropTypes.array.isRequired,
   params: PropTypes.object.isRequired,
   hasProjection: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -73,4 +77,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, actionCreators)(Status);
+export default connect(mapStateToProps, { fetchAllStatusData })(Status);
