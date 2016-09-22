@@ -7,6 +7,8 @@
     "build": "gulp",
     "lint": "eslint src/ test/ *.js",
     "start": "gulp server",
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "storybook:build": "build-storybook -c .storybook -o storybook",
     "test": "mocha --recursive test/unit",
     "test:ci": "mocha --recursive --reporter mocha-jenkins-reporter -O junit_report_path=./reports/test-results.xml,junit_report_name=\"Tests Results\",junit_report_stack=1 test/unit",
     "test:acceptance": "mocha --timeout 30000 --require co-mocha --require babel-register --require babel-polyfill --recursive test/acceptance/specs",
@@ -28,6 +30,8 @@
   "license": "MIT",
   "homepage": "https://bitbucket.org/digitalrigbitbucketteam/synapse#readme",
   "devDependencies": {
+    "@kadira/storybook": "^2.15.1",
+    "@kadira/storybook-addon-notes": "^1.0.1",
     "babel-core": "^6.10.4",
     "babel-eslint": "^6.1.0",
     "babel-loader": "^6.2.5",
@@ -39,6 +43,7 @@
     "chromedriver": "^2.23.1",
     "co-mocha": "^1.1.3",
     "cowsay": "^1.1.8",
+    "css-loader": "^0.25.0",
     "del": "^2.2.1",
     "enzyme": "^2.3.0",
     "eslint": "^2.13.1",
@@ -57,12 +62,15 @@
     "gulp-util": "^3.0.7",
     "gulp-webpack": "^1.5.0",
     "json-loader": "^0.5.4",
+    "less-loader": "^2.2.3",
     "mocha": "^3.0.2",
     "mocha-jenkins-reporter": "^0.2.6",
+    "path": "^0.12.7",
     "precommit-hook": "^3.0.0",
     "react-addons-test-utils": "^15.1.0",
     "selenium-webdriver": "^3.0.0-beta-2",
-    "sinon": "^1.17.4"
+    "sinon": "^1.17.4",
+    "style-loader": "^0.13.1"
   },
   "dependencies": {
     "babel-preset-stage-2": "^6.11.0",

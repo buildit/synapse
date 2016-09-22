@@ -42,6 +42,7 @@ class AddFlowItem extends Component {
         />
         <Button
           label="Add"
+          cssClasses="button btn btn-secondary"
           onClick={this.onClick}
           disabled={!this.state.isValid}
         />

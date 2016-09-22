@@ -23,6 +23,7 @@ class ProjectList extends Component {
       <div>
         <Button
           label="New"
+          cssClasses="button btn btn-primary"
           onClick={() => {
             browserHistory.push('/new');
           }}

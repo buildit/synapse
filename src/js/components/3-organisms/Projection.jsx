@@ -137,6 +137,7 @@ class Projection extends Component {
 
               <Button
                 label="Save"
+                cssClasses="button btn btn-primary"
                 onClick={() => {
                   this.props.saveProjection(this.props.projection, projectId);
                 }}

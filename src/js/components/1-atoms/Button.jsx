@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Button = ({ label, onClick, disabled = false }) => (
+const Button = ({ label, cssClasses, onClick, disabled = false }) => (
   <button
-    className="button btn btn-default"
+    className={cssClasses}
     onClick={onClick}
     disabled={disabled}
   >{label}
@@ -13,6 +13,7 @@ export default Button;
 
 Button.propTypes = {
   label: React.PropTypes.string.isRequired,
+  cssClasses: React.PropTypes.string.isRequired,
   onClick: React.PropTypes.func.isRequired,
   disabled: React.PropTypes.bool,
 };
