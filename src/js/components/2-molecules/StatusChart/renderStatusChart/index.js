@@ -7,7 +7,7 @@ const renderYAxisLabel = require('./renderYAxisLabel');
 const renderStackedAreaChart = require('./renderStackedAreaChart');
 const renderProjection = require('./renderProjection');
 const setProjectionButton = require('./setProjectionButton');
-const toggleProjectionButton = require('./toggleProjectionButton');
+const updateProjectionButton = require('./updateProjectionButton');
 import dateScaleCreator from './dateScaleCreator';
 import yScaleCreator from './yScaleCreator';
 import getChartableDates from './getChartableDates';
@@ -168,7 +168,7 @@ module.exports = (props, containerElement) => {
   projectionButton.on('click', () => {
     isProjectionVisible = !isProjectionVisible;
 
-    toggleProjectionButton(projectionButton, isProjectionVisible);
+    updateProjectionButton(projectionButton, isProjectionVisible);
 
     prepareDateScale();
     prepareYScales();
