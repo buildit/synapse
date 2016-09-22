@@ -14,7 +14,7 @@ Midas (Management Information Dashboard) was the previous version/iteration of S
   - Midas started off as a very simple/basic react project.
   - It was not connected to any sort of DB and used static text for project details and randomly generated  data.
   - It didn't connect to any real data cause at that point there was no access to any client data.
-  - There was no Kaban board or backlog of features/functionality.
+  - There was no kaban board or backlog of features/functionality.
   - It did have some mock ups.
 
 
