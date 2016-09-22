@@ -39,7 +39,7 @@ storiesOf('atoms.Button', module)
     </WithNotes>
   ))
   .add('info', () => (
-    <WithNotes notes={'Here is how our default button enabled looks like. Isn\'t it look nice?'}>
+    <WithNotes notes={'Use this button as informational.'}>
       <Button
         label="Info"
         cssClasses="button btn btn-info"
@@ -48,7 +48,7 @@ storiesOf('atoms.Button', module)
     </WithNotes>
   ))
   .add('success', () => (
-    <WithNotes notes={'Here is how our default button enabled looks like. Isn\'t it look nice?'}>
+    <WithNotes notes={'Use this button to show everything is successful.'}>
       <Button
         label="Success"
         cssClasses="button btn btn-success"
@@ -57,7 +57,7 @@ storiesOf('atoms.Button', module)
     </WithNotes>
   ))
   .add('danger', () => (
-    <WithNotes notes={'Here is how our default button enabled looks like. Isn\'t it look nice?'}>
+    <WithNotes notes={'Use this button to show that clicking it can be risky.'}>
       <Button
         label="Danger"
         cssClasses="button btn btn-danger"

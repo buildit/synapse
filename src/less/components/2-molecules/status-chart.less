@@ -1,4 +1,4 @@
-@axis: #666;
+@axis: #666666;
 
 // outline everything for debugging
 // .status-chart * {
@@ -7,8 +7,8 @@
 
 .status-chart {
   .axis {
-    font: 10px sans-serif;
     color: @axis;
+    font: 10px sans-serif;
     path,
     line {
       fill: none;
@@ -18,60 +18,23 @@
       display: none;
     }
   }
+
   .label {
-    font: 10px sans-serif;
     color: @axis;
+    font: 10px sans-serif;
   }
+
   .projection-line {
     fill: none;
     stroke: black;
     stroke-width: 5;
   }
+
   .projection-button {
     cursor: pointer;
+
     &:hover {
-      font-weight:bold;;
+      font-weight: bold;
     }
   }
 }
-
-// .status-chart {
-//  .chart-container {
-//    svg.chart {
-//      height: 1500px;
-//    }
-//   //  * {
-//   //    outline: 1px solid pink;
-//   //  }
-//    width: 950px;
-//    height: 500px;
-
-//
-//     .label {
-//       font: 10px sans-serif;
-//       color: @axis;
-//     }
-//
-//     .area {
-//       fill: @completed;
-//       stroke: none;
-//     }
-//
-//     .legend {
-//       .legend-item {
-//         font-size: 1rem;
-//         text-transform: uppercase;
-//         margin-bottom: 0.5rem;
-//         padding: 0.3rem;
-//         color: white;
-//       }
-//     }
-//
-//   }
-// }
-//
-// .line {
-//   fill: none;
-//   stroke: black;
-//   stroke-width: 3px;
-// }
