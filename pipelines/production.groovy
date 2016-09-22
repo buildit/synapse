@@ -6,7 +6,7 @@ node {
 
   try {
 
-    stage "Set Up"
+    stage("Set Up") {
       checkout scm
 
       sh "curl -L https://dl.bintray.com/buildit/maven/jenkins-pipeline-libraries-${env.PIPELINE_LIBS_VERSION}.zip -o lib.zip && echo 'A' | unzip lib.zip"
@@ -25,16 +25,18 @@ node {
       slackChannel = "synapse"
       gitUrl = "https://bitbucket.org/digitalrigbitbucketteam/synapse"
       appUrl = "http://synapse.${domainName}"
+    }
 
-    stage "Write docker-compose"
+    stage("Write docker-compose") {
       // global for exception handling
       tag = ui.selectTag(ecr.imageTags(appName, env.AWS_REGION))
       def tmpFile = UUID.randomUUID().toString() + ".tmp"
       def ymlData = template.transform(readFile("docker-compose.yml.template"), [tag: tag, registry_base: registryBase, domain_name: domainName])
 
       writeFile(file: tmpFile, text: ymlData)
+    }
 
-    stage "Deploy to production"
+    stage("Deploy to production") {
       sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"
       sh "convox env set NODE_ENV=production MIDAS_API_URL=http://eolas.${domainName}/ --app ${appName}"
       sh "convox deploy --app ${appName} --description '${tag}' --file ${tmpFile}"
@@ -44,6 +46,7 @@ node {
       convox.waitUntilDeployed("${appName}")
       convox.ensureSecurityGroupSet("${appName}", env.CONVOX_SECURITYGROUP)
       slack.notify("Deployed to Production", "Tag <${gitUrl}/commits/tag/${tag}|${tag}> has been deployed to <${appUrl}|${appUrl}>", "good", "http://images.8tracks.com/cover/i/001/225/360/18893.original-9419.jpg?rect=50,0,300,300&q=98&fm=jpg&fit=max&w=100&h=100", slackChannel)
+    }
   }
   catch (err) {
     currentBuild.result = "FAILURE"

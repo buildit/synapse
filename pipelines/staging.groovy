@@ -3,7 +3,7 @@ node {
     currentBuild.result = "SUCCESS"
 
     try {
-      stage "Set Up"
+      stage("Set Up") {
         sh "curl -L https://dl.bintray.com/buildit/maven/jenkins-pipeline-libraries-${env.PIPELINE_LIBS_VERSION}.zip -o lib.zip && echo 'A' | unzip lib.zip"
 
         ecr = load "lib/ecr.groovy"
@@ -23,20 +23,23 @@ node {
         slackChannel = "synapse"
         gitUrl = "https://bitbucket.org/digitalrigbitbucketteam/synapse"
         appUrl = "http://synapse.staging.${domainName}"
+      }
 
-      stage "Checkout"
+      stage("Checkout") {
         checkout scm
 
         // global for exception handling
         shortCommitHash = git.getShortCommit()
         def commitMessage = git.getCommitMessage()
         def version = npm.getVersion()
+      }
 
-      stage "Install"
+      stage("Install") {
         sh "node --version"
         sh "npm install"
+      }
 
-      stage "Test"
+      stage("Test") {
         try {
           sh "npm run test:ci"
         }
@@ -44,24 +47,29 @@ node {
           junit 'reports/test-results.xml'
           publishHTML(target: [reportDir: 'reports', reportFiles: 'test-results.html', reportName: 'Test Results'])
         }
+      }
 
-      stage "Analysis"
+      stage("Analysis") {
         sh "npm run lint"
+      }
 
-      stage "Build"
+      stage("Build") {
         sh "NODE_ENV='production' MIDAS_API_URL='http://eolas.staging.${domainName}/' npm run build"
+      }
 
-      stage "Docker Image Build"
+      stage("Docker Image Build") {
         def tag = "${version}-${shortCommitHash}-${env.BUILD_NUMBER}"
         def image = docker.build("${appName}:${tag}", '.')
         ecr.authenticate(env.AWS_REGION)
+      }
 
-      stage "Docker Push"
+      stage("Docker Push") {
         docker.withRegistry(registry) {
           image.push("${tag}")
         }
+      }
 
-      stage "Deploy To AWS"
+      stage("Deploy To AWS") {
         def tmpFile = UUID.randomUUID().toString() + ".tmp"
         def ymlData = template.transform(readFile("docker-compose.yml.template"), [tag: tag, registry_base: registryBase, domain_name: domainName])
         writeFile(file: tmpFile, text: ymlData)
@@ -69,8 +77,9 @@ node {
         sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"
         sh "convox env set NODE_ENV=production MIDAS_API_URL=http://eolas.staging.${domainName}/ --app ${appName}-staging"
         sh "convox deploy --app ${appName}-staging --description '${tag}' --file ${tmpFile}"
+      }
 
-      stage "Run Functional Tests"
+      stage("Run Functional Tests") {
         // wait until the app is deployed
         convox.waitUntilDeployed("${appName}-staging")
         convox.ensureSecurityGroupSet("${appName}-staging", env.CONVOX_SECURITYGROUP)
@@ -82,12 +91,14 @@ node {
           archiveArtifacts allowEmptyArchive: true, artifacts: 'screenshots/*.png'
           junit 'reports/acceptance-test-results.xml'
         }
+      }
 
-      stage "Promote Build to latest"
+      stage("Promote Build to latest") {
         docker.withRegistry(registry) {
           image.push("latest")
         }
         slack.notify("Deployed to Staging", "Commit <${gitUrl}/commits/${shortCommitHash}|${shortCommitHash}> has been deployed to <${appUrl}|${appUrl}>\n\n${commitMessage}", "good", "http://images.8tracks.com/cover/i/001/225/360/18893.original-9419.jpg?rect=50,0,300,300&q=98&fm=jpg&fit=max&w=100&h=100", slackChannel)
+      }
     }
     catch (err) {
       currentBuild.result = "FAILURE"
