@@ -14,10 +14,10 @@ node {
         convox = load "lib/convox.groovy"
         template = load "lib/template.groovy"
 
-        def domainName = "${env.MONGO_HOSTNAME}".substring(8)
-        def registryBase = "006393696278.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
-        def registry = "https://${registryBase}"
-        def appName = "synapse"
+        domainName = "${env.MONGO_HOSTNAME}".substring(8)
+        registryBase = "006393696278.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
+        registry = "https://${registryBase}"
+        appName = "synapse"
 
         // global for exception handling
         slackChannel = "synapse"
@@ -30,8 +30,8 @@ node {
 
         // global for exception handling
         shortCommitHash = git.getShortCommit()
-        def commitMessage = git.getCommitMessage()
-        def version = npm.getVersion()
+        commitMessage = git.getCommitMessage()
+        version = npm.getVersion()
       }
 
       stage("Install") {
@@ -58,8 +58,8 @@ node {
       }
 
       stage("Docker Image Build") {
-        def tag = "${version}-${shortCommitHash}-${env.BUILD_NUMBER}"
-        def image = docker.build("${appName}:${tag}", '.')
+        tag = "${version}-${shortCommitHash}-${env.BUILD_NUMBER}"
+        image = docker.build("${appName}:${tag}", '.')
         ecr.authenticate(env.AWS_REGION)
       }
 
@@ -70,8 +70,8 @@ node {
       }
 
       stage("Deploy To AWS") {
-        def tmpFile = UUID.randomUUID().toString() + ".tmp"
-        def ymlData = template.transform(readFile("docker-compose.yml.template"), [tag: tag, registry_base: registryBase, domain_name: domainName])
+        tmpFile = UUID.randomUUID().toString() + ".tmp"
+        ymlData = template.transform(readFile("docker-compose.yml.template"), [tag: tag, registry_base: registryBase, domain_name: domainName])
         writeFile(file: tmpFile, text: ymlData)
 
         sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"
@@ -83,6 +83,7 @@ node {
         // wait until the app is deployed
         convox.waitUntilDeployed("${appName}-staging")
         convox.ensureSecurityGroupSet("${appName}-staging", env.CONVOX_SECURITYGROUP)
+
         // run Selenium tests
         try {
           sh 'URL=http://synapse.staging.buildit.tools xvfb-run -d -s "-screen 0 1280x1024x16" npm run test:acceptance:ci'
