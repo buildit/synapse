@@ -37,7 +37,19 @@ module.exports = (
 
     layer.append('path')
       .attr('class', 'area')
-      .style('fill', (d, i) => d3.schemeCategory20[i])
+      .style('stroke-width', '2px')
+      .style('fill', (d, i) => {
+        if (chartID === 'effortChart') {
+          return 'none';
+        }
+        return d3.schemeCategory20[i];
+      })
+      .style('stroke', (d, i) => {
+        if (chartID === 'effortChart') {
+          return d3.schemeCategory20[i];
+        }
+        return 'none';
+      })
       .attr('d', area);
   }
 
