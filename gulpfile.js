@@ -76,6 +76,11 @@ gulp.task('html', ['clean'], () => (
     .pipe(gulp.dest('./dist'))
 ));
 
+gulp.task('testApi', () => (
+  gulp.src('./testApi/**/*')
+    .pipe(gulp.dest('./dist/.testApi'))
+));
+
 gulp.task('html-lint', () => (
   gulp.src('src/**/*.html')
     .pipe(html5lint())

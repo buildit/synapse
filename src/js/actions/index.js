@@ -69,9 +69,12 @@ export const hideModal = (modal) => ({
   type: 'HIDE_MODAL', modal,
 });
 
-export const fetchProjects = () => (dispatch) => {
+export const fetchProjects = () => dispatch => {
   dispatch(requestProjects());
-  return $.get(`${apiBaseUrl}v1/project/`)
+  return $.get({
+    url: `${apiBaseUrl}v1/project/`,
+    dataType: 'json',
+  })
     .done(response => {
       dispatch(receiveProjects(response));
     })
