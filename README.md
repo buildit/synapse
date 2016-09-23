@@ -84,7 +84,14 @@ npm version patch -m "SYNAPSE-XX #comment Some version related comment"
 ```
 
 #### Deploy
-Deployment happens through Jenkins Pipeline workflow.
+We're using a Jenkins pipeline to deploy to production.
+
+###### How to deploy the app to production
+
+- Go to the Jenkins pipeline for [Synapse production] (http://jenkins.riglet:9000/jenkins/job/synapse-prod-pipeline/)
+- Click "Build Now", which is on the left side of the page. This will begin the build process.
+- Hover over the middle stage -- "Write docker-compose". You'll be prompted to choose a "tag". This allows you to choose which version of the build to send out into the world. Generally, you should use "latest". Click "Proceed".
+- Watch for the build to succeed. If it does, you'll see the solid green dot at Jenkins. If not, check the Console Output on Jenkins and debug!
 
 #### Run Locally
 Start a local dev server:
