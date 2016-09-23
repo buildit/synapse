@@ -67,7 +67,7 @@ npm run test
 ##### Test API
 We might want to test out the app with various types of data (good data, bad data, edge cases, etc). To facilitate this, we can put test data in this folder: "testApi/v1/", and then run the app in "test mode" to see what happens.
 
-First, set the api url to point to our test data:
+To do so, first set the api url to point to our test data:
 ```
 $ export MIDAS_API_URL='./.testApi/'
 ```
@@ -79,7 +79,7 @@ $ npm run build
 
 Then generate the fake api:
 ```
-$ gulp testApi
+$ npm run generate-test-data
 ```
 
 Be sure to wipe out the MIDAS_API_URL environment variable when you're done with test mode.
