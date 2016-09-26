@@ -14,18 +14,19 @@ import { browserHistory } from 'react-router';
 
 const trimFormInputs = require('../helpers/trimFormInputs');
 
+const hostname = window.location.hostname;
 /* eslint-disable no-console */
-console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+console.log('hostname:', hostname);
 /* eslint-enable no-console */
 
 let configFile = '';
 
-if (process.env.NODE_ENV === 'staging') {
+if (hostname.includes('staging')) {
   configFile = './staging.json';
-} else if (process.env.NODE_ENV === 'production') {
-  configFile = './production.json';
-} else {
+} else if (hostname.includes('localhost')) {
   configFile = './default.json';
+} else {
+  configFile = './production.json';
 }
 
 /* eslint-disable import/no-unresolved */
