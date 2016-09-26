@@ -75,7 +75,7 @@ node {
         writeFile(file: tmpFile, text: ymlData)
 
         sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"
-        sh "convox env set NODE_ENV=production EOLAS_DOMAIN=${domainName} --app ${appName}-staging"
+        sh "convox env set NODE_ENV=staging EOLAS_DOMAIN=${domainName} --app ${appName}-staging"
         sh "convox deploy --app ${appName}-staging --description '${tag}' --file ${tmpFile}"
       }
 
@@ -86,7 +86,7 @@ node {
 
         // run Selenium tests
         try {
-          sh 'URL=http://synapse.staging.${domainName} xvfb-run -d -s "-screen 0 1280x1024x16" npm run test:acceptance:ci'
+          sh "URL=http://synapse.staging.${domainName} xvfb-run -d -s '-screen 0 1280x1024x16' npm run test:acceptance:ci"
         }
         finally {
           archiveArtifacts allowEmptyArchive: true, artifacts: 'screenshots/*.png'
