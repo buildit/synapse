@@ -15,7 +15,8 @@
     "test:acceptance:ci": "mocha --timeout 60000 --require co-mocha --require babel-register --require babel-polyfill --recursive --reporter mocha-jenkins-reporter -O junit_report_path=./reports/acceptance-test-results.xml,junit_report_name=\"Acceptance Tests\",junit_report_stack=1 test/acceptance/specs",
     "validate": "npm ls",
     "version": "git add package.json",
-    "postversion": "git push && git push origin HEAD:master && git push --tags"
+    "postversion": "git push && git push origin HEAD:master && git push --tags",
+    "generate-test-data": "gulp generate-test-data"
   },
   "pre-commit#master": [
     "lint",

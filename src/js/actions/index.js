@@ -14,11 +14,26 @@ import { browserHistory } from 'react-router';
 
 const trimFormInputs = require('../helpers/trimFormInputs');
 
+const hostname = window.location.hostname;
+/* eslint-disable no-console */
+console.log('hostname:', hostname);
+/* eslint-enable no-console */
+
+let configFile = '';
+
+if (hostname.includes('staging')) {
+  configFile = './staging.json';
+} else if (hostname.includes('localhost')) {
+  configFile = './default.json';
+} else {
+  configFile = './production.json';
+}
+
 /* eslint-disable import/no-unresolved */
-const defaultConfig = require('./default.json');
+const configuration = require(`${configFile}`);
 /* eslint-enable import/no-unresolved */
-const apiBaseUrl = defaultConfig.parameters.api.baseUrl;
-const starterProjectsBaseApiUrl = defaultConfig.parameters.starterProjectsApi.baseUrl;
+const apiBaseUrl = configuration.parameters.api.baseUrl;
+const starterProjectsBaseApiUrl = configuration.parameters.starterProjectsApi.baseUrl;
 const errorHelper = require('../helpers/errorHelper');
 
 const requestProjects = () => (
@@ -69,9 +84,12 @@ export const hideModal = (modal) => ({
   type: 'HIDE_MODAL', modal,
 });
 
-export const fetchProjects = () => (dispatch) => {
+export const fetchProjects = () => dispatch => {
   dispatch(requestProjects());
-  return $.get(`${apiBaseUrl}v1/project/`)
+  return $.get({
+    url: `${apiBaseUrl}v1/project/`,
+    dataType: 'json',
+  })
     .done(response => {
       dispatch(receiveProjects(response));
     })

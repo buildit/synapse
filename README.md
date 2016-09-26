@@ -64,6 +64,25 @@ npm run build
 ```
 npm run test
 ```
+##### Test API
+We might want to test out the app with various types of data (good data, bad data, edge cases, etc). To facilitate this, we can put test data in this folder: "testApi/v1/", and then run the app in "test mode" to see what happens.
+
+To do so, first set the api url to point to our test data:
+```
+$ export MIDAS_API_URL='./.testApi/'
+```
+
+Build the project, per usual:
+```
+$ npm run build
+```
+
+Then generate the fake api:
+```
+$ npm run generate-test-data
+```
+
+Be sure to wipe out the MIDAS_API_URL environment variable when you're done with test mode.
 
 ##### Acceptance Test
 You need to first have the Synapse app running and that app needs to be appropriately connected to a valid MI REST API service.
@@ -84,7 +103,14 @@ npm version patch -m "SYNAPSE-XX #comment Some version related comment"
 ```
 
 #### Deploy
-Deployment happens through Jenkins Pipeline workflow.
+We're using a Jenkins pipeline to deploy to production.
+
+###### How to deploy the app to production
+
+- Go to the Jenkins pipeline for [Synapse production] (http://jenkins.riglet:9000/jenkins/job/synapse-prod-pipeline/)
+- Click "Build Now", which is on the left side of the page. This will begin the build process.
+- Hover over the middle stage -- "Write docker-compose". You'll be prompted to choose a "tag". This allows you to choose which version of the build to send out into the world. Generally, you should use "latest". Click "Proceed".
+- Watch for the build to succeed. If it does, you'll see the solid green dot at Jenkins. If not, check the Console Output on Jenkins and debug!
 
 #### Run Locally
 Start a local dev server:
@@ -122,12 +148,7 @@ Here's a little table that describes the characteristics of the Flow, Role, and 
 |**Severity**|y          |y      |y         |
 
 ### Configure for Deployments
-To run this app, you need access to the management information REST API (code name Eolas). Configuration of the base URL for the REST API is already handled in the deployemnt pipeline for staging and production. Running this app in a local development environment assumes the REST API service is running on locahost:6565 but can be overridden by specifying NODE_ENV=development MIDAS_API_URL=<EOLAS_BASE_URL> (which a trailing slash) when start the app.
-
-Example
-```
-NODE_ENV=development MIDAS_API_URL=http://localhost:6565/ npm run start
-```
+To run this app, you need access to the management information REST API (code name Eolas). Configuration of the base URL for the REST API is already handled in the deployment pipeline for staging and production. Running this app in a local development environment assumes the REST API service is running on localhost:6565.
 
 ### Coding Standards
 #### HTML

@@ -17,12 +17,15 @@ gulp.task('clean', () => (
 ));
 
 gulp.task('config', ['clean'], (callback) => {
-  const midasApiUrl = process.env.MIDAS_API_URL || 'http://localhost:6565/';
+  const eolasDomain = process.env.EOLAS_DOMAIN;
+  const developmentApiUrl = 'http://localhost:6565/';
+  const stagingApiUrl = `http://eolas.staging.${eolasDomain}/`;
+  const productionApiUrl = `http://eolas.${eolasDomain}/`;
 
   /* eslint-disable no-console */
   /* eslint-disable max-len */
   console.log(cowsay.say({
-    text: `Setting up configuration\nfor ${environment} environment with midas-api url of ${midasApiUrl}.`,
+    text: `Setting up configuration\nfor ${environment} environment.`,
     e: 'oO',
     T: 'U ',
   }));
@@ -30,8 +33,16 @@ gulp.task('config', ['clean'], (callback) => {
   /* eslint-enable no-console */
 
   gulp.src('./config/gulp-template.json')
-    .pipe(template({ midasapiurl: `${midasApiUrl}` }))
+    .pipe(template({ eolasapiurl: `${developmentApiUrl}` }))
     .pipe(rename('default.json'))
+    .pipe(gulp.dest('./src/js/actions'));
+  gulp.src('./config/gulp-template.json')
+    .pipe(template({ eolasapiurl: `${stagingApiUrl}` }))
+    .pipe(rename('staging.json'))
+    .pipe(gulp.dest('./src/js/actions'));
+  gulp.src('./config/gulp-template.json')
+    .pipe(template({ eolasapiurl: `${productionApiUrl}` }))
+    .pipe(rename('production.json'))
     .pipe(gulp.dest('./src/js/actions'))
     .on('end', callback);
 });
@@ -76,6 +87,11 @@ gulp.task('html', ['clean'], () => (
     .pipe(gulp.dest('./dist'))
 ));
 
+gulp.task('generate-test-data', () => (
+  gulp.src('./testApi/**/*')
+    .pipe(gulp.dest('./dist/.testApi'))
+));
+
 gulp.task('html-lint', () => (
   gulp.src('src/**/*.html')
     .pipe(html5lint())
@@ -97,11 +113,17 @@ gulp.task('less-lint', () => (
       .pipe(lesshint.reporter())
 ));
 
-gulp.task('clean-config', ['js'], () => (
+gulp.task('clean-config', ['js'], () => {
   del([
     './src/js/actions/default.json',
-  ])
-));
+  ]);
+  del([
+    './src/js/actions/staging.json',
+  ]);
+  del([
+    './src/js/actions/production.json',
+  ]);
+});
 
 gulp.task('watch', () => {
   gulp.watch('./src/less/**/*.less', ['css']);

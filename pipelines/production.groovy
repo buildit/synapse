@@ -6,7 +6,7 @@ node {
 
   try {
 
-    stage "Set Up"
+    stage("Set Up") {
       checkout scm
 
       sh "curl -L https://dl.bintray.com/buildit/maven/jenkins-pipeline-libraries-${env.PIPELINE_LIBS_VERSION}.zip -o lib.zip && echo 'A' | unzip lib.zip"
@@ -17,26 +17,29 @@ node {
       convox = load "lib/convox.groovy"
       template = load "lib/template.groovy"
 
-      def domainName = "${env.MONGO_HOSTNAME}".substring(8)
-      def appName = "synapse"
-      def registryBase = "006393696278.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
+      domainName = "${env.MONGO_HOSTNAME}".substring(8)
+      appName = "synapse"
+      registryBase = "006393696278.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
 
       // global for exception handling
       slackChannel = "synapse"
       gitUrl = "https://bitbucket.org/digitalrigbitbucketteam/synapse"
       appUrl = "http://synapse.${domainName}"
+    }
 
-    stage "Write docker-compose"
+    stage("Write docker-compose") {
       // global for exception handling
       tag = ui.selectTag(ecr.imageTags(appName, env.AWS_REGION))
-      def tmpFile = UUID.randomUUID().toString() + ".tmp"
-      def ymlData = template.transform(readFile("docker-compose.yml.template"), [tag: tag, registry_base: registryBase, domain_name: domainName])
+      tmpFile = UUID.randomUUID().toString() + ".tmp"
+      nodeEnv = "staging"
+      ymlData = template.transform(readFile("docker-compose.yml.template"), [tag: tag, registry_base: registryBase, domain_name: domainName, node_env: nodeEnv])
 
       writeFile(file: tmpFile, text: ymlData)
+    }
 
-    stage "Deploy to production"
+    stage("Deploy to production") {
       sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"
-      sh "convox env set NODE_ENV=production MIDAS_API_URL=http://eolas.${domainName}/ --app ${appName}"
+      sh "convox env set NODE_ENV=production EOLAS_DOMAIN=${domainName} --app ${appName}"
       sh "convox deploy --app ${appName} --description '${tag}' --file ${tmpFile}"
       sh "rm ${tmpFile}"
 
@@ -44,6 +47,7 @@ node {
       convox.waitUntilDeployed("${appName}")
       convox.ensureSecurityGroupSet("${appName}", env.CONVOX_SECURITYGROUP)
       slack.notify("Deployed to Production", "Tag <${gitUrl}/commits/tag/${tag}|${tag}> has been deployed to <${appUrl}|${appUrl}>", "good", "http://images.8tracks.com/cover/i/001/225/360/18893.original-9419.jpg?rect=50,0,300,300&q=98&fm=jpg&fit=max&w=100&h=100", slackChannel)
+    }
   }
   catch (err) {
     currentBuild.result = "FAILURE"

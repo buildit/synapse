@@ -18,6 +18,9 @@ export default class HomePage {
   }
 
   navigate() {
+    /* eslint-disable no-console */
+    console.log('this.url:', this.url);
+    /* eslint-enable no-console */
     this.driver.navigate().to(this.url);
     return this.waitUntilReady();
   }

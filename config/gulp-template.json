@@ -1,10 +1,10 @@
 {
   "parameters": {
     "api": {
-      "baseUrl": "<%= midasapiurl %>"
+      "baseUrl": "<%= eolasapiurl %>"
     },
     "starterProjectsApi": {
-      "baseUrl": "<%= midasapiurl %>"
+      "baseUrl": "<%= eolasapiurl %>"
     }
   }
 }
