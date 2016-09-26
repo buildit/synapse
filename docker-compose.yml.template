@@ -3,8 +3,3 @@ nginx:
   image: ${registry_base}/synapse:${tag}
   ports:
     - 80
-services:
-  web:
-    environment:
-      - NODE_ENV=${node_env}
-      - EOLAS_DOMAIN=${domain_name}
