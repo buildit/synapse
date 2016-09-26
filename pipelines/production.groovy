@@ -31,7 +31,8 @@ node {
       // global for exception handling
       tag = ui.selectTag(ecr.imageTags(appName, env.AWS_REGION))
       tmpFile = UUID.randomUUID().toString() + ".tmp"
-      ymlData = template.transform(readFile("docker-compose.yml.template"), [tag: tag, registry_base: registryBase, domain_name: domainName])
+      nodeEnv = "staging"
+      ymlData = template.transform(readFile("docker-compose.yml.template"), [tag: tag, registry_base: registryBase, domain_name: domainName, node_env: nodeEnv])
 
       writeFile(file: tmpFile, text: ymlData)
     }

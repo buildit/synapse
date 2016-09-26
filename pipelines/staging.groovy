@@ -54,6 +54,7 @@ node {
       }
 
       stage("Build") {
+        // eolasIp = sh "dig +short http://eolas.staging.${domainName} | tail -1"
         sh "NODE_ENV='staging' EOLAS_DOMAIN='${domainName}' npm run build"
       }
 
@@ -71,7 +72,8 @@ node {
 
       stage("Deploy To Staging") {
         tmpFile = UUID.randomUUID().toString() + ".tmp"
-        ymlData = template.transform(readFile("docker-compose.yml.template"), [tag: tag, registry_base: registryBase, domain_name: domainName])
+        nodeEnv = "staging"
+        ymlData = template.transform(readFile("docker-compose.yml.template"), [tag: tag, registry_base: registryBase, domain_name: domainName, node_env: nodeEnv])
         writeFile(file: tmpFile, text: ymlData)
 
         sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"
