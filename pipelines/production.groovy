@@ -38,7 +38,7 @@ node {
 
     stage("Deploy to production") {
       sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"
-      sh "convox env set NODE_ENV=production MIDAS_API_URL=http://eolas.${domainName}/ --app ${appName}"
+      sh "convox env set NODE_ENV=production EOLAS_DOMAIN=${domainName} --app ${appName}"
       sh "convox deploy --app ${appName} --description '${tag}' --file ${tmpFile}"
       sh "rm ${tmpFile}"
 
@@ -50,7 +50,7 @@ node {
   }
   catch (err) {
     currentBuild.result = "FAILURE"
-    // slack.notify("Error while deploying to Production", "Tag <${gitUrl}/commits/tag/${tag}|${tag}> failed to deploy to <${appUrl}|${appUrl}>", "danger", "https://yt3.ggpht.com/-X2hgGcBURV8/AAAAAAAAAAI/AAAAAAAAAAA/QnCcurrZr50/s100-c-k-no-mo-rj-c0xffffff/photo.jpg", slackChannel)
+    slack.notify("Error while deploying to Production", "Tag <${gitUrl}/commits/tag/${tag}|${tag}> failed to deploy to <${appUrl}|${appUrl}>", "danger", "https://yt3.ggpht.com/-X2hgGcBURV8/AAAAAAAAAAI/AAAAAAAAAAA/QnCcurrZr50/s100-c-k-no-mo-rj-c0xffffff/photo.jpg", slackChannel)
     throw err
   }
 }

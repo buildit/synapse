@@ -129,12 +129,7 @@ Here's a little table that describes the characteristics of the Flow, Role, and 
 |**Severity**|y          |y      |y         |
 
 ### Configure for Deployments
-To run this app, you need access to the management information REST API (code name Eolas). Configuration of the base URL for the REST API is already handled in the deployemnt pipeline for staging and production. Running this app in a local development environment assumes the REST API service is running on locahost:6565 but can be overridden by specifying NODE_ENV=development MIDAS_API_URL=<EOLAS_BASE_URL> (which a trailing slash) when start the app.
-
-Example
-```
-NODE_ENV=development MIDAS_API_URL=http://localhost:6565/ npm run start
-```
+To run this app, you need access to the management information REST API (code name Eolas). Configuration of the base URL for the REST API is already handled in the deployment pipeline for staging and production. Running this app in a local development environment assumes the REST API service is running on localhost:6565.
 
 ### Coding Standards
 #### HTML

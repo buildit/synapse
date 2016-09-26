@@ -5,4 +5,4 @@ nginx:
     - 80
   environment:
     - NODE_ENV=production
-    - MIDAS_API_URL=http://midas-api.${domain_name}/
+    - EOLAS_DOMAIN=${domain_name}

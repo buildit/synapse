@@ -54,7 +54,7 @@ node {
       }
 
       stage("Build") {
-        sh "NODE_ENV='production' MIDAS_API_URL='http://eolas.staging.${domainName}/' npm run build"
+        sh "NODE_ENV='staging' EOLAS_DOMAIN='${domainName}' npm run build"
       }
 
       stage("Docker Image Build") {
@@ -69,13 +69,13 @@ node {
         }
       }
 
-      stage("Deploy To AWS") {
+      stage("Deploy To Staging") {
         tmpFile = UUID.randomUUID().toString() + ".tmp"
         ymlData = template.transform(readFile("docker-compose.yml.template"), [tag: tag, registry_base: registryBase, domain_name: domainName])
         writeFile(file: tmpFile, text: ymlData)
 
         sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"
-        sh "convox env set NODE_ENV=production MIDAS_API_URL=http://eolas.staging.${domainName}/ --app ${appName}-staging"
+        sh "convox env set NODE_ENV=production EOLAS_DOMAIN=${domainName} --app ${appName}-staging"
         sh "convox deploy --app ${appName}-staging --description '${tag}' --file ${tmpFile}"
       }
 
@@ -86,7 +86,7 @@ node {
 
         // run Selenium tests
         try {
-          sh 'URL=http://synapse.staging.buildit.tools xvfb-run -d -s "-screen 0 1280x1024x16" npm run test:acceptance:ci'
+          sh 'URL=http://synapse.staging.${domainName} xvfb-run -d -s "-screen 0 1280x1024x16" npm run test:acceptance:ci'
         }
         finally {
           archiveArtifacts allowEmptyArchive: true, artifacts: 'screenshots/*.png'
