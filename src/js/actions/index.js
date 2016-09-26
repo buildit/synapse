@@ -14,6 +14,10 @@ import { browserHistory } from 'react-router';
 
 const trimFormInputs = require('../helpers/trimFormInputs');
 
+/* eslint-disable no-console */
+console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+/* eslint-enable no-console */
+
 let configFile = '';
 
 if (process.env.NODE_ENV === 'staging') {

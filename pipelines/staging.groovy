@@ -86,7 +86,7 @@ node {
 
         // run Selenium tests
         try {
-          sh "URL=http://synapse.staging.${domainName} xvfb-run -d -s '-screen 0 1280x1024x16' npm run test:acceptance:ci"
+          sh "NODE_ENV=staging URL=http://synapse.staging.${domainName} xvfb-run -d -s '-screen 0 1280x1024x16' npm run test:acceptance:ci"
         }
         finally {
           archiveArtifacts allowEmptyArchive: true, artifacts: 'screenshots/*.png'
