@@ -69,7 +69,7 @@ We might want to test out the app with various types of data (good data, bad dat
 
 To do so, first set the api url to point to our test data:
 ```
-$ export MIDAS_API_URL='./.testApi/'
+$ export TEST_API="./.testApi/"
 ```
 
 Build the project, per usual:
@@ -82,7 +82,10 @@ Then generate the fake api:
 $ npm run generate-test-data
 ```
 
-Be sure to wipe out the MIDAS_API_URL environment variable when you're done with test mode.
+Be sure to wipe out the MIDAS_API_URL environment variable when you're done with test mode. You can do this by running
+```
+$ TEST_API=""
+```
 
 ##### Acceptance Test
 You need to first have the Synapse app running and that app needs to be appropriately connected to a valid MI REST API service.
