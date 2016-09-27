@@ -18,7 +18,7 @@ gulp.task('clean', () => (
 
 gulp.task('config', ['clean'], (callback) => {
   const eolasDomain = process.env.EOLAS_DOMAIN;
-  const developmentApiUrl = 'http://localhost:6565/';
+  const developmentApiUrl = process.env.TEST_API || 'http://localhost:6565/';
   const stagingApiUrl = `http://eolas.staging.${eolasDomain}/`;
   const productionApiUrl = `http://eolas.${eolasDomain}/`;
 
