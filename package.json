@@ -16,7 +16,7 @@
     "validate": "npm ls",
     "version": "git add package.json",
     "postversion": "git push && git push origin HEAD:master && git push --tags",
-    "generate-test-data": "gulp generate-test-data"
+    "generate-test-data": "node testApi/scripts/generateTestData"
   },
   "pre-commit#master": [
     "lint",
