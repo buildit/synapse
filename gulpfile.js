@@ -127,7 +127,7 @@ gulp.task('clean-config', ['js'], () => {
 
 gulp.task('watch', () => {
   gulp.watch('./src/less/**/*.less', ['css']);
-  gulp.watch('./src/js/**/*.jsx', ['js']);
+  gulp.watch('./src/js/**/*.js*', ['js']);
 });
 
 gulp.task('server', () => {

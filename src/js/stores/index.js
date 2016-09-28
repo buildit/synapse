@@ -1,8 +1,17 @@
 const isLogging = false;
 // const isLogging = true;
 
+import createSagaMiddleware from 'redux-saga';
 import thunkMiddleware from 'redux-thunk';
 import reducers from '../reducers';
+
+// Sagas
+import {
+  watchFetchProjectionRequest,
+  watchFetchAllStatusData,
+  watchFetchProjectionSuccess,
+  watchFetchProjects
+} from '../middleware/project';
 
 const redux = require('redux');
 
@@ -27,12 +36,19 @@ const addLoggingToDispatch = (store) => {
   /* eslint-enable no-console */
 };
 
+const sagaMiddleware = createSagaMiddleware();
+
 module.exports = (initialState) => {
   const store = redux.createStore(
     reducers,
     initialState,
-    redux.applyMiddleware(thunkMiddleware)
+    redux.applyMiddleware(thunkMiddleware, sagaMiddleware),
   );
+
+  sagaMiddleware.run(watchFetchProjectionRequest);
+  sagaMiddleware.run(watchFetchAllStatusData);
+  sagaMiddleware.run(watchFetchProjectionSuccess);
+  sagaMiddleware.run(watchFetchProjects);
 
   store.dispatch = addLoggingToDispatch(store);
 

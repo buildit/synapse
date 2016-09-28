@@ -1,5 +1,8 @@
 import {
+  FETCH_PROJECTS,
   FETCH_PROJECTION_REQUEST,
+  FETCH_PROJECTION_SUCCESS,
+  FETCH_PROJECT_SUCCESS,
   SAVE_PROJECTION_REQUEST,
   SET_MESSAGE,
   RESET_PROJECT,
@@ -40,7 +43,7 @@ const requestProjects = () => (
   { type: 'FETCH_PROJECTS_REQUEST' }
 );
 
-const receiveProjects = (response) => (
+export const receiveProjects = (response) => (
   {
     type: 'FETCH_PROJECTS_RECEIVE',
     response,
@@ -84,19 +87,19 @@ export const hideModal = (modal) => ({
   type: 'HIDE_MODAL', modal,
 });
 
-export const fetchProjects = () => dispatch => {
-  dispatch(requestProjects());
-  return $.get({
-    url: `${apiBaseUrl}v1/project/`,
-    dataType: 'json',
-  })
-    .done(response => {
-      dispatch(receiveProjects(response));
-    })
-    .fail(() => {
-      dispatch(setErrorMessage('We could not fetch the projects.'));
-      dispatch(onSwitchView('error'));
-    });
+export const fetchProjects = () => (dispatch) => {
+  dispatch({
+    type: FETCH_PROJECTS
+  });
+  // dispatch(requestProjects());
+  // return $.get(`${apiBaseUrl}v1/project/`)
+  //   .done(response => {
+  //     dispatch(receiveProjects(response));
+  //   })
+  //   .fail(() => {
+  //     dispatch(setErrorMessage('We could not fetch the projects.'));
+  //     dispatch(onSwitchView('error'));
+  //   });
 };
 
 export const fetchStarterProjects = () => (dispatch) => {
@@ -277,74 +280,42 @@ export const updateProjectionStartDate = value => ({
   value,
 });
 
-export const fetchProjection = name => (dispatch) => {
-  dispatch({
+export const setHasProjection = () => ({
+  type: SET_HAS_PROJECTION,
+  value: true
+});
+
+export const setDoesNotHaveProjection = () => ({
+  type: SET_HAS_PROJECTION,
+  value: false
+});
+
+export const setMessage = message => ({
+  type: SET_MESSAGE,
+  message: message,
+});
+export const clearMessage = () => ({
+  type: SET_MESSAGE,
+  message: '',
+});
+
+export const fetchProjection = name => {
+  return {
     type: FETCH_PROJECTION_REQUEST,
-  });
-
-  return $.get(`${apiBaseUrl}v1/project/${name}`)
-    .done(
-      project => {
-        dispatch({
-          type: 'UPDATE_PROJECTION_BACKLOG_SIZE',
-          value: project.projection.backlogSize,
-        });
-        dispatch({
-          type: 'UPDATE_PROJECTION_VELOCITY_START',
-          value: project.projection.startVelocity,
-        });
-
-        dispatch({
-          type: 'UPDATE_PROJECTION_VELOCITY_MIDDLE',
-          value: project.projection.targetVelocity,
-        });
-
-        dispatch({
-          type: 'UPDATE_PROJECTION_VELOCITY_END',
-          value: project.projection.endVelocity,
-        });
-
-        dispatch({
-          type: 'UPDATE_PROJECTION_PERIOD_START',
-          value: project.projection.startIterations,
-        });
-
-        dispatch({
-          type: 'UPDATE_PROJECTION_PERIOD_END',
-          value: project.projection.endIterations,
-        });
-
-        dispatch({
-          type: 'UPDATE_PROJECTION_DARK_MATTER',
-          value: project.projection.darkMatterPercentage,
-        });
-
-        dispatch({
-          type: 'UPDATE_PROJECTION_ITERATION_LENGTH',
-          value: project.projection.iterationLength,
-        });
-
-        dispatch({
-          type: UPDATE_PROJECTION_START_DATE,
-          value: project.projection.startDate,
-        });
-
-        dispatch({
-          type: SET_HAS_PROJECTION,
-          value: true,
-        });
-      })
-      .fail(() => {
-        dispatch({
-          type: SET_MESSAGE,
-          message: `You're creating a new projection for project ${name}.`,
-        });
-
-        dispatch({
-          type: SET_HAS_PROJECTION,
-          value: false,
-        });
-      });
+    name
+  };
+};
+export const fetchProjectionSuccess = project => {
+  return {
+    type: FETCH_PROJECTION_SUCCESS,
+    project
+  };
+};
+export const fetchProjectSuccess = project => {
+  return {
+    type: FETCH_PROJECT_SUCCESS,
+    project
+  };
 };
 
 export const saveProjection = (projection, name) => dispatch => {

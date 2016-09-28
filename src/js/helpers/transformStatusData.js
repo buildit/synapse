@@ -2,10 +2,12 @@ import moment from 'moment';
 
 module.exports = ((data, key) => (
   data.map(dataPoint => {
+    // dataPoint.projectDate is in YYYY/mm/dd format, and we're getting a deprecation warning.
+    const processedDate = moment(dataPoint.projectDate.replace(new RegExp('/', 'g'), '-'))
     const date = [
-      moment(dataPoint.projectDate).format('DD'),
-      moment(dataPoint.projectDate).format('MMM'),
-      moment(dataPoint.projectDate).format('YY'),
+      processedDate.format('DD'),
+      processedDate.format('MMM'),
+      processedDate.format('YY'),
     ].join('-');
 
     const transformedDataPoint = {
