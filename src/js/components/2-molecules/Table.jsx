@@ -1,10 +1,15 @@
 import React from 'react';
-import TableCell from '../1-atoms/TableCell';
-import TableHeaderCell from '../1-atoms/TableHeaderCell';
+import TableCell from '/components/1-atoms/TableCell';
+import TableHeaderCell from '/components/1-atoms/TableHeaderCell';
 
-const Table = ({ tableData, visibleColumns, rowKey }) => {
+const Table = ({ tableData, visibleColumns, rowKey, isStriped = false }) => {
   let headerRow = [];
   let bodyRows = [];
+  let tableClasses = 'table';
+
+  if (isStriped) {
+    tableClasses = 'table table-striped';
+  }
 
   for (let headerValue of visibleColumns) {
     headerRow.push(
@@ -35,9 +40,9 @@ const Table = ({ tableData, visibleColumns, rowKey }) => {
   }
 
   return (
-    <table className="table">
-      <thead>
-        <tr className="tableHeaderRow">
+    <table className={tableClasses}>
+      <thead className="theadDark">
+        <tr>
           {headerRow}
         </tr>
       </thead>
@@ -54,4 +59,5 @@ Table.propTypes = {
   tableData: React.PropTypes.array.isRequired,
   visibleColumns: React.PropTypes.array.isRequired,
   rowKey: React.PropTypes.string.isRequired,
+  isStriped: React.PropTypes.bool,
 };

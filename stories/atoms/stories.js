@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import Button from '../../src/js/components/1-atoms/Button.jsx';
+import Button from '/components/1-atoms/Button';
 import { WithNotes } from '@kadira/storybook-addon-notes';
 import '../../src/less/main.less';
 
