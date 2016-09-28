@@ -6,10 +6,22 @@ import {
 } from './actions';
 import errorHelper from '../helpers/errorHelper';
 
+const hostname = window.location.hostname;
+let configFile = '';
+
+if (hostname.includes('staging')) {
+  configFile = './staging.json';
+} else if (hostname.includes('localhost')) {
+  configFile = './default.json';
+} else {
+  configFile = './production.json';
+}
+
 /* eslint-disable import/no-unresolved */
-const defaultConfig = require('./default.json');
+const configuration = require(`${configFile}`);
 /* eslint-enable import/no-unresolved */
-const apiBaseUrl = defaultConfig.parameters.api.baseUrl;
+const apiBaseUrl = configuration.parameters.api.baseUrl;
+
 const fetch = require('./fetch');
 
 const fetchStatusSuccess = status => ({
