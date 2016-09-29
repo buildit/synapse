@@ -9,27 +9,32 @@ NOTE: Except for build status, these other badges currently do not seem to be wo
 [![Build Status](http://jenkins.riglet:9000/jenkins/buildStatus/icon?job=synapse-staging-pipeline)](http://jenkins.riglet:9000/jenkins/job/synapse-staging-pipeline/)
 
 ## What is Synapse?
-Synapse is a management information dashboard that provides metrics on projects.
-The dashboard shows:
+Synapse is a Management Information (MI) dashboard that provides visualizations of metrics pertaining to the development and delivery of software projects.  Projects exist within the context of Programs (a related grouping of projects) and Portfolios (a related grouping of Programs).  Thus Synapse is able to provide overviews across any particular level or grouping.
 
-- **Project List** - List of all projects currently being tracked. You can also
-add new projects from here.
+Synapse provides:
 
-- **Project Details** - Specifics concerning a given project such as start and
-dates, demand flow, etc... Projects can be edited.
+- **Project List** - List of the projects currently being tracked. This allows you to select a particular project for viewing.  The *New* button also allows you to add a project to the list.
 
-- **Project Status** - Graphical view of a given project showing demand, defect
-and effort over time.
+- **Project Projection** - Typically at the beginning of a project the "How long is this going to take" question is asked.  The Projection allows you to project a target completion date by tweaking a set of parameters (Start Date, Target Velocity, Backlog Size, ...).  The projection is based on an S-Curve concept that allows for adjusting Velocity to support Ramp Up and Release activities.  Dark Matter allows you to set a confidence level on the currently known backlog and plan for the discovery of additional requirements.
 
-- **Project Projection** - A graphical view of a projects projected forecast with
-the ability to adjust various factors to change the projection.
+- **Project Status** - While operational systems provide a team level view one-dimensional view of a Project, they rarely provide the ability to view all of the dimensions that matter.  The Project Status page provides a graphical view of a given project's demand (scope), defects (quality), and effort (cost) over the life of the project.  This allows the user to rapidly determine if a project is or is not on track across all those dimensions.
+
+In addition the previously created projection can be overlaid to the project's actuals to determine if the project is meeting forecast expectations.
+
+- **Project Details** - The project details view provides a set of instructions to the system.  These instructions tell the Synapse what the operational source systems are for the various dimensions, what type the system is, a how to connect to that system to extract the necessary data.  Additionally the user can control what what data is displayed and in what order.
+
+The Demand data specifies the status that a work item might be in, and how to stack it on the graph.  Status data that exists in the source system but is not listed will be ignored.  Additionally the user can decide to group one or more status together on the graph.
+
+The Defect data specifies the severity that a defect item might be in, and how to stack it on the graph.  Severity data that exists in the source system but is not listed will be ignored.  Additionally the user can decide to group one or more severities together on the graph.
+
+The Effort data specifies the roles that various people fill while working on the project.    Effort role types that exists in the source system but is not listed will be ignored.  Additionally the user can decide to group one or more roles together on the graph.
 
 #### Deployments
 Staging Environment: [Synapse Staging](http://synapse.staging.buildit.tools)
 
 Production Environment: [Synapse Production](http://synapse.buildit.tools)
 
-### Journey of the project ([Midas Journey](MidasJourney.md))
+### Journey of the project ([The Journey](TheJourney.md))
 
 ### Getting Started (how to run it, build, deploy, test, analysis)
 #### Prereqs
