@@ -4,7 +4,7 @@
   "description": "Management information dashboard.",
   "main": "dev-server.js",
   "scripts": {
-    "build": "gulp",
+    "build": "echo 'Checking for outdated dependencies...' && npm outdated && gulp",
     "lint": "eslint src/ test/ *.js",
     "start": "gulp server",
     "storybook": "start-storybook -p 9001 -c .storybook",
