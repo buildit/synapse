@@ -74,10 +74,10 @@ export function* fetchAllStatusData(action) {
   const name = action.name;
   try {
     const [demand, defect, effort, project] = yield [
-      Api.projectDemandSummary(name),
-      Api.projectDefectSummary(name),
-      Api.projectEffortSummary(name),
-      Api.project(name)
+      call(Api.projectDemandSummary, name),
+      call(Api.projectDefectSummary, name),
+      call(Api.projectEffortSummary, name),
+      call(Api.project, name)
     ];
 
     yield put(fetchStatusSuccess({
@@ -90,6 +90,8 @@ export function* fetchAllStatusData(action) {
 
   }
   catch (err) {
+    console.log(err);
+    yield put({ type: 'DER_WHAT_DE_HEY'});
     // yield put(setMessage(errorHelper(err)));
   }
   finally {
@@ -103,7 +105,7 @@ export function* watchFetchAllStatusData() {
 
 export function* fetchProjects(action) {
   try {
-    const projects = yield Api.projects();
+    const projects = yield call(Api.projects);
     yield put(receiveProjects(projects));
   }
   catch (err) {
