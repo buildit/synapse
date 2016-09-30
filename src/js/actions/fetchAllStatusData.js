@@ -1,7 +1,7 @@
 import { FETCH_PROJECT_STATUS_DATA } from './actions';
 import errorHelper from '../helpers/errorHelper';
 
-const hostname = window.location.hostname;
+const hostname =  typeof window == 'undefined' ? 'localhost' : window.location.hostname;
 let configFile = '';
 
 if (hostname.includes('staging')) {

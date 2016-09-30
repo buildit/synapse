@@ -17,7 +17,8 @@ import { browserHistory } from 'react-router';
 
 const trimFormInputs = require('../helpers/trimFormInputs');
 
-const hostname = window.location.hostname;
+
+const hostname =  typeof window == 'undefined' ? 'localhost' : window.location.hostname;
 /* eslint-disable no-console */
 console.log('hostname:', hostname);
 /* eslint-enable no-console */

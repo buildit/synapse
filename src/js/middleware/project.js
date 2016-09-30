@@ -90,12 +90,7 @@ export function* fetchAllStatusData(action) {
 
   }
   catch (err) {
-    console.log(err);
-    yield put({ type: 'DER_WHAT_DE_HEY'});
-    // yield put(setMessage(errorHelper(err)));
-  }
-  finally {
-    yield put({ type: 'FETCH_END' })
+    yield put({ type: 'DER_WHAT_DE_HEY', errorMessage: err});
   }
 };
 
@@ -109,8 +104,7 @@ export function* fetchProjects(action) {
     yield put(receiveProjects(projects));
   }
   catch (err) {
-    // dispatch(setErrorMessage('We could not fetch the projects.'));
-    // dispatch(onSwitchView('error'));
+    // TODO: Hook in the new error handling code
 
   }
 };
