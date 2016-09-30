@@ -74,7 +74,7 @@ describe('All status for project fetcher', () => {
 
     const errorCorrect = {
       '@@redux-saga/IO': true,
-      PUT: { channel: null, action: { type: 'DER_WHAT_DE_HEY', errorMessage: errorMessage } }
+      PUT: { channel: null, action: { type: 'SET_MESSAGE', message: errorMessage } }
     }
 
     expect(errorGenerator.throw(errorMessage).value).to.deep.equal(errorCorrect);

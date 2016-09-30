@@ -90,7 +90,7 @@ export function* fetchAllStatusData(action) {
 
   }
   catch (err) {
-    yield put({ type: 'DER_WHAT_DE_HEY', errorMessage: err});
+    yield put({ type: SET_MESSAGE, message: err });
   }
 };
 
@@ -104,8 +104,7 @@ export function* fetchProjects(action) {
     yield put(receiveProjects(projects));
   }
   catch (err) {
-    // TODO: Hook in the new error handling code
-
+    yield put({ type: SET_MESSAGE, message: err });
   }
 };
 export function* watchFetchProjects() {

@@ -1,12 +1,15 @@
 const xhr = require('xhr');
+import errorHelper from '../helpers/errorHelper';
 
-// Is there a better way to structure this function so it has an explcit return value?
+// Is there a better way to structure this function so it has an expilcit return value?
 /* eslint-disable consistent-return */
 module.exports = uri => new Promise((resolve, reject) => {
-  xhr(uri, (err, res, body) => {
-    if (err) return reject(err);
-    if (res.statusCode !== 200) return reject(new Error(body));
-    resolve(JSON.parse(body));
+  xhr(uri, (error, response) => {
+    if (error) return reject(errorHelper(error));
+    if (!(response.statusCode === 200 || response.statusCode === 304)) {
+      return reject(errorHelper(response));
+    }
+    resolve(JSON.parse(response.body));
   });
 });
 /* eslint-enable consistent-return */

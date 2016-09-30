@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import * as actionCreators from '../../actions/';
+import { fetchProjects } from '../../actions/fetchProjects';
 import Button from '../1-atoms/Button';
 import ProjectsTable from '../2-molecules/ProjectsTable';
 import Footer from '../2-molecules/Footer';
@@ -59,4 +59,4 @@ const mapStateToProps = state => (
   }
 );
 
-export default connect(mapStateToProps, actionCreators)(ProjectList);
+export default connect(mapStateToProps, { fetchProjects })(ProjectList);

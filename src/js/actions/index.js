@@ -92,15 +92,6 @@ export const fetchProjects = () => (dispatch) => {
   dispatch({
     type: FETCH_PROJECTS
   });
-  // dispatch(requestProjects());
-  // return $.get(`${apiBaseUrl}v1/project/`)
-  //   .done(response => {
-  //     dispatch(receiveProjects(response));
-  //   })
-  //   .fail(() => {
-  //     dispatch(setErrorMessage('We could not fetch the projects.'));
-  //     dispatch(onSwitchView('error'));
-  //   });
 };
 
 export const fetchStarterProjects = () => (dispatch) => {

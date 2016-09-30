@@ -1,17 +1,19 @@
 // Takes a response from the api and returns a string that represents the error.
 
 const errorHelper = response => {
-  const parsedResponse = JSON.parse(response.message);
-
-  if (parsedResponse.error && parsedResponse.error.message) {
-    return parsedResponse.error.message;
+  if (response && response.body) {
+    return response.body;
   }
 
-  if (parsedResponse.statusText) {
-    return parsedResponse.statusText;
+  if (response && response.statusText) {
+    return response.statusText;
   }
 
-  return `An unknown error occurred: ${response.statusCode}`;
+  if (response && response.message) {
+    return response.message;
+  }
+
+  return 'An unknown error occurred.';
 };
 
 module.exports = errorHelper;
