@@ -70,14 +70,16 @@ npm run build
 npm run test
 ```
 ##### Test API
-We might want to test out the app with various types of data (good data, bad data, edge cases, etc). To facilitate this, we can put test data in this folder: "testApi/v1/", and then run the app in "test mode" to see what happens.
+We want to make sure our app can elegantly handle all kinds of data (good data, bad data, edge cases, etc). To facilitate this, we can put the app into "Test mode", which makes use of a client-side mock API.
 
-To do so, first set the api url to point to our test data:
+###### Running the app in Test mode:
+
+First set the api url to point to our test data:
 ```
 $ export TEST_API="./.testApi/"
 ```
 
-Build the project, per usual:
+Build the project in the usual manner:
 ```
 $ npm run build
 ```
@@ -91,6 +93,33 @@ Be sure to wipe out the MIDAS_API_URL environment variable when you're done with
 ```
 $ TEST_API=""
 ```
+
+###### Creating test data
+Test data is defined in the "testApi" folder. Any project placed in the "projectDefinitions" folder will be automatically pulled in. See the existing projects to get a sense of the format.
+
+The "dataOptions" section of the project definition specifies which status data to use for each project. These data sets, which are regular json, are defined in the "dataSets" folder.
+
+If you add a new status data set to "dataSets", you'll need to pull it into the corresponding data generator. For instance, say you want to create a set of effort data with weird values. Here's how you'd do this:
+
+1. Create the json file in "dataSets/effort". Give it a meaningful name, such as "weirdValues.json".
+2. Import this at the top of "generateEffortData.js":
+```
+const weirdValues = require('../../dataSets/demand/weirdValues')
+```
+Add the `case` as well. This is what maps the project definition to the data set:
+```
+case 'WEIRD VALUES': return weirdValues
+```
+
+3. Use the weirdValues data in a test project. The dataOptions section of your project definition would look something like this:
+```
+dataOptions: {
+  demand: 'STANDARD',
+  defect: 'STANDARD',
+  effort: 'WEIRD VALUES',
+}
+```
+
 
 ##### Acceptance Test
 You need to first have the Synapse app running and that app needs to be appropriately connected to a valid MI REST API service.
