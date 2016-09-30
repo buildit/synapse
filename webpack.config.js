@@ -1,27 +1,26 @@
-console.log('help me, I\'m trapped in a license plate factory');
-var path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: [
     './src/js/index.js',
-    './src/less/main.less'
+    './src/less/main.less',
   ],
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "/js/bundle.js"
+    path: path.resolve(__dirname, 'dist'),
+    filename: '/js/bundle.js',
   },
   devtool: 'source-map',
   devServer: {
     host: '0.0.0.0',
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: './src/index.html',
     }),
-    new ExtractTextPlugin('./dist/css/main.css')
+    new ExtractTextPlugin('./dist/css/main.css'),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -34,7 +33,7 @@ module.exports = {
       loader: 'babel-loader',
       query: {
         presets: ['es2015', 'react'],
-        plugins: ['transform-runtime']
+        plugins: ['transform-runtime'],
       },
     }, {
       test: /.json/,
@@ -44,13 +43,25 @@ module.exports = {
     }, {
       test: /\.less$/,
       loader: ExtractTextPlugin.extract({
-        loader: "css!less"
-      })
+        loader: 'css!less',
+      }),
     },
-    {test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff'},
-    {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
-    {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},
-    {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'}
+    {
+      test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+      loader: 'url?limit=10000&mimetype=application/font-woff',
+    },
+    {
+      test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+      loader: 'url?limit=10000&mimetype=application/octet-stream',
+    },
+    {
+      test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+      loader: 'file',
+    },
+    {
+      test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+      loader: 'url?limit=10000&mimetype=image/svg+xml',
+    },
   ],
   },
 };

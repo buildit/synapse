@@ -9,7 +9,7 @@ describe('All projects fetcher', () => {
   it('retrieves data', () => {
     const xhrCorrect = {
       '@@redux-saga/IO': true,
-      CALL: { context: null, fn: Api.projects, args: [] }
+      CALL: { context: null, fn: Api.projects, args: [] },
     };
     expect(generator.next().value).to.deep.equal(xhrCorrect);
   });
@@ -19,8 +19,8 @@ describe('All projects fetcher', () => {
       '@@redux-saga/IO': true,
       PUT: {
         channel: null,
-        action: { type: actions.FETCH_PROJECTS_RECEIVE, response: undefined }
-      }
+        action: { type: actions.FETCH_PROJECTS_RECEIVE, response: undefined },
+      },
     };
     expect(generator.next().value).to.deep.equal(actionCorrect);
   });

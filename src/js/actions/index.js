@@ -18,7 +18,7 @@ import { browserHistory } from 'react-router';
 const trimFormInputs = require('../helpers/trimFormInputs');
 
 
-const hostname =  typeof window == 'undefined' ? 'localhost' : window.location.hostname;
+const hostname = typeof window === 'undefined' ? 'localhost' : window.location.hostname;
 /* eslint-disable no-console */
 console.log('hostname:', hostname);
 /* eslint-enable no-console */
@@ -39,10 +39,6 @@ const configuration = require(`${configFile}`);
 const apiBaseUrl = configuration.parameters.api.baseUrl;
 const starterProjectsBaseApiUrl = configuration.parameters.starterProjectsApi.baseUrl;
 const errorHelper = require('../helpers/errorHelper');
-
-const requestProjects = () => (
-  { type: 'FETCH_PROJECTS_REQUEST' }
-);
 
 export const receiveProjects = (response) => (
   {
@@ -90,7 +86,7 @@ export const hideModal = (modal) => ({
 
 export const fetchProjects = () => (dispatch) => {
   dispatch({
-    type: FETCH_PROJECTS
+    type: FETCH_PROJECTS,
   });
 };
 
@@ -274,41 +270,35 @@ export const updateProjectionStartDate = value => ({
 
 export const setHasProjection = () => ({
   type: SET_HAS_PROJECTION,
-  value: true
+  value: true,
 });
 
 export const setDoesNotHaveProjection = () => ({
   type: SET_HAS_PROJECTION,
-  value: false
+  value: false,
 });
 
 export const setMessage = message => ({
   type: SET_MESSAGE,
-  message: message,
+  message,
 });
 export const clearMessage = () => ({
   type: SET_MESSAGE,
   message: '',
 });
 
-export const fetchProjection = name => {
-  return {
-    type: FETCH_PROJECTION_REQUEST,
-    name
-  };
-};
-export const fetchProjectionSuccess = project => {
-  return {
-    type: FETCH_PROJECTION_SUCCESS,
-    project
-  };
-};
-export const fetchProjectSuccess = project => {
-  return {
-    type: FETCH_PROJECT_SUCCESS,
-    project
-  };
-};
+export const fetchProjection = name => ({
+  type: FETCH_PROJECTION_REQUEST,
+  name,
+});
+export const fetchProjectionSuccess = project => ({
+  type: FETCH_PROJECTION_SUCCESS,
+  project,
+});
+export const fetchProjectSuccess = project => ({
+  type: FETCH_PROJECT_SUCCESS,
+  project,
+});
 
 export const saveProjection = (projection, name) => dispatch => {
   const projectionToSave = {

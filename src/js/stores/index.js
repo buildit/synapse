@@ -10,7 +10,7 @@ import {
   watchFetchProjectionRequest,
   watchFetchAllStatusData,
   watchFetchProjectionSuccess,
-  watchFetchProjects
+  watchFetchProjects,
 } from '../middleware/project';
 
 const redux = require('redux');
@@ -42,8 +42,7 @@ module.exports = (initialState) => {
   const store = redux.createStore(
     reducers,
     initialState,
-    redux.applyMiddleware(thunkMiddleware, sagaMiddleware),
-  );
+    redux.applyMiddleware(thunkMiddleware, sagaMiddleware));
 
   sagaMiddleware.run(watchFetchProjectionRequest);
   sagaMiddleware.run(watchFetchAllStatusData);
