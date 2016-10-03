@@ -1,6 +1,6 @@
-import Api from '../../../src/js/api';
-import * as actions from '../../../src/js/actions/actions';
-import { fetchProjects } from '../../../src/js/middleware/project';
+import Api from '../../src/js/api';
+import * as actions from '../../src/js/actions/actions';
+import { fetchProjects } from '../../src/js/middleware/project';
 const expect = require('chai').expect;
 
 describe('All projects fetcher', () => {

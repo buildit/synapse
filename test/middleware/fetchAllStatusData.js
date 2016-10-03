@@ -1,5 +1,5 @@
-import Api from '../../../src/js/api';
-import { fetchAllStatusData } from '../../../src/js/middleware/project';
+import Api from '../../src/js/api';
+import { fetchAllStatusData } from '../../src/js/middleware/project';
 const expect = require('chai').expect;
 
 describe('All status for project fetcher', () => {
