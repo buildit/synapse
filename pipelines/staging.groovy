@@ -41,7 +41,7 @@ node {
 
       stage("Test") {
         try {
-          sh "npm run test"
+          sh "npm run test:ci"
         }
         finally {
           junit 'reports/test-results.xml'
