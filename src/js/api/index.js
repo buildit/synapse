@@ -1,5 +1,20 @@
+const hostname = typeof window === 'undefined' ? 'localhost' : window.location.hostname;
+/* eslint-disable no-console */
+console.log('hostname:', hostname);
+/* eslint-enable no-console */
+
+let configFile = '';
+
+if (hostname.includes('staging')) {
+  configFile = './staging.json';
+} else if (hostname.includes('localhost')) {
+  configFile = './default.json';
+} else {
+  configFile = './production.json';
+}
+
 /* eslint-disable import/no-unresolved */
-const defaultConfig = require('../actions/default.json');
+const defaultConfig = require(`../actions/${configFile}`);
 /* eslint-enable import/no-unresolved */
 const apiBaseUrl = defaultConfig.parameters.api.baseUrl;
 const fetch = require('../actions/fetch');
