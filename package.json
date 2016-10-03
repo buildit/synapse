@@ -11,10 +11,10 @@
     "storybook:build": "build-storybook -c .storybook -o storybook",
     "test": "mocha test/unit",
     "test:sagas": "mocha --recursive  --compilers js:babel-core/register --require babel-polyfill test/unit/middleware",
-    "test:ci": "mocha --recursive --compilers js:babel-core/register --require babel-polyfill --reporter mocha-jenkins-reporter -O junit_report_path=./reports/test-results.xml,junit_report_name=\"Tests Results\",junit_report_stack=1 test/unit",
+    "test:ci": "mocha --compilers js:babel-core/register --require babel-polyfill --reporter mocha-jenkins-reporter -O junit_report_path=./reports/test-results.xml,junit_report_name=\"Tests Results\",junit_report_stack=1 test/unit",
     "test:acceptance": "mocha --timeout 30000 --require co-mocha --require babel-register --require babel-polyfill --recursive test/acceptance/specs",
     "test:acceptance:ci": "mocha --timeout 60000 --require co-mocha --require babel-register --require babel-polyfill --recursive --reporter mocha-jenkins-reporter -O junit_report_path=./reports/acceptance-test-results.xml,junit_report_name=\"Acceptance Tests\",junit_report_stack=1 test/acceptance/specs",
-    "validate": "npm ls",
+    "validate": "npm ls --production",
     "version": "git add package.json",
     "postversion": "git push && git push origin HEAD:master && git push --tags",
     "generate-test-data": "node testApi/scripts/generateTestData"
