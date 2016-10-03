@@ -9,7 +9,6 @@
     "start": "gulp server",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "storybook:build": "build-storybook -c .storybook -o storybook",
-    "test": "mocha test/unit",
     "test:sagas": "mocha --recursive  --compilers js:babel-core/register --require babel-polyfill test/unit/middleware",
     "test:ci": "mocha --compilers js:babel-core/register --require babel-polyfill --reporter mocha-jenkins-reporter -O junit_report_path=./reports/test-results.xml,junit_report_name=\"Tests Results\",junit_report_stack=1 test/unit",
     "test:acceptance": "mocha --timeout 30000 --require co-mocha --require babel-register --require babel-polyfill --recursive test/acceptance/specs",
@@ -22,6 +21,7 @@
   "pre-commit#master": [
     "lint",
     "test",
+    "test:acceptance",
     "validate"
   ],
   "repository": {
@@ -105,10 +105,5 @@
     "redux-thunk": "^2.1.0",
     "sum-values-in-object": "^1.0.5",
     "xhr": "^2.2.2"
-  },
-  "pre-commit": [
-    "lint",
-    "validate",
-    "test"
-  ]
+  }
 }
