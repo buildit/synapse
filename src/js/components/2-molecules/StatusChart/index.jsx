@@ -26,7 +26,7 @@ class StatusChart extends Component {
 export default StatusChart;
 
 StatusChart.propTypes = {
-  data: React.PropTypes.array.isRequired,
+  demandStatus: React.PropTypes.array.isRequired,
   defectStatus: React.PropTypes.array.isRequired,
   effortStatus: React.PropTypes.array.isRequired,
   demandCategories: React.PropTypes.array.isRequired,

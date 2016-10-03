@@ -23,7 +23,7 @@ class Status extends Component {
     if (!this.props.isFetching && this.props.project.name) {
       component = (
         <StatusChart
-          data={this.props.demandStatus}
+          demandStatus={this.props.demandStatus}
           defectStatus={this.props.defectStatus}
           effortStatus={this.props.effortStatus}
           demandCategories={this.props.demandCategories}

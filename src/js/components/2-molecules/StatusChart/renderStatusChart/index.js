@@ -6,6 +6,7 @@ const renderYAxis = require('./renderYAxis');
 const renderYAxisLabel = require('./renderYAxisLabel');
 const renderStackedAreaChart = require('./renderStackedAreaChart');
 const renderProjection = require('./renderProjection');
+const renderProjectionAlarm = require('./renderProjectionAlarm');
 const setProjectionButton = require('./setProjectionButton');
 const updateProjectionButton = require('./updateProjectionButton');
 import dateScaleCreator from './dateScaleCreator';
@@ -13,6 +14,7 @@ import yScaleCreator from './yScaleCreator';
 import getChartableDates from './getChartableDates';
 import getChartableValues from './getChartableValues';
 import getChartableDemandValues from './getChartableDemandValues';
+import isProjectionAlarm from './isProjectionAlarm';
 import {
   PADDING,
   WIDTH,
@@ -29,7 +31,7 @@ import {
 } from './config';
 
 module.exports = (props, containerElement) => {
-  const { data,
+  const { demandStatus,
     defectStatus,
     effortStatus,
     projection,
@@ -37,7 +39,6 @@ module.exports = (props, containerElement) => {
     defectCategories,
     effortCategories,
    } = props;
-
   const chartContainer = setChart(containerElement, WIDTH, HEIGHT, PADDING);
   let demandChart;
   let defectChart;
@@ -54,7 +55,7 @@ module.exports = (props, containerElement) => {
 
   const prepareYScales = () => {
     demandValues = getChartableDemandValues(
-      data,
+      demandStatus,
       demandCategories,
       projection,
       isProjectionVisible
@@ -69,7 +70,7 @@ module.exports = (props, containerElement) => {
 
   const prepareDateScale = () => {
     chartableDates = getChartableDates(
-      data,
+      demandStatus,
       defectStatus,
       effortStatus,
       projection,
@@ -82,7 +83,7 @@ module.exports = (props, containerElement) => {
   const render = () => {
     demandChart = renderStackedAreaChart(
       chartContainer,
-      data,
+      demandStatus,
       demandCategories,
       demandYScale,
       dateScale,
@@ -109,7 +110,7 @@ module.exports = (props, containerElement) => {
 
     renderLegend(
       demandChart,
-      data,
+      demandStatus,
       demandCategories,
       demandYScale,
       INDIVIDUAL_CHART_HEIGHT
@@ -167,19 +168,19 @@ module.exports = (props, containerElement) => {
   // Event listeners
   projectionButton.on('click', () => {
     isProjectionVisible = !isProjectionVisible;
-
     updateProjectionButton(projectionButton, isProjectionVisible);
-
     prepareDateScale();
     prepareYScales();
     render();
-
     if (isProjectionVisible) {
       renderProjection({
         data: projection,
         yScale: demandYScale,
         dateScale,
       });
+      if (isProjectionAlarm(demandStatus, projection)) {
+        renderProjectionAlarm(demandChart, WIDTH, DEMAND_Y_OFFSET);
+      }
     }
   });
 };
