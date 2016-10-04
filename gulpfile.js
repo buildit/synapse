@@ -11,6 +11,7 @@ const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
 const template = require('gulp-template');
 const webpack = require('gulp-webpack');
+const path = require('path');
 
 gulp.task('clean', () => (
   del(['dist'])
@@ -58,7 +59,10 @@ gulp.task('js', ['config'], (callback) => {
         devtool: 'source-map',
         resolve: {
           modulesDirectories: ['node_modules', './src/js/'],
-          extensions: ['', '.js', '.jsx'],
+          extensions: ['', '.js', '.jsx', '.json'],
+          alias: {
+            config: path.join(__dirname, 'src/js/actions', (process.env.NODE_ENV || 'default') )
+          }
         },
         module: {
           loaders: [{

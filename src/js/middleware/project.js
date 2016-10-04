@@ -8,7 +8,7 @@ import {
   FETCH_PROJECTION_SUCCESS,
   FETCH_PROJECT_STATUS_DATA,
   SET_MESSAGE,
-} from '../actions/actions';
+} from '/actions/actions';
 import {
   receiveProjects,
   fetchProjectSuccess as fetchProjectSuccessAction,
@@ -23,10 +23,10 @@ import {
   updateProjectionStartDate,
   setHasProjection,
   setDoesNotHaveProjection,
-} from '../actions';
-import { fetchStatusSuccess } from '../actions/fetchAllStatusData';
+} from '/actions';
+import { fetchStatusSuccess } from '/actions/fetchAllStatusData';
 
-import Api from '../api';
+import Api from '/api';
 
 export function* fetchProjectionRequest(action) {
   try {
