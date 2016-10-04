@@ -1,7 +1,8 @@
 /* eslint-disable import/no-unresolved */
 import config from '/helpers/config';
 /* eslint-enable import/no-unresolved */
-const fetch = require('../actions/fetch');
+// const fetch = require('../actions/fetch');
+import { fetch, put, post } from './xhr';
 
 const projects = () => fetch(`${config.apiBaseUrl}v1/project/`);
 
@@ -10,6 +11,30 @@ const projectDemandSummary = name => fetch(`${config.apiBaseUrl}v1/project/${nam
 const projectDefectSummary = name => fetch(`${config.apiBaseUrl}v1/project/${name}/defect/summary`);
 const projectEffortSummary = name => fetch(`${config.apiBaseUrl}v1/project/${name}/effort/summary`);
 
+const starterProjects = () => fetch(
+  `${config.starterProjectsBaseApiUrl}v1/project?status=available`
+);
+
+const saveProjection = (projection, name) => {
+  put(
+    `${config.apiBaseUrl}v1/project/${name}/projection`,
+    projection
+  );
+};
+
+const updateProject = (projectToUpdate) => {
+  put(
+    `${config.apiBaseUrl}v1/project/${project.name}`,
+    projectToUpdate
+  );
+};
+
+const saveProject = (projectToSave) => {
+  post(
+    `${config.apiBaseUrl}v1/project/${project.name}`,
+    projectToSave
+  );
+};
 
 export default {
   projects,
@@ -17,4 +42,8 @@ export default {
   projectDemandSummary,
   projectDefectSummary,
   projectEffortSummary,
+  starterProjects,
+  saveProjection,
+  updateProject,
+  saveProject,
 };

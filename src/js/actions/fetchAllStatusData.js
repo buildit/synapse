@@ -5,9 +5,7 @@ export const fetchStatusSuccess = status => ({
   status,
 });
 
-export const fetchAllStatusData = name => dispatch => {
-  dispatch({
-    type: FETCH_PROJECT_STATUS_DATA,
-    name,
-  });
-};
+export const fetchAllStatusData = name => ({
+  type: FETCH_PROJECT_STATUS_DATA,
+  name,
+});

@@ -11,6 +11,11 @@ import {
   watchFetchAllStatusData,
   watchFetchProjectionSuccess,
   watchFetchProjects,
+  watchFetchStarterProjectsRequest,
+  watchFetchProjectRequest,
+  watchSaveProjectionRequest,
+  watchUpdateProjectRequest,
+  watchSaveProjectRequest,
 } from '../middleware/project';
 
 const redux = require('redux');
@@ -48,6 +53,11 @@ module.exports = (initialState) => {
   sagaMiddleware.run(watchFetchAllStatusData);
   sagaMiddleware.run(watchFetchProjectionSuccess);
   sagaMiddleware.run(watchFetchProjects);
+  sagaMiddleware.run(watchFetchStarterProjectsRequest);
+  sagaMiddleware.run(watchFetchProjectRequest);
+  sagaMiddleware.run(watchSaveProjectionRequest);
+  sagaMiddleware.run(watchUpdateProjectRequest);
+  sagaMiddleware.run(watchSaveProjectRequest);
 
   store.dispatch = addLoggingToDispatch(store);
 

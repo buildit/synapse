@@ -1,6 +1,4 @@
 import { FETCH_PROJECTS } from './actions';
-export const fetchProjects = () => (dispatch) => {
-  dispatch({
-    type: FETCH_PROJECTS,
-  });
-};
+export const fetchProjects = () => ({
+  type: FETCH_PROJECTS,
+});
