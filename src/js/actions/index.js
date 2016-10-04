@@ -17,28 +17,11 @@ import { browserHistory } from 'react-router';
 
 const trimFormInputs = require('../helpers/trimFormInputs');
 
-
-// const hostname = typeof window === 'undefined' ? 'localhost' : window.location.hostname;
-// /* eslint-disable no-console */
-// console.log('hostname:', hostname);
-// /* eslint-enable no-console */
-//
-// let configFile = '';
-//
-// if (hostname.includes('staging')) {
-//   configFile = './staging.json';
-// } else if (hostname.includes('localhost')) {
-//   configFile = './default.json';
-// } else {
-//   configFile = './production.json';
-// }
-
 /* eslint-disable import/no-unresolved */
-// const configuration = require(`${configFile}`);
-const configuration = require('config');
+import config from '/helpers/config';
 /* eslint-enable import/no-unresolved */
-const apiBaseUrl = configuration.parameters.api.baseUrl;
-const starterProjectsBaseApiUrl = configuration.parameters.starterProjectsApi.baseUrl;
+const apiBaseUrl = config.apiBaseUrl;
+const starterProjectsBaseApiUrl = config.starterProjectsBaseApiUrl;
 const errorHelper = require('../helpers/errorHelper');
 
 export const receiveProjects = (response) => (

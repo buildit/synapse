@@ -36,15 +36,15 @@ gulp.task('config', ['clean'], (callback) => {
   gulp.src('./config/gulp-template.json')
     .pipe(template({ eolasapiurl: `${developmentApiUrl}` }))
     .pipe(rename('default.json'))
-    .pipe(gulp.dest('./src/js/actions'));
+    .pipe(gulp.dest('./src/js/environments'));
   gulp.src('./config/gulp-template.json')
     .pipe(template({ eolasapiurl: `${stagingApiUrl}` }))
     .pipe(rename('staging.json'))
-    .pipe(gulp.dest('./src/js/actions'));
+    .pipe(gulp.dest('./src/js/environments'));
   gulp.src('./config/gulp-template.json')
     .pipe(template({ eolasapiurl: `${productionApiUrl}` }))
     .pipe(rename('production.json'))
-    .pipe(gulp.dest('./src/js/actions'))
+    .pipe(gulp.dest('./src/js/environments'))
     .on('end', callback);
 });
 
@@ -61,7 +61,7 @@ gulp.task('js', ['config'], (callback) => {
           modulesDirectories: ['node_modules', './src/js/'],
           extensions: ['', '.js', '.jsx', '.json'],
           alias: {
-            config: path.join(__dirname, 'src/js/actions', (process.env.NODE_ENV || 'default')),
+            config: path.join(__dirname, 'src/js/environments'),
           },
         },
         module: {
@@ -120,13 +120,13 @@ gulp.task('less-lint', () => (
 
 gulp.task('clean-config', ['js'], () => {
   del([
-    './src/js/actions/default.json',
+    './src/js/environments/default.json',
   ]);
   del([
-    './src/js/actions/staging.json',
+    './src/js/environments/staging.json',
   ]);
   del([
-    './src/js/actions/production.json',
+    './src/js/environments/production.json',
   ]);
 });
 
