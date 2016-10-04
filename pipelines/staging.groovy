@@ -85,6 +85,7 @@ node {
         convox.ensureSecurityGroupSet("${appName}-staging", env.CONVOX_SECURITYGROUP)
 
         // run Selenium tests
+        sleep(60000)
         try {
           sh "NODE_ENV=staging URL=http://synapse.staging.${domainName} xvfb-run -d -s '-screen 0 1280x1024x16' npm run test:acceptance:ci"
         }
