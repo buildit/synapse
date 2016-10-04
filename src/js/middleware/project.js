@@ -2,6 +2,7 @@
 import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
+/* eslint-disable import/no-unresolved */
 import {
   FETCH_PROJECTS,
   FETCH_PROJECTION_REQUEST,
@@ -27,6 +28,7 @@ import {
 import { fetchStatusSuccess } from '/actions/fetchAllStatusData';
 
 import Api from '/api';
+/* eslint-enable import/no-unresolved */
 
 export function* fetchProjectionRequest(action) {
   try {

@@ -61,8 +61,8 @@ gulp.task('js', ['config'], (callback) => {
           modulesDirectories: ['node_modules', './src/js/'],
           extensions: ['', '.js', '.jsx', '.json'],
           alias: {
-            config: path.join(__dirname, 'src/js/actions', (process.env.NODE_ENV || 'default') )
-          }
+            config: path.join(__dirname, 'src/js/actions', (process.env.NODE_ENV || 'default')),
+          },
         },
         module: {
           loaders: [{

@@ -2,7 +2,7 @@
   "extends": "airbnb",
   "rules": {
     "indent": ["error", 2],
-    "no-class-assign": "warn"
+    "no-class-assign": "warn",
   },
   "globals": {
     "describe": false,

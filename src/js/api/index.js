@@ -1,17 +1,3 @@
-// const hostname = typeof window === 'undefined' ? 'localhost' : window.location.hostname;
-// /* eslint-disable no-console */
-// console.log('hostname:', hostname);
-// /* eslint-enable no-console */
-//
-// let configFile = '';
-//
-// if (hostname.includes('staging')) {
-//   configFile = './staging.json';
-// } else if (hostname.includes('localhost')) {
-//   configFile = './default.json';
-// } else {
-//   configFile = './production.json';
-// }
 /* eslint-disable import/no-unresolved */
 const defaultConfig = require('config');
 /* eslint-enable import/no-unresolved */
