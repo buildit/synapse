@@ -76,7 +76,7 @@ node {
 
         sh "convox login ${env.CONVOX_RACKNAME} --password ${env.CONVOX_PASSWORD}"
         sh "convox env set NODE_ENV=staging EOLAS_DOMAIN=${domainName} --app ${appName}-staging"
-        sh "convox deploy --app ${appName}-staging --description '${tag}' --file ${tmpFile}"
+        sh "convox deploy --app ${appName}-staging --description '${tag}' --file ${tmpFile} --wait"
       }
 
       stage("Run Functional Tests") {
@@ -85,7 +85,6 @@ node {
         convox.ensureSecurityGroupSet("${appName}-staging", env.CONVOX_SECURITYGROUP)
 
         // run Selenium tests
-        sleep(60)
         try {
           sh "NODE_ENV=staging URL=http://synapse.staging.${domainName} xvfb-run -d -s '-screen 0 1280x1024x16' npm run test:acceptance:ci"
         }
