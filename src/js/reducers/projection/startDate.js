@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const initialState = moment().format('YYYY-MM-DD');
+const initialState = moment('01-Aug-16', 'DD-MMM-YY').format('YYYY-MM-DD');
 
 const startDate = (state = initialState, action) => {
   switch (action.type) {
