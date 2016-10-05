@@ -1,4 +1,4 @@
-const initialState = 2;
+const initialState = 3;
 
 const periodEnd = (state = initialState, action) => {
   switch (action.type) {

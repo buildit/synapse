@@ -13,8 +13,6 @@ module.exports = ({ data, dateScale, yScale }) => {
     .append('path')
     .attr('class', 'projection-line')
     .attr('id', 'projectionLine')
-    .attr('opacity', 1)
     .datum(points)
-    .style('stroke-dasharray', ('3, 3'))
     .attr('d', line);
 };

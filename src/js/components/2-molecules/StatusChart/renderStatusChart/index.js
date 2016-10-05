@@ -1,4 +1,6 @@
-// const d3 = require('d3');
+const getY = require('./getY');
+const renderProjectionDot = require('./renderProjectionDot');
+const getProjectionY = require('./getProjectionY');
 const setChart = require('./setChart');
 const renderLegend = require('./renderLegend');
 const renderDateAxis = require('./renderDateAxis');
@@ -181,6 +183,13 @@ module.exports = (props, containerElement) => {
       if (isProjectionAlarm(demandStatus, projection)) {
         renderProjectionAlarm(demandChart, WIDTH, DEMAND_Y_OFFSET);
       }
+      demandStatus.forEach(datapoint => {
+        const doneValue = getY(datapoint.date, demandStatus, 'Done', demandYScale);
+        const projectionValue = getProjectionY(datapoint.date, projection, dateScale, demandYScale);
+        if (projectionValue < doneValue) {
+          renderProjectionDot(demandChart, datapoint.date, projection, dateScale, demandYScale);
+        }
+      });
     }
   });
 };
