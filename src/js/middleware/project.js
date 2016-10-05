@@ -33,7 +33,7 @@ import Api from '/api';
 export function* fetchProjectionRequest(action) {
   try {
     const project = Api.project(action.name);
-    yield put(fetchProjectSuccessAction, project);
+    yield put(fetchProjectSuccessAction(project);
   } catch (err) {
     yield put({
       type: SET_MESSAGE,
