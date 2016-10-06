@@ -4,8 +4,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: [
-    './src/js/index.js',
-    './src/less/main.less',
+    // './src/js/index.js',
+    // './src/less/main.less',
+    './node_modules/whippersnapper/lib/react/Text.jsx ',
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -27,7 +28,7 @@ module.exports = {
   },
   module: {
     loaders: [{
-      test: /\.(js|jsx)/,
+      test: /\.(js)/,
       exclude: /node_modules/,
       // cacheable: true,
       loader: 'babel-loader',
@@ -35,7 +36,15 @@ module.exports = {
         presets: ['es2015', 'react'],
         plugins: ['transform-runtime'],
       },
-    }, {
+    },
+    {
+      test: /\.(jsx)/,
+      loader: 'babel-loader',
+      query: {
+        presets: ['es2015', 'react'],
+      },
+    },
+    {
       test: /.json/,
       exclude: [/node_modules/, /config/],
       // cacheable: true,

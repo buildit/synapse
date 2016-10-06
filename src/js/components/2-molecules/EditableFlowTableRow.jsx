@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
-import Badge from '../1-atoms/Badge';
+// import Badge from '../1-atoms/Badge';
+const Badge = require('whippersnapper/lib/react/Badge');
 import Icon from '../1-atoms/Icon';
 
 const EditableFlowTableRow = React.createClass({
