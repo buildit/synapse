@@ -1,11 +1,5 @@
 # Synapse
 
-### Code Quality Badges
-NOTE: Except for build status, these other badges currently do not seem to be working correctly. Please ignore test and coverage badges at this time. Here now as a placeholder.
-
-[![Jenkins tests](https://img.shields.io/jenkins/t/https/jenkins.qa.ubuntu.com/precise-desktop-amd64_default.svg?maxAge=2592000)](http://jenkins.riglet:9000/jenkins/job/synapse-staging-pipeline/) [![Jenkins coverage](https://img.shields.io/jenkins/c/https/jenkins.qa.ubuntu.com/address-book-service-utopic-i386-ci.svg?maxAge=2592000)](http://jenkins.riglet:9000/jenkins/job/synapse-staging-pipeline/)
-
-#### Build Status
 [![Build Status](http://jenkins.riglet:9000/jenkins/buildStatus/icon?job=synapse-staging-pipeline)](http://jenkins.riglet:9000/jenkins/job/synapse-staging-pipeline/)
 
 ## What is Synapse?
