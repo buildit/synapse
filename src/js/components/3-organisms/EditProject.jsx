@@ -37,7 +37,7 @@ class EditProject extends Component {
     };
 
     return (
-      <div>
+      <div className="edit-project">
         <Button
           label="Save"
           cssClasses="button btn btn-primary"

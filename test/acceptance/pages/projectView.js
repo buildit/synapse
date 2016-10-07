@@ -43,4 +43,10 @@ export default class ProjectView {
   hasStatusLink() {
     return this.driver.findElement(this.elements.statusLink).isDisplayed();
   }
+
+  clickEditProject() {
+    const editLink = this.driver.wait(
+      until.elementLocated(this.elements.editLink), 10000);
+    return editLink.click();
+  }
 }
