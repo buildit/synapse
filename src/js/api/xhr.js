@@ -12,7 +12,10 @@ const makeRequest = (uri, method = 'GET', body = undefined) => new Promise((reso
     options.json = body;
   }
   xhr(options, (error, response) => {
-    if (error) return reject(errorHelper(error));
+    if (error) {
+      const message = errorHelper(error);
+      reject(message);
+    }
     // TODO: clean this up
     if ([200, 201, 304].indexOf(response.statusCode) === -1) {
       return reject(errorHelper(response));

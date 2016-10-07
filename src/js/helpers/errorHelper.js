@@ -4,7 +4,12 @@
 
 const errorHelper = thing => {
   if (thing && thing.body) {
-    const innerThing = JSON.parse(thing.body);
+    let innerThing;
+    try {
+      innerThing = JSON.parse(thing.body);
+    } catch (err) {
+      innerThing = thing.body;
+    }
     if (innerThing.error.message) return innerThing.error.message;
     if (innerThing.error.statusCode) return innerThing.error.statusCode;
   }

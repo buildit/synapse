@@ -1,6 +1,6 @@
 const trimTextInput = require('./trimTextInput');
 
-module.exports = project => {
+export const trimFormInputs = project => {
   const result = project;
 
   Object.keys(project).forEach(key => {

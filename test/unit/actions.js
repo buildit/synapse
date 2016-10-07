@@ -2,6 +2,8 @@ const expect = require('chai').expect;
 /* eslint-disable import/no-unresolved */
 import * as actions from '/actions/actions';
 import * as functions from '/actions';
+import * as statusFunctions from '/actions/fetchAllStatusData';
+import * as projectFunctions from '/actions/fetchProjects';
 /* eslint-enable import/no-unresolved */
 
 describe('Redux actions', () => {
@@ -389,5 +391,28 @@ describe('Redux actions', () => {
       value,
     };
     expect(functions.setIsNewProject(value)).to.deep.equal(correct);
+  });
+
+  it('fetchStatusSuccess', () => {
+    const status = 'test';
+    const correct = {
+      type: actions.FETCH_STATUS_SUCCESS,
+      status,
+    };
+    expect(statusFunctions.fetchStatusSuccess(status)).to.deep.equal(correct);
+  });
+
+  it('fetchAllStatusData', () => {
+    const name = 'test';
+    const correct = {
+      type: actions.FETCH_PROJECT_STATUS_DATA,
+      name,
+    };
+    expect(statusFunctions.fetchAllStatusData(name)).to.deep.equal(correct);
+  });
+
+  it('fetchProjects', () => {
+    const correct = { type: actions.FETCH_PROJECTS };
+    expect(projectFunctions.fetchProjects()).to.deep.equal(correct);
   });
 });

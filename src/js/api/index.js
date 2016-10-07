@@ -31,7 +31,7 @@ const updateProject = (projectToUpdate) => {
 
 const saveProject = (projectToSave) => {
   post(
-    `${config.apiBaseUrl}v1/project/${project.name}`,
+    `${config.apiBaseUrl}v1/project/${projectToSave.name}`,
     projectToSave
   );
 };

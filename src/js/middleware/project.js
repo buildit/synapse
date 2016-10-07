@@ -10,7 +10,6 @@ import {
   FETCH_STARTER_PROJECTS_REQUEST,
   FETCH_PROJECT_REQUEST,
   FETCH_PROJECT_STATUS_DATA,
-  SET_MESSAGE,
   SAVE_PROJECTION_REQUEST,
   UPDATE_PROJECT_REQUEST,
   SAVE_PROJECT_REQUEST,
@@ -44,15 +43,15 @@ import { trimFormInputs } from '/helpers/trimFormInputs';
 import Api from '/api';
 /* eslint-enable import/no-unresolved */
 
+/*
+ * Middleware for FETCH_PROJECTION_REQUEST
+ */
 export function* fetchProjectionRequest(action) {
   try {
     const project = yield call(Api.project, action.name);
     yield put(fetchProjectSuccessAction(project));
   } catch (err) {
-    yield put({
-      type: SET_MESSAGE,
-      message: `You're creating a new projection for project ${action.name}.`,
-    });
+    yield put(setMessage(`You're creating a new projection for project ${action.name}.`));
     yield put(setErrorMessage(err));
     yield put(setDoesNotHaveProjection());
   }
@@ -61,7 +60,10 @@ export function* watchFetchProjectionRequest() {
   yield* takeEvery(FETCH_PROJECTION_REQUEST, fetchProjectionRequest);
 }
 
-
+/*
+ * Middleware for FETCH_PROJECTION_SUCCESS
+ * needs test
+ */
 export function* fetchProjectionSuccess(action) {
   if (action.project.projection) {
     const projection = action.project.projection;
@@ -84,6 +86,10 @@ export function* watchFetchProjectionSuccess() {
 }
 
 
+/*
+ * Middleware for FETCH_PROJECT_REQUEST
+ * needs test
+ */
 export function* fetchProjectRequest(action) {
   try {
     const project = yield call(Api.project, action.name);
@@ -98,6 +104,9 @@ export function* watchFetchProjectRequest() {
 }
 
 
+/*
+ * Middleware for FETCH_PROJECT_STATUS_DATA
+ */
 export function* fetchAllStatusData(action) {
   const name = action.name;
   try {
@@ -116,7 +125,7 @@ export function* fetchAllStatusData(action) {
 
     yield put(fetchProjectSuccessAction(project));
   } catch (err) {
-    yield put({ type: SET_MESSAGE, message: err });
+    yield put(setErrorMessage(err));
   }
 }
 
@@ -124,12 +133,16 @@ export function* watchFetchAllStatusData() {
   yield* takeEvery(FETCH_PROJECT_STATUS_DATA, fetchAllStatusData);
 }
 
+
+/*
+ * Middleware for FETCH_PROJECTS
+ */
 export function* fetchProjects() {
   try {
     const projects = yield call(Api.projects);
     yield put(receiveProjects(projects));
   } catch (err) {
-    yield put({ type: SET_MESSAGE, message: err });
+    yield put(setErrorMessage(err));
   }
 }
 export function* watchFetchProjects() {
@@ -137,6 +150,9 @@ export function* watchFetchProjects() {
 }
 
 
+/*
+ * Middleware for FETCH_STARTER_PROJECTS_REQUEST
+ */
 export function* fetchStarterProjects() {
   try {
     const starterProjects = yield call(Api.starterProjects);
@@ -150,6 +166,10 @@ export function* watchFetchStarterProjectsRequest() {
   yield* takeEvery(FETCH_STARTER_PROJECTS_REQUEST, fetchStarterProjects);
 }
 
+
+/*
+ * Middleware for SAVE_PROJECTION_REQUEST
+ */
 export function* saveProjectionRequest(action) {
   try {
     const projection = action.projection;
@@ -176,10 +196,14 @@ export function* watchSaveProjectionRequest() {
 }
 
 
+/*
+ * Middleware for UPDATE_PROJECT_REQUEST
+ */
 export function* updateProjectRequest(action) {
   try {
     yield call(Api.updateProject, action.project);
-    yield put(setMessage(`The form data for project ${name} was saved successfully.`));
+    const message = `The form data for project ${action.project.name} was saved successfully.`;
+    yield put(setMessage(message));
   } catch (err) {
     yield put(setErrorMessage(`There was an error.  We could not save the project: ${err}`));
   }
@@ -189,9 +213,12 @@ export function* watchUpdateProjectRequest() {
 }
 
 
+/*
+ * Middleware for SAVE_PROJECT_REQUEST
+ */
 export function* saveProjectRequest(action) {
   try {
-    const project = trimFormInputs(action.project);
+    const project = yield(call(trimFormInputs, action.project));
     yield put(setMessage(`Saving ${project.name}`));
     yield call(Api.saveProject, project);
     yield put(onSwitchView('modalView'));
