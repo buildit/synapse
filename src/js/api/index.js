@@ -24,7 +24,7 @@ const saveProjection = (projection, name) => {
 
 const updateProject = (projectToUpdate) => {
   put(
-    `${config.apiBaseUrl}v1/project/${project.name}`,
+    `${config.apiBaseUrl}v1/project/${projectToUpdate.name}`,
     projectToUpdate
   );
 };
