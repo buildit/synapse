@@ -3,11 +3,11 @@ import React, {
   PropTypes,
 } from 'react';
 import { connect } from 'react-redux';
-import * as actionCreators from '../../actions/index.js';
-import ProjectionChart from '../2-molecules/ProjectionChart';
-import ProjectionSlider from '../1-atoms/ProjectionSlider';
-import Button from '../1-atoms/Button';
-import DateInput from '../1-atoms/DateInput';
+import * as actionCreators from 'actions';
+import ProjectionChart from 'components/2-molecules/ProjectionChart';
+import ProjectionSlider from 'components/1-atoms/ProjectionSlider';
+import Button from 'components/1-atoms/Button';
+import DateInput from 'components/1-atoms/DateInput';
 
 
 class Projection extends Component {

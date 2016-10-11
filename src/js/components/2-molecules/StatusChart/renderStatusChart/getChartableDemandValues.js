@@ -3,7 +3,7 @@
 
 const moment = require('moment');
 const sumValuesInObject = require('sum-values-in-object');
-const makePoints = require('../../../../helpers/makePoints');
+const makePoints = require('helpers/makePoints');
 
 module.exports = (data, demandCategories, projection, isProjectionVisible) => {
   const dataValues = data.map(datapoint => sumValuesInObject(datapoint, demandCategories));

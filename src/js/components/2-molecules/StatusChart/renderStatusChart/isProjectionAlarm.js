@@ -4,7 +4,7 @@ returns true if the projection end date is greater than the status data's end da
 false if otherwise.
 */
 const moment = require('moment');
-const makePoints = require('../../../../helpers/makePoints');
+const makePoints = require('helpers/makePoints');
 
 const getDates = datapoint => moment(datapoint.date, 'DD-MMM-YY');
 

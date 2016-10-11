@@ -27,3 +27,6 @@ errorShots/
 
 # React-Storybook
 storybook
+
+# Caching directories made during linting
+.tmp/

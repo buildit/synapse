@@ -1,0 +1,42 @@
+// @import '../../variables';
+// @import '../../mixins';
+//
+// .btn {
+//   color: #ffffff;
+//   font-weight: 300;
+//
+//   &.btn-primary {
+//     background-color: $brand-primary-colour;
+//     .box-shadow(inset 0 0 0 0 $brand-secondary-colour);
+//     .transition(all ease $transition-delay);
+//
+//     &:hover {
+//       .box-shadow(inset 300em 0 0 0 $brand-secondary-colour);
+//       color: $brand-primary-colour;
+//     }
+//   }
+//
+//   &.btn-secondary {
+//     background-color: $brand-secondary-colour;
+//     color: $brand-primary-colour;
+//     .box-shadow(inset 0 0 0 0 white);
+//     .transition(all ease $transition-delay);
+//
+//     &:hover {
+//       .box-shadow(inset 300em 0 0 0 white);
+//       color: $brand-primary-colour;
+//     }
+//   }
+//
+//   &.btn-info {
+//     background-color: $button-info-colour;
+//   }
+//
+//   &.btn-success {
+//     background-color: $button-success-colour;
+//   }
+//
+//   &.btn-danger {
+//     background-color: $button-danger-colour;
+//   }
+// }

@@ -1,9 +1,9 @@
-import blankProject from '../helpers/blankProject';
+import blankProject from 'helpers/blankProject';
 import _ from 'lodash';
 
 import {
   RESET_PROJECT,
-} from '../actions/actions';
+} from 'actions/actions';
 
 const initialState = {
   project: blankProject,
@@ -66,7 +66,6 @@ const appData = (state = initialState, action) => {
   case 'FETCH_PROJECT_SUCCESS': {
     // Probably don't need normalize here
     // since we're doing it in mapStateToProps wherever the data is rendered.
-    // const project = normalizeProject(action.project);
     return {
       ...state,
       project: action.project,

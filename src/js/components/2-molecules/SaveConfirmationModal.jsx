@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import Button from '../1-atoms/Button';
+import Button from 'components/1-atoms/Button';
 
 const SaveConfirmationModal = () => ({
   render() {

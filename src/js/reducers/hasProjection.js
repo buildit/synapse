@@ -1,4 +1,4 @@
-import { SET_HAS_PROJECTION } from '../actions/actions';
+import { SET_HAS_PROJECTION } from 'actions/actions';
 
 const initialValue = false;
 

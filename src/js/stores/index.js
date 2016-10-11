@@ -3,7 +3,7 @@ const isLogging = false;
 
 import createSagaMiddleware from 'redux-saga';
 import thunkMiddleware from 'redux-thunk';
-import reducers from '../reducers';
+import reducers from 'reducers';
 
 // Sagas
 import {
@@ -15,11 +15,10 @@ import {
   watchSaveProjectionRequest,
   watchUpdateProjectRequest,
   watchSaveProjectRequest,
-} from '../middleware/project';
+} from 'middleware/project';
 import {
-  // watchFetchAllStatusData,
   watchFetchDemandStatusData,
-} from '../middleware/status';
+} from 'middleware/status';
 
 const redux = require('redux');
 

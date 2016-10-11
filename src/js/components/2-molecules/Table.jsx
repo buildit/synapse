@@ -1,6 +1,6 @@
 import React from 'react';
-import TableCell from '/components/1-atoms/TableCell';
-import TableHeaderCell from '/components/1-atoms/TableHeaderCell';
+import TableCell from 'components/1-atoms/TableCell';
+import TableHeaderCell from 'components/1-atoms/TableHeaderCell';
 
 const Table = ({ tableData, visibleColumns, rowKey, isStriped = false }) => {
   let headerRow = [];

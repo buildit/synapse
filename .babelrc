@@ -3,6 +3,15 @@
   "plugins": [
     ["babel-root-slash-import", {
       "rootPathSuffix": "src/js"
-    }]
-  ]
+    }],
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        ["babel-plugin-webpack-alias", {
+          "noOutputExtension": true,
+        }],
+      ],
+    },
+  },
 }

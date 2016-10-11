@@ -1,15 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import * as actionCreators from '../../actions/';
-import Input from '../1-atoms/Input';
-import ProjectDateInput from '../1-atoms/ProjectDateInput';
-import Button from '../1-atoms/Button';
-import EditableArrayTable from '../2-molecules/EditableArrayTable';
-import AddFlowItem from '../2-molecules/AddFlowItem';
-import AddRoleItem from '../2-molecules/AddRoleItem';
-import AddSeverityItem from '../2-molecules/AddSeverityItem';
-import normalizeProject from '../../helpers/normalizeProject';
+import * as actionCreators from 'actions';
+import Input from 'components/1-atoms/Input';
+import ProjectDateInput from 'components/1-atoms/ProjectDateInput';
+import Button from 'components/1-atoms/Button';
+import EditableArrayTable from 'components/2-molecules/EditableArrayTable';
+import AddFlowItem from 'components/2-molecules/AddFlowItem';
+import AddRoleItem from 'components/2-molecules/AddRoleItem';
+import AddSeverityItem from 'components/2-molecules/AddSeverityItem';
+import normalizeProject from 'helpers/normalizeProject';
 
 class EditProject extends Component {
   componentWillMount() {
@@ -22,7 +22,6 @@ class EditProject extends Component {
     const saveFormData = this.props.saveFormData;
     const onListItemRemove = this.props.onListItemRemove;
     const addItemToDemandFlowList = this.props.addItemToDemandFlowList;
-    const addItemToDefectFlowList = this.props.addItemToDefectFlowList;
     const addItemToRoleList = this.props.addItemToRoleList;
     const addItemToSeverityList = this.props.addItemToSeverityList;
     const moveListItemUp = this.props.moveListItemUp;
@@ -320,7 +319,6 @@ EditProject.propTypes = {
   initializeFormData: PropTypes.func.isRequired,
   onListItemRemove: PropTypes.func.isRequired,
   addItemToDemandFlowList: PropTypes.func.isRequired,
-  addItemToDefectFlowList: PropTypes.func.isRequired,
   addItemToRoleList: PropTypes.func.isRequired,
   addItemToSeverityList: PropTypes.func.isRequired,
   moveListItemUp: PropTypes.func.isRequired,

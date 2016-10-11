@@ -1,5 +1,5 @@
 const xhr = require('xhr');
-import errorHelper from '../helpers/errorHelper';
+import errorHelper from 'helpers/errorHelper';
 
 // Is there a better way to structure this function so it has an expilcit return value?
 /* eslint-disable consistent-return */

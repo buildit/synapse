@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import Button from '../1-atoms/Button';
+import Button from 'components/1-atoms/Button';
 
 class AddFlowItem extends Component {
   constructor() {

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import EditableSeverityTableRow from '../2-molecules/EditableSeverityTableRow';
+import EditableSeverityTableRow from 'components/2-molecules/EditableSeverityTableRow';
 
 const EditableSeverityTable = ({ items, removeItem, moveItemUp, moveItemDown }) => {
   const bodyRows = [];

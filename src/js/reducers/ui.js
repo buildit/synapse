@@ -1,6 +1,6 @@
 import {
   SET_MESSAGE,
-} from '../actions/actions';
+} from 'actions/actions';
 
 const ui = (state = {
   view: 'listView',

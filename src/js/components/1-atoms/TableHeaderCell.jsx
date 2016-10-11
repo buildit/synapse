@@ -8,4 +8,5 @@ export default TableHeaderCell;
 
 TableHeaderCell.propTypes = {
   headerValue: React.PropTypes.string.isRequired,
+  id: React.PropTypes.string.isRequired,
 };

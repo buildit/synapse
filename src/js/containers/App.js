@@ -3,8 +3,8 @@ import React, {
 } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import Header from '../components/2-molecules/Header';
-import * as actionCreators from '../actions/index.js';
+import Header from 'components/2-molecules/Header';
+import * as actionCreators from 'actions';
 
 const App = ({
   message,

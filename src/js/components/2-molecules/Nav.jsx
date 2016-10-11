@@ -41,6 +41,8 @@ const Nav = ({ onSwitchView, links, currentLink }) => {
 
 Nav.propTypes = {
   onSwitchView: React.PropTypes.func.isRequired,
+  links: React.PropTypes.array.isRequired,
+  currentLink: React.PropTypes.object.isRequired,
 };
 
 export default Nav;
