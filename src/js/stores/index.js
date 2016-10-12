@@ -8,7 +8,6 @@ import reducers from '../reducers';
 // Sagas
 import {
   watchFetchProjectionRequest,
-  watchFetchAllStatusData,
   watchFetchProjectionSuccess,
   watchFetchProjects,
   watchFetchStarterProjectsRequest,
@@ -17,6 +16,10 @@ import {
   watchUpdateProjectRequest,
   watchSaveProjectRequest,
 } from '../middleware/project';
+import {
+  // watchFetchAllStatusData,
+  watchFetchDemandStatusData,
+} from '../middleware/status';
 
 const redux = require('redux');
 
@@ -50,7 +53,8 @@ module.exports = (initialState) => {
     redux.applyMiddleware(thunkMiddleware, sagaMiddleware));
 
   sagaMiddleware.run(watchFetchProjectionRequest);
-  sagaMiddleware.run(watchFetchAllStatusData);
+  // sagaMiddleware.run(watchFetchAllStatusData);
+  sagaMiddleware.run(watchFetchDemandStatusData);
   sagaMiddleware.run(watchFetchProjectionSuccess);
   sagaMiddleware.run(watchFetchProjects);
   sagaMiddleware.run(watchFetchStarterProjectsRequest);

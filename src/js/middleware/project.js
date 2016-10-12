@@ -9,7 +9,6 @@ import {
   FETCH_PROJECTION_SUCCESS,
   FETCH_STARTER_PROJECTS_REQUEST,
   FETCH_PROJECT_REQUEST,
-  FETCH_PROJECT_STATUS_DATA,
   SAVE_PROJECTION_REQUEST,
   UPDATE_PROJECT_REQUEST,
   SAVE_PROJECT_REQUEST,
@@ -37,7 +36,6 @@ import {
   setErrorMessage,
   onSwitchView,
 } from '/actions';
-import { fetchStatusSuccess } from '/actions/fetchAllStatusData';
 import { trimFormInputs } from '/helpers/trimFormInputs';
 
 import Api from '/api';
@@ -101,36 +99,6 @@ export function* fetchProjectRequest(action) {
 }
 export function* watchFetchProjectRequest() {
   yield* takeEvery(FETCH_PROJECT_REQUEST, fetchProjectRequest);
-}
-
-
-/*
- * Middleware for FETCH_PROJECT_STATUS_DATA
- */
-export function* fetchAllStatusData(action) {
-  const name = action.name;
-  try {
-    const [demand, defect, effort, project] = yield [
-      call(Api.projectDemandSummary, name),
-      call(Api.projectDefectSummary, name),
-      call(Api.projectEffortSummary, name),
-      call(Api.project, name),
-    ];
-
-    yield put(fetchStatusSuccess({
-      demand,
-      defect,
-      effort,
-    }));
-
-    yield put(fetchProjectSuccessAction(project));
-  } catch (err) {
-    yield put(setErrorMessage(err));
-  }
-}
-
-export function* watchFetchAllStatusData() {
-  yield* takeEvery(FETCH_PROJECT_STATUS_DATA, fetchAllStatusData);
 }
 
 

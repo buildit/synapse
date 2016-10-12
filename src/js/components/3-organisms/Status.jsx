@@ -55,6 +55,7 @@ Status.propTypes = {
 };
 
 const mapStateToProps = state => {
+  debugger
   const demandStatus = transformStatusData(state.appData.status.demand, 'status');
   const defectStatus = transformStatusData(state.appData.status.defect, 'severity');
   const effortStatus = transformStatusData(state.appData.status.effort, 'activity');
