@@ -17,13 +17,15 @@ import getChartableDates from './getChartableDates';
 import getChartableValues from './getChartableValues';
 import getChartableDemandValues from './getChartableDemandValues';
 import isProjectionAlarm from './isProjectionAlarm';
+/* eslint-disable import/no-unresolved */
+import findStatusChartOffset from '/helpers/findStatusChartOffset';
+/* eslint-enable import/no-unresolved */
+
 import {
   PADDING,
   WIDTH,
   HEIGHT,
-  DEMAND_Y_OFFSET,
-  DEFECT_Y_OFFSET,
-  EFFORT_Y_OFFSET,
+  SPACE_BETWEEN_CHARTS,
   DEMAND_Y_LABEL,
   DEFECT_Y_LABEL,
   EFFORT_Y_LABEL,
@@ -46,7 +48,16 @@ module.exports = (props, containerElement) => {
     defectCategories,
     effortCategories,
    } = props;
+
+  const chartOffsets = findStatusChartOffset([
+    demandStatus, defectStatus, effortStatus,
+  ], INDIVIDUAL_CHART_HEIGHT + SPACE_BETWEEN_CHARTS);
+  const DEMAND_Y_OFFSET = chartOffsets[0];
+  const DEFECT_Y_OFFSET = chartOffsets[1];
+  const EFFORT_Y_OFFSET = chartOffsets[2];
+
   const chartContainer = setChart(containerElement, WIDTH, HEIGHT, PADDING);
+
   let demandChart;
   let defectChart;
   let effortChart;
