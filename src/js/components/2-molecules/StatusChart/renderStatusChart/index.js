@@ -60,10 +60,6 @@ module.exports = (props, containerElement) => {
   let dateScale;
   let isProjectionVisible = false;
 
-  console.log('show demand data', isDataChartable(demandStatus));
-  console.log('show defect data', isDataChartable(defectStatus));
-  console.log('show effort data', isDataChartable(effortStatus));
-
   const prepareYScales = () => {
     demandValues = getChartableDemandValues(
       demandStatus,

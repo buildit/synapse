@@ -10,7 +10,6 @@ import { call, put } from 'redux-saga/effects';
 import { FETCH_PROJECT_STATUS_DATA } from '/actions/actions';
 import { fetchStatusSuccess } from '/actions/fetchAllStatusData';
 import {
-  setErrorMessage,
   fetchProjectSuccess as fetchProjectSuccessAction,
 } from '/actions';
 
