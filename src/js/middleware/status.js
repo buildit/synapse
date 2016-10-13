@@ -11,6 +11,7 @@ import { FETCH_PROJECT_STATUS_DATA } from '/actions/actions';
 import { fetchStatusSuccess } from '/actions/fetchAllStatusData';
 import {
   fetchProjectSuccess as fetchProjectSuccessAction,
+  setMessage,
 } from '/actions';
 
 import Api from '/api';
@@ -52,6 +53,17 @@ export function* fetchAllStatusData(action) {
     effort,
   }));
   yield put(fetchProjectSuccessAction(project));
+
+  // Show message if data is missing
+  const getMissingDataList = (statusData) => (
+    Object.keys(statusData).filter(key => (
+      statusData[key].length === 0
+    )).join(', ')
+  );
+  const missingDataList = getMissingDataList({ demand, defect, effort });
+  if (missingDataList.length > 0) {
+    yield put(setMessage(`There is no data for ${missingDataList}.`));
+  }
 }
 
 export function* watchFetchDemandStatusData() {
