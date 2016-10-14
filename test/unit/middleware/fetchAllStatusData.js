@@ -4,7 +4,7 @@ import Api from 'api';
 import { fetchAllStatusData } from 'middleware/status';
 import {
   fetchProjectSuccess,
-  setErrorMessage,
+  setMessage,
 } from 'actions';
 import {
   fetchStatusSuccess,
@@ -19,7 +19,6 @@ describe('All status for project fetcher', () => {
   const effort = { we: 'they' };
   const project = { project: 'Yes, this is a project' };
   const errorGenerator = fetchAllStatusData({ name });
-  const errorMessage = 'foo';
 
   it('retrieves data', () => {
     const projectCorrect = call(Api.project, name);
@@ -45,16 +44,24 @@ describe('All status for project fetcher', () => {
     expect(generator.next().value).to.deep.equal(put(fetchProjectSuccess(project)));
   });
 
-  it('handles exceptions properly', () => {
-    // Step to the first yield, so that we're inside the error catcher.
-    errorGenerator.next();
+  it('handles missing data properly', () => {
+    /* eslint-disable no-unused-expressions */
+    errorGenerator.next().value;
+    errorGenerator.next(project).value;
+    errorGenerator.next(demand).value;
+    errorGenerator.next(defect).value;
 
-    const message = put(setErrorMessage(errorMessage));
-    expect(errorGenerator.throw(errorMessage).value).to.deep.equal(message);
+    errorGenerator.next([]);
+    errorGenerator.next();
+    /* eslint-enable no-unused-expressions */
+
+
+    const messageCorrect = put(setMessage('There is no data for effort.'));
+    expect(errorGenerator.next([]).value).to.deep.equal(messageCorrect);
   });
 
   it('finishes', () => {
     expect(generator.next().done).to.equal(true);
-    expect(errorGenerator.next().done).to.equal(true);
+    // expect(errorGenerator.next().done).to.equal(true);
   });
 });
