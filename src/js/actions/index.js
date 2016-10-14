@@ -258,8 +258,3 @@ export const setIsNewProject = value => ({
   type: SET_IS_NEW_PROJECT,
   value,
 });
-
-export const updateProjection = projection => ({
-  type: 'UPDATE_PROJECTION',
-  projection,
-});

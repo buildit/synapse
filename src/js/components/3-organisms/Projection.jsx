@@ -18,24 +18,7 @@ class Projection extends Component {
 
   render() {
     const { projectId } = this.props.params;
-
-    const handleInputChange = (inputValue, key) => {
-      const projection = this.props.projection;
-      const parsedValue = key !== 'startDate' ? parseInt(inputValue, 10) : inputValue;
-      projection[key] = parsedValue;
-      this.props.updateProjection({
-        startDate: projection.startDate,
-        iterationLength: projection.iterationLength,
-        backlogSize: projection.backlogSize,
-        targetVelocity: projection.velocityMiddle,
-        darkMatterPercentage: projection.darkMatter,
-        startIterations: projection.periodStart,
-        startVelocity: projection.velocityStart,
-        endIterations: projection.periodEnd,
-        endVelocity: projection.velocityEnd,
-      });
-    };
-
+    let value;
     return (
       <div className="projection">
         <div className="container">
@@ -55,7 +38,9 @@ class Projection extends Component {
                 initialValue={this.props.projection.backlogSize}
                 min={10}
                 max={300}
-                onInputChange={value => handleInputChange(value, 'backlogSize')}
+                onInputChange={value => {
+                  this.props.updateProjectionBacklogSize(parseInt(value, 10));
+                }}
               />
 
               <ProjectionSlider
@@ -65,19 +50,23 @@ class Projection extends Component {
                 initialValue={this.props.projection.darkMatter}
                 min={0}
                 max={100}
-                onInputChange={value => handleInputChange(value, 'darkMatter')}
+                onInputChange={value => {
+                  this.props.updateProjectionDarkMatter(parseInt(value, 10));
+                }}
               />
 
               <hr />
 
-              <ProjectionSlider
-                label="Iteration length"
-                unit="week(s)"
-                initialValue={this.props.projection.iterationLength}
-                min={1}
-                max={8}
-                onInputChange={value => handleInputChange(value, 'iterationLength')}
-              />
+                <ProjectionSlider
+                  label="Iteration length"
+                  unit="week(s)"
+                  initialValue={this.props.projection.iterationLength}
+                  min={1}
+                  max={8}
+                  onInputChange={value => {
+                    this.props.updateProjectionIterationLength(parseInt(value, 10));
+                  }}
+                />
 
               <ProjectionSlider
                 label="Target velocity"
@@ -85,7 +74,9 @@ class Projection extends Component {
                 initialValue={this.props.projection.velocityMiddle}
                 min={1}
                 max={20}
-                onInputChange={value => handleInputChange(value, 'velocityMiddle')}
+                onInputChange={value => {
+                  this.props.updateProjectionVelocityMiddle(parseInt(value, 10));
+                }}
               />
 
               <hr />
@@ -96,7 +87,9 @@ class Projection extends Component {
                 initialValue={this.props.projection.periodStart}
                 min={0}
                 max={30}
-                onInputChange={value => handleInputChange(value, 'periodStart')}
+                onInputChange={value => {
+                  this.props.updateProjectionPeriodStart(parseInt(value, 10));
+                }}
               />
 
               <ProjectionSlider
@@ -105,7 +98,9 @@ class Projection extends Component {
                 initialValue={this.props.projection.velocityStart}
                 min={1}
                 max={10}
-                onInputChange={value => handleInputChange(value, 'velocityStart')}
+                onInputChange={value => {
+                  this.props.updateProjectionVelocityStart(parseInt(value, 10));
+                }}
               />
 
               <hr />
@@ -116,7 +111,9 @@ class Projection extends Component {
                 initialValue={this.props.projection.periodEnd}
                 min={0}
                 max={30}
-                onInputChange={value => handleInputChange(value, 'periodEnd')}
+                onInputChange={value => {
+                  this.props.updateProjectionPeriodEnd(parseInt(value, 10));
+                }}
               />
 
               <ProjectionSlider
@@ -125,13 +122,17 @@ class Projection extends Component {
                 initialValue={this.props.projection.velocityEnd}
                 min={1}
                 max={10}
-                onInputChange={value => handleInputChange(value, 'velocityEnd')}
+                onInputChange={value => {
+                  this.props.updateProjectionVelocityEnd(parseInt(value, 10));
+                }}
               />
 
               <DateInput
                 label="Start date"
                 initialValue={this.props.projection.startDate}
-                onInputChange={value => handleInputChange(value, 'startDate')}
+                onInputChange={dateValue => {
+                  this.props.updateProjectionStartDate(dateValue);
+                }}
               />
 
               <Button
@@ -152,19 +153,8 @@ class Projection extends Component {
 }
 
 function mapStateToProps(state) {
-  const projection = {
-    startDate: state.appData.project.projection.startDate,
-    iterationLength: state.appData.project.projection.iterationLength,
-    backlogSize: state.appData.project.projection.backlogSize,
-    velocityMiddle: state.appData.project.projection.targetVelocity,
-    darkMatter: state.appData.project.projection.darkMatterPercentage,
-    periodStart: state.appData.project.projection.startIterations,
-    velocityStart: state.appData.project.projection.startVelocity,
-    periodEnd: state.appData.project.projection.endIterations,
-    velocityEnd: state.appData.project.projection.endVelocity,
-  };
   const props = {
-    projection,
+    projection: state.projection,
   };
   return props;
 }
@@ -174,7 +164,6 @@ export default connect(mapStateToProps, actionCreators)(Projection);
 Projection.propTypes = {
   params: PropTypes.object.isRequired,
   projection: PropTypes.object.isRequired,
-  fetchProjection: PropTypes.func.isRequired,
-  updateProjection: PropTypes.func.isRequired,
   saveProjection: PropTypes.func.isRequired,
+  params: React.PropTypes.object.isRequired,
 };
