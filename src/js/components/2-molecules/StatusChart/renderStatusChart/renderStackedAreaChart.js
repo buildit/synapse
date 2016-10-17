@@ -8,6 +8,7 @@ module.exports = (
   categories,
   yScale,
   dateScale,
+  chartPaddingLeft,
   chartID
 ) => {
   removeElement(chartID);
@@ -33,7 +34,8 @@ module.exports = (
       .data(stack(data))
       .enter()
       .append('g')
-      .attr('class', 'layer');
+      .attr('class', 'layer')
+      .attr('transform', `translate(${chartPaddingLeft}, 0)`);
 
     layer.append('path')
       .attr('class', 'area')
