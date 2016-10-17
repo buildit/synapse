@@ -1,3 +1,4 @@
+const d3 = require('d3');
 const getY = require('./getY');
 const renderProjectionDot = require('./renderProjectionDot');
 const getProjectionY = require('./getProjectionY');
@@ -182,7 +183,8 @@ module.exports = (props, containerElement) => {
 
   const projectionButton = setProjectionButton(chartContainer);
 
-  // Event listeners
+  /** EVENT LISTENERS **/
+  // Projection button
   projectionButton.on('click', () => {
     isProjectionVisible = !isProjectionVisible;
     updateProjectionButton(projectionButton, isProjectionVisible);
@@ -206,5 +208,12 @@ module.exports = (props, containerElement) => {
         }
       });
     }
+  });
+
+  // Scrubber line
+  chartContainer.on('mousemove', function () {
+    const x = d3.mouse(this)[0];
+    const date = dateScale.invert(x);
+    console.log(x, date);
   });
 };
