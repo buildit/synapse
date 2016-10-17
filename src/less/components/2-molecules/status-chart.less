@@ -2,6 +2,10 @@
 @import '../../variables';
 
 .status-chart {
+  .background {
+    fill: transparent;
+  }
+
   .axis {
     color: @axis;
     font: 10px sans-serif;
@@ -72,4 +76,20 @@
         text-transform: uppercase;;
       }
     }
+
+    #scrubber {
+      fill: none;
+      stroke: #ddd;
+      stroke-width: 3px;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s, opacity 0.2s linear;
+      .scrubber-date {
+        stroke: none;
+        fill: black;
+        font-size: 1rem;
+        text-transform: uppercase;
+      }
+    }
+
 }

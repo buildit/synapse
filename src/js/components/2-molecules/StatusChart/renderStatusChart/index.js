@@ -4,6 +4,9 @@ const renderProjectionDot = require('./renderProjectionDot');
 const getProjectionY = require('./getProjectionY');
 const setChart = require('./setChart');
 const renderLegend = require('./renderLegend');
+const initializeScrubber = require('./initializeScrubber');
+const moveScrubber = require('./moveScrubber');
+const updateScrubberText = require('./updateScrubberText');
 const renderDateAxis = require('./renderDateAxis');
 const renderYAxis = require('./renderYAxis');
 const renderYAxisLabel = require('./renderYAxisLabel');
@@ -72,6 +75,7 @@ module.exports = (props, containerElement) => {
   let chartableDates;
   let dateScale;
   let isProjectionVisible = false;
+  let scrubber;
 
   const prepareYScales = () => {
     demandValues = getChartableDemandValues(
@@ -182,6 +186,7 @@ module.exports = (props, containerElement) => {
         EFFORT_Y_OFFSET,
         INDIVIDUAL_CHART_HEIGHT);
     }
+    scrubber = initializeScrubber(chartContainer, CHART_PADDING_LEFT);
   };
 
   prepareDateScale();
@@ -202,6 +207,7 @@ module.exports = (props, containerElement) => {
       renderProjection({
         data: projection,
         yScale: demandYScale,
+        xOffset: CHART_PADDING_LEFT,
         dateScale,
       });
       if (isProjectionAlarm(demandStatus, projection)) {
@@ -211,16 +217,23 @@ module.exports = (props, containerElement) => {
         const doneValue = getY(datapoint.date, demandStatus, 'Done', demandYScale);
         const projectionValue = getProjectionY(datapoint.date, projection, dateScale, demandYScale);
         if (projectionValue < doneValue) {
-          renderProjectionDot(demandChart, datapoint.date, projection, dateScale, demandYScale);
+          renderProjectionDot(
+            demandChart, datapoint.date, projection, dateScale, demandYScale, CHART_PADDING_LEFT);
         }
       });
     }
   });
 
   // Scrubber line
+  const isXInBounds = (x) => {
+    return x >= CHART_PADDING_LEFT && x <= WIDTH;
+  };
   chartContainer.on('mousemove', function () {
     const x = d3.mouse(this)[0];
-    const date = dateScale.invert(x);
-    console.log(x, date);
+    const date = dateScale.invert(x - CHART_PADDING_LEFT);
+    if (isXInBounds(x)) {
+      moveScrubber(scrubber, x);
+      updateScrubberText(date);
+    }
   });
 };
