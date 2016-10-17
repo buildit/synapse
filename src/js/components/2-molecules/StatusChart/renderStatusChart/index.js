@@ -1,5 +1,7 @@
+const moment = require('moment');
 const d3 = require('d3');
 const getY = require('./getY');
+const getDataSetValue = require('./getDataSetValue');
 const renderProjectionDot = require('./renderProjectionDot');
 const getProjectionY = require('./getProjectionY');
 const setChart = require('./setChart');
@@ -7,6 +9,7 @@ const renderLegend = require('./renderLegend');
 const initializeScrubber = require('./initializeScrubber');
 const moveScrubber = require('./moveScrubber');
 const updateScrubberText = require('./updateScrubberText');
+const updateValues = require('./updateValues');
 const renderDateAxis = require('./renderDateAxis');
 const renderYAxis = require('./renderYAxis');
 const renderYAxisLabel = require('./renderYAxisLabel');
@@ -215,6 +218,7 @@ module.exports = (props, containerElement) => {
       }
       demandStatus.forEach(datapoint => {
         const doneValue = getY(datapoint.date, demandStatus, 'Done', demandYScale);
+        console.log(datapoint.date, doneValue);
         const projectionValue = getProjectionY(datapoint.date, projection, dateScale, demandYScale);
         if (projectionValue < doneValue) {
           renderProjectionDot(
@@ -231,9 +235,13 @@ module.exports = (props, containerElement) => {
   chartContainer.on('mousemove', function () {
     const x = d3.mouse(this)[0];
     const date = dateScale.invert(x - CHART_PADDING_LEFT);
+    const formattedDate = moment(date).format('DD-MMM-YY');
+    const doneValue = getDataSetValue(formattedDate, demandStatus, 'Done');
+    console.log(date, doneValue);
     if (isXInBounds(x)) {
       moveScrubber(scrubber, x);
       updateScrubberText(date);
+      updateValues('Done', doneValue);
     }
   });
 };

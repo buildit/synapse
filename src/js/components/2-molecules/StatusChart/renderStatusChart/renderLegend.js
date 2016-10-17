@@ -31,4 +31,11 @@ module.exports = (containerElement, data, categories, yScale, chartHeight) => {
       .attr('x', 15)
       .attr('y', (d, i) => 4 + i * 14)
       .text(d => d.key);
+
+  // TODO: Make this general to all values
+  legend.append('text')
+    .attr('class', 'Done')
+    .attr('x', 45)
+    .attr('y', (d, i) => 4 + 3 * 14)
+    .text('');
 };
