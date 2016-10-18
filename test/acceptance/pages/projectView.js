@@ -4,7 +4,7 @@ import { url } from '../global';
 export default class ProjectView {
   constructor(driver) {
     // const projectNameUrlEncoded = 'Test%20Project%201';
-    const projectName = 'Test Project 1';
+    const projectName = encodeURIComponent('Test Project 1');
     this.url = `${url}/${projectName}`;
     this.elements = {
       projectView: By.css('.project-view'),

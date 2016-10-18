@@ -3,7 +3,7 @@ import { url } from '../global';
 
 export default class ProjectEdit {
   constructor(driver) {
-    const projectName = 'Test Project 1';
+    const projectName = encodeURIComponent('Test Project 1');
     this.url = `${url}/${projectName}/edit`;
     this.elements = {
       component: By.css('.edit-project'),
