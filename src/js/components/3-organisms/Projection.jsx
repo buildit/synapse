@@ -20,7 +20,7 @@ class Projection extends Component {
     const { projectId } = this.props.params;
 
     const handleInputChange = (inputValue, key) => {
-      const projection = this.props.projection;
+      const projection = this.props.projection || {};
       const parsedValue = key !== 'startDate' ? parseInt(inputValue, 10) : inputValue;
       projection[key] = parsedValue;
       this.props.updateProjection({

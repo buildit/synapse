@@ -2,7 +2,6 @@ const isLogging = false;
 // const isLogging = true;
 
 import createSagaMiddleware from 'redux-saga';
-import thunkMiddleware from 'redux-thunk';
 import reducers from 'reducers';
 
 // Sagas
@@ -49,7 +48,7 @@ module.exports = (initialState) => {
   const store = redux.createStore(
     reducers,
     initialState,
-    redux.applyMiddleware(thunkMiddleware, sagaMiddleware));
+    redux.applyMiddleware(sagaMiddleware));
 
   sagaMiddleware.run(watchFetchProjectionRequest);
   // sagaMiddleware.run(watchFetchAllStatusData);

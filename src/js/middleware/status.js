@@ -7,14 +7,14 @@ import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 /* eslint-disable import/no-unresolved */
-import { FETCH_PROJECT_STATUS_DATA } from '/actions/actions';
-import { fetchStatusSuccess } from '/actions/fetchAllStatusData';
+import { FETCH_PROJECT_STATUS_DATA } from 'actions/actions';
+import { fetchStatusSuccess } from 'actions/fetchAllStatusData';
 import {
   fetchProjectSuccess as fetchProjectSuccessAction,
   setMessage,
-} from '/actions';
+} from 'actions';
 
-import Api from '/api';
+import Api from 'api';
 /* eslint-enable import/no-unresolved */
 
 export function* fetchAllStatusData(action) {

@@ -8,5 +8,5 @@ export default TableCell;
 
 TableCell.propTypes = {
   cellValue: React.PropTypes.string,
-  id: React.PropTypes.string.isRequired,
+  id: React.PropTypes.string,
 };
