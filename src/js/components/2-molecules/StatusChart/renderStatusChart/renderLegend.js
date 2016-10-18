@@ -18,7 +18,7 @@ module.exports = (containerElement, data, categories, yScale, chartHeight) => {
     .enter()
     .append('circle')
       .attr('r', 5)
-      .attr('cx', 20)
+      .attr('cx', 5)
       .attr('cy', (d, i) => i * 14)
       .attr('stroke', 'none')
       .attr('fill', (d, i) => d3.schemeCategory20[i]);
@@ -28,7 +28,14 @@ module.exports = (containerElement, data, categories, yScale, chartHeight) => {
     .enter()
     .append('text')
       .attr('class', 'legend-item')
-      .attr('x', 30)
+      .attr('x', 15)
       .attr('y', (d, i) => 4 + i * 14)
       .text(d => d.key);
+
+  // TODO: Make this general to all values
+  legend.append('text')
+    .attr('class', 'Done')
+    .attr('x', 45)
+    .attr('y', (d, i) => 4 + 3 * 14)
+    .text('');
 };

@@ -5,8 +5,8 @@ const parseTime = d3.timeParse('%d-%b-%y');
 
 const convertDateToXPixelValue = (date, dateScale) => dateScale(parseTime(date));
 
-module.exports = (containerElement, date, projection, dateScale, yScale) => {
+module.exports = (containerElement, date, projection, dateScale, yScale, xOffset) => {
   const x = convertDateToXPixelValue(date, dateScale);
   const y = getProjectionY(date, projection, dateScale, yScale);
-  renderDot(containerElement, x, y, 'projection-alarm-dot');
+  renderDot(containerElement, x + xOffset, y, 'projection-alarm-dot');
 };

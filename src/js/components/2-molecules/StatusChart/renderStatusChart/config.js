@@ -1,5 +1,6 @@
-export const PADDING = { top: 40, right: 30, bottom: 160, left: 70 };
-export const WIDTH = 1000;
+export const PADDING = { top: 40, right: 0, bottom: 160, left: 0 };
+export const WIDTH = 1140;
+export const CHART_PADDING_LEFT = 250;
 export const HEIGHT = 2500;
 export const INDIVIDUAL_CHART_HEIGHT = 300;
 export const SPACE_BETWEEN_CHARTS = 100;

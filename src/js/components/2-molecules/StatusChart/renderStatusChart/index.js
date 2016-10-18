@@ -1,8 +1,15 @@
+const moment = require('moment');
+const d3 = require('d3');
 const getY = require('./getY');
+const getDataSetValue = require('./getDataSetValue');
 const renderProjectionDot = require('./renderProjectionDot');
 const getProjectionY = require('./getProjectionY');
 const setChart = require('./setChart');
 const renderLegend = require('./renderLegend');
+const initializeScrubber = require('./initializeScrubber');
+const moveScrubber = require('./moveScrubber');
+const updateScrubberText = require('./updateScrubberText');
+const updateValues = require('./updateValues');
 const renderDateAxis = require('./renderDateAxis');
 const renderYAxis = require('./renderYAxis');
 const renderYAxisLabel = require('./renderYAxisLabel');
@@ -25,6 +32,7 @@ import {
   PADDING,
   WIDTH,
   HEIGHT,
+  CHART_PADDING_LEFT,
   SPACE_BETWEEN_CHARTS,
   DEMAND_Y_LABEL,
   DEFECT_Y_LABEL,
@@ -70,6 +78,7 @@ module.exports = (props, containerElement) => {
   let chartableDates;
   let dateScale;
   let isProjectionVisible = false;
+  let scrubber;
 
   const prepareYScales = () => {
     demandValues = getChartableDemandValues(
@@ -106,6 +115,7 @@ module.exports = (props, containerElement) => {
         demandCategories,
         demandYScale,
         dateScale,
+        CHART_PADDING_LEFT,
         'demandChart'
       );
       renderLegend(
@@ -115,12 +125,13 @@ module.exports = (props, containerElement) => {
         demandYScale,
         INDIVIDUAL_CHART_HEIGHT
       );
-      renderYAxis(demandChart, `${Y_AXIS_ID}-demand`, demandYScale);
-      renderYAxisLabel(demandChart, DEMAND_Y_LABEL, DEMAND_Y_OFFSET);
+      renderYAxis(demandChart, `${Y_AXIS_ID}-demand`, demandYScale, CHART_PADDING_LEFT);
+      renderYAxisLabel(demandChart, DEMAND_Y_LABEL, CHART_PADDING_LEFT, DEMAND_Y_OFFSET);
       renderDateAxis(
         demandChart,
         `${DATE_AXIS_ID}-demand`,
         dateScale,
+        CHART_PADDING_LEFT,
         DEMAND_Y_OFFSET,
         INDIVIDUAL_CHART_HEIGHT);
     }
@@ -131,6 +142,7 @@ module.exports = (props, containerElement) => {
         defectCategories,
         defectYScale,
         dateScale,
+        CHART_PADDING_LEFT,
         'defectChart'
       );
       renderLegend(
@@ -140,12 +152,13 @@ module.exports = (props, containerElement) => {
         defectYScale,
         INDIVIDUAL_CHART_HEIGHT
       );
-      renderYAxis(defectChart, `${Y_AXIS_ID}-defect`, defectYScale);
-      renderYAxisLabel(defectChart, DEFECT_Y_LABEL, DEFECT_Y_OFFSET);
+      renderYAxis(defectChart, `${Y_AXIS_ID}-defect`, defectYScale, CHART_PADDING_LEFT);
+      renderYAxisLabel(defectChart, DEFECT_Y_LABEL, CHART_PADDING_LEFT, DEFECT_Y_OFFSET);
       renderDateAxis(
         defectChart,
         `${DATE_AXIS_ID}-defect`,
         dateScale,
+        CHART_PADDING_LEFT,
         DEFECT_Y_OFFSET,
         INDIVIDUAL_CHART_HEIGHT);
     }
@@ -156,6 +169,7 @@ module.exports = (props, containerElement) => {
         effortCategories,
         effortYScale,
         dateScale,
+        CHART_PADDING_LEFT,
         'effortChart'
       );
       renderLegend(
@@ -165,15 +179,17 @@ module.exports = (props, containerElement) => {
         effortYScale,
         INDIVIDUAL_CHART_HEIGHT
       );
-      renderYAxis(effortChart, `${Y_AXIS_ID}-effort`, effortYScale);
-      renderYAxisLabel(effortChart, EFFORT_Y_LABEL, EFFORT_Y_OFFSET);
+      renderYAxis(effortChart, `${Y_AXIS_ID}-effort`, effortYScale, CHART_PADDING_LEFT);
+      renderYAxisLabel(effortChart, EFFORT_Y_LABEL, CHART_PADDING_LEFT, EFFORT_Y_OFFSET);
       renderDateAxis(
         effortChart,
         `${DATE_AXIS_ID}-effort`,
         dateScale,
+        CHART_PADDING_LEFT,
         EFFORT_Y_OFFSET,
         INDIVIDUAL_CHART_HEIGHT);
     }
+    scrubber = initializeScrubber(chartContainer, CHART_PADDING_LEFT);
   };
 
   prepareDateScale();
@@ -182,7 +198,8 @@ module.exports = (props, containerElement) => {
 
   const projectionButton = setProjectionButton(chartContainer);
 
-  // Event listeners
+  /** EVENT LISTENERS **/
+  // Projection button
   projectionButton.on('click', () => {
     isProjectionVisible = !isProjectionVisible;
     updateProjectionButton(projectionButton, isProjectionVisible);
@@ -193,6 +210,7 @@ module.exports = (props, containerElement) => {
       renderProjection({
         data: projection,
         yScale: demandYScale,
+        xOffset: CHART_PADDING_LEFT,
         dateScale,
       });
       if (isProjectionAlarm(demandStatus, projection)) {
@@ -200,11 +218,30 @@ module.exports = (props, containerElement) => {
       }
       demandStatus.forEach(datapoint => {
         const doneValue = getY(datapoint.date, demandStatus, 'Done', demandYScale);
+        console.log(datapoint.date, doneValue);
         const projectionValue = getProjectionY(datapoint.date, projection, dateScale, demandYScale);
         if (projectionValue < doneValue) {
-          renderProjectionDot(demandChart, datapoint.date, projection, dateScale, demandYScale);
+          renderProjectionDot(
+            demandChart, datapoint.date, projection, dateScale, demandYScale, CHART_PADDING_LEFT);
         }
       });
+    }
+  });
+
+  // Scrubber line
+  const isXInBounds = (x) => {
+    return x >= CHART_PADDING_LEFT && x <= WIDTH;
+  };
+  chartContainer.on('mousemove', function () {
+    const x = d3.mouse(this)[0];
+    const date = dateScale.invert(x - CHART_PADDING_LEFT);
+    const formattedDate = moment(date).format('DD-MMM-YY');
+    const doneValue = getDataSetValue(formattedDate, demandStatus, 'Done');
+    console.log(date, doneValue);
+    if (isXInBounds(x)) {
+      moveScrubber(scrubber, x);
+      updateScrubberText(date);
+      updateValues('Done', doneValue);
     }
   });
 };

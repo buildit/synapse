@@ -1,7 +1,7 @@
-module.exports = (containerElement, label, yOffset) => (
+module.exports = (containerElement, label, xOffset, yOffset) => (
   containerElement
     .append('g')
-    .attr('transform', `translate(-55, ${yOffset + 140})`)
+    .attr('transform', `translate(${xOffset - 55}, ${yOffset + 140})`)
       .append('text')
       .attr('transform', 'rotate(-90)')
       .attr('class', 'y label')
