@@ -218,7 +218,6 @@ module.exports = (props, containerElement) => {
       }
       demandStatus.forEach(datapoint => {
         const doneValue = getY(datapoint.date, demandStatus, 'Done', demandYScale);
-        console.log(datapoint.date, doneValue);
         const projectionValue = getProjectionY(datapoint.date, projection, dateScale, demandYScale);
         if (projectionValue < doneValue) {
           renderProjectionDot(
@@ -229,19 +228,33 @@ module.exports = (props, containerElement) => {
   });
 
   // Scrubber line
-  const isXInBounds = (x) => {
-    return x >= CHART_PADDING_LEFT && x <= WIDTH;
-  };
-  chartContainer.on('mousemove', function () {
+  const isXInBounds = x => x >= CHART_PADDING_LEFT && x <= WIDTH;
+
+  chartContainer.on('mousemove', function handleMouseMove() {
     const x = d3.mouse(this)[0];
     const date = dateScale.invert(x - CHART_PADDING_LEFT);
     const formattedDate = moment(date).format('DD-MMM-YY');
-    const doneValue = getDataSetValue(formattedDate, demandStatus, 'Done');
-    console.log(date, doneValue);
     if (isXInBounds(x)) {
       moveScrubber(scrubber, x);
       updateScrubberText(date);
-      updateValues('Done', doneValue);
+      demandCategories.forEach(category => {
+        const value = getDataSetValue(formattedDate, demandStatus, category);
+        const categoryIdentifier = category.split(' ').join('-');
+        const identifier = `demandChart-${categoryIdentifier}`;
+        updateValues(`${identifier}`, value);
+      });
+      defectCategories.forEach(category => {
+        const value = getDataSetValue(formattedDate, defectStatus, category);
+        const categoryIdentifier = category.split(' ').join('-');
+        const identifier = `defectChart-${categoryIdentifier}`;
+        updateValues(`${identifier}`, value);
+      });
+      effortCategories.forEach(category => {
+        const value = getDataSetValue(formattedDate, effortStatus, category);
+        const categoryIdentifier = category.split(' ').join('-');
+        const identifier = `effortChart-${categoryIdentifier}`;
+        updateValues(`${identifier}`, value);
+      });
     }
   });
 };

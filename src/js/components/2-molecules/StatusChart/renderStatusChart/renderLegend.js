@@ -28,14 +28,24 @@ module.exports = (containerElement, data, categories, yScale, chartHeight) => {
     .enter()
     .append('text')
       .attr('class', 'legend-item')
-      .attr('x', 15)
+      .attr('x', 40)
       .attr('y', (d, i) => 4 + i * 14)
       .text(d => d.key);
 
   // TODO: Make this general to all values
-  legend.append('text')
-    .attr('class', 'Done')
-    .attr('x', 45)
-    .attr('y', (d, i) => 4 + 3 * 14)
+  legend.selectAll('.legend-count')
+    .data(stack(data))
+    .enter()
+    .append('text')
+    .attr('class', 'legend-count')
+    .attr('class', d => {
+      /* eslint-disable no-underscore-dangle */
+      const datasetId = containerElement._groups[0][0].id;
+      /* eslint-enable no-underscore-dangle */
+      const categoryIdentifier = d.key.split(' ').join('-');
+      return `${datasetId}-${categoryIdentifier}`;
+    })
+    .attr('x', 15)
+    .attr('y', (d, i) => 4 + i * 14)
     .text('');
 };
