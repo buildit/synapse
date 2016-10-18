@@ -27,11 +27,11 @@ class Config {
       let url;
       const eolasDomain = process.env.EOLAS_DOMAIN;
       if (environment === STAGING) {
-        url = `http://eolas.staging.${eolasDomain}`;
+        url = `http://eolas.staging.${eolasDomain}/`;
       } else if (environment === DEVELOPMENT) {
         url = process.env.TEST_API || 'http://localhost:6565/';
       } else {
-        url = `http://eolas.${eolasDomain}`;
+        url = `http://eolas.${eolasDomain}/`;
       }
       this.computedBaseUrl = url;
     }
