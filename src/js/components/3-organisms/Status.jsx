@@ -3,9 +3,9 @@ import React, {
   PropTypes,
 } from 'react';
 import { connect } from 'react-redux';
-import { fetchAllStatusData } from '../../actions/fetchAllStatusData';
-import StatusChart from '../2-molecules/StatusChart';
-import transformStatusData from '../../helpers/transformStatusData';
+import { fetchAllStatusData } from 'actions/fetchAllStatusData';
+import StatusChart from 'components/2-molecules/StatusChart';
+import transformStatusData from 'helpers/transformStatusData';
 
 class Status extends Component {
   componentDidMount() {
@@ -63,6 +63,18 @@ const mapStateToProps = state => {
   const defectCategories = state.appData.project.defect.severity.map(item => (item.name));
   const effortCategories = state.appData.project.effort.role.map(item => (item.name));
 
+  const projection = {
+    backlogSize: state.appData.project.projection.backlogSize,
+    darkMatter: state.appData.project.projection.darkMatterPercentage,
+    iterationLength: state.appData.project.projection.iterationLength,
+    periodEnd: state.appData.project.projection.endIterations,
+    periodStart: state.appData.project.projection.startIterations,
+    startDate: state.appData.project.projection.startDate,
+    velocityEnd: state.appData.project.projection.endVelocity,
+    velocityMiddle: state.appData.project.projection.targetVelocity,
+    velocityStart: state.appData.project.projection.startVelocity,
+  };
+
   return {
     project: state.appData.project,
     demandStatus,
@@ -71,8 +83,8 @@ const mapStateToProps = state => {
     demandCategories,
     defectCategories,
     effortCategories,
-    projection: state.projection,
-    hasProjection: state.hasProjection,
+    projection,
+    hasProjection: state.hasProjection, // TODO: Investigate whether this is being used.
     isFetching: state.isFetching,
   };
 };

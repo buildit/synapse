@@ -1,6 +1,6 @@
 import React from 'react';
-import TableCell from '../1-atoms/TableCell';
-import TableHeaderCell from '../1-atoms/TableHeaderCell';
+import TableCell from 'components/1-atoms/TableCell';
+import TableHeaderCell from 'components/1-atoms/TableHeaderCell';
 
 const NewProjectsTable = ({ tableData, visibleColumns, rowKey, onProjectCreateClick }) => {
   let headerRow = [];

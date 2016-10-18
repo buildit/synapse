@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actionCreators from '../../actions/';
-import RouteLink from '../1-atoms/RouteLink';
-import Text from '../1-atoms/Text';
-import Table from '../2-molecules/Table';
-import formatDate from '../../helpers/formatDate';
-import normalizeProject from '../../helpers/normalizeProject';
+import * as actionCreators from 'actions';
+import RouteLink from 'components/1-atoms/RouteLink';
+import Text from 'components/1-atoms/Text';
+import Table from 'components/2-molecules/Table';
+import formatDate from 'helpers/formatDate';
+import normalizeProject from 'helpers/normalizeProject';
 
 class Project extends Component {
   componentDidMount() {

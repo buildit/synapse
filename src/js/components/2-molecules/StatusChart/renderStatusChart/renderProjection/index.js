@@ -1,6 +1,6 @@
 const d3 = require('d3');
 import lineGenerator from './lineGenerator';
-import makePoints from '../../../../../helpers/makePoints';
+import makePoints from 'helpers/makePoints';
 import moment from 'moment';
 
 module.exports = ({ data, dateScale, yScale }) => {

@@ -1,6 +1,6 @@
 const d3 = require('d3');
 import React from 'react';
-const makePoints = require('../../helpers/makePoints');
+const makePoints = require('helpers/makePoints');
 import moment from 'moment';
 
 const TRANSITION_DURATION = 100;

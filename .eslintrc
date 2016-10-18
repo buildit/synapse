@@ -21,5 +21,8 @@
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true
     }
-  }
+  },
+  "settings": {
+    "import/resolver": webpack,
+  },
 }

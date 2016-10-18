@@ -4,11 +4,11 @@ import React, {
 } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import * as actionCreators from '../../actions/';
-import Button from '../1-atoms/Button';
-import NewProjectsTable from '../2-molecules/NewProjectsTable';
-import normalizeProject from '../../helpers/normalizeProject';
-// import filterListByIds from '../../helpers/filterListByIds';
+import * as actionCreators from 'actions';
+import Button from 'components/1-atoms/Button';
+import NewProjectsTable from 'components/2-molecules/NewProjectsTable';
+import normalizeProject from 'helpers/normalizeProject';
+// import filterListByIds from 'helpers/filterListByIds';
 
 class NewProjectList extends Component {
   componentWillMount() {

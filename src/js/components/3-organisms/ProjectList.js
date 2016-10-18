@@ -4,10 +4,10 @@ import React, {
 } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { fetchProjects } from '../../actions/fetchProjects';
-import Button from '../1-atoms/Button';
-import ProjectsTable from '../2-molecules/ProjectsTable';
-import Footer from '../2-molecules/Footer';
+import { fetchProjects } from 'actions/fetchProjects';
+import Button from 'components/1-atoms/Button';
+import ProjectsTable from 'components/2-molecules/ProjectsTable';
+import Footer from 'components/2-molecules/Footer';
 
 class ProjectList extends Component {
   componentDidMount() {

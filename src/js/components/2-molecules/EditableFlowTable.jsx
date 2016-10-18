@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import EditableFlowTableRow from '../2-molecules/EditableFlowTableRow';
+import EditableFlowTableRow from 'components/2-molecules/EditableFlowTableRow';
 
 const EditableFlowTable = ({ items, removeItem, moveItemUp, moveItemDown }) => {
   const bodyRows = [];

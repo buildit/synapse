@@ -1,4 +1,4 @@
-import { UPDATE_PROJECTION_ITERATION_LENGTH } from '../../actions/actions';
+import { UPDATE_PROJECTION_ITERATION_LENGTH } from 'actions/actions';
 
 const initialState = 2;
 

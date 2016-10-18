@@ -1,0 +1,75 @@
+$axis: #666666;
+@import '../../variables';
+
+.status-chart {
+  .axis {
+    color: $axis;
+    font: 10px sans-serif;
+    path,
+    line {
+      fill: none;
+      stroke: $axis;
+    }
+    path {
+      display: none;
+    }
+  }
+
+  .label {
+    color: $axis;
+    font: 10px sans-serif;
+  }
+
+  .projection-line {
+    fill: none;
+    stroke: black;
+    stroke-width: 6;
+    opacity: 0.8;
+  }
+
+  .projection-alarm-dot {
+    fill: aqua;
+    r: 3;
+    stroke: none;
+  }
+
+  .projection-button {
+    cursor: pointer;
+
+    rect {
+      // Match button style: color, border, and corner radii. TODO: Make variables for this stuff.
+      fill: $brand-colour-blue; // Match standard button color.
+      // stroke: #2e6da4;
+      rx: 4; // rounded corners
+      ry: 4; // rounded corners
+      &:hover {
+        fill: darken($brand-colour-blue, 10%); // Match standard button color.
+      }
+    }
+
+    text {
+      fill: white;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+  }
+
+  .legend {
+    .legend-item {
+      color: white;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      padding: 0.3rem;
+      text-transform: uppercase;
+    }
+  }
+
+  .projection-alarm {
+    text {
+      fill: $danger-colour;
+      font-size: 10px;
+      text-transform: uppercase;;
+    }
+  }
+}

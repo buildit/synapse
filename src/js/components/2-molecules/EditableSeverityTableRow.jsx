@@ -1,34 +1,25 @@
 import React, { PropTypes } from 'react';
-import Badge from '../1-atoms/Badge';
-import Icon from '../1-atoms/Icon';
+import Badge from 'components/1-atoms/Badge';
+import Icon from 'components/1-atoms/Icon';
 
-const EditableSeverityTableRow = React.createClass({
-  propTypes: {
-    item: PropTypes.object.isRequired,
-    index: PropTypes.number.isRequired,
-    itemsSize: PropTypes.number.isRequired,
-    removeItem: PropTypes.func.isRequired,
-    moveItemUp: PropTypes.func.isRequired,
-    moveItemDown: PropTypes.func.isRequired,
-  },
-
+class EditableSeverityTableRow extends React.Component {
   removeItemOnClick() {
     this.props.removeItem(this.props.index);
-  },
+  }
 
   moveItemUpOnClick() {
     this.props.moveItemUp(this.props.index);
-  },
+  }
 
   moveItemDownOnClick() {
     this.props.moveItemDown(this.props.index);
-  },
+  }
 
   render() {
     const item = this.props.item;
     const index = this.props.index;
     const itemsSize = this.props.itemsSize;
-    let actions = [];
+    const actions = [];
     switch (index) {
     case 0:
       if (itemsSize > 1) {
@@ -91,7 +82,16 @@ const EditableSeverityTableRow = React.createClass({
         </td>
       </tr>
     );
-  },
-});
+  }
+}
 
 export default EditableSeverityTableRow;
+
+EditableSeverityTableRow.propTypes = {
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  itemsSize: PropTypes.number.isRequired,
+  removeItem: PropTypes.func.isRequired,
+  moveItemUp: PropTypes.func.isRequired,
+  moveItemDown: PropTypes.func.isRequired,
+};

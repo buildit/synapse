@@ -1,5 +1,5 @@
 const moment = require('moment');
-const makePoints = require('../../../../helpers/makePoints');
+const makePoints = require('helpers/makePoints');
 
 module.exports = (
   demandStatus,

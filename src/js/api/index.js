@@ -1,7 +1,4 @@
-/* eslint-disable import/no-unresolved */
-import config from '/helpers/config';
-/* eslint-enable import/no-unresolved */
-// const fetch = require('../actions/fetch');
+import config from 'helpers/config';
 import { fetch, put, post } from './xhr';
 
 const projects = () => fetch(`${config.apiBaseUrl}v1/project/`);

@@ -1,35 +1,67 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const SassLintPlugin = require('sasslint-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: [
     './src/js/index.js',
-    './src/less/main.less',
+    './src/scss/main.scss',
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '/js/bundle.js',
+    filename: '/js/bundle.[hash].js',
   },
   devtool: 'source-map',
   devServer: {
     host: '0.0.0.0',
+    port: 3000,
     historyApiFallback: true,
   },
   plugins: [
+    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
-    new ExtractTextPlugin('./dist/css/main.css'),
+    new ExtractTextPlugin('/css/main.[hash].css'),
+    new webpack.DefinePlugin({
+      'process.env.EOLAS_DOMAIN': JSON.stringify(process.env.EOLAS_DOMAIN),
+      'process.env.TEST_API': JSON.stringify(process.env.TEST_API),
+    }),
+    new SassLintPlugin({
+      glob: 'src/scss/**/*.s?(a|c)ss',
+      ignorePlugins: ['extract-text-webpack-plugin'],
+    }),
   ],
   resolve: {
-    modulesDirectories: ['node_modules', './src/js/'],
+    modulesDirectories: [path.join(__dirname, 'src/js/'), 'node_modules'],
     extensions: ['', '.js', '.jsx', '.json'],
     alias: {
-      config: path.join(__dirname, 'src/js/actions', (process.env.NODE_ENV || 'default')),
+      actions: path.join(__dirname, 'src/js/actions'),
+      api: path.join(__dirname, 'src/js/api'),
+      components: path.join(__dirname, 'src/js/components'),
+      containers: path.join(__dirname, 'src/js/containers'),
+      helpers: path.join(__dirname, 'src/js/helpers'),
+      middleware: path.join(__dirname, 'src/js/middleware'),
+      reducers: path.join(__dirname, 'src/js/reducers'),
+      stores: path.join(__dirname, 'src/js/stores'),
+      scss: path.join(__dirname, 'src/scss'),
     },
   },
   module: {
+    preLoaders: [
+      {
+        test: /\.(js|jsx)$/,
+        loaders: ['babel-loader', 'eslint'],
+        exclude: /node_modules/,
+      }, {
+        test: /\.html$/,
+        loader: 'htmlhint',
+        exclude: /node_modules/,
+      },
+    ],
     loaders: [{
       test: /\.(js|jsx)/,
       exclude: /node_modules/,
@@ -45,27 +77,12 @@ module.exports = {
       // cacheable: true,
       loader: 'json-loader',
     }, {
-      test: /\.less$/,
-      loader: ExtractTextPlugin.extract({
-        loader: 'css!less',
-      }),
-    },
-    {
-      test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-      loader: 'url?limit=10000&mimetype=application/font-woff',
-    },
-    {
-      test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-      loader: 'url?limit=10000&mimetype=application/octet-stream',
-    },
-    {
-      test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-      loader: 'file',
-    },
-    {
-      test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-      loader: 'url?limit=10000&mimetype=image/svg+xml',
-    },
-  ],
+      test: /\.html$/,
+      exclude: /node_modules/,
+      loader: 'html',
+    }, {
+      test: /\.scss$/,
+      loader: ExtractTextPlugin.extract('css!sass'),
+    }],
   },
 };

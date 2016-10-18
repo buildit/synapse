@@ -1,7 +1,7 @@
 import React from 'react';
-import RouteLink from '../1-atoms/RouteLink';
-import TableCell from '../1-atoms/TableCell';
-import TableHeaderCell from '../1-atoms/TableHeaderCell';
+import RouteLink from 'components/1-atoms/RouteLink';
+import TableCell from 'components/1-atoms/TableCell';
+import TableHeaderCell from 'components/1-atoms/TableHeaderCell';
 
 const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
   let headerRow = [];

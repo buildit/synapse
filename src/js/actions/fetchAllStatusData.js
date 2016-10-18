@@ -1,7 +1,7 @@
 import {
   FETCH_PROJECT_STATUS_DATA,
   FETCH_STATUS_SUCCESS,
-} from './actions';
+} from 'actions/actions';
 
 export const fetchStatusSuccess = status => ({
   type: FETCH_STATUS_SUCCESS,

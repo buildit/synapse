@@ -1,4 +1,4 @@
-import { SET_IS_NEW_PROJECT } from '../actions/actions';
+import { SET_IS_NEW_PROJECT } from 'actions/actions';
 
 const initialValue = false;
 
