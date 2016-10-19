@@ -1,10 +1,13 @@
 import React from 'react';
 
+// onClick handler (the old way).  Save in case changing it breaks something.
+// onClick={() => {
+//   onClick();
+// }}
+
 const Icon = ({ icon, onClick }) => (
   <span
-    onClick={() => {
-      onClick();
-    }}
+    onClick={onClick}
     className={icon}
     aria-hidden="true"
   >

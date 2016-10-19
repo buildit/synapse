@@ -1,6 +1,5 @@
 import React from 'react';
 import Badge from 'components/1-atoms/Badge';
-import { Link } from 'react-router';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
