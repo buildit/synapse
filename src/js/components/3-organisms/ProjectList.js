@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { fetchProjects } from 'actions/fetchProjects';
+import { fetchProjects } from 'actions/projects';
 import Button from 'components/1-atoms/Button';
 import ProjectsTable from 'components/2-molecules/ProjectsTable';
 import Footer from 'components/2-molecules/Footer';
@@ -48,7 +48,6 @@ class ProjectList extends Component {
 ProjectList.propTypes = {
   fetchProjects: PropTypes.func,
   fetchProject: PropTypes.func,
-  onSwitchView: PropTypes.func,
   projectList: PropTypes.array,
   isFetching: PropTypes.bool,
 };

@@ -7,7 +7,6 @@ import reducers from 'reducers';
 // Sagas
 import {
   watchFetchProjectionRequest,
-  watchFetchProjectionSuccess,
   watchFetchProjects,
   watchFetchStarterProjectsRequest,
   watchFetchProjectRequest,
@@ -53,7 +52,6 @@ module.exports = (initialState) => {
   sagaMiddleware.run(watchFetchProjectionRequest);
   // sagaMiddleware.run(watchFetchAllStatusData);
   sagaMiddleware.run(watchFetchDemandStatusData);
-  sagaMiddleware.run(watchFetchProjectionSuccess);
   sagaMiddleware.run(watchFetchProjects);
   sagaMiddleware.run(watchFetchStarterProjectsRequest);
   sagaMiddleware.run(watchFetchProjectRequest);

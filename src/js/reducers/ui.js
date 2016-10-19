@@ -25,12 +25,6 @@ const ui = (state = {
       errorMessage: action.errorMessage,
     };
   }
-  case 'SWITCH_VIEW': {
-    return {
-      ...state,
-      view: action.view,
-    };
-  }
   case 'SET_ERROR_MESSAGE': {
     return {
       ...state,
@@ -155,20 +149,6 @@ const ui = (state = {
       formData: newFormData,
     };
   }
-  case 'SHOW_MODAL': {
-    return {
-      ...state,
-      modalMessage: action.modal,
-    };
-  }
-
-  case 'HIDE_MODAL': {
-    return {
-      ...state,
-      modalMessage: '',
-    };
-  }
-
   case SET_MESSAGE: {
     return {
       ...state,

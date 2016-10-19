@@ -6,7 +6,6 @@ import {
   fetchProjectSuccess,
   setMessage,
   setErrorMessage,
-  setDoesNotHaveProjection,
 } from 'actions';
 const expect = require('chai').expect;
 
@@ -37,10 +36,6 @@ describe('Projection fetcher', () => {
 
   it('sets an error message on error', () => {
     expect(errorGenerator.next().value).to.deep.equal(put(setErrorMessage(errorMessage)));
-  });
-
-  it('marks the projection as new', () => {
-    expect(errorGenerator.next().value).to.deep.equal(put(setDoesNotHaveProjection()));
   });
 
   it('finishes', () => {

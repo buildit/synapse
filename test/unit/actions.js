@@ -1,10 +1,6 @@
 const expect = require('chai').expect;
-/* eslint-disable import/no-unresolved */
-import * as actions from '/actions/actions';
-import * as functions from '/actions';
-import * as statusFunctions from '/actions/fetchAllStatusData';
-import * as projectFunctions from '/actions/fetchProjects';
-/* eslint-enable import/no-unresolved */
+import * as actions from 'actions/actions';
+import * as functions from 'actions';
 
 describe('Redux actions', () => {
   it('receiveProjects', () => {
@@ -34,34 +30,6 @@ describe('Redux actions', () => {
     expect(functions.setErrorMessage(message)).to.deep.equal(correct);
   });
 
-  it('onSwitchView', () => {
-    const view = 'test';
-    const correct = {
-      type: actions.SWITCH_VIEW,
-      view,
-    };
-    expect(functions.onSwitchView(view)).to.deep.equal(correct);
-  });
-
-  it('showModal', () => {
-    const modal = 'test';
-    const project = 'test 2';
-    const correct = {
-      type: actions.SHOW_MODAL,
-      modal,
-      project,
-    };
-    expect(functions.showModal(modal, project)).to.deep.equal(correct);
-  });
-
-  it('hideModal', () => {
-    const modal = 'test';
-    const correct = {
-      type: actions.HIDE_MODAL,
-      modal,
-    };
-    expect(functions.hideModal(modal)).to.deep.equal(correct);
-  });
 
   it('fetchProjects', () => {
     const correct = {
@@ -205,96 +173,6 @@ describe('Redux actions', () => {
     expect(functions.moveListItemDown(section, list, index)).to.deep.equal(correct);
   });
 
-  it('updateProjectionVelocityStart', () => {
-    const value = 'test';
-    const correct = {
-      type: actions.UPDATE_PROJECTION_VELOCITY_START,
-      value,
-    };
-    expect(functions.updateProjectionVelocityStart(value)).to.deep.equal(correct);
-  });
-
-  it('updateProjectionVelocityMiddle', () => {
-    const value = 'test';
-    const correct = {
-      type: actions.UPDATE_PROJECTION_VELOCITY_MIDDLE,
-      value,
-    };
-    expect(functions.updateProjectionVelocityMiddle(value)).to.deep.equal(correct);
-  });
-
-  it('updateProjectionVelocityEnd', () => {
-    const value = 'test';
-    const correct = {
-      type: actions.UPDATE_PROJECTION_VELOCITY_END,
-      value,
-    };
-    expect(functions.updateProjectionVelocityEnd(value)).to.deep.equal(correct);
-  });
-
-  it('updateProjectionPeriodStart', () => {
-    const value = 'test';
-    const correct = {
-      type: actions.UPDATE_PROJECTION_PERIOD_START,
-      value,
-    };
-    expect(functions.updateProjectionPeriodStart(value)).to.deep.equal(correct);
-  });
-
-  it('updateProjectionPeriodEnd', () => {
-    const value = 'test';
-    const correct = {
-      type: actions.UPDATE_PROJECTION_PERIOD_END,
-      value,
-    };
-    expect(functions.updateProjectionPeriodEnd(value)).to.deep.equal(correct);
-  });
-
-  it('updateProjectionBacklogSize', () => {
-    const value = 'test';
-    const correct = {
-      type: actions.UPDATE_PROJECTION_BACKLOG_SIZE,
-      value,
-    };
-    expect(functions.updateProjectionBacklogSize(value)).to.deep.equal(correct);
-  });
-
-  it('updateProjectionDarkMatter', () => {
-    const value = 'test';
-    const correct = {
-      type: actions.UPDATE_PROJECTION_DARK_MATTER,
-      value,
-    };
-    expect(functions.updateProjectionDarkMatter(value)).to.deep.equal(correct);
-  });
-
-  it('updateProjectionIterationLength', () => {
-    const value = 'test';
-    const correct = {
-      type: actions.UPDATE_PROJECTION_ITERATION_LENGTH,
-      value,
-    };
-    expect(functions.updateProjectionIterationLength(value)).to.deep.equal(correct);
-  });
-
-  it('updateProjectionStartDate', () => {
-    const value = 'test';
-    const correct = {
-      type: actions.UPDATE_PROJECTION_START_DATE,
-      value,
-    };
-    expect(functions.updateProjectionStartDate(value)).to.deep.equal(correct);
-  });
-
-  it('setDoesNotHaveProjection', () => {
-    const value = false;
-    const correct = {
-      type: actions.SET_HAS_PROJECTION,
-      value,
-    };
-    expect(functions.setDoesNotHaveProjection(value)).to.deep.equal(correct);
-  });
-
   it('setMessage', () => {
     const message = 'test';
     const correct = {
@@ -320,15 +198,6 @@ describe('Redux actions', () => {
       name,
     };
     expect(functions.fetchProjection(name)).to.deep.equal(correct);
-  });
-
-  it('fetchProjectionSuccess', () => {
-    const project = 'test';
-    const correct = {
-      type: actions.FETCH_PROJECTION_SUCCESS,
-      project,
-    };
-    expect(functions.fetchProjectionSuccess(project)).to.deep.equal(correct);
   });
 
   it('fetchProjectSuccess', () => {
@@ -390,7 +259,7 @@ describe('Redux actions', () => {
       type: actions.FETCH_STATUS_SUCCESS,
       status,
     };
-    expect(statusFunctions.fetchStatusSuccess(status)).to.deep.equal(correct);
+    expect(functions.fetchStatusSuccess(status)).to.deep.equal(correct);
   });
 
   it('fetchAllStatusData', () => {
@@ -399,11 +268,11 @@ describe('Redux actions', () => {
       type: actions.FETCH_PROJECT_STATUS_DATA,
       name,
     };
-    expect(statusFunctions.fetchAllStatusData(name)).to.deep.equal(correct);
+    expect(functions.fetchAllStatusData(name)).to.deep.equal(correct);
   });
 
   it('fetchProjects', () => {
     const correct = { type: actions.FETCH_PROJECTS };
-    expect(projectFunctions.fetchProjects()).to.deep.equal(correct);
+    expect(functions.fetchProjects()).to.deep.equal(correct);
   });
 });

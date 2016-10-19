@@ -15,9 +15,4 @@ describe('<TableHeaderCell />', () => {
   it('sets the id', () => {
     expect(wrapper.is(`#${id}`)).to.equal(true);
   });
-
 });
-
-// const TableHeaderCell = ({ headerValue, id }) => (
-//   <th className="tableHeaderCell" id={id}>{headerValue}</th>
-// );

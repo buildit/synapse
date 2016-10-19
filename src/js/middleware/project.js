@@ -4,7 +4,6 @@ import { call, put } from 'redux-saga/effects';
 import {
   FETCH_PROJECTS,
   FETCH_PROJECTION_REQUEST,
-  FETCH_PROJECTION_SUCCESS,
   FETCH_STARTER_PROJECTS_REQUEST,
   FETCH_PROJECT_REQUEST,
   SAVE_PROJECTION_REQUEST,
@@ -15,23 +14,9 @@ import {
   receiveProjects,
   receiveStarterProjects,
   fetchProjectSuccess as fetchProjectSuccessAction,
-  fetchProjectionSuccess as fetchProjectionSuccessAction,
-  updateProjectionBacklogSize,
-  updateProjectionVelocityStart,
-  updateProjectionVelocityMiddle,
-  updateProjectionVelocityEnd,
-  updateProjectionPeriodStart,
-  updateProjectionPeriodEnd,
-  updateProjectionDarkMatter,
-  updateProjectionIterationLength,
-  updateProjectionStartDate,
-  setDoesNotHaveProjection,
-  showModal,
-  switchLocation,
   setMessage,
   clearMessage,
   setErrorMessage,
-  onSwitchView,
 } from 'actions';
 import { trimFormInputs } from 'helpers/trimFormInputs';
 
@@ -47,35 +32,10 @@ export function* fetchProjectionRequest(action) {
   } catch (err) {
     yield put(setMessage(`You're creating a new projection for project ${action.name}.`));
     yield put(setErrorMessage(err));
-    yield put(setDoesNotHaveProjection());
   }
 }
 export function* watchFetchProjectionRequest() {
   yield* takeEvery(FETCH_PROJECTION_REQUEST, fetchProjectionRequest);
-}
-
-/*
- * Middleware for FETCH_PROJECTION_SUCCESS
- * needs test
- */
-export function* fetchProjectionSuccess(action) {
-  if (action.project.projection) {
-    const projection = action.project.projection;
-    yield put(updateProjectionBacklogSize(projection.backlogSize));
-    yield put(updateProjectionVelocityStart(projection.startVelocity));
-    yield put(updateProjectionVelocityMiddle(projection.targetVelocity));
-    yield put(updateProjectionVelocityEnd(projection.endVelocity));
-    yield put(updateProjectionPeriodStart(projection.startIterations));
-    yield put(updateProjectionPeriodEnd(projection.endIterations));
-    yield put(updateProjectionDarkMatter(projection.darkMatterPercentage));
-    yield put(updateProjectionIterationLength(projection.iterationLength));
-    yield put(updateProjectionStartDate(projection.startDate));
-  } else {
-    yield put(setErrorMessage('We could not fetch the project.'));
-  }
-}
-export function* watchFetchProjectionSuccess() {
-  yield* takeEvery(FETCH_PROJECTION_SUCCESS, fetchProjectionSuccess);
 }
 
 
@@ -87,7 +47,6 @@ export function* fetchProjectRequest(action) {
   try {
     const project = yield call(Api.project, action.name);
     yield put(fetchProjectSuccessAction(project));
-    yield put(fetchProjectionSuccessAction(project));
   } catch (err) {
     yield put(setErrorMessage('We could not fetch the project.'));
   }
@@ -122,7 +81,6 @@ export function* fetchStarterProjects() {
     yield put(receiveStarterProjects(starterProjects));
   } catch (err) {
     yield put(setErrorMessage(err));
-    yield put(switchLocation('error'));
   }
 }
 export function* watchFetchStarterProjectsRequest() {
@@ -184,8 +142,6 @@ export function* saveProjectRequest(action) {
     const project = yield(call(trimFormInputs, action.project));
     yield put(setMessage(`Saving ${project.name}`));
     yield call(Api.saveProject, project);
-    yield put(onSwitchView('modalView'));
-    yield put(showModal('SaveConfirmationModal', project));
     yield put(clearMessage());
   } catch (err) {
     yield put(setErrorMessage(err));

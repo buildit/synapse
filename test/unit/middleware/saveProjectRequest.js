@@ -4,8 +4,6 @@ import Api from 'api';
 import {
   setMessage,
   clearMessage,
-  onSwitchView,
-  showModal,
   setErrorMessage,
 } from 'actions';
 import { trimFormInputs } from 'helpers/trimFormInputs';
@@ -27,12 +25,6 @@ describe('Project saving', () => {
   });
   it('saves data', () => {
     expect(generator.next().value).to.deep.equal(call(Api.saveProject, project));
-  });
-  it('switches the view', () => {
-    expect(generator.next().value).to.deep.equal(put(onSwitchView('modalView')));
-  });
-  it('shows a modal', () => {
-    expect(generator.next().value).to.deep.equal(put(showModal('SaveConfirmationModal', project)));
   });
   it('clears the message', () => {
     expect(generator.next().value).to.deep.equal(put(clearMessage()));

@@ -15,5 +15,4 @@ describe('<TableCell />', () => {
   it('sets the id', () => {
     expect(wrapper.is(`#${id}`)).to.equal(true);
   });
-
 });

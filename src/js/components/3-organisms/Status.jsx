@@ -3,7 +3,7 @@ import React, {
   PropTypes,
 } from 'react';
 import { connect } from 'react-redux';
-import { fetchAllStatusData } from 'actions/fetchAllStatusData';
+import { fetchAllStatusData } from 'actions';
 import StatusChart from 'components/2-molecules/StatusChart';
 import transformStatusData from 'helpers/transformStatusData';
 
