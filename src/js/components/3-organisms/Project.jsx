@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from 'actions';
 import RouteLink from 'components/1-atoms/RouteLink';
 import Text from 'components/1-atoms/Text';
+// const Text = require('whippersnapper/build/Text');
 import Table from 'components/2-molecules/Table';
 import formatDate from 'helpers/formatDate';
 import normalizeProject from 'helpers/normalizeProject';

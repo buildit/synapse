@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
-import Badge from 'components/1-atoms/Badge';
 import Icon from 'components/1-atoms/Icon';
+import Badge from 'components/1-atoms/Badge';
+// const Badge = require('whippersnapper/lib/react/Badge');
 
 class EditableFlowTableRow extends React.Component {
   removeItemOnClick() {
