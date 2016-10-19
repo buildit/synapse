@@ -9,7 +9,7 @@ module.exports = {
   entry: [
     './src/js/index.js',
     './src/scss/main.scss',
-    './node_modules/whippersnapper/lib/react/Text.jsx ',
+    // './node_modules/whippersnapper/build/Text.jsx ',
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -92,6 +92,10 @@ module.exports = {
     }, {
       test: /\.scss$/,
       loader: ExtractTextPlugin.extract('css!sass'),
+    },
+    {
+      test: /\.css$/,
+      loader: 'style-loader!css-loader',
     }],
   },
 };

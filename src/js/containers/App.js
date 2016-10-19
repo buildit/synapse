@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Header from 'components/2-molecules/Header';
 import * as actionCreators from 'actions';
+require('zzzss/dist/css/zzzss.css');
 
 const App = ({
   message,
