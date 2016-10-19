@@ -25,7 +25,6 @@ import {
   updateProjectionDarkMatter,
   updateProjectionIterationLength,
   updateProjectionStartDate,
-  setHasProjection,
   setDoesNotHaveProjection,
   showModal,
   switchLocation,
@@ -71,7 +70,6 @@ export function* fetchProjectionSuccess(action) {
     yield put(updateProjectionDarkMatter(projection.darkMatterPercentage));
     yield put(updateProjectionIterationLength(projection.iterationLength));
     yield put(updateProjectionStartDate(projection.startDate));
-    yield put(setHasProjection());
   } else {
     yield put(setErrorMessage('We could not fetch the project.'));
   }

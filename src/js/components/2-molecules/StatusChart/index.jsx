@@ -33,5 +33,4 @@ StatusChart.propTypes = {
   defectCategories: React.PropTypes.array.isRequired,
   effortCategories: React.PropTypes.array.isRequired,
   projection: React.PropTypes.object,
-  hasProjection: React.PropTypes.bool.isRequired,
 };

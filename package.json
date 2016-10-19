@@ -109,10 +109,5 @@
     "redux-saga": "^0.11.1",
     "sum-values-in-object": "^1.0.5",
     "xhr": "^2.2.2"
-  },
-  "pre-commit": [
-    "lint",
-    "validate",
-    "test"
-  ]
+  }
 }

@@ -204,11 +204,6 @@ export const updateProjectionStartDate = value => ({
   value,
 });
 
-export const setHasProjection = () => ({
-  type: SET_HAS_PROJECTION,
-  value: true,
-});
-
 export const setDoesNotHaveProjection = () => ({
   type: SET_HAS_PROJECTION,
   value: false,

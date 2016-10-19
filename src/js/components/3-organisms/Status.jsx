@@ -30,7 +30,6 @@ class Status extends Component {
           defectCategories={this.props.defectCategories}
           effortCategories={this.props.effortCategories}
           projection={this.props.projection}
-          hasProjection={this.props.hasProjection}
         />
     );
     }
@@ -50,7 +49,6 @@ Status.propTypes = {
   defectCategories: PropTypes.array.isRequired,
   effortCategories: PropTypes.array.isRequired,
   params: PropTypes.object.isRequired,
-  hasProjection: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
 };
 
@@ -62,18 +60,20 @@ const mapStateToProps = state => {
   const demandCategories = state.appData.project.demand.flow.map(item => (item.name));
   const defectCategories = state.appData.project.defect.severity.map(item => (item.name));
   const effortCategories = state.appData.project.effort.role.map(item => (item.name));
-
-  const projection = {
-    backlogSize: state.appData.project.projection.backlogSize,
-    darkMatter: state.appData.project.projection.darkMatterPercentage,
-    iterationLength: state.appData.project.projection.iterationLength,
-    periodEnd: state.appData.project.projection.endIterations,
-    periodStart: state.appData.project.projection.startIterations,
-    startDate: state.appData.project.projection.startDate,
-    velocityEnd: state.appData.project.projection.endVelocity,
-    velocityMiddle: state.appData.project.projection.targetVelocity,
-    velocityStart: state.appData.project.projection.startVelocity,
-  };
+  let projection = {};
+  if (state.appData.project.projection) {
+    projection = {
+      backlogSize: state.appData.project.projection.backlogSize,
+      darkMatter: state.appData.project.projection.darkMatterPercentage,
+      iterationLength: state.appData.project.projection.iterationLength,
+      periodEnd: state.appData.project.projection.endIterations,
+      periodStart: state.appData.project.projection.startIterations,
+      startDate: state.appData.project.projection.startDate,
+      velocityEnd: state.appData.project.projection.endVelocity,
+      velocityMiddle: state.appData.project.projection.targetVelocity,
+      velocityStart: state.appData.project.projection.startVelocity,
+    };
+  }
 
   return {
     project: state.appData.project,
@@ -84,7 +84,6 @@ const mapStateToProps = state => {
     defectCategories,
     effortCategories,
     projection,
-    hasProjection: state.hasProjection, // TODO: Investigate whether this is being used.
     isFetching: state.isFetching,
   };
 };

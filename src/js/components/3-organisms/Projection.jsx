@@ -9,7 +9,6 @@ import ProjectionSlider from 'components/1-atoms/ProjectionSlider';
 import Button from 'components/1-atoms/Button';
 import DateInput from 'components/1-atoms/DateInput';
 
-
 class Projection extends Component {
   componentDidMount() {
     const { projectId } = this.props.params;

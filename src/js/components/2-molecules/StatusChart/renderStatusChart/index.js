@@ -16,8 +16,7 @@ const renderYAxisLabel = require('./renderYAxisLabel');
 const renderStackedAreaChart = require('./renderStackedAreaChart');
 const renderProjection = require('./renderProjection');
 const renderProjectionAlarm = require('./renderProjectionAlarm');
-const setProjectionButton = require('./setProjectionButton');
-const updateProjectionButton = require('./updateProjectionButton');
+const isProjectionVisible = require('./isProjectionVisible');
 import dateScaleCreator from './dateScaleCreator';
 import yScaleCreator from './yScaleCreator';
 import getChartableDates from './getChartableDates';
@@ -77,7 +76,6 @@ module.exports = (props, containerElement) => {
   let effortYScale;
   let chartableDates;
   let dateScale;
-  let isProjectionVisible = false;
   let scrubber;
 
   const prepareYScales = () => {
@@ -189,24 +187,7 @@ module.exports = (props, containerElement) => {
         EFFORT_Y_OFFSET,
         INDIVIDUAL_CHART_HEIGHT);
     }
-    scrubber = initializeScrubber(chartContainer, CHART_PADDING_LEFT);
-  };
-
-  prepareDateScale();
-  prepareYScales();
-  render();
-
-  const projectionButton = setProjectionButton(chartContainer);
-
-  /** EVENT LISTENERS **/
-  // Projection button
-  projectionButton.on('click', () => {
-    isProjectionVisible = !isProjectionVisible;
-    updateProjectionButton(projectionButton, isProjectionVisible);
-    prepareDateScale();
-    prepareYScales();
-    render();
-    if (isProjectionVisible) {
+    if (isProjectionVisible(projection)) {
       renderProjection({
         data: projection,
         yScale: demandYScale,
@@ -225,7 +206,14 @@ module.exports = (props, containerElement) => {
         }
       });
     }
-  });
+    scrubber = initializeScrubber(chartContainer, CHART_PADDING_LEFT);
+  };
+
+  prepareDateScale();
+  prepareYScales();
+  render();
+
+  /** EVENT LISTENERS **/
 
   // Scrubber line
   const isXInBounds = x => x >= CHART_PADDING_LEFT && x <= WIDTH;

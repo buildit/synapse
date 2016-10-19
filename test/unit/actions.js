@@ -286,15 +286,6 @@ describe('Redux actions', () => {
     expect(functions.updateProjectionStartDate(value)).to.deep.equal(correct);
   });
 
-  it('setHasProjection', () => {
-    const value = true;
-    const correct = {
-      type: actions.SET_HAS_PROJECTION,
-      value,
-    };
-    expect(functions.setHasProjection(value)).to.deep.equal(correct);
-  });
-
   it('setDoesNotHaveProjection', () => {
     const value = false;
     const correct = {
