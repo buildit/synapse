@@ -18,6 +18,7 @@ selenium-server-standalone-*
 
 # Testing stuff
 errorShots/
+.nyc_output/
 
 # Logs
 *.log
