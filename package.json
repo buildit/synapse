@@ -110,7 +110,7 @@
     "sum-values-in-object": "^1.0.5",
     "whippersnapper": "<1.0.0",
     "xhr": "^2.2.2",
-    "zzzss": "0.0.3"
+    "zzzss": "<1.0.0"
   },
   "pre-commit": [
     "lint",
