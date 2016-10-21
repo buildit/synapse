@@ -31,7 +31,7 @@ import {
   PADDING,
   WIDTH,
   HEIGHT,
-  CHART_PADDING_LEFT,
+  CHART_OFFSET_LEFT,
   SPACE_BETWEEN_CHARTS,
   DEMAND_Y_LABEL,
   DEFECT_Y_LABEL,
@@ -113,7 +113,7 @@ module.exports = (props, containerElement) => {
         demandCategories,
         demandYScale,
         dateScale,
-        CHART_PADDING_LEFT,
+        CHART_OFFSET_LEFT,
         'demandChart'
       );
       renderLegend(
@@ -123,13 +123,13 @@ module.exports = (props, containerElement) => {
         demandYScale,
         INDIVIDUAL_CHART_HEIGHT
       );
-      renderYAxis(demandChart, `${Y_AXIS_ID}-demand`, demandYScale, CHART_PADDING_LEFT);
-      renderYAxisLabel(demandChart, DEMAND_Y_LABEL, CHART_PADDING_LEFT, DEMAND_Y_OFFSET);
+      renderYAxis(demandChart, `${Y_AXIS_ID}-demand`, demandYScale, CHART_OFFSET_LEFT);
+      renderYAxisLabel(demandChart, DEMAND_Y_LABEL, CHART_OFFSET_LEFT, DEMAND_Y_OFFSET);
       renderDateAxis(
         demandChart,
         `${DATE_AXIS_ID}-demand`,
         dateScale,
-        CHART_PADDING_LEFT,
+        CHART_OFFSET_LEFT,
         DEMAND_Y_OFFSET,
         INDIVIDUAL_CHART_HEIGHT);
     }
@@ -140,7 +140,7 @@ module.exports = (props, containerElement) => {
         defectCategories,
         defectYScale,
         dateScale,
-        CHART_PADDING_LEFT,
+        CHART_OFFSET_LEFT,
         'defectChart'
       );
       renderLegend(
@@ -150,13 +150,13 @@ module.exports = (props, containerElement) => {
         defectYScale,
         INDIVIDUAL_CHART_HEIGHT
       );
-      renderYAxis(defectChart, `${Y_AXIS_ID}-defect`, defectYScale, CHART_PADDING_LEFT);
-      renderYAxisLabel(defectChart, DEFECT_Y_LABEL, CHART_PADDING_LEFT, DEFECT_Y_OFFSET);
+      renderYAxis(defectChart, `${Y_AXIS_ID}-defect`, defectYScale, CHART_OFFSET_LEFT);
+      renderYAxisLabel(defectChart, DEFECT_Y_LABEL, CHART_OFFSET_LEFT, DEFECT_Y_OFFSET);
       renderDateAxis(
         defectChart,
         `${DATE_AXIS_ID}-defect`,
         dateScale,
-        CHART_PADDING_LEFT,
+        CHART_OFFSET_LEFT,
         DEFECT_Y_OFFSET,
         INDIVIDUAL_CHART_HEIGHT);
     }
@@ -167,7 +167,7 @@ module.exports = (props, containerElement) => {
         effortCategories,
         effortYScale,
         dateScale,
-        CHART_PADDING_LEFT,
+        CHART_OFFSET_LEFT,
         'effortChart'
       );
       renderLegend(
@@ -177,13 +177,13 @@ module.exports = (props, containerElement) => {
         effortYScale,
         INDIVIDUAL_CHART_HEIGHT
       );
-      renderYAxis(effortChart, `${Y_AXIS_ID}-effort`, effortYScale, CHART_PADDING_LEFT);
-      renderYAxisLabel(effortChart, EFFORT_Y_LABEL, CHART_PADDING_LEFT, EFFORT_Y_OFFSET);
+      renderYAxis(effortChart, `${Y_AXIS_ID}-effort`, effortYScale, CHART_OFFSET_LEFT);
+      renderYAxisLabel(effortChart, EFFORT_Y_LABEL, CHART_OFFSET_LEFT, EFFORT_Y_OFFSET);
       renderDateAxis(
         effortChart,
         `${DATE_AXIS_ID}-effort`,
         dateScale,
-        CHART_PADDING_LEFT,
+        CHART_OFFSET_LEFT,
         EFFORT_Y_OFFSET,
         INDIVIDUAL_CHART_HEIGHT);
     }
@@ -191,7 +191,7 @@ module.exports = (props, containerElement) => {
       renderProjection({
         data: projection,
         yScale: demandYScale,
-        xOffset: CHART_PADDING_LEFT,
+        xOffset: CHART_OFFSET_LEFT,
         dateScale,
       });
       if (isProjectionAlarm(demandStatus, projection)) {
@@ -203,11 +203,11 @@ module.exports = (props, containerElement) => {
         const projectionValue = getProjectionY(date, projection, dateScale, demandYScale);
         if (projectionValue && projectionValue < doneValue) {
           renderProjectionDot(
-            demandChart, datapoint.date, projection, dateScale, demandYScale, CHART_PADDING_LEFT);
+            demandChart, datapoint.date, projection, dateScale, demandYScale, CHART_OFFSET_LEFT);
         }
       });
     }
-    scrubber = initializeScrubber(chartContainer, CHART_PADDING_LEFT);
+    scrubber = initializeScrubber(chartContainer, CHART_OFFSET_LEFT);
   };
 
   prepareDateScale();
@@ -217,11 +217,11 @@ module.exports = (props, containerElement) => {
   /** EVENT LISTENERS **/
 
   // Scrubber line
-  const isXInBounds = x => x >= CHART_PADDING_LEFT && x <= WIDTH;
+  const isXInBounds = x => x >= CHART_OFFSET_LEFT && x <= WIDTH + PADDING.right + PADDING.left;
 
   chartContainer.on('mousemove', function handleMouseMove() {
     const x = d3.mouse(this)[0];
-    const date = dateScale.invert(x - CHART_PADDING_LEFT);
+    const date = dateScale.invert(x - CHART_OFFSET_LEFT);
     const formattedDate = moment(date).format('DD-MMM-YY');
     if (isXInBounds(x)) {
       moveScrubber(scrubber, x);
