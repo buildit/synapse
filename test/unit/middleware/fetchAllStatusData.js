@@ -18,6 +18,9 @@ describe('All status for project fetcher', () => {
   const defect = { near: 'far' };
   const effort = { we: 'they' };
   const project = { project: 'Yes, this is a project' };
+  project.projection = {
+    pretendKey: 'Just for the test.',
+  };
   const errorGenerator = fetchAllStatusData({ name });
 
   it('retrieves data', () => {

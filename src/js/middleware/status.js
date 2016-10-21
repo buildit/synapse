@@ -61,12 +61,14 @@ export function* fetchAllStatusData(action) {
   const missingDataList = getMissingStatusDataList({ demand, defect, effort });
   const prettifiedList = missingDataList.join(', ');
   if (missingDataList.length > 0) {
-    message += `There is no data for ${prettifiedList}. `;
+    message += `There is no data for ${prettifiedList}.`;
   }
   if (!project.projection) {
-    message += 'You have not yet set a projection for this project.';
+    message += ' You have not yet set a projection for this project.';
   }
-  yield put(setMessage(message));
+  if (message) {
+    yield put(setMessage(message));
+  }
 }
 
 export function* watchFetchDemandStatusData() {
