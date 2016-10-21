@@ -1,3 +1,6 @@
+const moment = require('moment');
+const today = moment().format('YYYY-MM-DD');
+
 const blankProject = {
   name: '',
   demand: {
@@ -19,7 +22,7 @@ const blankProject = {
     startIterations: 3,
     endIterations: 3,
     endVelocity: 5,
-    startDate: '2016-07-01',
+    startDate: today,
   },
 };
 
