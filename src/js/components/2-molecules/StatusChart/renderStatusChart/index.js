@@ -198,9 +198,10 @@ module.exports = (props, containerElement) => {
         renderProjectionAlarm(demandChart, WIDTH, DEMAND_Y_OFFSET);
       }
       demandStatus.forEach(datapoint => {
-        const doneValue = getY(datapoint.date, demandStatus, 'Done', demandYScale);
-        const projectionValue = getProjectionY(datapoint.date, projection, dateScale, demandYScale);
-        if (projectionValue < doneValue) {
+        const date = datapoint ? datapoint.date : '11-Jul-16';
+        const doneValue = getY(date, demandStatus, 'Done', demandYScale);
+        const projectionValue = getProjectionY(date, projection, dateScale, demandYScale);
+        if (projectionValue && projectionValue < doneValue) {
           renderProjectionDot(
             demandChart, datapoint.date, projection, dateScale, demandYScale, CHART_PADDING_LEFT);
         }

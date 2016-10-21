@@ -1,3 +1,11 @@
+/* getProjectionY
+Takes a date and returns the y value at that point on the projection curve.
+*/
+
+const RAMP_UP_PERIOD = 'RAMP_UP_PERIOD';
+const TARGET_PERIOD = 'TARGET_PERIOD';
+const RAMP_DOWN_PERIOD = 'RAMP_DOWN_PERIOD';
+
 const moment = require('moment');
 const makePoints = require('helpers/makePoints');
 const d3 = require('d3');
@@ -6,63 +14,60 @@ const parseTime = d3.timeParse('%d-%b-%y');
 const convertDateToXPixelValue = (date, dateScale) => dateScale(parseTime(date));
 const convertStoriesToYPixelValue = (y, yScale) => yScale(y);
 
+/* getRegion
+Takes a date and returns the "region" of the projection curve.
+There are three regions in a projection curve:
+  - Ramp up period
+  - Target period
+  - Ramp down period
+If the date falls outside the projection, getRegion returns undefined.
+*/
 const getRegion = (date, projectionPoints) => {
   const parsedDate = moment(date, 'DD-MMM-YY');
-  // if (parsedDate.isBefore(moment('13-Jul-16', 'DD-MMM-YY'))) {}
   const projectionDates = projectionPoints.map(point => (
     moment(point.date, 'DD-MMM-YY')
   ));
   if (parsedDate.isAfter(projectionDates[0]) && parsedDate.isBefore(projectionDates[1])) {
-    return 0;
+    return RAMP_UP_PERIOD;
   }
   if (parsedDate.isAfter(projectionDates[1]) && parsedDate.isBefore(projectionDates[2])) {
-    return 1;
+    return TARGET_PERIOD;
   }
   if (parsedDate.isAfter(projectionDates[2]) && parsedDate.isBefore(projectionDates[3])) {
-    return 2;
+    return RAMP_DOWN_PERIOD;
   }
-  if (parsedDate.isAfter(projectionDates[3]) && parsedDate.isBefore(projectionDates[4])) {
-    return 3;
-  }
-  return -1;
+  return undefined;
 };
 
 module.exports = (targetDate, projection, dateScale, yScale) => {
   const projectionStartDate =
     moment(projection.startDate, 'YYYY MM DD').format('DD-MMM-YY');
   const projectionPoints = makePoints(projection, projectionStartDate);
+  const region = getRegion(targetDate, projectionPoints);
+
+  if (!region) return undefined;
 
   let p1;
   let p2;
 
-  switch (getRegion(targetDate, projectionPoints)) {
-  case 0: {
+  switch (region) {
+  case RAMP_UP_PERIOD: {
     p1 = projectionPoints[0];
     p2 = projectionPoints[1];
   }
     break;
-  case 1: {
+  case TARGET_PERIOD: {
     p1 = projectionPoints[1];
     p2 = projectionPoints[2];
   }
     break;
-  case 2: {
+  case RAMP_DOWN_PERIOD: {
     p1 = projectionPoints[2];
     p2 = projectionPoints[3];
   }
     break;
-  case 3: {
-    p1 = projectionPoints[3];
-    p2 = projectionPoints[4];
+  default: return undefined;
   }
-    break;
-  default: {
-    p1 = projectionPoints[0];
-    p2 = projectionPoints[1];
-  }
-
-  }
-
 
   // Solving for y = mx + b
   const x1 = convertDateToXPixelValue(p1.date, dateScale);
