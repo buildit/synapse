@@ -1,11 +1,18 @@
+import { takeEvery } from 'redux-saga';
 import { put, call } from 'redux-saga/effects';
 
 import Api from 'api';
 import {
   receiveStarterProjects,
   setErrorMessage,
+  startXHR,
+  endXHR,
 } from 'actions';
-import { fetchStarterProjects } from 'middleware/project';
+import { FETCH_STARTER_PROJECTS_REQUEST } from 'actions/actions';
+import {
+  fetchStarterProjects,
+  watchFetchStarterProjectsRequest,
+} from 'middleware/project';
 const expect = require('chai').expect;
 
 describe('Starter projects fetcher', () => {
@@ -13,6 +20,10 @@ describe('Starter projects fetcher', () => {
   const starterProjects = 'a project';
   const generator = fetchStarterProjects();
   const errorGenerator = fetchStarterProjects();
+
+  it('marks as xhr running', () => {
+    expect(generator.next().value).to.deep.equal(put(startXHR()));
+  });
 
   it('retrieves data', () => {
     expect(generator.next().value).to.deep.equal(call(Api.starterProjects));
@@ -28,15 +39,22 @@ describe('Starter projects fetcher', () => {
 
     const message = put(setErrorMessage(errorMessage));
     expect(errorGenerator.throw(errorMessage).value).to.deep.equal(message);
-  });
-  // TODO: fix this test
-  // it('switches location', () => {
-  //   expect(errorGenerator.next().value).to.deep.equal(put(switchLocation('error')));
-  // });
 
-  // TODO: re-enable this when the previous test is fixed
-  // it('finishes', () => {
-  //   expect(generator.next().done).to.equal(true);
-  //   expect(errorGenerator.next().done).to.equal(true);
-  // });
+    errorGenerator.next();
+  });
+
+  it('marks as xhr finished', () => {
+    expect(generator.next().value).to.deep.equal(put(endXHR()));
+  });
+
+  it('finishes', () => {
+    expect(generator.next().done).to.equal(true);
+    expect(errorGenerator.next().done).to.equal(true);
+  });
+
+  it('watches', () => {
+    const watchGenerator = watchFetchStarterProjectsRequest();
+    const correct = call(takeEvery, FETCH_STARTER_PROJECTS_REQUEST, fetchStarterProjects);
+    expect(watchGenerator.next().value).to.deep.equal(correct);
+  });
 });

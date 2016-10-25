@@ -17,11 +17,11 @@ class Status extends Component {
   render() {
     let component = <div></div>;
 
-    if (this.props.isFetching) {
+    if (this.props.xhr) {
       component = <Spinner />;
     }
 
-    if (!this.props.isFetching && this.props.project.name) {
+    if (!this.props.xhr && this.props.project.name) {
       component = (
         <StatusChart
           demandStatus={this.props.demandStatus}
@@ -50,34 +50,34 @@ Status.propTypes = {
   defectCategories: PropTypes.array.isRequired,
   effortCategories: PropTypes.array.isRequired,
   params: PropTypes.object.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  xhr: PropTypes.bool,
 };
 
 const mapStateToProps = state => {
-  const demandStatus = transformStatusData(state.appData.status.demand, 'status');
-  const defectStatus = transformStatusData(state.appData.status.defect, 'severity');
-  const effortStatus = transformStatusData(state.appData.status.effort, 'activity');
+  const demandStatus = transformStatusData(state.status.demand, 'status');
+  const defectStatus = transformStatusData(state.status.defect, 'severity');
+  const effortStatus = transformStatusData(state.status.effort, 'activity');
 
-  const demandCategories = state.appData.project.demand.flow.map(item => (item.name));
-  const defectCategories = state.appData.project.defect.severity.map(item => (item.name));
-  const effortCategories = state.appData.project.effort.role.map(item => (item.name));
+  const demandCategories = state.project.demand.flow.map(item => (item.name));
+  const defectCategories = state.project.defect.severity.map(item => (item.name));
+  const effortCategories = state.project.effort.role.map(item => (item.name));
   let projection = {};
-  if (state.appData.project.projection) {
+  if (state.project.projection) {
     projection = {
-      backlogSize: state.appData.project.projection.backlogSize,
-      darkMatter: state.appData.project.projection.darkMatterPercentage,
-      iterationLength: state.appData.project.projection.iterationLength,
-      periodEnd: state.appData.project.projection.endIterations,
-      periodStart: state.appData.project.projection.startIterations,
-      startDate: state.appData.project.projection.startDate,
-      velocityEnd: state.appData.project.projection.endVelocity,
-      velocityMiddle: state.appData.project.projection.targetVelocity,
-      velocityStart: state.appData.project.projection.startVelocity,
+      backlogSize: state.project.projection.backlogSize,
+      darkMatter: state.project.projection.darkMatterPercentage,
+      iterationLength: state.project.projection.iterationLength,
+      periodEnd: state.project.projection.endIterations,
+      periodStart: state.project.projection.startIterations,
+      startDate: state.project.projection.startDate,
+      velocityEnd: state.project.projection.endVelocity,
+      velocityMiddle: state.project.projection.targetVelocity,
+      velocityStart: state.project.projection.startVelocity,
     };
   }
 
   return {
-    project: state.appData.project,
+    project: state.project,
     demandStatus,
     defectStatus,
     effortStatus,
@@ -85,7 +85,7 @@ const mapStateToProps = state => {
     defectCategories,
     effortCategories,
     projection,
-    isFetching: state.isFetching,
+    xhr: state.xhr,
   };
 };
 

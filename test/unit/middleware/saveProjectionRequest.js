@@ -1,13 +1,20 @@
+import { takeEvery } from 'redux-saga';
 import { put, call } from 'redux-saga/effects';
 
 import Api from 'api';
 import {
   setMessage,
+  startXHR,
+  endXHR,
 } from 'actions';
-import { saveProjectionRequest } from 'middleware/project';
+import { SAVE_PROJECTION_REQUEST } from 'actions/actions';
+import {
+  saveProjectionRequest,
+  watchSaveProjectionRequest,
+} from 'middleware/project';
 const expect = require('chai').expect;
 
-describe('Project saver', () => {
+describe('Projection saver', () => {
   // Neither of these work properly
   // const errorMessage = { message: 'an error message' };
   // const errorMessage = 'an error message';
@@ -38,6 +45,10 @@ describe('Project saver', () => {
   const generator = saveProjectionRequest(action);
   // const errorGenerator = saveProjectionRequest();
 
+  it('marks as xhr running', () => {
+    expect(generator.next().value).to.deep.equal(put(startXHR()));
+  });
+
   it('saves data', () => {
     const correctSave = call(Api.saveProjection, processedProjection, name);
     expect(generator.next().value).to.deep.equal(correctSave);
@@ -46,6 +57,10 @@ describe('Project saver', () => {
   it('displays a message', () => {
     const message = put(setMessage(`The projection for project ${name} was saved successfully.`));
     expect(generator.next().value).to.deep.equal(message);
+  });
+
+  it('marks as xhr finished', () => {
+    expect(generator.next().value).to.deep.equal(put(endXHR()));
   });
 
   // TODO:  Figure out why this test is borked.
@@ -62,4 +77,10 @@ describe('Project saver', () => {
   //   expect(generator.next().done).to.equal(true);
   //   expect(errorGenerator.next().done).to.equal(true);
   // });
+
+  it('watches', () => {
+    const watchGenerator = watchSaveProjectionRequest();
+    const correct = call(takeEvery, SAVE_PROJECTION_REQUEST, saveProjectionRequest);
+    expect(watchGenerator.next().value).to.deep.equal(correct);
+  });
 });

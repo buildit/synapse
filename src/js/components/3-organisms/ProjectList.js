@@ -14,7 +14,8 @@ class ProjectList extends Component {
   }
 
   render() {
-    if (this.props.isFetching) {
+    // const message = this.props.xhr ? 'Fetching project list...' : '';
+    if (this.props.xhr) {
       return <div>Fetching project list...</div>;
     }
 
@@ -47,12 +48,13 @@ ProjectList.propTypes = {
   fetchProjects: PropTypes.func,
   fetchProject: PropTypes.func,
   projectList: PropTypes.array,
-  isFetching: PropTypes.bool,
+  xhr: PropTypes.bool,
 };
 
 const mapStateToProps = state => (
   {
-    projectList: state.appData.projectList,
+    projectList: state.projects.projectList,
+    xhr: state.xhr,
   }
 );
 

@@ -2,7 +2,11 @@
 // TODO: Clarify the expected cases,
 // and use meaningful variable names that make these cases apparent.
 
-const errorHelper = thing => {
+export const stockErrorMessage = 'An unknown error occurred.';
+export const xhrErrorMessage = 'We are unable to reach the server at this time.';
+export const xhrInternalErrorMessage = 'Internal XMLHttpRequest Error';
+
+export const errorHelper = thing => {
   if (thing && thing.body) {
     let innerThing;
     try {
@@ -19,13 +23,11 @@ const errorHelper = thing => {
   }
 
   if (thing && thing.message) {
-    if (thing.message === 'Internal XMLHttpRequest Error') {
-      return 'We are unable to reach the server at this time.';
+    if (thing.message === xhrInternalErrorMessage) {
+      return xhrErrorMessage;
     }
     return thing.message;
   }
 
-  return 'An unknown error occurred.';
+  return stockErrorMessage;
 };
-
-module.exports = errorHelper;

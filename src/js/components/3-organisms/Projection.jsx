@@ -145,15 +145,15 @@ class Projection extends Component {
 
 function mapStateToProps(state) {
   const projection = {
-    startDate: state.appData.project.projection.startDate,
-    iterationLength: state.appData.project.projection.iterationLength,
-    backlogSize: state.appData.project.projection.backlogSize,
-    velocityMiddle: state.appData.project.projection.targetVelocity,
-    darkMatter: state.appData.project.projection.darkMatterPercentage,
-    periodStart: state.appData.project.projection.startIterations,
-    velocityStart: state.appData.project.projection.startVelocity,
-    periodEnd: state.appData.project.projection.endIterations,
-    velocityEnd: state.appData.project.projection.endVelocity,
+    startDate: state.project.projection.startDate,
+    iterationLength: state.project.projection.iterationLength,
+    backlogSize: state.project.projection.backlogSize,
+    velocityMiddle: state.project.projection.targetVelocity,
+    darkMatter: state.project.projection.darkMatterPercentage,
+    periodStart: state.project.projection.startIterations,
+    velocityStart: state.project.projection.startVelocity,
+    periodEnd: state.project.projection.endIterations,
+    velocityEnd: state.project.projection.endVelocity,
   };
   const props = {
     projection,

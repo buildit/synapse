@@ -1,14 +1,20 @@
 import { combineReducers } from 'redux';
-import appData from './appData';
 import ui from './ui';
-import isNewProject from './isNewProject';
-import isFetching from './isFetching';
+import { project } from './project';
+import { projects } from './projects';
+import { status } from './status';
+import { xhr } from './xhr';
+import { messages } from './messages';
+import { form } from './form';
 
 const reducers = {
   ui,
-  appData,
-  isNewProject,
-  isFetching,
+  project,
+  projects,
+  status,
+  xhr,
+  messages,
+  form,
 };
 
 const combinedReducers = combineReducers(reducers);

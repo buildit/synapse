@@ -1,11 +1,4 @@
-import {
-  SET_MESSAGE,
-} from 'actions/actions';
-
 const ui = (state = {
-  view: 'listView',
-  errorMessage: null,
-  message: '',
   formData: {
     demand: {},
     defect: {},
@@ -13,24 +6,6 @@ const ui = (state = {
   },
 }, action) => {
   switch (action.type) {
-  case 'FETCH_PROJECTS_FAILURE': {
-    return {
-      ...state,
-      errorMessage: action.errorMessage,
-    };
-  }
-  case 'FETCH_PROJECT_FAILURE': {
-    return {
-      ...state,
-      errorMessage: action.errorMessage,
-    };
-  }
-  case 'SET_ERROR_MESSAGE': {
-    return {
-      ...state,
-      errorMessage: action.message,
-    };
-  }
   case 'UPDATE_FORM_DATA': {
     const newFormData = state.formData;
     newFormData.id = state.formData.id ? state.formData.id.toString() : '';
@@ -147,12 +122,6 @@ const ui = (state = {
     return {
       ...state,
       formData: newFormData,
-    };
-  }
-  case SET_MESSAGE: {
-    return {
-      ...state,
-      message: action.message,
     };
   }
   default: return state;

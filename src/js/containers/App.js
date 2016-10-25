@@ -51,9 +51,9 @@ App.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const projectName = state.appData.project ? state.appData.project.name : '';
+  const projectName = state.project ? state.project.name : '';
   return {
-    message: state.ui.message,
+    message: state.messages,
     appData: state.appData,
     projectName,
   };

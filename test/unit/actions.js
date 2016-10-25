@@ -21,16 +21,6 @@ describe('Redux actions', () => {
     expect(functions.receiveStarterProjects(response)).to.deep.equal(correct);
   });
 
-  it('setErrorMessage', () => {
-    const message = 'test';
-    const correct = {
-      type: actions.SET_ERROR_MESSAGE,
-      message,
-    };
-    expect(functions.setErrorMessage(message)).to.deep.equal(correct);
-  });
-
-
   it('fetchProjects', () => {
     const correct = {
       type: actions.FETCH_PROJECTS,
@@ -218,6 +208,15 @@ describe('Redux actions', () => {
       name,
     };
     expect(functions.saveProjection(projection, name)).to.deep.equal(correct);
+  });
+
+  it('updateProjection', () => {
+    const projection = 'test';
+    const correct = {
+      type: actions.UPDATE_PROJECTION,
+      projection,
+    };
+    expect(functions.updateProjection(projection)).to.deep.equal(correct);
   });
 
   it('updateProject', () => {

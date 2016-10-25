@@ -1,11 +1,18 @@
+import { takeEvery } from 'redux-saga';
 import { put, call } from 'redux-saga/effects';
 
 import Api from 'api';
-import { fetchAllStatusData } from 'middleware/status';
+import {
+  fetchAllStatusData,
+  watchFetchDemandStatusData,
+} from 'middleware/status';
 import {
   fetchProjectSuccess,
   setMessage,
+  startXHR,
+  endXHR,
 } from 'actions';
+import { FETCH_PROJECT_STATUS_DATA } from 'actions/actions';
 import {
   fetchStatusSuccess,
 } from 'actions/fetchAllStatusData';
@@ -22,6 +29,10 @@ describe('All status for project fetcher', () => {
     pretendKey: 'Just for the test.',
   };
   const errorGenerator = fetchAllStatusData({ name });
+
+  it('marks as xhr running', () => {
+    expect(generator.next().value).to.deep.equal(put(startXHR()));
+  });
 
   it('retrieves data', () => {
     const projectCorrect = call(Api.project, name);
@@ -48,7 +59,9 @@ describe('All status for project fetcher', () => {
   });
 
   it('handles missing data properly', () => {
+    // TODO: add a second thing in here that handles not having a projection (line 72 is uncovered)
     /* eslint-disable no-unused-expressions */
+    errorGenerator.next();
     errorGenerator.next().value;
     errorGenerator.next(project).value;
     errorGenerator.next(demand).value;
@@ -61,10 +74,22 @@ describe('All status for project fetcher', () => {
 
     const messageCorrect = put(setMessage('There is no data for effort.'));
     expect(errorGenerator.next([]).value).to.deep.equal(messageCorrect);
+
+    errorGenerator.next();
+  });
+
+  it('marks as xhr finished', () => {
+    expect(generator.next().value).to.deep.equal(put(endXHR()));
   });
 
   it('finishes', () => {
     expect(generator.next().done).to.equal(true);
-    // expect(errorGenerator.next().done).to.equal(true);
+    expect(errorGenerator.next().done).to.equal(true);
+  });
+
+  it('watches', () => {
+    const watchGenerator = watchFetchDemandStatusData();
+    const correct = call(takeEvery, FETCH_PROJECT_STATUS_DATA, fetchAllStatusData);
+    expect(watchGenerator.next().value).to.deep.equal(correct);
   });
 });

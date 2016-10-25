@@ -18,6 +18,8 @@ import {
   setMessage,
   clearMessage,
   setErrorMessage,
+  startXHR,
+  endXHR,
 } from 'actions';
 import { trimFormInputs } from 'helpers/trimFormInputs';
 
@@ -28,32 +30,37 @@ import Api from 'api';
  */
 export function* fetchProjectionRequest(action) {
   try {
+    yield put(startXHR());
     const project = yield call(Api.project, action.name);
     yield put(fetchProjectSuccessAction(project));
   } catch (err) {
     yield put(setMessage(`You're creating a new projection for project ${action.name}.`));
     yield put(setErrorMessage(err));
+  } finally {
+    yield put(endXHR());
   }
 }
 export function* watchFetchProjectionRequest() {
-  yield* takeEvery(FETCH_PROJECTION_REQUEST, fetchProjectionRequest);
+  yield call(takeEvery, FETCH_PROJECTION_REQUEST, fetchProjectionRequest);
 }
 
 
 /*
  * Middleware for FETCH_PROJECT_REQUEST
- * needs test
  */
 export function* fetchProjectRequest(action) {
   try {
+    yield put(startXHR());
     const project = yield call(Api.project, action.name);
     yield put(fetchProjectSuccessAction(project));
   } catch (err) {
     yield put(setErrorMessage('We could not fetch the project.'));
+  } finally {
+    yield put(endXHR());
   }
 }
 export function* watchFetchProjectRequest() {
-  yield* takeEvery(FETCH_PROJECT_REQUEST, fetchProjectRequest);
+  yield call(takeEvery, FETCH_PROJECT_REQUEST, fetchProjectRequest);
 }
 
 /*
@@ -63,6 +70,7 @@ export function* fetchProjects() {
   let projectSummary = [];
   let demand = undefined;
   try {
+    yield put(startXHR());
     projectSummary = yield call(Api.projects);
     const length = projectSummary.length;
     for (let i = 0; i < length; i++) {
@@ -78,10 +86,12 @@ export function* fetchProjects() {
     yield put(receiveProjects(projectSummary));
   } catch (err) {
     yield put(setErrorMessage(err));
+  } finally {
+    yield put(endXHR());
   }
 }
 export function* watchFetchProjects() {
-  yield* takeEvery(FETCH_PROJECTS, fetchProjects);
+  yield call(takeEvery, FETCH_PROJECTS, fetchProjects);
 }
 
 
@@ -90,14 +100,17 @@ export function* watchFetchProjects() {
  */
 export function* fetchStarterProjects() {
   try {
+    yield put(startXHR());
     const starterProjects = yield call(Api.starterProjects);
     yield put(receiveStarterProjects(starterProjects));
   } catch (err) {
     yield put(setErrorMessage(err));
+  } finally {
+    yield put(endXHR());
   }
 }
 export function* watchFetchStarterProjectsRequest() {
-  yield* takeEvery(FETCH_STARTER_PROJECTS_REQUEST, fetchStarterProjects);
+  yield call(takeEvery, FETCH_STARTER_PROJECTS_REQUEST, fetchStarterProjects);
 }
 
 
@@ -106,6 +119,7 @@ export function* watchFetchStarterProjectsRequest() {
  */
 export function* saveProjectionRequest(action) {
   try {
+    yield put(startXHR());
     const projection = action.projection;
     const name = action.name;
     const projectionToSave = {
@@ -123,10 +137,12 @@ export function* saveProjectionRequest(action) {
     yield put(setMessage(`The projection for project ${name} was saved successfully.`));
   } catch (err) {
     yield put(setErrorMessage(`There was an error. We could not save the projection: ${err}`));
+  } finally {
+    yield put(endXHR());
   }
 }
 export function* watchSaveProjectionRequest() {
-  yield* takeEvery(SAVE_PROJECTION_REQUEST, saveProjectionRequest);
+  yield call(takeEvery, SAVE_PROJECTION_REQUEST, saveProjectionRequest);
 }
 
 
@@ -135,15 +151,18 @@ export function* watchSaveProjectionRequest() {
  */
 export function* updateProjectRequest(action) {
   try {
+    yield put(startXHR());
     yield call(Api.updateProject, action.project);
     const message = `The form data for project ${action.project.name} was saved successfully.`;
     yield put(setMessage(message));
   } catch (err) {
     yield put(setErrorMessage(`There was an error.  We could not save the project: ${err}`));
+  } finally {
+    yield put(endXHR());
   }
 }
 export function* watchUpdateProjectRequest() {
-  yield* takeEvery(UPDATE_PROJECT_REQUEST, updateProjectRequest);
+  yield call(takeEvery, UPDATE_PROJECT_REQUEST, updateProjectRequest);
 }
 
 
@@ -152,14 +171,17 @@ export function* watchUpdateProjectRequest() {
  */
 export function* saveProjectRequest(action) {
   try {
+    yield put(startXHR());
     const project = yield(call(trimFormInputs, action.project));
     yield put(setMessage(`Saving ${project.name}`));
     yield call(Api.saveProject, project);
     yield put(clearMessage());
   } catch (err) {
     yield put(setErrorMessage(err));
+  } finally {
+    yield put(endXHR());
   }
 }
 export function* watchSaveProjectRequest() {
-  yield* takeEvery(SAVE_PROJECT_REQUEST, saveProjectRequest);
+  yield call(takeEvery, SAVE_PROJECT_REQUEST, saveProjectRequest);
 }

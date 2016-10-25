@@ -1,11 +1,18 @@
+import { takeEvery } from 'redux-saga';
 import { put, call } from 'redux-saga/effects';
 
 import Api from 'api';
 import {
   receiveProjects,
   setErrorMessage,
+  startXHR,
+  endXHR,
 } from 'actions';
-import { fetchProjects } from 'middleware/project';
+import { FETCH_PROJECTS } from 'actions/actions';
+import {
+  fetchProjects,
+  watchFetchProjects,
+} from 'middleware/project';
 import getRagStatus from 'helpers/getRagStatus';
 const expect = require('chai').expect;
 
@@ -16,6 +23,10 @@ describe('All projects fetcher', () => {
   const demand = [];
   const generator = fetchProjects();
   const errorGenerator = fetchProjects();
+
+  it('marks as xhr running', () => {
+    expect(generator.next().value).to.deep.equal(put(startXHR()));
+  });
 
   it('retrieves project summary data', () => {
     expect(generator.next().value).to.deep.equal(call(Api.projects));
@@ -44,10 +55,22 @@ describe('All projects fetcher', () => {
 
     const message = put(setErrorMessage(errorMessage));
     expect(errorGenerator.throw(errorMessage).value).to.deep.equal(message);
+
+    errorGenerator.next();
+  });
+
+  it('marks as xhr finished', () => {
+    expect(generator.next().value).to.deep.equal(put(endXHR()));
   });
 
   it('finishes', () => {
     expect(generator.next().done).to.equal(true);
     expect(errorGenerator.next().done).to.equal(true);
+  });
+
+  it('watches', () => {
+    const watchGenerator = watchFetchProjects();
+    const correct = call(takeEvery, FETCH_PROJECTS, fetchProjects);
+    expect(watchGenerator.next().value).to.deep.equal(correct);
   });
 });

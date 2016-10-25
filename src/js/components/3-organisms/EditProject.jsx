@@ -329,10 +329,10 @@ EditProject.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const project = normalizeProject(state.appData.project);
+  const project = normalizeProject(state.project);
   return ({
     project,
-    isNewProject: state.isNewProject,
+    isNewProject: state.project.new ? state.project.new : true,
 
     // Passing this down as a prop for one reason only: to trigger the render to update.
     ui: state.ui,

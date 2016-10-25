@@ -28,7 +28,7 @@ class NewProjectList extends Component {
       }
     };
 
-    if (this.props.isFetching) {
+    if (this.props.xhr) {
       return <div>Fetching starter projects list...</div>;
     }
 
@@ -69,18 +69,19 @@ NewProjectList.propTypes = {
   fetchStarterProjects: PropTypes.func,
   initializeNewProject: PropTypes.func,
   starterProjectList: PropTypes.array.isRequired,
-  isFetching: PropTypes.bool,
+  xhr: PropTypes.bool,
   setIsNewProject: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
   // Normalize the raw Harvest project data
   const starterProjectList =
-    state.appData.starterProjectList.map(_project => (normalizeProject(_project)));
+    state.projects.starterProjectList.map(_project => (normalizeProject(_project)));
 
   return (
   {
     starterProjectList,
+    xhr: state.xhr,
   }
   );
 };

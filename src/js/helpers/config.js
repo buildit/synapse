@@ -3,37 +3,48 @@ const hostname = typeof window === 'undefined' ? 'localhost' : window.location.h
 console.log('hostname:', hostname);
 /* eslint-enable no-console */
 
-let environment = '';
-const STAGING = 'staging';
-const DEVELOPMENT = 'development';
-const PRODUCTION = 'production';
+export const STAGING = 'staging';
+export const DEVELOPMENT = 'development';
+export const PRODUCTION = 'production';
 
+export const DEVELOPMENT_ENDPOINT = 'http://localhost:6565/';
+export const STAGING_PREFIX = 'http://eolas.staging.';
+export const PRODUCTION_PREFIX = 'http://eolas.';
+
+let browserEnvironment = '';
 if (hostname.includes('staging')) {
-  environment = STAGING;
+  browserEnvironment = STAGING;
 } else if (hostname.includes('localhost')) {
-  environment = DEVELOPMENT;
+  browserEnvironment = DEVELOPMENT;
 } else {
-  environment = PRODUCTION;
+  browserEnvironment = PRODUCTION;
 }
 
-class Config {
+export class Config {
 
-  constructor() {
+  constructor(environment) {
+    this.environment = environment;
     this.computedBaseUrl = undefined;
   }
 
   baseUrl() {
-    if (!this.computedBaseUrl) {
-      let url;
-      const eolasDomain = process.env.EOLAS_DOMAIN;
-      if (environment === STAGING) {
-        url = `http://eolas.staging.${eolasDomain}/`;
-      } else if (environment === DEVELOPMENT) {
-        url = process.env.TEST_API || 'http://localhost:6565/';
-      } else {
-        url = `http://eolas.${eolasDomain}/`;
+    try {
+      if (!this.computedBaseUrl) {
+        let url;
+        const eolasDomain = process.env.EOLAS_DOMAIN;
+        if (this.environment === STAGING) {
+          url = `${STAGING_PREFIX}${eolasDomain}/`;
+        } else if (this.environment === DEVELOPMENT) {
+          url = process.env.TEST_API || DEVELOPMENT_ENDPOINT;
+        } else {
+          url = `${PRODUCTION_PREFIX}${eolasDomain}/`;
+        }
+        this.computedBaseUrl = url;
       }
-      this.computedBaseUrl = url;
+    } catch (err) {
+      /* eslint-disable no-console */
+      console.log(err);
+      this.computedBaseUrl = DEVELOPMENT_ENDPOINT;
     }
     return this.computedBaseUrl;
   }
@@ -47,5 +58,5 @@ class Config {
   }
 }
 
-const config = new Config();
+const config = new Config(browserEnvironment);
 export default config;

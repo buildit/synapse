@@ -1,7 +1,7 @@
 import * as types from 'actions/actions';
 
 export const setErrorMessage = message => ({
-  type: types.SET_ERROR_MESSAGE,
+  type: types.SET_MESSAGE,
   message,
 });
 

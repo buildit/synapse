@@ -3,3 +3,4 @@ export * from 'actions/messages';
 export * from 'actions/projects';
 export * from 'actions/projection';
 export * from 'actions/form';
+export * from 'actions/xhr';

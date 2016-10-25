@@ -1,11 +1,18 @@
+import { takeEvery } from 'redux-saga';
 import { put, call } from 'redux-saga/effects';
 
 import Api from 'api';
 import {
   setMessage,
   setErrorMessage,
+  startXHR,
+  endXHR,
 } from 'actions';
-import { updateProjectRequest } from 'middleware/project';
+import { UPDATE_PROJECT_REQUEST } from 'actions/actions';
+import {
+  updateProjectRequest,
+  watchUpdateProjectRequest,
+} from 'middleware/project';
 const expect = require('chai').expect;
 
 describe('Project updating', () => {
@@ -15,6 +22,10 @@ describe('Project updating', () => {
   const action = { project };
   const generator = updateProjectRequest(action);
   const errorGenerator = updateProjectRequest(action);
+
+  it('marks as xhr running', () => {
+    expect(generator.next().value).to.deep.equal(put(startXHR()));
+  });
 
   it('saves data', () => {
     expect(generator.next().value).to.deep.equal(call(Api.updateProject, project));
@@ -26,13 +37,27 @@ describe('Project updating', () => {
   });
 
   it('displays an error message', () => {
+    // Step into the try block
     errorGenerator.next();
 
     expect(errorGenerator.throw(error).value).to.deep.equal(put(setErrorMessage(errorMessage)));
+
+    // After it displays the message, it has the endXHR call again
+    errorGenerator.next();
+  });
+
+  it('marks as xhr finished', () => {
+    expect(generator.next().value).to.deep.equal(put(endXHR()));
   });
 
   it('finishes', () => {
     expect(generator.next().done).to.equal(true);
     expect(errorGenerator.next().done).to.equal(true);
+  });
+
+  it('watches', () => {
+    const watchGenerator = watchUpdateProjectRequest();
+    const correct = call(takeEvery, UPDATE_PROJECT_REQUEST, updateProjectRequest);
+    expect(watchGenerator.next().value).to.deep.equal(correct);
   });
 });

@@ -10,6 +10,8 @@ import {
   fetchProjectSuccess as fetchProjectSuccessAction,
   fetchStatusSuccess,
   setMessage,
+  startXHR,
+  endXHR,
 } from 'actions';
 
 import Api from 'api';
@@ -20,6 +22,9 @@ export function* fetchAllStatusData(action) {
   let demand = [];
   let defect = [];
   let effort = [];
+
+  yield put(startXHR());
+
   try {
     project = yield call(Api.project, name);
   } catch (err) {
@@ -69,8 +74,10 @@ export function* fetchAllStatusData(action) {
   if (message) {
     yield put(setMessage(message));
   }
+
+  yield put(endXHR());
 }
 
 export function* watchFetchDemandStatusData() {
-  yield* takeEvery(FETCH_PROJECT_STATUS_DATA, fetchAllStatusData);
+  yield call(takeEvery, FETCH_PROJECT_STATUS_DATA, fetchAllStatusData);
 }

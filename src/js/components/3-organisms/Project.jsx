@@ -144,7 +144,7 @@ Project.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  project: normalizeProject(state.appData.project),
+  project: normalizeProject(state.project),
 });
 
 export default connect(mapStateToProps, actionCreators)(Project);
