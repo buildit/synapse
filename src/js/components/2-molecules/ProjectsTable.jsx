@@ -1,6 +1,7 @@
 import React from 'react';
 import RouteLink from 'components/1-atoms/RouteLink';
 import TableCell from 'components/1-atoms/TableCell';
+import RAGStatusTableCell from 'components/1-atoms/RAGStatusTableCell';
 import TableHeaderCell from 'components/1-atoms/TableHeaderCell';
 
 const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
@@ -17,7 +18,11 @@ const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
 
     for (const key of visibleColumns) {
       let cellValue = tableData[i][key];
-      bodyRow.push(<TableCell key={i + key} cellValue={cellValue} />);
+      if (key === 'status') {
+        bodyRow.push(<RAGStatusTableCell key={i + key} status={cellValue} />);
+      } else {
+        bodyRow.push(<TableCell key={i + key} cellValue={cellValue} />);
+      }
     }
 
     bodyRow.push(

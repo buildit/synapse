@@ -14,6 +14,7 @@
     "storybook": "start-storybook -p 9001 -c .storybook",
     "storybook:build": "build-storybook -c .storybook -o storybook",
     "test": "NODE_ENV=test nyc mocha --recursive --compilers js:babel-core/register --require babel-polyfill test/unit",
+    "test:helpers": "mocha --compilers js:babel-core/register --require babel-polyfill test/unit",
     "test:ci": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register --require babel-polyfill --reporter mocha-jenkins-reporter -O junit_report_path=./reports/test-results.xml,junit_report_name=\"Tests Results\",junit_report_stack=1 test/unit",
     "test:acceptance": "NODE_ENV=test mocha --timeout 30000 --require co-mocha --require babel-register --require babel-polyfill --recursive test/acceptance/specs",
     "test:acceptance:ci": "NODE_ENV=test mocha --timeout 60000 --require co-mocha --require babel-register --require babel-polyfill --recursive --reporter mocha-jenkins-reporter -O junit_report_path=./reports/acceptance-test-results.xml,junit_report_name=\"Acceptance Tests\",junit_report_stack=1 test/acceptance/specs",

@@ -1,0 +1,15 @@
+// @import '../../variables'
+
+.rag-status-table-cell {
+  .indicator {
+    width: 2rem;
+    height: 2rem;
+    display: block;
+    border-radius: 50%;
+  }
+
+  .blank { background-color: gray; }
+  .red { background-color: $red; }
+  .amber { background-color: $amber; }
+  .green { background-color: $green; }
+}

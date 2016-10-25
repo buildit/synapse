@@ -1,5 +1,6 @@
 import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
+import getRagStatus from 'helpers/getRagStatus';
 
 import {
   FETCH_PROJECTS,
@@ -55,14 +56,26 @@ export function* watchFetchProjectRequest() {
   yield* takeEvery(FETCH_PROJECT_REQUEST, fetchProjectRequest);
 }
 
-
 /*
  * Middleware for FETCH_PROJECTS
  */
 export function* fetchProjects() {
+  let projectSummary = [];
+  let demand = undefined;
   try {
-    const projects = yield call(Api.projects);
-    yield put(receiveProjects(projects));
+    projectSummary = yield call(Api.projects);
+    const length = projectSummary.length;
+    for (let i = 0; i < length; i++) {
+      const name = projectSummary[i].name;
+      const project = yield call(Api.project, name);
+      try {
+        demand = yield call(Api.projectDemandSummary, name);
+        projectSummary[i].status = yield call(getRagStatus, project.projection, demand);
+      } catch (err) {
+        yield put(setErrorMessage(err));
+      }
+    }
+    yield put(receiveProjects(projectSummary));
   } catch (err) {
     yield put(setErrorMessage(err));
   }
