@@ -9,6 +9,7 @@ module.exports = {
   entry: [
     './src/js/index.js',
     './src/scss/main.scss',
+    // './node_modules/whippersnapper/build/Text.jsx ',
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -63,7 +64,7 @@ module.exports = {
       },
     ],
     loaders: [{
-      test: /\.(js|jsx)/,
+      test: /\.(js)/,
       exclude: /node_modules/,
       // cacheable: true,
       loader: 'babel-loader',
@@ -71,7 +72,15 @@ module.exports = {
         presets: ['es2015', 'react'],
         plugins: ['transform-runtime'],
       },
-    }, {
+    },
+    {
+      test: /\.(jsx)/,
+      loader: 'babel-loader',
+      query: {
+        presets: ['es2015', 'react'],
+      },
+    },
+    {
       test: /.json/,
       exclude: [/node_modules/, /config/],
       // cacheable: true,
@@ -83,6 +92,10 @@ module.exports = {
     }, {
       test: /\.scss$/,
       loader: ExtractTextPlugin.extract('css!sass'),
+    },
+    {
+      test: /\.css$/,
+      loader: 'style-loader!css-loader',
     }],
   },
 };
