@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { fetchProjects } from 'actions/projects';
 import Button from 'components/1-atoms/Button';
 import ProjectsTable from 'components/2-molecules/ProjectsTable';
-import Footer from 'components/2-molecules/Footer';
 
 class ProjectList extends Component {
   componentDidMount() {
@@ -39,7 +38,6 @@ class ProjectList extends Component {
           ]}
           rowKey={'name'}
         />
-        <Footer />
       </div>
     );
   }

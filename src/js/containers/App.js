@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import Header from 'components/2-molecules/Header';
 import * as actionCreators from 'actions';
 import MessageBar from 'components/2-molecules/MessageBar';
+import Footer from 'whippersnapper/build/Footer';
+import { version } from '../../../package.json';
 require('zzzss/dist/css/zzzss.css');
 
 const App = ({
@@ -32,6 +34,9 @@ const App = ({
     />
     <MessageBar message={message} />
     {children}
+    <Footer
+      appVersion={version}
+    />
   </div>
 );
 
