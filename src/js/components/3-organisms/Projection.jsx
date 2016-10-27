@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from 'actions';
 import ProjectionChart from 'components/2-molecules/ProjectionChart';
 import ProjectionSlider from 'components/1-atoms/ProjectionSlider';
+import ProjectionIntegerInput from 'components/1-atoms/ProjectionIntegerInput';
 import Button from 'components/1-atoms/Button';
 import DateInput from 'components/1-atoms/DateInput';
 
@@ -47,13 +48,11 @@ class Projection extends Component {
 
             <div className="sliders col-md-3">
 
-              <ProjectionSlider
+              <ProjectionIntegerInput
                 label="Backlog"
                 unit="stories"
                 legendClass="backlog"
                 initialValue={this.props.projection.backlogSize}
-                min={10}
-                max={300}
                 onInputChange={value => handleInputChange(value, 'backlogSize')}
               />
 
@@ -69,6 +68,13 @@ class Projection extends Component {
 
               <hr />
 
+              <ProjectionIntegerInput
+                label="Target velocity"
+                unit="stories per iteration"
+                initialValue={this.props.projection.velocityMiddle}
+                onInputChange={value => handleInputChange(value, 'velocityMiddle')}
+              />
+
               <ProjectionSlider
                 label="Iteration length"
                 unit="week(s)"
@@ -78,16 +84,14 @@ class Projection extends Component {
                 onInputChange={value => handleInputChange(value, 'iterationLength')}
               />
 
-              <ProjectionSlider
-                label="Target velocity"
-                unit="stories per iteration"
-                initialValue={this.props.projection.velocityMiddle}
-                min={1}
-                max={20}
-                onInputChange={value => handleInputChange(value, 'velocityMiddle')}
-              />
-
               <hr />
+
+              <ProjectionIntegerInput
+                label="Velocity start"
+                unit="stories per iteration"
+                initialValue={this.props.projection.velocityStart}
+                onInputChange={value => handleInputChange(value, 'velocityStart')}
+              />
 
               <ProjectionSlider
                 label="Ramp up period"
@@ -98,16 +102,14 @@ class Projection extends Component {
                 onInputChange={value => handleInputChange(value, 'periodStart')}
               />
 
-              <ProjectionSlider
-                label="Velocity start"
-                unit="stories per iteration"
-                initialValue={this.props.projection.velocityStart}
-                min={1}
-                max={10}
-                onInputChange={value => handleInputChange(value, 'velocityStart')}
-              />
-
               <hr />
+
+              <ProjectionIntegerInput
+                label="Velocity end"
+                unit="stories per iteration"
+                initialValue={this.props.projection.velocityEnd}
+                onInputChange={value => handleInputChange(value, 'velocityEnd')}
+              />
 
               <ProjectionSlider
                 label="Ramp down period"
@@ -116,15 +118,6 @@ class Projection extends Component {
                 min={0}
                 max={30}
                 onInputChange={value => handleInputChange(value, 'periodEnd')}
-              />
-
-              <ProjectionSlider
-                label="Velocity end"
-                unit="stories per iteration"
-                initialValue={this.props.projection.velocityEnd}
-                min={1}
-                max={10}
-                onInputChange={value => handleInputChange(value, 'velocityEnd')}
               />
 
               <DateInput
