@@ -7,8 +7,10 @@ import Header from 'components/2-molecules/Header';
 import * as actionCreators from 'actions';
 import MessageBar from 'components/2-molecules/MessageBar';
 import Footer from 'whippersnapper/build/Footer';
-import { version } from '../../../package.json';
 require('zzzss/dist/css/zzzss.css');
+
+// TODO: This feels not quite right. Instead, inject version during build.
+import { version } from '../../../package.json';
 
 const App = ({
   message,
