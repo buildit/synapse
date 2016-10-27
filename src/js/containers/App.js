@@ -9,8 +9,7 @@ import MessageBar from 'components/2-molecules/MessageBar';
 import Footer from 'whippersnapper/build/Footer';
 require('zzzss/dist/css/zzzss.css');
 
-// TODO: This feels not quite right. Instead, inject version during build.
-import { version } from '../../../package.json';
+const version = process.env.VERSION;
 
 const App = ({
   message,

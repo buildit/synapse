@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const SassLintPlugin = require('sasslint-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const version = require('./package.json').version;
 
 module.exports = {
   entry: [
@@ -30,6 +31,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.EOLAS_DOMAIN': JSON.stringify(process.env.EOLAS_DOMAIN),
       'process.env.TEST_API': JSON.stringify(process.env.TEST_API),
+      'process.env.VERSION': JSON.stringify(version),
     }),
     new SassLintPlugin({
       glob: 'src/scss/**/*.s?(a|c)ss',
