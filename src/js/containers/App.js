@@ -3,9 +3,9 @@ import React, {
 } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import Header from 'components/2-molecules/Header';
 import * as actionCreators from 'actions';
 import MessageBar from 'components/2-molecules/MessageBar';
+import Header from 'whippersnapper/build/Header';
 import Footer from 'whippersnapper/build/Footer';
 require('zzzss/dist/css/zzzss.css');
 
@@ -20,7 +20,8 @@ const App = ({
  }) => (
   <div className="container">
     <Header
-      projectName={projectName}
+      logotype="Synapse"
+      pageName={projectName}
       onLogoClick={() => {
         // Navigate to home screen. Should this be first or last?
         browserHistory.push('/');
@@ -31,7 +32,6 @@ const App = ({
         // reset the message.
         dismissMessage();
       }}
-      message={message}
     />
     <MessageBar message={message} />
     {children}
