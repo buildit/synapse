@@ -37,6 +37,7 @@ node {
       stage("Install") {
         sh "node --version"
         sh "npm install"
+        sh "npm update"
       }
 
       stage("Test") {
