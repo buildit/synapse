@@ -23,9 +23,13 @@ node {
         slackChannel = "synapse"
         gitUrl = "https://bitbucket.org/digitalrigbitbucketteam/synapse"
         appUrl = "http://synapse.staging.${domainName}"
+
+        // clean the workspace before checking out
+        sh "git clean -ffdx"
       }
 
       stage("Checkout") {
+
         checkout scm
 
         // global for exception handling
@@ -37,7 +41,6 @@ node {
       stage("Install") {
         sh "node --version"
         sh "npm install"
-        sh "npm update"
       }
 
       stage("Test") {
