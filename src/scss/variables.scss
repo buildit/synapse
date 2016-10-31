@@ -1,7 +1,8 @@
 $brand-colour-black: #1c1f22;
 $brand-colour-yellow: #fcff00;
 $brand-colour-white: #ffffff;
-$brand-colour-blue: #91d6ff;
+$brand-colour-blue: steelblue;
+$brand-colour-red: #dd6241;
 
 $brand-primary-colour: $brand-colour-black;
 $brand-secondary-colour: $brand-colour-blue;
@@ -31,7 +32,7 @@ $transition-delay: 0.5s;
   Carry over from colors.less
 **/
 $completed: #c9ebb2;
-$backlog: #ff7c59;
+$backlog: $brand-colour-red;
 $dark-matter: #4ba395;
 $gray: #777777;
 $light-gray: #eeeeee;

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { fetchAllStatusData } from 'actions';
 import StatusChart from 'components/2-molecules/StatusChart';
 import transformStatusData from 'helpers/transformStatusData';
+import Spinner from 'components/1-atoms/Spinner';
 
 class Status extends Component {
   componentDidMount() {
@@ -17,7 +18,7 @@ class Status extends Component {
     let component = <div></div>;
 
     if (this.props.isFetching) {
-      component = <div>Loading...</div>;
+      component = <Spinner />;
     }
 
     if (!this.props.isFetching && this.props.project.name) {
