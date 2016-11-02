@@ -15,11 +15,9 @@ class Status extends Component {
   }
 
   render() {
-    let component = <div></div>;
+    if (this.props.xhr) return <Spinner />;
 
-    if (this.props.xhr) {
-      component = <Spinner />;
-    }
+    let component = <div></div>;
 
     if (!this.props.xhr && this.props.project.name) {
       component = (

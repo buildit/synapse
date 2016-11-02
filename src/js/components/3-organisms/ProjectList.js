@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { fetchProjects } from 'actions/projects';
 import Button from 'components/1-atoms/Button';
+import Spinner from 'components/1-atoms/Spinner';
 import ProjectsTable from 'components/2-molecules/ProjectsTable';
 
 class ProjectList extends Component {
@@ -14,10 +15,7 @@ class ProjectList extends Component {
   }
 
   render() {
-    // const message = this.props.xhr ? 'Fetching project list...' : '';
-    if (this.props.xhr) {
-      return <div>Fetching project list...</div>;
-    }
+    if (this.props.xhr) return <Spinner />;
 
     return (
       <div>
@@ -48,7 +46,7 @@ ProjectList.propTypes = {
   fetchProjects: PropTypes.func,
   fetchProject: PropTypes.func,
   projectList: PropTypes.array,
-  xhr: PropTypes.bool,
+  xhr: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => (

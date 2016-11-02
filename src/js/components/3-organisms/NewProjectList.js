@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actions';
 import Button from 'components/1-atoms/Button';
+import Spinner from 'components/1-atoms/Spinner';
 import NewProjectsTable from 'components/2-molecules/NewProjectsTable';
 import normalizeProject from 'helpers/normalizeProject';
 // import filterListByIds from 'helpers/filterListByIds';
@@ -16,6 +17,8 @@ class NewProjectList extends Component {
   }
 
   render() {
+    if (this.props.xhr) return <Spinner />;
+
     const { starterProjectList, setIsNewProject, initializeNewProject } = this.props;
 
     const onProjectCreateClick = harvestId => {
@@ -69,8 +72,8 @@ NewProjectList.propTypes = {
   fetchStarterProjects: PropTypes.func,
   initializeNewProject: PropTypes.func,
   starterProjectList: PropTypes.array.isRequired,
-  xhr: PropTypes.bool,
   setIsNewProject: PropTypes.func.isRequired,
+  xhr: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => {

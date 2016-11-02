@@ -8,6 +8,7 @@ import ProjectionChart from 'components/2-molecules/ProjectionChart';
 import ProjectionSlider from 'components/1-atoms/ProjectionSlider';
 import ProjectionIntegerInput from 'components/1-atoms/ProjectionIntegerInput';
 import Button from 'components/1-atoms/Button';
+import Spinner from 'components/1-atoms/Spinner';
 import DateInput from 'components/1-atoms/DateInput';
 
 class Projection extends Component {
@@ -17,6 +18,8 @@ class Projection extends Component {
   }
 
   render() {
+    if (this.props.xhr) return <Spinner />;
+
     const { projectId } = this.props.params;
 
     const handleInputChange = (inputValue, key) => {
@@ -157,6 +160,7 @@ function mapStateToProps(state) {
   };
   const props = {
     projection,
+    xhr: state.xhr,
   };
   return props;
 }
@@ -169,4 +173,5 @@ Projection.propTypes = {
   fetchProjection: PropTypes.func.isRequired,
   updateProjection: PropTypes.func.isRequired,
   saveProjection: PropTypes.func.isRequired,
+  xhr: PropTypes.bool.isRequired,
 };

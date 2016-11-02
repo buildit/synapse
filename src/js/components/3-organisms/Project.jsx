@@ -1,8 +1,12 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  PropTypes,
+} from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actions';
 import RouteLink from 'components/1-atoms/RouteLink';
 import Text from 'whippersnapper/build/Text';
+import Spinner from 'components/1-atoms/Spinner';
 import Table from 'components/2-molecules/Table';
 import formatDate from 'helpers/formatDate';
 import normalizeProject from 'helpers/normalizeProject';
@@ -14,6 +18,8 @@ class Project extends Component {
   }
 
   render() {
+    if (this.props.xhr) return <Spinner />;
+
     const { project } = this.props;
     return (
       <div className="project-view">
@@ -137,14 +143,16 @@ class Project extends Component {
 }
 
 Project.propTypes = {
-  project: React.PropTypes.object.isRequired,
-  setIsNewProject: React.PropTypes.func.isRequired,
-  fetchProject: React.PropTypes.func.isRequired,
-  params: React.PropTypes.object.isRequired,
+  project: PropTypes.object.isRequired,
+  setIsNewProject: PropTypes.func.isRequired,
+  fetchProject: PropTypes.func.isRequired,
+  params: PropTypes.object.isRequired,
+  xhr: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   project: normalizeProject(state.project),
+  xhr: state.xhr,
 });
 
 export default connect(mapStateToProps, actionCreators)(Project);
