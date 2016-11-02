@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 
 const MessageBar = ({ message }) => {
-  console.log(message);
   const classes = message.type === 'ERROR' ? 'message-bar error' : 'message-bar';
   if (message) {
     return (

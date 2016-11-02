@@ -13,7 +13,7 @@ import {
 import { fetchProjectXhr } from 'middleware/project';
 import {
   fetchProjectSuccess,
-  setMessage,
+  setErrorMessage,
   startXHR,
   endXHR,
 } from 'actions';
@@ -22,6 +22,18 @@ import {
   fetchStatusSuccess,
 } from 'actions/fetchAllStatusData';
 const expect = require('chai').expect;
+
+describe('status error message constructor', () => {
+  const goodDemand = ['foo', 'bar', 'baz'];
+  const goodDefect = ['foo', 'bar', 'baz'];
+  const goodEffort = ['foo', 'bar', 'baz'];
+  const goodProject = { projection: 'foo' };
+
+  it('returns nothing when everything is fine', () => {
+    const noMessage = createStatusErrorMessage(goodDemand, goodDefect, goodEffort, goodProject);
+    expect(noMessage).to.deep.equal([]);
+  });
+});
 
 describe('fetcher for project demand data', () => {
   const demandCorrect = 'foo';
@@ -134,7 +146,7 @@ describe('All status for project fetcher', () => {
     errorGenerator.next([demand, defect, effort, project]);
     errorGenerator.next();
     errorGenerator.next();
-    expect(errorGenerator.next(['foo']).value).to.deep.equal(put(setMessage('foo')));
+    expect(errorGenerator.next(['foo']).value).to.deep.equal(put(setErrorMessage('foo')));
   });
   it('ends the xhr display after error', () => {
     expect(errorGenerator.next().value).to.deep.equal(put(endXHR()));
