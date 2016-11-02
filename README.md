@@ -2,6 +2,13 @@
 
 [![Build Status](http://jenkins.riglet:9000/jenkins/buildStatus/icon?job=synapse-staging-pipeline)](http://jenkins.riglet:9000/jenkins/job/synapse-staging-pipeline/)
 
+## Quick Start
+```
+npm install
+npm start
+```
+Visit [the app](http://localhost:3000/).
+
 ## What is Synapse?
 Synapse is a Management Information (MI) dashboard that provides visualizations of metrics pertaining to the development and delivery of software projects.  Projects exist within the context of Programs (a related grouping of projects) and Portfolios (a related grouping of Programs).  Thus Synapse is able to provide overviews across any particular level or grouping.
 
@@ -56,64 +63,13 @@ To create domain dynamic values, the docker-compose.yml.template can be used to 
 #### Build
 Build and watch for changes:
 ```
-npm run build
+npm start
 ```
 #### Test
 ##### Unit Test
 ```
 npm run test
 ```
-##### Test API
-We want to make sure our app can elegantly handle all kinds of data (good data, bad data, edge cases, etc). To facilitate this, we can put the app into "Test mode", which makes use of a client-side mock API.
-
-###### Running the app in Test mode:
-
-First set the api url to point to our test data:
-```
-$ export TEST_API="./.testApi/"
-```
-
-Build the project in the usual manner:
-```
-$ npm run build
-```
-
-Then generate the fake api:
-```
-$ npm run generate-test-data
-```
-
-Be sure to wipe out the MIDAS_API_URL environment variable when you're done with test mode. You can do this by running
-```
-$ TEST_API=""
-```
-
-###### Creating test data
-Test data is defined in the "testApi" folder. Any project placed in the "projectDefinitions" folder will be automatically pulled in. See the existing projects to get a sense of the format.
-
-The "dataOptions" section of the project definition specifies which status data to use for each project. These data sets, which are regular json, are defined in the "dataSets" folder.
-
-If you add a new status data set to "dataSets", you'll need to pull it into the corresponding data generator. For instance, say you want to create a set of effort data with weird values. Here's how you'd do this:
-
-1. Create the json file in "dataSets/effort". Give it a meaningful name, such as "weirdValues.json".
-2. Import this at the top of "generateEffortData.js":
-```
-const weirdValues = require('../../dataSets/demand/weirdValues')
-```
-Add the `case` as well. This is what maps the project definition to the data set:
-```
-case 'WEIRD VALUES': return weirdValues
-```
-
-3. Use the weirdValues data in a test project. The dataOptions section of your project definition would look something like this:
-```
-dataOptions: {
-  demand: 'STANDARD',
-  defect: 'STANDARD',
-  effort: 'WEIRD VALUES',
-}
-```
-
 
 ##### Acceptance Test
 You need to first have the Synapse app running and that app needs to be appropriately connected to a valid MI REST API service.
@@ -149,34 +105,7 @@ Start a local dev server:
 npm start
 ```
 
-## Developer Notes
-#### State tree
-Our state tree has the following shape, with some typical values:
-
-```
-{
-  appData: {
-    projectList: [],
-    project: {...},
-    isFetching: false
-  },
-  ui: {
-    view: 'LIST_VIEW',
-    errorMsg: 'There was an error fetching data from the server.',
-    projectFormData: {...}
-  }
-}
-```
-
 ## User Notes
-#### We have lists
-Here's a little table that describes the characteristics of the Flow, Role, and Severity lists.
-
-|            |Sequence   |Name   |Group with|
-|------------|-----------|-------|----------|
-|**Flow**    |y          |y      |          |
-|**Role**    |           |y      |y         |
-|**Severity**|y          |y      |y         |
 
 ### Configure for Deployments
 To run this app, you need access to the management information REST API (code name Eolas). Configuration of the base URL for the REST API is already handled in the deployment pipeline for staging and production. Running this app in a local development environment assumes the REST API service is running on localhost:6565.
