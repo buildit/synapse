@@ -50,7 +50,6 @@ module.exports = (initialState) => {
     redux.applyMiddleware(sagaMiddleware));
 
   sagaMiddleware.run(watchFetchProjectionRequest);
-  // sagaMiddleware.run(watchFetchAllStatusData);
   sagaMiddleware.run(watchFetchDemandStatusData);
   sagaMiddleware.run(watchFetchProjects);
   sagaMiddleware.run(watchFetchStarterProjectsRequest);

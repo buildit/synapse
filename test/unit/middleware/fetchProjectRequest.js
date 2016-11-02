@@ -1,8 +1,8 @@
 import { takeEvery } from 'redux-saga';
 import { put, call } from 'redux-saga/effects';
 
-import Api from 'api';
 import {
+  fetchProjectXhr,
   fetchProjectRequest,
   watchFetchProjectRequest,
 } from 'middleware/project';
@@ -28,7 +28,7 @@ describe('Single project fetcher', () => {
   });
 
   it('retrieves data', () => {
-    expect(generator.next().value).to.deep.equal(call(Api.project, project));
+    expect(generator.next().value).to.deep.equal(call(fetchProjectXhr, project));
   });
 
   it('calls a success action', () => {

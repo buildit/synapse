@@ -48,10 +48,19 @@ export function* watchFetchProjectionRequest() {
 /*
  * Middleware for FETCH_PROJECT_REQUEST
  */
+export function* fetchProjectXhr(name) {
+  let project;
+  try {
+    project = yield call(Api.project, name);
+  } catch (err) {
+    project = {};
+  }
+  return project;
+}
 export function* fetchProjectRequest(action) {
   try {
     yield put(startXHR());
-    const project = yield call(Api.project, action.name);
+    const project = yield call(fetchProjectXhr, action.name);
     yield put(fetchProjectSuccessAction(project));
   } catch (err) {
     yield put(setErrorMessage('We could not fetch the project.'));
