@@ -28,10 +28,33 @@ describe('status error message constructor', () => {
   const goodDefect = ['foo', 'bar', 'baz'];
   const goodEffort = ['foo', 'bar', 'baz'];
   const goodProject = { projection: 'foo' };
+  const badDemand = [];
+  const badDefect = [];
+  const badEffort = [];
+  const badProject = {};
 
   it('returns nothing when everything is fine', () => {
     const noMessage = createStatusErrorMessage(goodDemand, goodDefect, goodEffort, goodProject);
     expect(noMessage).to.deep.equal([]);
+  });
+  it('returns one message when projections are missing', () => {
+    const oneMessage = createStatusErrorMessage(goodDemand, goodDefect, goodEffort, badProject);
+    expect(oneMessage).to.deep.equal(['You have not yet set a projection for this project.']);
+  });
+  it('returns one message when status data is missing', () => {
+    const missingDataList = ['demand', 'effort'];
+    const correct = [`There is no data for ${missingDataList.join(', ')}.`];
+    const oneMessage = createStatusErrorMessage(badDemand, goodDefect, badEffort, goodProject);
+    expect(oneMessage).to.deep.equal(correct);
+  });
+  it('returns two messages when both are bad', () => {
+    const missingDataList = ['demand', 'defect', 'effort'];
+    const correct = [
+      `There is no data for ${missingDataList.join(', ')}.`,
+      'You have not yet set a projection for this project.',
+    ];
+    const twoMessage = createStatusErrorMessage(badDemand, badDefect, badEffort, badProject);
+    expect(twoMessage).to.deep.equal(correct);
   });
 });
 
