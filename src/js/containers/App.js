@@ -42,7 +42,7 @@ const App = ({
 );
 
 App.propTypes = {
-  message: PropTypes.string.isRequired,
+  message: PropTypes.object.isRequired,
   resetProject: PropTypes.func.isRequired,
   dismissMessage: PropTypes.func.isRequired,
   projectName: PropTypes.string,

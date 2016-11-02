@@ -3,6 +3,7 @@ import * as types from 'actions/actions';
 export const setErrorMessage = message => ({
   type: types.SET_MESSAGE,
   message,
+  messageType: 'ERROR',
 });
 
 export const setMessage = message => ({

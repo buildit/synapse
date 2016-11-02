@@ -9,8 +9,11 @@ describe('messages reducer', () => {
   });
 
   it('should set a message', () => {
-    const message = 'a message';
-    const action = setMessage(message);
-    expect(reducer(undefined, action)).to.equal(message);
+    const message = {
+      text: 'a message',
+      type: undefined,
+    };
+    const action = setMessage(message.text);
+    expect(reducer(undefined, action)).to.deep.equal(message);
   });
 });

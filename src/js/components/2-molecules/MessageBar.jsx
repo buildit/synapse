@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 
 const MessageBar = ({ message }) => {
+  console.log(message);
+  const classes = message.type === 'ERROR' ? 'message-bar error' : 'message-bar';
   if (message) {
     return (
-      <div className="message-bar">
-        <span className="message-text">{message}</span>
+      <div className={classes}>
+        <span className="message-text">{message.text}</span>
       </div>
     );
   }
@@ -14,5 +16,5 @@ const MessageBar = ({ message }) => {
 export default MessageBar;
 
 MessageBar.propTypes = {
-  message: PropTypes.string,
+  message: PropTypes.object,
 };

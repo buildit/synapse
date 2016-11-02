@@ -8,7 +8,7 @@ import {
 } from 'middleware/project';
 import {
   fetchProjectSuccess,
-  setMessage,
+  setErrorMessage,
   startXHR,
   endXHR,
 } from 'actions';
@@ -39,7 +39,7 @@ describe('Single project fetcher', () => {
     errorGenerator.next();
 
     const generatorValue = errorGenerator.throw(errorMessage).value;
-    const correct = put(setMessage(displayedErrorMessage));
+    const correct = put(setErrorMessage(displayedErrorMessage));
     expect(generatorValue).to.deep.equal(correct);
 
     errorGenerator.next();
