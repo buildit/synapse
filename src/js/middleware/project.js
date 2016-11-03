@@ -22,6 +22,10 @@ import {
   endXHR,
 } from 'actions';
 import { trimFormInputs } from 'helpers/trimFormInputs';
+import {
+  fetchProject,
+  fetchProjectDemandData,
+} from 'middleware/api';
 
 import Api from 'api';
 
@@ -48,19 +52,10 @@ export function* watchFetchProjectionRequest() {
 /*
  * Middleware for FETCH_PROJECT_REQUEST
  */
-export function* fetchProjectXhr(name) {
-  let project;
-  try {
-    project = yield call(Api.project, name);
-  } catch (err) {
-    project = {};
-  }
-  return project;
-}
 export function* fetchProjectRequest(action) {
   try {
     yield put(startXHR());
-    const project = yield call(fetchProjectXhr, action.name);
+    const project = yield call(fetchProject, action.name);
     yield put(fetchProjectSuccessAction(project));
   } catch (err) {
     yield put(setErrorMessage('We could not fetch the project.'));
@@ -77,16 +72,15 @@ export function* watchFetchProjectRequest() {
  */
 export function* fetchProjects() {
   let projectSummary = [];
-  let demand = undefined;
   try {
     yield put(startXHR());
     projectSummary = yield call(Api.projects);
     const length = projectSummary.length;
     for (let i = 0; i < length; i++) {
       const name = projectSummary[i].name;
-      const project = yield call(Api.project, name);
+      const project = yield call(fetchProject, name);
       try {
-        demand = yield call(Api.projectDemandSummary, name);
+        const demand = yield call(fetchProjectDemandData, name);
         projectSummary[i].status = yield call(getRagStatus, project.projection, demand);
       } catch (err) {
         yield put(setErrorMessage(err));

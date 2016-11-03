@@ -1,16 +1,17 @@
 import { takeEvery } from 'redux-saga';
 import { put, call } from 'redux-saga/effects';
 
-import Api from 'api';
 import {
   createStatusErrorMessage,
-  fetchProjectDemandData,
-  fetchProjectDefectData,
-  fetchProjectEffortData,
   fetchAllStatusData,
   watchFetchDemandStatusData,
 } from 'middleware/status';
-import { fetchProjectXhr } from 'middleware/project';
+import {
+  fetchProject,
+  fetchProjectDemandData,
+  fetchProjectDefectData,
+  fetchProjectEffortData,
+} from 'middleware/api';
 import {
   fetchProjectSuccess,
   setErrorMessage,
@@ -58,62 +59,6 @@ describe('status error message constructor', () => {
   });
 });
 
-describe('fetcher for project demand data', () => {
-  const demandCorrect = 'foo';
-  const name = 'name';
-  const generator = fetchProjectDemandData(name);
-  const errorGenerator = fetchProjectDemandData(name);
-
-  it('fetches demand', () => {
-    const correct = call(Api.projectDemandSummary, name);
-    expect(generator.next().value).to.deep.equal(correct);
-    const final = generator.next(demandCorrect).value;
-    expect(final).to.deep.equal(demandCorrect);
-  });
-  it('returns a default on failure', () => {
-    errorGenerator.next();
-    const final = errorGenerator.throw().value;
-    expect(final).to.deep.equal([]);
-  });
-});
-
-describe('fetcher for project defect data', () => {
-  const defectCorrect = 'foo';
-  const name = 'name';
-  const generator = fetchProjectDefectData(name);
-  const errorGenerator = fetchProjectDefectData(name);
-
-  it('fetches defect', () => {
-    const correct = call(Api.projectDefectSummary, name);
-    expect(generator.next().value).to.deep.equal(correct);
-    const final = generator.next(defectCorrect).value;
-    expect(final).to.deep.equal(defectCorrect);
-  });
-  it('returns a default on failure', () => {
-    errorGenerator.next();
-    const final = errorGenerator.throw().value;
-    expect(final).to.deep.equal([]);
-  });
-});
-describe('fetcher for project effort data', () => {
-  const effortCorrect = 'foo';
-  const name = 'name';
-  const generator = fetchProjectEffortData(name);
-  const errorGenerator = fetchProjectEffortData(name);
-
-  it('fetches effort', () => {
-    const correct = call(Api.projectEffortSummary, name);
-    expect(generator.next().value).to.deep.equal(correct);
-    const final = generator.next(effortCorrect).value;
-    expect(final).to.deep.equal(effortCorrect);
-  });
-  it('returns a default on failure', () => {
-    errorGenerator.next();
-    const final = errorGenerator.throw().value;
-    expect(final).to.deep.equal([]);
-  });
-});
-
 
 describe('All status for project fetcher', () => {
   const name = 'Foo';
@@ -132,7 +77,7 @@ describe('All status for project fetcher', () => {
   });
 
   it('retrieves data', () => {
-    const projectCorrect = call(fetchProjectXhr, name);
+    const projectCorrect = call(fetchProject, name);
     const demandCorrect = call(fetchProjectDemandData, name);
     const defectCorrect = call(fetchProjectDefectData, name);
     const effortCorrect = call(fetchProjectEffortData, name);

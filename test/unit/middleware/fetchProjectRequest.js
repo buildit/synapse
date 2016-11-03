@@ -2,10 +2,10 @@ import { takeEvery } from 'redux-saga';
 import { put, call } from 'redux-saga/effects';
 
 import {
-  fetchProjectXhr,
   fetchProjectRequest,
   watchFetchProjectRequest,
 } from 'middleware/project';
+import { fetchProject } from 'middleware/api';
 import {
   fetchProjectSuccess,
   setErrorMessage,
@@ -28,7 +28,7 @@ describe('Single project fetcher', () => {
   });
 
   it('retrieves data', () => {
-    expect(generator.next().value).to.deep.equal(call(fetchProjectXhr, project));
+    expect(generator.next().value).to.deep.equal(call(fetchProject, project));
   });
 
   it('calls a success action', () => {

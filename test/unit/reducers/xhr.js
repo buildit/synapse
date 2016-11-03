@@ -7,6 +7,10 @@ import {
 import { expect } from 'chai';
 
 describe('xhr reducer', () => {
+  it('should return the initial state with a bad action', () => {
+    expect(reducer(undefined, { type: 'foo' })).to.equal(initialState);
+  });
+
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).to.equal(initialState);
   });

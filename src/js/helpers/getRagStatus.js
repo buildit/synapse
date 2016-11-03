@@ -2,6 +2,9 @@ import moment from 'moment';
 import makePoints from 'helpers/makePoints';
 
 module.exports = (rawProjection, demand, doneKey = 'Done') => {
+  if (!rawProjection) {
+    return undefined;
+  }
   const projection = {
     startDate: rawProjection.startDate,
     iterationLength: rawProjection.iterationLength,

@@ -41,6 +41,4 @@ describe('project reducer', () => {
 
     expect(reducer(oldProject, action)).to.deep.equal(initialState);
   });
-
-  // TODO: initialize_new_project, once we get that straightened out
 });

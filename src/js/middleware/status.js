@@ -13,9 +13,12 @@ import {
   startXHR,
   endXHR,
 } from 'actions';
-import { fetchProjectXhr } from 'middleware/project';
-
-import Api from 'api';
+import {
+  fetchProject,
+  fetchProjectDemandData,
+  fetchProjectDefectData,
+  fetchProjectEffortData,
+} from 'middleware/api';
 
 export function createStatusErrorMessage(demand, defect, effort, project) {
   // Construct any required error messages
@@ -37,46 +40,6 @@ export function createStatusErrorMessage(demand, defect, effort, project) {
 }
 
 /*
- * Mini saga for retrieving demand data
- */
-export function* fetchProjectDemandData(name) {
-  let demand;
-  try {
-    demand = yield call(Api.projectDemandSummary, name);
-  } catch (err) {
-    demand = [];
-  }
-
-  return demand;
-}
-
-/*
- * Mini saga for retrieving defect data
- */
-export function* fetchProjectDefectData(name) {
-  let defect;
-  try {
-    defect = yield call(Api.projectDefectSummary, name);
-  } catch (err) {
-    defect = [];
-  }
-  return defect;
-}
-
-/*
- * Mini saga for retrieving effort data
- */
-export function* fetchProjectEffortData(name) {
-  let effort;
-  try {
-    effort = yield call(Api.projectEffortSummary, name);
-  } catch (err) {
-    effort = [];
-  }
-  return effort;
-}
-
-/*
  * Saga for FETCH_PROJECT_STATUS_DATA
  */
 export function* fetchAllStatusData(action) {
@@ -88,7 +51,7 @@ export function* fetchAllStatusData(action) {
     call(fetchProjectDemandData, name),
     call(fetchProjectDefectData, name),
     call(fetchProjectEffortData, name),
-    call(fetchProjectXhr, name),
+    call(fetchProject, name),
   ];
 
   yield put(fetchStatusSuccess({
