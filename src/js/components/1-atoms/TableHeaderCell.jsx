@@ -1,7 +1,7 @@
 import React from 'react';
 
-const TableHeaderCell = ({ headerValue, id }) => (
-  <th className="tableHeaderCell" id={id}>{headerValue}</th>
+const TableHeaderCell = ({ headerValue, id, classes }) => (
+  <th className={`tableHeaderCell ${classes}`} id={id}>{headerValue}</th>
 );
 
 export default TableHeaderCell;
@@ -9,4 +9,5 @@ export default TableHeaderCell;
 TableHeaderCell.propTypes = {
   headerValue: React.PropTypes.string.isRequired,
   id: React.PropTypes.string,
+  classes: React.PropTypes.string,
 };

@@ -2,8 +2,8 @@
 
 .rag-status-table-cell {
   .indicator {
-    width: 2rem;
-    height: 2rem;
+    width: 1.3rem;
+    height: 1.3rem;
     display: block;
     border-radius: 50%;
   }
@@ -12,4 +12,13 @@
   .red { background-color: $red; }
   .amber { background-color: $amber; }
   .green { background-color: $green; }
+
+  @media (min-width: $screen-md-min) {
+    .indicator {
+      width: 2rem;
+      height: 2rem;
+      display: block;
+      border-radius: 50%;
+    }
+  }
 }

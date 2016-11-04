@@ -9,7 +9,12 @@ const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
   let bodyRows = [];
 
   for (let headerValue of visibleColumns) {
-    headerRow.push(<TableHeaderCell key={headerValue} headerValue={headerValue} />);
+    // Hide description on small screens
+    const classes =
+      (headerValue === 'description') ? `${headerValue} hidden-sm hidden-xs` : headerValue;
+
+    headerRow.push(
+      <TableHeaderCell key={headerValue} headerValue={headerValue} classes={classes} />);
   }
 
   for (let i = 0; i < tableData.length; i++) {
@@ -18,10 +23,14 @@ const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
 
     for (const key of visibleColumns) {
       let cellValue = tableData[i][key];
+
+      // Hide description on small screens
+      const classes = (key === 'description') ? `${key} hidden-sm hidden-xs` : key;
+
       if (key === 'status') {
         bodyRow.push(<RAGStatusTableCell key={i + key} status={cellValue} />);
       } else {
-        bodyRow.push(<TableCell key={i + key} cellValue={cellValue} />);
+        bodyRow.push(<TableCell key={i + key} cellValue={cellValue} classes={classes} />);
       }
     }
 
@@ -60,7 +69,7 @@ const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
   }
 
   return (
-    <table className="table">
+    <table className="table projectsTable">
       <thead>
         <tr className="tableHeaderRow">
           {headerRow}
