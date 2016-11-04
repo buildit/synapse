@@ -1,6 +1,11 @@
-export const PADDING = { top: 50, right: 200, bottom: 0, left: 0 };
-export const WIDTH = 940;
-export const CHART_OFFSET_LEFT = 250;
+const bodyWidth = document.body.clientWidth;
+const smallScreenMode = bodyWidth < 800;
+
+export const CHART_OFFSET_LEFT = smallScreenMode ? 10 : 250;
+export const WIDTH = smallScreenMode ? 600 : 940;
+
+
+export const PADDING = { top: 50, right: 200, bottom: 0, left: 55 };
 export const HEIGHT = 1200;
 export const INDIVIDUAL_CHART_HEIGHT = 300;
 export const SPACE_BETWEEN_CHARTS = 100;
