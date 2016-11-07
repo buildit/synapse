@@ -1,5 +1,5 @@
-const isValid = require('../../src/js/helpers/isValid');
-const should = require('chai').should();
+import isValid from 'helpers/isValid';
+import { expect } from 'chai';
 
 describe('Data validity checker', () => {
   it('Rejects when projectDate property is missing from a data point', () => {
@@ -17,7 +17,7 @@ describe('Data validity checker', () => {
         },
       },
     ];
-    should.equal(isValid(data, 'demand-status-data'), false);
+    expect(isValid(data, 'demand-status-data')).to.equal(false);
   });
 
   it('Rejects when projectDate does not conform to expected date format', () => {
@@ -35,7 +35,7 @@ describe('Data validity checker', () => {
         },
       },
     ];
-    should.equal(isValid(data, 'demand-status-data'), false);
+    expect(isValid(data, 'demand-status-data')).to.equal(false);
   });
 
   it('Does not reject when projectDate has slashes instead of dashes', () => {
@@ -53,7 +53,7 @@ describe('Data validity checker', () => {
         },
       },
     ];
-    should.equal(isValid(data, 'demand-status-data'), true);
+    expect(isValid(data, 'demand-status-data')).to.equal(true);
   });
 
   it('Rejects when a demand status point does not contain a "status" key', () => {
@@ -71,7 +71,7 @@ describe('Data validity checker', () => {
         },
       },
     ];
-    should.equal(isValid(data, 'demand-status-data'), false);
+    expect(isValid(data, 'demand-status-data')).to.equal(false);
   });
 
   it('Rejects when a defect status point does not contain a "severity" key', () => {
@@ -89,7 +89,7 @@ describe('Data validity checker', () => {
         },
       },
     ];
-    should.equal(isValid(data, 'defect-status-data'), false);
+    expect(isValid(data, 'defect-status-data')).to.equal(false);
   });
 
   it('Rejects when an effort status point does not contain an "activity" key', () => {
@@ -107,6 +107,24 @@ describe('Data validity checker', () => {
         },
       },
     ];
-    should.equal(isValid(data, 'effort-status-data'), false);
+    expect(isValid(data, 'effort-status-data')).to.equal(false);
+  });
+
+  it('Does not reject when we request something nonstandard', () => {
+    const data = [
+      {
+        projectDate: '2015-10-29',
+        status: {
+          Backlog: 23,
+        },
+      },
+      {
+        projectDate: '2015/10/30',
+        status: {
+          Backlog: 34,
+        },
+      },
+    ];
+    expect(isValid(data, 'whatever')).to.equal(true);
   });
 });

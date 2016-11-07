@@ -9,7 +9,6 @@ import EditableArrayTable from 'components/2-molecules/EditableArrayTable';
 import AddFlowItem from 'components/2-molecules/AddFlowItem';
 import AddRoleItem from 'components/2-molecules/AddRoleItem';
 import AddSeverityItem from 'components/2-molecules/AddSeverityItem';
-import normalizeProject from 'helpers/normalizeProject';
 
 class EditProject extends Component {
   componentWillMount() {
@@ -328,17 +327,11 @@ EditProject.propTypes = {
   isNewProject: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => {
-  const project = normalizeProject(state.project);
-  return ({
-    project,
-    isNewProject: state.project.new ? state.project.new : true,
-
-    // Passing this down as a prop for one reason only: to trigger the render to update.
-    ui: state.ui,
-    // Sheesh.
-  });
-};
+const mapStateToProps = state => ({
+  project: state.project,
+  isNewProject: state.project.new ? state.project.new : true,
+  form: state.form,
+});
 
 
 export default connect(mapStateToProps, actionCreators)(EditProject);
