@@ -1,7 +1,14 @@
 import fs from 'fs';
-import { Builder, logging } from 'selenium-webdriver';
+import { Builder, logging, } from 'selenium-webdriver';
+import chrome from 'selenium-webdriver/chrome';
 
-const driver = new Builder().forBrowser('chrome').build();
+const options = new chrome.Options();
+options.addArguments('no-sandbox')
+
+const driver = new Builder()
+  .forBrowser('chrome')
+  .setChromeOptions(options)
+  .build();
 const url = process.env.URL || 'http://localhost:3000';
 logging.installConsoleHandler();
 
