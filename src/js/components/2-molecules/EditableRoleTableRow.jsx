@@ -2,6 +2,13 @@ import React, { PropTypes } from 'react';
 import Icon from 'components/1-atoms/Icon';
 
 class EditableRoleTableRow extends React.Component {
+
+  constructor() {
+    super();
+    this.removeItemOnClick = this.removeItemOnClick.bind(this);
+    this.moveItemUpOnClick = this.moveItemUpOnClick.bind(this);
+    this.moveItemDownOnClick = this.moveItemDownOnClick.bind(this);
+  }
   removeItemOnClick() {
     this.props.removeItem(this.props.index);
   }
