@@ -1,5 +1,5 @@
+import makePoints from 'helpers/makePoints';
 const assert = require('chai').assert;
-const makePoints = require('../../src/js/helpers/makePoints');
 
 describe('Projection chart points maker', () => {
   const projection1 = {

@@ -21,8 +21,10 @@ describe('error helper', () => {
     const message = 'foo';
     const messageBody = { body: { error: { message } } };
     const statusBody = { body: { error: { statusCode: message } } };
+    const emptyStyle = { error: {} };
     expect(errorHelper(messageBody)).to.equal(message);
     expect(errorHelper(statusBody)).to.equal(message);
+    expect(errorHelper(emptyStyle)).to.equal(stockErrorMessage);
   });
 
   it('deals with statusText errors', () => {

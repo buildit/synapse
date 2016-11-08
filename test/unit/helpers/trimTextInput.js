@@ -1,4 +1,4 @@
-const trimTextInput = require('../../src/js/helpers/trimTextInput');
+import trimTextInput from 'helpers/trimTextInput';
 const should = require('chai').should();
 
 describe('Text input trimmer', () => {

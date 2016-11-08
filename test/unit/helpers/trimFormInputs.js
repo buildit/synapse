@@ -1,15 +1,22 @@
-import { trimFormInputs } from '../../src/js/helpers/trimFormInputs';
-// const trimFormInputs = require('../../src/js/helpers/trimFormInputs');
-/* eslint-disable no-unused-vars */
-const should = require('chai').should();
-/* eslint-enable no-unused-vars */
+import { trimFormInputs } from 'helpers/trimFormInputs';
+import chai from 'chai';
+chai.should();
 
 describe('Form inputs trimmer', () => {
+  it('For top level fields, it removes extra spaces from the end of an input string', () => {
+    const rawProjectFromForm = {
+      name: 'Jasper   ',
+    };
+    const trimmedInput = trimFormInputs(rawProjectFromForm);
+    trimmedInput.name.should.equal('Jasper');
+  });
+
   it('For demand header, it removes extra spaces from the end of an input string', () => {
     const rawProjectFromForm = {
       name: 'Jasper',
       demand: {
         source: 'The moon   ',
+        other: [],
       },
     };
     const trimmedInput = trimFormInputs(rawProjectFromForm);
@@ -21,6 +28,7 @@ describe('Form inputs trimmer', () => {
       name: 'Jasper',
       defect: {
         source: 'The sun   ',
+        other: [],
       },
     };
     const trimmedInput = trimFormInputs(rawProjectFromForm);
@@ -32,6 +40,7 @@ describe('Form inputs trimmer', () => {
       name: 'Jasper',
       effort: {
         source: 'The sun   ',
+        other: [],
       },
     };
     const trimmedInput = trimFormInputs(rawProjectFromForm);

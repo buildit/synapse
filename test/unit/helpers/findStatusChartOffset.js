@@ -1,4 +1,4 @@
-const findStatusChartOffset = require('../../src/js/helpers/findStatusChartOffset');
+import findStatusChartOffset from 'helpers/findStatusChartOffset';
 const should = require('chai').should();
 
 describe('Status chart offset calculator', () => {
