@@ -1,9 +1,9 @@
 import fs from 'fs';
-import { Builder, logging, } from 'selenium-webdriver';
+import { Builder, logging } from 'selenium-webdriver';
 import chrome from 'selenium-webdriver/chrome';
 
 const options = new chrome.Options();
-options.addArguments('no-sandbox')
+options.addArguments('no-sandbox');
 
 const driver = new Builder()
   .forBrowser('chrome')
