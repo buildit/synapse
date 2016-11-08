@@ -4,6 +4,12 @@ node {
 
     try {
       stage("Set Up") {
+        // clean the workspace before checking out
+        if(fileExists('.git')) {
+          echo 'Perform workspace cleanup'
+          sh "git clean -ffdx"
+        }
+
         sh "curl -L https://dl.bintray.com/buildit/maven/jenkins-pipeline-libraries-${env.PIPELINE_LIBS_VERSION}.zip -o lib.zip && echo 'A' | unzip lib.zip"
 
         ecr = load "lib/ecr.groovy"
@@ -23,9 +29,6 @@ node {
         slackChannel = "synapse"
         gitUrl = "https://bitbucket.org/digitalrigbitbucketteam/synapse"
         appUrl = "http://synapse.staging.${domainName}"
-
-        // clean the workspace before checking out
-        sh "git clean -ffdx"
       }
 
       stage("Checkout") {
