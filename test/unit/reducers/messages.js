@@ -16,4 +16,18 @@ describe('messages reducer', () => {
     const action = setMessage(message.text);
     expect(reducer(undefined, action)).to.deep.equal(message);
   });
+
+  it('should replace a message', () => {
+    const text = 'text';
+    const start = {
+      text: 'message',
+      type: 'error',
+    };
+    const correct = {
+      text,
+      type: undefined,
+    };
+    const action = setMessage(text);
+    expect(reducer(start, action)).to.deep.equal(correct);
+  });
 });

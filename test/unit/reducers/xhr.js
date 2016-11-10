@@ -17,9 +17,11 @@ describe('xhr reducer', () => {
 
   it('should mark xhr as started', () => {
     expect(reducer(undefined, startXHR())).to.equal(true);
+    expect(reducer(true, endXHR())).to.equal(false);
   });
 
   it('should mark xhr as completed', () => {
     expect(reducer(undefined, endXHR())).to.equal(false);
+    expect(reducer(false, endXHR())).to.equal(false);
   });
 });

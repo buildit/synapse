@@ -1,3 +1,4 @@
+import { FETCH_STATUS_SUCCESS } from 'actions/actions';
 export const initialState = {
   demand: [],
   defect: [],
@@ -6,7 +7,7 @@ export const initialState = {
 
 export const status = (state = initialState, action) => {
   switch (action.type) {
-  case 'FETCH_STATUS_SUCCESS': {
+  case FETCH_STATUS_SUCCESS: {
     return {
       ...state,
       demand: action.status.demand,

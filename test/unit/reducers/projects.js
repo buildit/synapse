@@ -18,6 +18,7 @@ describe('projects reducer', () => {
     finalState.projectList = newProjectList;
 
     expect(reducer(undefined, action)).to.deep.equal(finalState);
+    expect(reducer(initialState, action)).to.deep.equal(finalState);
   });
 
   it('should update the starter project list', () => {
@@ -27,5 +28,6 @@ describe('projects reducer', () => {
     finalState.starterProjectList = starterProjectList;
 
     expect(reducer(undefined, action)).to.deep.equal(finalState);
+    expect(reducer(initialState, action)).to.deep.equal(finalState);
   });
 });
