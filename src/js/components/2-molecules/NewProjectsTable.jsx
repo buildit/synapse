@@ -22,6 +22,7 @@ const NewProjectsTable = ({ tableData, visibleColumns, rowKey, onProjectCreateCl
     bodyRow.push(
       <td key={`create-${projectId}`}>
         <span
+          className="btn btn-primary"
           onClick={() => {
             onProjectCreateClick(projectId);
           }}
