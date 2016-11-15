@@ -6,6 +6,7 @@ const SassLintPlugin = require('sasslint-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const version = require('./package.json').version;
 
+console.log(process.env.NODE_ENV);
 module.exports = {
   entry: [
     './src/js/index.js',
@@ -31,6 +32,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.EOLAS_DOMAIN': JSON.stringify(process.env.EOLAS_DOMAIN),
       'process.env.TEST_API': JSON.stringify(process.env.TEST_API),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.VERSION': JSON.stringify(version),
     }),
     new SassLintPlugin({

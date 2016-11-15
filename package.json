@@ -10,7 +10,7 @@
     "lint:js": "eslint 'src/js/**/*.js' 'src/js/**/*.jsx' 'test/**/*'",
     "lint:scss": "./node_modules/sass-lint/bin/sass-lint.js --verbose --no-exit",
     "lint:html": "./node_modules/htmlhint/bin/htmlhint 'src/**/*.html'",
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --inline",
+    "start": "NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --inline",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "storybook:build": "build-storybook -c .storybook -o storybook",
     "test": "NODE_ENV=test nyc mocha --recursive --compilers js:babel-core/register --require babel-polyfill test/unit",
