@@ -23,9 +23,7 @@ import getChartableDates from './getChartableDates';
 import getChartableValues from './getChartableValues';
 import getChartableDemandValues from './getChartableDemandValues';
 import isProjectionAlarm from './isProjectionAlarm';
-/* eslint-disable import/no-unresolved */
-import findStatusChartOffset from '/helpers/findStatusChartOffset';
-/* eslint-enable import/no-unresolved */
+import findStatusChartOffset from 'helpers/findStatusChartOffset';
 
 import {
   PADDING,

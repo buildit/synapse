@@ -11,20 +11,23 @@ export const DEVELOPMENT_ENDPOINT = 'http://localhost:6565/';
 export const STAGING_PREFIX = 'http://eolas.staging.';
 export const PRODUCTION_PREFIX = 'http://eolas.';
 
-let browserEnvironment = '';
-if (hostname.includes('staging')) {
-  browserEnvironment = STAGING;
-} else if (hostname.includes('localhost')) {
-  browserEnvironment = DEVELOPMENT;
-} else {
-  browserEnvironment = PRODUCTION;
-}
-
 export class Config {
 
-  constructor(environment) {
-    this.environment = environment;
+  constructor(environment = '') {
+    this.environment = this.determineEnvironment(environment);
     this.computedBaseUrl = undefined;
+  }
+
+  determineEnvironment(environment) {
+    let currentEnv;
+    if (environment.includes('staging')) {
+      currentEnv = STAGING;
+    } else if (environment.includes('localhost')) {
+      currentEnv = DEVELOPMENT;
+    } else {
+      currentEnv = PRODUCTION;
+    }
+    return currentEnv;
   }
 
   baseUrl() {
@@ -58,5 +61,5 @@ export class Config {
   }
 }
 
-const config = new Config(browserEnvironment);
+const config = new Config(hostname);
 export default config;
