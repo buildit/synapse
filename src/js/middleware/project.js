@@ -30,26 +30,6 @@ import {
 import Api from 'api';
 
 /*
- * Middleware for FETCH_PROJECTION_REQUEST
- */
-export function* fetchProjectionRequest(action) {
-  try {
-    yield put(startXHR());
-    const project = yield call(Api.project, action.name);
-    yield put(fetchProjectSuccessAction(project));
-  } catch (err) {
-    yield put(setMessage(`You're creating a new projection for project ${action.name}.`));
-    yield put(setErrorMessage(err));
-  } finally {
-    yield put(endXHR());
-  }
-}
-export function* watchFetchProjectionRequest() {
-  yield call(takeEvery, FETCH_PROJECTION_REQUEST, fetchProjectionRequest);
-}
-
-
-/*
  * Middleware for FETCH_PROJECT_REQUEST
  */
 export function* fetchProjectRequest(action) {
@@ -65,6 +45,9 @@ export function* fetchProjectRequest(action) {
 }
 export function* watchFetchProjectRequest() {
   yield call(takeEvery, FETCH_PROJECT_REQUEST, fetchProjectRequest);
+}
+export function* watchFetchProjectionRequest() {
+  yield call(takeEvery, FETCH_PROJECTION_REQUEST, fetchProjectRequest);
 }
 
 /*
@@ -135,6 +118,7 @@ export function* saveProjectionRequest(action) {
       endIterations: projection.periodEnd,
       endVelocity: projection.velocityEnd,
       startDate: projection.startDate,
+      // endDate: projection.endDate,
     };
     yield call(Api.saveProjection, projectionToSave, name);
     yield put(setMessage(`The projection for project ${name} was saved successfully.`));
