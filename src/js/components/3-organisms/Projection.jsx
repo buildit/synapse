@@ -36,6 +36,7 @@ class Projection extends Component {
         startVelocity: projection.velocityStart,
         endIterations: projection.periodEnd,
         endVelocity: projection.velocityEnd,
+        endDate: projection.endDate,
       });
     };
 
@@ -157,6 +158,7 @@ function mapStateToProps(state) {
     velocityStart: state.project.projection.startVelocity,
     periodEnd: state.project.projection.endIterations,
     velocityEnd: state.project.projection.endVelocity,
+    endDate: state.project.projection.endDate,
   };
   const props = {
     projection,

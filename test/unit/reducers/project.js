@@ -15,7 +15,7 @@ describe('project reducer', () => {
   });
 
   it('should update the projection', () => {
-    const newProjection = 'a projection';
+    const newProjection = {};
     const action = updateProjection(newProjection);
     const finalState = initialState;
     finalState.projection = newProjection;
@@ -24,14 +24,14 @@ describe('project reducer', () => {
   });
 
   it('should update a whole project', () => {
-    const newProject = { name: 'foo' };
+    const newProject = { name: 'foo', projection: {} };
     const action = fetchProjectSuccess(newProject);
 
     expect(reducer(undefined, action)).to.deep.equal(newProject);
   });
 
   it('should update a whole project when it\'s not new', () => {
-    const newProject = { name: 'foo', new: false };
+    const newProject = { name: 'foo', projection: {}, new: false };
     const action = fetchProjectSuccess(newProject);
 
     expect(reducer(undefined, action)).to.deep.equal(newProject);

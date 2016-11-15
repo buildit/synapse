@@ -6,7 +6,6 @@ const SassLintPlugin = require('sasslint-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const version = require('./package.json').version;
 
-console.log(process.env.NODE_ENV);
 module.exports = {
   entry: [
     './src/js/index.js',
