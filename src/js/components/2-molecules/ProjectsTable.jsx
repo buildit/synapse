@@ -5,10 +5,10 @@ import RAGStatusTableCell from 'components/1-atoms/RAGStatusTableCell';
 import TableHeaderCell from 'components/1-atoms/TableHeaderCell';
 
 const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
-  let headerRow = [];
-  let bodyRows = [];
+  const headerRow = [];
+  const bodyRows = [];
 
-  for (let headerValue of visibleColumns) {
+  for (const headerValue of visibleColumns) {
     // Hide description on small screens
     const classes =
       (headerValue === 'description') ? `${headerValue} hidden-sm hidden-xs` : headerValue;
@@ -19,10 +19,10 @@ const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
 
   for (let i = 0; i < tableData.length; i++) {
     const projectId = tableData[i][rowKey];
-    let bodyRow = [];
+    const bodyRow = [];
 
     for (const key of visibleColumns) {
-      let cellValue = tableData[i][key];
+      const cellValue = tableData[i][key];
 
       // Hide description on small screens
       const classes = (key === 'description') ? `${key} hidden-sm hidden-xs` : key;

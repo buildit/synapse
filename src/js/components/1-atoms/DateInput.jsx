@@ -17,7 +17,7 @@ const DateInput = ({ label, onInputChange, initialValue = '' }) => {
       }
       />
     </div>
-    );
+  );
 };
 
 export default DateInput;

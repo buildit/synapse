@@ -40,7 +40,7 @@ const ProjectionIntegerInput = (
       </div>
 
     </div>
-    );
+  );
 };
 
 export default ProjectionIntegerInput;

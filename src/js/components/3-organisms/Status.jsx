@@ -7,6 +7,7 @@ import { fetchAllStatusData } from 'actions';
 import StatusChart from 'components/2-molecules/StatusChart';
 import transformStatusData from 'helpers/transformStatusData';
 import Spinner from 'components/1-atoms/Spinner';
+import getForecastedCompletionDate from 'helpers/getForecastedCompletionDate';
 
 class Status extends Component {
   componentDidMount() {
@@ -29,6 +30,7 @@ class Status extends Component {
           defectCategories={this.props.defectCategories}
           effortCategories={this.props.effortCategories}
           projection={this.props.projection}
+          forecastedCompletionDate={this.props.forecastedCompletionDate}
         />
     );
     }
@@ -49,6 +51,7 @@ Status.propTypes = {
   effortCategories: PropTypes.array.isRequired,
   params: PropTypes.object.isRequired,
   xhr: PropTypes.bool,
+  forecastedCompletionDate: PropTypes.string,
 };
 
 const mapStateToProps = state => {
@@ -75,6 +78,8 @@ const mapStateToProps = state => {
     };
   }
 
+  const forecastedCompletionDate = getForecastedCompletionDate(demandStatus);
+
   return {
     project: state.project,
     demandStatus,
@@ -85,6 +90,7 @@ const mapStateToProps = state => {
     effortCategories,
     projection,
     xhr: state.xhr,
+    forecastedCompletionDate,
   };
 };
 

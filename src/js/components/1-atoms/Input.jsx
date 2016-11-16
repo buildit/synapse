@@ -29,7 +29,7 @@ const Input = ({ label, section, property, onInputChange, initialValue = default
       }
       />
     </div>
-    );
+  );
 };
 
 export default Input;

@@ -30,7 +30,7 @@ const ProjectionSlider = ({ label, legendClass, onInputChange, initialValue, min
       </div>
 
     </div>
-    );
+  );
 };
 
 export default ProjectionSlider;
