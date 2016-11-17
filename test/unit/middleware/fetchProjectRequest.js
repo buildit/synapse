@@ -4,6 +4,7 @@ import { put, call } from 'redux-saga/effects';
 import {
   fetchProjectRequest,
   watchFetchProjectRequest,
+  watchFetchProjectionRequest,
 } from 'middleware/project';
 import { fetchProject } from 'middleware/api';
 import {
@@ -12,7 +13,10 @@ import {
   startXHR,
   endXHR,
 } from 'actions';
-import { FETCH_PROJECT_REQUEST } from 'actions/actions';
+import {
+  FETCH_PROJECT_REQUEST,
+  FETCH_PROJECTION_REQUEST,
+} from 'actions/actions';
 const expect = require('chai').expect;
 
 describe('Single project fetcher', () => {
@@ -41,12 +45,11 @@ describe('Single project fetcher', () => {
     const generatorValue = errorGenerator.throw(errorMessage).value;
     const correct = put(setErrorMessage(displayedErrorMessage));
     expect(generatorValue).to.deep.equal(correct);
-
-    errorGenerator.next();
   });
 
   it('marks as xhr finished', () => {
     expect(generator.next().value).to.deep.equal(put(endXHR()));
+    expect(errorGenerator.next().value).to.deep.equal(put(endXHR()));
   });
 
   it('finishes', () => {
@@ -58,5 +61,9 @@ describe('Single project fetcher', () => {
     const watchGenerator = watchFetchProjectRequest();
     const correct = call(takeEvery, FETCH_PROJECT_REQUEST, fetchProjectRequest);
     expect(watchGenerator.next().value).to.deep.equal(correct);
+
+    const projectionCorrect = call(takeEvery, FETCH_PROJECTION_REQUEST, fetchProjectRequest);
+    const projectionWatchGenerator = watchFetchProjectionRequest();
+    expect(projectionWatchGenerator.next().value).to.deep.equal(projectionCorrect);
   });
 });

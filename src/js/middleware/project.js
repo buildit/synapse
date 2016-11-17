@@ -14,7 +14,7 @@ import {
 import {
   receiveProjects,
   receiveStarterProjects,
-  fetchProjectSuccess as fetchProjectSuccessAction,
+  fetchProjectSuccess,
   setMessage,
   clearMessage,
   setErrorMessage,
@@ -36,7 +36,7 @@ export function* fetchProjectRequest(action) {
   try {
     yield put(startXHR());
     const project = yield call(fetchProject, action.name);
-    yield put(fetchProjectSuccessAction(project));
+    yield put(fetchProjectSuccess(project));
   } catch (err) {
     yield put(setErrorMessage('We could not fetch the project.'));
   } finally {

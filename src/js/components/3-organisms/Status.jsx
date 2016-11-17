@@ -71,7 +71,6 @@ const mapStateToProps = state => {
       velocityEnd: state.project.projection.endVelocity,
       velocityMiddle: state.project.projection.targetVelocity,
       velocityStart: state.project.projection.startVelocity,
-      endDate: state.project.projection.endDate,
     };
   }
 

@@ -1,6 +1,5 @@
 import blankProject from 'helpers/blankProject';
 import normalizeProject from 'helpers/normalizeProject';
-import normalizeProjection from 'helpers/normalizeProjection';
 
 import {
   ADD_DEFECT_FLOW_LIST_ITEM,
@@ -47,7 +46,7 @@ export const project = (state = initialState, action) => {
   case UPDATE_PROJECTION: {
     return {
       ...state,
-      projection: normalizeProjection(action.projection),
+      projection: action.projection,
     };
   }
   case FETCH_PROJECT_SUCCESS: {
@@ -55,7 +54,7 @@ export const project = (state = initialState, action) => {
     if (! ('new' in fetchedProject)) {
       fetchedProject.new = false;
     }
-    fetchedProject.projection = normalizeProjection(action.project.projection);
+    fetchedProject.projection = action.project.projection;
     return fetchedProject;
   }
   case RESET_PROJECT: {

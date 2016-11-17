@@ -1,6 +1,5 @@
 const d3 = require('d3');
 import React from 'react';
-const makePoints = require('helpers/makePoints');
 import moment from 'moment';
 
 const TRANSITION_DURATION = 100;
@@ -35,10 +34,7 @@ export default class ProjectionChart extends React.Component {
   }
 
   setPoints() {
-    const { projection } = this.props;
-    const startDate = moment(this.props.projection.startDate, 'YYYY MM DD').format('DD-MMM-YY');
-    const { iterationLength } = projection;
-    this.points = makePoints(projection, startDate, iterationLength);
+    this.points = this.props.projection.points;
   }
 
   getSize() {
@@ -164,9 +160,9 @@ export default class ProjectionChart extends React.Component {
   }
 
   update() {
-    const { backlogSize, darkMatter } = this.props.projection;
-    const projectedCompletionDate = this.points ?
-      moment(this.points[3].date, 'DD-MMM-YY').format('MMMM Do YYYY') : undefined;
+    const { backlogSize, darkMatter, endDate } = this.props.projection;
+    const projectedCompletionDate = endDate ?
+      moment(endDate, 'DD-MMM-YY').format('MMMM Do YYYY') : undefined;
     this.updateCurve();
     this.updateBacklog(backlogSize);
     this.updateDarkMatter(backlogSize, darkMatter);

@@ -10,6 +10,8 @@ import ProjectionIntegerInput from 'components/1-atoms/ProjectionIntegerInput';
 import Button from 'components/1-atoms/Button';
 import Spinner from 'components/1-atoms/Spinner';
 import DateInput from 'components/1-atoms/DateInput';
+import moment from 'moment';
+import makePoints from 'helpers/makePoints';
 
 class Projection extends Component {
   componentDidMount() {
@@ -158,8 +160,14 @@ function mapStateToProps(state) {
     velocityStart: state.project.projection.startVelocity,
     periodEnd: state.project.projection.endIterations,
     velocityEnd: state.project.projection.endVelocity,
-    endDate: state.project.projection.endDate,
   };
+
+  const startDate = moment(projection.startDate, 'YYYY MM DD').format('DD-MMM-YY');
+  const points = makePoints(projection, startDate, projection.iterationLength);
+  const endDate = points ? points[3].date : undefined;
+  projection.endDate = endDate;
+  projection.points = points;
+
   const props = {
     projection,
     xhr: state.xhr,

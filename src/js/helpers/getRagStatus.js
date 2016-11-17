@@ -21,8 +21,13 @@ module.exports = (rawProjection, demand, doneKey = 'Done') => {
   const projectionPoints = makePoints(projection, projectionStartDate);
 
   const projectionLastValue = projectionPoints[3].y;
-  const demandLastValue = demand.reduce((finalDone, datapoint) => datapoint.status[doneKey]);
+  const reduceFunction = (finalDone, datapoint) => datapoint.status[doneKey];
+  const demandLastValue = demand.reduce(reduceFunction, undefined);
 
-  if (projectionLastValue > demandLastValue) return 'RED';
-  return 'GREEN';
+  let status;
+  if (demandLastValue) {
+    status = (projectionLastValue > demandLastValue) ? 'RED' : 'GREEN';
+  }
+
+  return status;
 };
