@@ -118,7 +118,7 @@ export function* saveProjectionRequest(action) {
       endIterations: projection.periodEnd,
       endVelocity: projection.velocityEnd,
       startDate: projection.startDate,
-      // endDate: projection.endDate,
+      endDate: projection.endDate,
     };
     yield call(Api.saveProjection, projectionToSave, name);
     yield put(setMessage(`The projection for project ${name} was saved successfully.`));

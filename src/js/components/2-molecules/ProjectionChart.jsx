@@ -34,7 +34,7 @@ export default class ProjectionChart extends React.Component {
   }
 
   setPoints() {
-    this.points = this.props.projection.points;
+    this.points = this.props.points;
   }
 
   getSize() {
@@ -243,6 +243,7 @@ export default class ProjectionChart extends React.Component {
 
 ProjectionChart.propTypes = {
   projection: React.PropTypes.object.isRequired,
+  points: React.PropTypes.array,
   padding: React.PropTypes.object,
   startDate: React.PropTypes.string,
 };

@@ -28,6 +28,7 @@ describe('Projection saver', () => {
     periodEnd: true,
     velocityEnd: true,
     startDate: true,
+    endDate: true,
   };
   const processedProjection = {
     backlogSize: true,
@@ -39,6 +40,7 @@ describe('Projection saver', () => {
     endIterations: true,
     endVelocity: true,
     startDate: true,
+    endDate: true,
   };
   const name = 'a name';
   const action = { projection, name };
