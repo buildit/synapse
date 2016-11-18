@@ -62,8 +62,12 @@ describe('XHR Wrapper', () => {
     pendingRequests[0].respond(...errorResponse);
     return response.should.be.rejectedWith(errorMessage);
   });
-  // TODO: figure out how to simulate an actual failure, rather than a failure error message
-  // because lines 16/17 aren't tested in api/xhr.js
+  it('handles remote server failures properly', () => {
+    const clock = sinon.useFakeTimers();
+    const response = fetch(testUrl);
+    clock.tick(100000);
+    return response.should.be.rejectedWith('XMLHttpRequest timeout');
+  });
 });
 
 describe('API', () => {
