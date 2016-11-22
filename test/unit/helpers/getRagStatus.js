@@ -17,14 +17,14 @@ describe('getRagStatus', () => {
   };
   const greenDemand = [{
     projectDate: '2016/07/11',
-    status: { Backlog: 100 },
+    status: { Backlog: 170, 'Selected for Development': 7, 'In Progress': 2, Done: 1000 },
   }];
   const redDemand = [{
     projectDate: '2016/08/11',
     status: { Backlog: 170, 'Selected for Development': 7, 'In Progress': 3 },
   }, {
     projectDate: '2016/08/12',
-    status: { Backlog: 170, 'Selected for Development': 7, 'In Progress': 2, Done: 1 },
+    status: { Backlog: 170, 'Selected for Development': 7, 'In Progress': 200, Done: 1 },
   }];
 
   it('deals with bad data', () => {
@@ -38,6 +38,9 @@ describe('getRagStatus', () => {
     expect(getRagStatus(projection, redDemand)).to.equal(ragStatus.RED);
   });
   it('changes the red status with a different done key', () => {
-    expect(getRagStatus(projection, redDemand, 'Foo')).to.equal(ragStatus.GREEN);
+    expect(getRagStatus(projection, redDemand, 'In Progress')).to.equal(ragStatus.GREEN);
+  });
+  it('is undefined with incomplete data', () => {
+    expect(getRagStatus(projection, redDemand, 'Foo')).to.equal(undefined);
   });
 });

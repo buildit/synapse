@@ -45,8 +45,6 @@ export class Config {
         this.computedBaseUrl = url;
       }
     } catch (err) {
-      /* eslint-disable no-console */
-      console.log(err);
       this.computedBaseUrl = DEVELOPMENT_ENDPOINT;
     }
     return this.computedBaseUrl;

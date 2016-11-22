@@ -10,6 +10,8 @@ import ProjectionIntegerInput from 'components/1-atoms/ProjectionIntegerInput';
 import Button from 'components/1-atoms/Button';
 import Spinner from 'components/1-atoms/Spinner';
 import DateInput from 'components/1-atoms/DateInput';
+import moment from 'moment';
+import makePoints from 'helpers/makePoints';
 
 class Projection extends Component {
   componentDidMount() {
@@ -47,6 +49,7 @@ class Projection extends Component {
             <div className="col-md-9">
               <ProjectionChart
                 projection={this.props.projection}
+                points={this.props.points}
               />
             </div>
 
@@ -134,7 +137,10 @@ class Projection extends Component {
                 label="Save"
                 cssClasses="button btn btn-primary"
                 onClick={() => {
-                  this.props.saveProjection(this.props.projection, projectId);
+                  const projectionToSave = Object.assign({}, this.props.projection);
+                  projectionToSave.endDate = moment(projectionToSave.endDate, 'DD-MMM-YY')
+                    .format('YYYY-MM-DD');
+                  this.props.saveProjection(projectionToSave, projectId);
                 }}
               />
 
@@ -158,10 +164,16 @@ function mapStateToProps(state) {
     velocityStart: state.project.projection.startVelocity,
     periodEnd: state.project.projection.endIterations,
     velocityEnd: state.project.projection.endVelocity,
-    endDate: state.project.projection.endDate,
   };
+
+  const startDate = moment(projection.startDate, 'YYYY MM DD').format('DD-MMM-YY');
+  const points = makePoints(projection, startDate, projection.iterationLength);
+  const endDate = points ? points[3].date : undefined;
+  projection.endDate = endDate;
+
   const props = {
     projection,
+    points,
     xhr: state.xhr,
   };
   return props;
@@ -172,6 +184,7 @@ export default connect(mapStateToProps, actionCreators)(Projection);
 Projection.propTypes = {
   params: PropTypes.object.isRequired,
   projection: PropTypes.object.isRequired,
+  points: PropTypes.array,
   fetchProjection: PropTypes.func.isRequired,
   updateProjection: PropTypes.func.isRequired,
   saveProjection: PropTypes.func.isRequired,

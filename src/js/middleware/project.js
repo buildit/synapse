@@ -14,7 +14,7 @@ import {
 import {
   receiveProjects,
   receiveStarterProjects,
-  fetchProjectSuccess as fetchProjectSuccessAction,
+  fetchProjectSuccess,
   setMessage,
   clearMessage,
   setErrorMessage,
@@ -36,7 +36,7 @@ export function* fetchProjectRequest(action) {
   try {
     yield put(startXHR());
     const project = yield call(fetchProject, action.name);
-    yield put(fetchProjectSuccessAction(project));
+    yield put(fetchProjectSuccess(project));
   } catch (err) {
     yield put(setErrorMessage('We could not fetch the project.'));
   } finally {
@@ -118,7 +118,7 @@ export function* saveProjectionRequest(action) {
       endIterations: projection.periodEnd,
       endVelocity: projection.velocityEnd,
       startDate: projection.startDate,
-      // endDate: projection.endDate,
+      endDate: projection.endDate,
     };
     yield call(Api.saveProjection, projectionToSave, name);
     yield put(setMessage(`The projection for project ${name} was saved successfully.`));

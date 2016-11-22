@@ -7,6 +7,7 @@ const makeRequest = (uri, method = 'GET', body = undefined) => new Promise((reso
   const options = {
     uri,
     method,
+    timeout: 30000,
   };
   if (body) {
     options.json = body;
@@ -14,7 +15,7 @@ const makeRequest = (uri, method = 'GET', body = undefined) => new Promise((reso
   xhr(options, (error, response) => {
     if (error) {
       const message = errorHelper(error);
-      reject(message);
+      return reject(message);
     }
     // TODO: clean this up
     if ([200, 201, 304].indexOf(response.statusCode) === -1) {

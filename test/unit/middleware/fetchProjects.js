@@ -18,7 +18,8 @@ import {
   fetchProjectDemandData,
 } from 'middleware/api';
 import getRagStatus from 'helpers/getRagStatus';
-const expect = require('chai').expect;
+
+import { expect } from 'chai';
 
 describe('All projects fetcher', () => {
   const errorMessage = 'an error message';
@@ -61,6 +62,16 @@ describe('All projects fetcher', () => {
     expect(errorGenerator.throw(errorMessage).value).to.deep.equal(message);
 
     errorGenerator.next();
+  });
+  it('displays a deep error message', () => {
+    const errorGenerator2 = fetchProjects();
+    const correct = put(setErrorMessage(errorMessage));
+    errorGenerator2.next();
+    errorGenerator2.next();
+    errorGenerator2.next(projects);
+    errorGenerator2.next(project1);
+
+    expect(errorGenerator2.throw(errorMessage).value).to.deep.equal(correct);
   });
 
   it('marks as xhr finished', () => {
