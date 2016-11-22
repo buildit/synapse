@@ -1,3 +1,5 @@
+const showRegressionCurve = false; // Allows us to show the curve when debugging.
+
 const moment = require('moment');
 const d3 = require('d3');
 const getY = require('./getY');
@@ -132,12 +134,15 @@ module.exports = (props, containerElement) => {
         CHART_OFFSET_LEFT,
         DEMAND_Y_OFFSET,
         INDIVIDUAL_CHART_HEIGHT);
-      renderRegressionLine({
-        data: demandStatus,
-        dateScale,
-        xOffset: CHART_OFFSET_LEFT,
-        yScale: demandYScale,
-      });
+
+      if (showRegressionCurve) {
+        renderRegressionLine({
+          data: demandStatus,
+          dateScale,
+          xOffset: CHART_OFFSET_LEFT,
+          yScale: demandYScale,
+        });
+      }
     }
     if (isDataChartable(defectStatus)) {
       defectChart = renderStackedAreaChart(
