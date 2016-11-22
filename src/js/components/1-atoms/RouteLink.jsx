@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-const RouteLink = ({ route, label }) => {
+const RouteLink = ({ route, label, classNames = '' }) => {
   const processedRoute = route.split('/').map(encodeURIComponent).join('/');
 
   return (
@@ -12,6 +12,7 @@ const RouteLink = ({ route, label }) => {
           textDecoration: 'none',
           color: 'gray',
         }}
+        className={classNames}
       >
         {label}
       </Link>
@@ -22,6 +23,7 @@ const RouteLink = ({ route, label }) => {
 RouteLink.propTypes = {
   route: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  classNames: PropTypes.string,
 };
 
 export default RouteLink;
