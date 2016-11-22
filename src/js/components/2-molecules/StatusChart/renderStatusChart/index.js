@@ -219,7 +219,9 @@ module.exports = (props, containerElement) => {
       });
     }
     scrubber = initializeScrubber(chartContainer, CHART_OFFSET_LEFT);
-    renderForecastedCompletionDate(demandChart, forecastedCompletionDate, WIDTH, DEMAND_Y_OFFSET);
+    if (demandChart) {
+      renderForecastedCompletionDate(demandChart, forecastedCompletionDate, WIDTH, DEMAND_Y_OFFSET);
+    }
   };
 
   prepareDateScale();
