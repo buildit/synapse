@@ -3,19 +3,19 @@ import TableCell from 'components/1-atoms/TableCell';
 import TableHeaderCell from 'components/1-atoms/TableHeaderCell';
 
 const NewProjectsTable = ({ tableData, visibleColumns, rowKey, onProjectCreateClick }) => {
-  let headerRow = [];
-  let bodyRows = [];
+  const headerRow = [];
+  const bodyRows = [];
 
-  for (let headerValue of visibleColumns) {
+  for (const headerValue of visibleColumns) {
     headerRow.push(<TableHeaderCell key={headerValue} headerValue={headerValue} />);
   }
 
   for (let i = 0; i < tableData.length; i++) {
     const projectId = tableData[i][rowKey];
-    let bodyRow = [];
+    const bodyRow = [];
 
     for (const key of visibleColumns) {
-      let cellValue = tableData[i][key];
+      const cellValue = tableData[i][key];
       bodyRow.push(<TableCell key={i + key} cellValue={cellValue} />);
     }
 

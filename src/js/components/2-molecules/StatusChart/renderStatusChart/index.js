@@ -1,3 +1,5 @@
+const showRegressionCurve = false; // Allows us to show the curve when debugging.
+
 const moment = require('moment');
 const d3 = require('d3');
 const getY = require('./getY');
@@ -24,6 +26,8 @@ import getChartableValues from './getChartableValues';
 import getChartableDemandValues from './getChartableDemandValues';
 import isProjectionAlarm from './isProjectionAlarm';
 import findStatusChartOffset from 'helpers/findStatusChartOffset';
+import renderRegressionLine from './renderRegressionLine';
+import renderForecastedCompletionDate from './renderForecastedCompletionDate';
 
 import {
   PADDING,
@@ -52,8 +56,8 @@ module.exports = (props, containerElement) => {
     demandCategories,
     defectCategories,
     effortCategories,
+    forecastedCompletionDate,
    } = props;
-
   const chartOffsets = findStatusChartOffset([
     demandStatus, defectStatus, effortStatus,
   ], INDIVIDUAL_CHART_HEIGHT + SPACE_BETWEEN_CHARTS);
@@ -130,6 +134,15 @@ module.exports = (props, containerElement) => {
         CHART_OFFSET_LEFT,
         DEMAND_Y_OFFSET,
         INDIVIDUAL_CHART_HEIGHT);
+
+      if (showRegressionCurve) {
+        renderRegressionLine({
+          data: demandStatus,
+          dateScale,
+          xOffset: CHART_OFFSET_LEFT,
+          yScale: demandYScale,
+        });
+      }
     }
     if (isDataChartable(defectStatus)) {
       defectChart = renderStackedAreaChart(
@@ -206,6 +219,7 @@ module.exports = (props, containerElement) => {
       });
     }
     scrubber = initializeScrubber(chartContainer, CHART_OFFSET_LEFT);
+    renderForecastedCompletionDate(demandChart, forecastedCompletionDate, WIDTH, DEMAND_Y_OFFSET);
   };
 
   prepareDateScale();

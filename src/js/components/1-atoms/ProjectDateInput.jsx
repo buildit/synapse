@@ -25,7 +25,7 @@ const ProjectDateInput = ({ label, section, property, onInputChange, initialValu
       }
       />
     </div>
-    );
+  );
 };
 
 export default ProjectDateInput;
