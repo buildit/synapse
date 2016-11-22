@@ -329,7 +329,7 @@ EditProject.propTypes = {
 
 const mapStateToProps = state => ({
   project: state.project,
-  isNewProject: state.project.new ? state.project.new : true,
+  isNewProject: state.project.new,
   form: state.form,
 });
 

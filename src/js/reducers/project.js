@@ -51,9 +51,7 @@ export const project = (state = initialState, action) => {
   }
   case FETCH_PROJECT_SUCCESS: {
     const fetchedProject = normalizeProject(action.project);
-    if (! ('new' in fetchedProject)) {
-      fetchedProject.new = false;
-    }
+    fetchedProject.new = ('new' in fetchedProject) ? fetchedProject.new : false;
     fetchedProject.projection = action.project.projection;
     return fetchedProject;
   }
