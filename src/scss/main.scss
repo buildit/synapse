@@ -14,6 +14,7 @@
 @import './components/1-atoms/projection-integer-input';
 @import './components/1-atoms/spinner';
 @import './components/1-atoms/table-cell';
+@import './components/1-atoms/button';
 
 @import './components/2-molecules/nav';
 @import './components/2-molecules/chart';
@@ -28,6 +29,9 @@
 @import './components/2-molecules/message-bar';
 @import './components/2-molecules/projects-table';
 
+@import './components/3-organisms/edit-project';
+@import './components/3-organisms/project';
+@import './components/3-organisms/project-list';
 @import './components/3-organisms/projection';
 
 @import './containers/app';

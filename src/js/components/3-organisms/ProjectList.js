@@ -18,7 +18,7 @@ class ProjectList extends Component {
     if (this.props.xhr) return <Spinner />;
 
     return (
-      <div>
+      <div className="project-list">
         <Button
           label="New"
           cssClasses="button btn btn-primary"
@@ -26,17 +26,19 @@ class ProjectList extends Component {
             browserHistory.push('/new');
           }}
         />
-        <ProjectsTable
-          tableData={this.props.projectList || []}
-          visibleColumns={[
-            'name',
-            'portfolio',
-            'program',
-            'status',
-            'description',
-          ]}
-          rowKey={'name'}
-        />
+        <div className="main">
+          <ProjectsTable
+            tableData={this.props.projectList || []}
+            visibleColumns={[
+              'name',
+              'portfolio',
+              'program',
+              'status',
+              'description',
+            ]}
+            rowKey={'name'}
+          />
+        </div>
       </div>
     );
   }

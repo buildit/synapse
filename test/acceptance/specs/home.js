@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 import HomePage from '../pages/home';
-import ProjectViewPage from '../pages/projectView';
+import ProjectPage from '../pages/project';
 import { driver } from '../global';
 
 describe('Home Page', () => {
   const homePage = new HomePage(driver);
-  const projectViewPage = new ProjectViewPage(driver);
+  const projectPage = new ProjectPage(driver);
 
   beforeEach(() => homePage.navigate());
 
@@ -25,7 +25,7 @@ describe('Home Page', () => {
     homePage.selectProject(projectName);
 
     // assert
-    expect(yield projectViewPage.hasProjectView()).to.be.true;
+    expect(yield projectPage.hasProjectView()).to.be.true;
   });
   /* eslint-enable no-unused-expressions */
 });

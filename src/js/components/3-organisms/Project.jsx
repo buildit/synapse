@@ -22,7 +22,7 @@ class Project extends Component {
 
     const { project } = this.props;
     return (
-      <div className="project-view">
+      <div className="project">
         <RouteLink
           route={`${project.name}/edit`}
           label="Edit"
@@ -38,107 +38,110 @@ class Project extends Component {
           label="Status"
           classNames="btn btn-primary"
         />
-        <Text label="Name" content={project.name} />
-        <Text label="Description" content={project.description} />
-        <Text label="Portfolio" content={project.portfolio} />
-        <Text label="Program" content={project.program} />
-        <Text label="Start date" content={formatDate(project.startDate)} />
-        <Text label="End date" content={formatDate(project.endDate)} />
 
-        <div className="subsection">
-          <h2>Demand</h2>
-          <Text
-            label="Source"
-            content={project.demand.source}
-          />
-          <Text
-            label="Source URL"
-            content={project.demand.url}
-          />
-          <Text
-            label="Project"
-            content={project.demand.project}
-          />
-          <h3>Auth</h3>
-          <Text
-            label="Auth policy"
-            content={project.demand.authPolicy}
-          />
-          <Text
-            label="Auth Data"
-            content={project.demand.userData}
-          />
+        <div className="main">
+          <Text label="Name" content={project.name} />
+          <Text label="Description" content={project.description} />
+          <Text label="Portfolio" content={project.portfolio} />
+          <Text label="Program" content={project.program} />
+          <Text label="Start date" content={formatDate(project.startDate)} />
+          <Text label="End date" content={formatDate(project.endDate)} />
 
-          <h3>Flow</h3>
-          <Table
-            tableData={project.demand.flow}
-            visibleColumns={['name']}
-            rowKey="name"
-          />
-        </div>
+          <div className="subsection">
+            <h2>Demand</h2>
+            <Text
+              label="Source"
+              content={project.demand.source}
+            />
+            <Text
+              label="Source URL"
+              content={project.demand.url}
+            />
+            <Text
+              label="Project"
+              content={project.demand.project}
+            />
+            <h3>Auth</h3>
+            <Text
+              label="Auth policy"
+              content={project.demand.authPolicy}
+            />
+            <Text
+              label="Auth Data"
+              content={project.demand.userData}
+            />
 
-        <div className="subsection">
-          <h2>Defect</h2>
-          <Text
-            label="Source"
-            content={project.defect.source}
-          />
-          <Text
-            label="Source URL"
-            content={project.defect.url}
-          />
-          <Text
-            label="Project"
-            content={project.defect.project}
-          />
-          <h3>Auth</h3>
-          <Text
-            label="Auth policy"
-            content={project.defect.authPolicy}
-          />
-          <Text
-            label="Auth Data"
-            content={project.defect.userData}
-          />
+            <h3>Flow</h3>
+            <Table
+              tableData={project.demand.flow}
+              visibleColumns={['name']}
+              rowKey="name"
+            />
+          </div>
 
-          <h3>Severity</h3>
-          <Table
-            tableData={project.defect.severity}
-            visibleColumns={['name', 'groupWith']}
-            rowKey="name"
-          />
-        </div>
+          <div className="subsection">
+            <h2>Defect</h2>
+            <Text
+              label="Source"
+              content={project.defect.source}
+            />
+            <Text
+              label="Source URL"
+              content={project.defect.url}
+            />
+            <Text
+              label="Project"
+              content={project.defect.project}
+            />
+            <h3>Auth</h3>
+            <Text
+              label="Auth policy"
+              content={project.defect.authPolicy}
+            />
+            <Text
+              label="Auth Data"
+              content={project.defect.userData}
+            />
 
-        <div className="subsection">
-          <h2>Effort</h2>
-          <Text
-            label="Source"
-            content={project.effort.source}
-          />
-          <Text
-            label="Source URL"
-            content={project.effort.url}
-          />
-          <Text
-            label="Project"
-            content={project.effort.project}
-          />
-          <h3>Auth</h3>
-          <Text
-            label="Auth policy"
-            content={project.effort.authPolicy}
-          />
-          <Text
-            label="Auth Data"
-            content={project.effort.userData}
-          />
+            <h3>Severity</h3>
+            <Table
+              tableData={project.defect.severity}
+              visibleColumns={['name', 'groupWith']}
+              rowKey="name"
+            />
+          </div>
 
-          <h3>Roles</h3>
-          <Table
-            tableData={project.effort.role}
-            visibleColumns={['name', 'groupWith']}
-            rowKey="name"
-          />
+          <div className="subsection">
+            <h2>Effort</h2>
+            <Text
+              label="Source"
+              content={project.effort.source}
+            />
+            <Text
+              label="Source URL"
+              content={project.effort.url}
+            />
+            <Text
+              label="Project"
+              content={project.effort.project}
+            />
+            <h3>Auth</h3>
+            <Text
+              label="Auth policy"
+              content={project.effort.authPolicy}
+            />
+            <Text
+              label="Auth Data"
+              content={project.effort.userData}
+            />
+
+            <h3>Roles</h3>
+            <Table
+              tableData={project.effort.role}
+              visibleColumns={['name', 'groupWith']}
+              rowKey="name"
+            />
+          </div>
         </div>
       </div>
     );

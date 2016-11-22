@@ -1,13 +1,12 @@
 import { By, until } from 'selenium-webdriver';
 import { url } from '../global';
 
-export default class ProjectView {
+export default class Project {
   constructor(driver) {
-    // const projectNameUrlEncoded = 'Test%20Project%201';
     const projectName = encodeURIComponent('Test Project 1');
     this.url = `${url}/${projectName}`;
     this.elements = {
-      projectView: By.css('.project-view'),
+      projectView: By.css('.project'),
       editLink: By.css(`a[href="${projectName}/edit"]`),
       projectionLink: By.css(`a[href="${projectName}/projection"]`),
       statusLink: By.css(`a[href="${projectName}/status"]`),
