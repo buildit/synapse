@@ -21,7 +21,7 @@ export const initialState = blankProject;
 // Some helpers
 const moveListItem = (formData, section, list, index, steps) => {
   const newList = formData[section][list];
-  if (index >= (newList.length - 1)) {
+  if (index > (newList.length - 1)) {
     return {
       ...formData,
     };
