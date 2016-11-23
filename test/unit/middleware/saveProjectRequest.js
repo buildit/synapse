@@ -19,9 +19,12 @@ const expect = require('chai').expect;
 
 describe('Project saving', () => {
   const errorMessage = 'an error message';
-  const project = { name: 'a project' };
+  const projectName = 'a project';
+  const project = { name: projectName };
+  const weirdProject = { name: projectName, foo: 'bar', baz: 'narf' };
   const action = { project };
   const generator = saveProjectRequest(action);
+  const weirdGenerator = saveProjectRequest({ weirdProject });
   const errorGenerator = saveProjectRequest(action);
 
   it('marks as xhr running', () => {
@@ -52,6 +55,13 @@ describe('Project saving', () => {
 
   it('marks as xhr finished', () => {
     expect(generator.next().value).to.deep.equal(put(endXHR()));
+  });
+
+  it('strips out non-whitelisted fields from the project', () => {
+    weirdGenerator.next();
+    weirdGenerator.next();
+    weirdGenerator.next(weirdProject);
+    expect(weirdGenerator.next().value).to.deep.equal(call(Api.saveProject, project));
   });
 
   it('finishes', () => {

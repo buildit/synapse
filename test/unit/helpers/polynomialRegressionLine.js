@@ -31,4 +31,8 @@ describe('Polynomial regression line', () => {
     });
     expect(result).to.equal(4);
   });
+
+  it('Should return a sane default with no data provided', () => {
+    expect(polynomialRegressionLine({})).to.equal(0);
+  });
 });
