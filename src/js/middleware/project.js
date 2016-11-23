@@ -132,6 +132,28 @@ export function* watchSaveProjectionRequest() {
   yield call(takeEvery, SAVE_PROJECTION_REQUEST, saveProjectionRequest);
 }
 
+function whitelistProjectFields(originalProject) {
+  const finalProject = {};
+  const whitelistFields = [
+    'name',
+    'program',
+    'portfolio',
+    'description',
+    'startDate',
+    'endDate',
+    'demand',
+    'defect',
+    'effort',
+    'projection',
+  ];
+  for (const field of whitelistFields) {
+    if (originalProject[field]) {
+      finalProject[field] = originalProject[field];
+    }
+  }
+  return finalProject;
+}
+
 
 /*
  * Middleware for UPDATE_PROJECT_REQUEST
@@ -139,7 +161,7 @@ export function* watchSaveProjectionRequest() {
 export function* updateProjectRequest(action) {
   try {
     yield put(startXHR());
-    yield call(Api.updateProject, action.project);
+    yield call(Api.updateProject, whitelistProjectFields(action.project));
     const message = `The form data for project ${action.project.name} was saved successfully.`;
     yield put(setMessage(message));
   } catch (err) {
@@ -161,7 +183,7 @@ export function* saveProjectRequest(action) {
     yield put(startXHR());
     const project = yield(call(trimFormInputs, action.project));
     yield put(setMessage(`Saving ${project.name}`));
-    yield call(Api.saveProject, project);
+    yield call(Api.saveProject, whitelistProjectFields(project));
     yield put(clearMessage());
   } catch (err) {
     yield put(setErrorMessage(err));
