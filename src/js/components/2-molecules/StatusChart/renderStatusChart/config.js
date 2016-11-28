@@ -17,3 +17,5 @@ export const DATE_LABEL = 'Date';
 
 export const DATE_AXIS_ID = 'axis--date';
 export const Y_AXIS_ID = 'axis--y';
+
+export const FORECAST_UPPER_BOUND = '01-01-2050';

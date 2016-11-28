@@ -1,3 +1,5 @@
+const isLogging = false;
+
 import createSagaMiddleware from 'redux-saga';
 import reducers from 'reducers';
 import createLogger from 'redux-logger';
@@ -26,7 +28,7 @@ const sagaMiddleware = createSagaMiddleware();
 module.exports = (initialState) => {
   const middlewares = [sagaMiddleware];
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' && isLogging) {
     const logger = createLogger();
     middlewares.push(logger);
   }

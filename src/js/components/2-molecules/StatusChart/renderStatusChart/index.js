@@ -1,4 +1,4 @@
-const showRegressionCurve = false; // Allows us to show the curve when debugging.
+const showRegressionCurve = true; // Allows us to show the curve when debugging.
 
 const moment = require('moment');
 const d3 = require('d3');
@@ -56,7 +56,6 @@ module.exports = (props, containerElement) => {
     demandCategories,
     defectCategories,
     effortCategories,
-    forecastedCompletionDate,
    } = props;
   const chartOffsets = findStatusChartOffset([
     demandStatus, defectStatus, effortStatus,
@@ -136,12 +135,16 @@ module.exports = (props, containerElement) => {
         INDIVIDUAL_CHART_HEIGHT);
 
       if (showRegressionCurve) {
-        renderRegressionLine({
+        const forecastedCompletionDate = renderRegressionLine({
           data: demandStatus,
           dateScale,
           xOffset: CHART_OFFSET_LEFT,
           yScale: demandYScale,
         });
+        if (demandChart) {
+          renderForecastedCompletionDate(
+            demandChart, forecastedCompletionDate, WIDTH, DEMAND_Y_OFFSET);
+        }
       }
     }
     if (isDataChartable(defectStatus)) {
@@ -219,9 +222,6 @@ module.exports = (props, containerElement) => {
       });
     }
     scrubber = initializeScrubber(chartContainer, CHART_OFFSET_LEFT);
-    if (demandChart) {
-      renderForecastedCompletionDate(demandChart, forecastedCompletionDate, WIDTH, DEMAND_Y_OFFSET);
-    }
   };
 
   prepareDateScale();
