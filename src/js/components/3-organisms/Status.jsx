@@ -59,9 +59,13 @@ const mapStateToProps = state => {
   const defectStatus = transformStatusData(state.status.defect, 'severity');
   const effortStatus = transformStatusData(state.status.effort, 'activity');
 
-  const demandCategories = state.project.demand.flow.map(item => (item.name));
-  const defectCategories = state.project.defect.severity.map(item => (item.name));
-  const effortCategories = state.project.effort.role.map(item => (item.name));
+  const demandCategories = state.project.demand.flow ?
+    state.project.demand.flow.map(item => (item.name)) : [];
+  const defectCategories = state.project.defect.severity ?
+    state.project.defect.severity.map(item => (item.name)) : [];
+  const effortCategories = state.project.effort.role ?
+    state.project.effort.role.map(item => (item.name)) : [];
+
   let projection = {};
   if (state.project.projection) {
     projection = {
