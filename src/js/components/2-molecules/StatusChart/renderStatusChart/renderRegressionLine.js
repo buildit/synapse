@@ -13,20 +13,22 @@ const y = (statusData, targetDate, category) => linearRegressionLine({
   date: targetDate.format('DD-MMM-YY'),
 });
 
-const getDataInRange = ({ data, startDate, endDate }) => data.filter(datapoint => {
+const getDataInRange = ({ statusData, startDate, endDate }) => statusData.filter(datapoint => {
   const parsedDatapointDate = moment(datapoint.date, 'DD-MMM-YY');
   return parsedDatapointDate.isAfter(startDate) &&
     parsedDatapointDate.isBefore(endDate);
 });
 
-module.exports = ({ data, dateScale, xOffset, yScale }) => {
-  const dateRange = findStatusDateRange(data, 'Done');
+module.exports = ({ statusData, dateScale, xOffset, yScale, done, notDone }) => {
+  console.log(done, notDone);
+  const doneKey = done;
+  const dateRange = findStatusDateRange(statusData, done);
   const doneStartDate = moment(dateRange[0], 'DD-MMM-YY');
   const doneEndDate = moment(dateRange[1], 'DD-MMM-YY');
   const forecastEndDate = moment(dateRange[0], 'DD-MMM-YY');
 
   const trimmedData = getDataInRange({
-    data,
+    statusData,
     startDate: doneStartDate,
     endDate: doneEndDate,
   });
@@ -37,8 +39,8 @@ module.exports = ({ data, dateScale, xOffset, yScale }) => {
     backlogY1 = y(trimmedData, forecastEndDate, 'Backlog');
     endDate = forecastEndDate.format('DD-MMM-YY');
   }
-  const doneY0 = y(trimmedData, doneStartDate, 'Done');
-  const doneY1 = y(trimmedData, forecastEndDate, 'Done');
+  const doneY0 = y(trimmedData, doneStartDate, done);
+  const doneY1 = y(trimmedData, forecastEndDate, done);
   const backlogY0 = y(trimmedData, doneStartDate, 'Backlog');
 
   const donePoints = [

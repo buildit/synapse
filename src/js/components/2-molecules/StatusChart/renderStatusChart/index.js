@@ -57,6 +57,14 @@ module.exports = (props, containerElement) => {
     defectCategories,
     effortCategories,
    } = props;
+  console.log(demandCategories);
+  const done = demandCategories[demandCategories.length - 1];
+  console.log(done);
+  const notDone = demandCategories.filter((category, index, array) => (
+    index < array.length - 1
+  ));
+  console.log(notDone);
+
   const chartOffsets = findStatusChartOffset([
     demandStatus, defectStatus, effortStatus,
   ], INDIVIDUAL_CHART_HEIGHT + SPACE_BETWEEN_CHARTS);
@@ -136,7 +144,9 @@ module.exports = (props, containerElement) => {
 
       if (showRegressionCurve) {
         const forecastedCompletionDate = renderRegressionLine({
-          data: demandStatus,
+          done,
+          notDone,
+          statusData: demandStatus,
           dateScale,
           xOffset: CHART_OFFSET_LEFT,
           yScale: demandYScale,
