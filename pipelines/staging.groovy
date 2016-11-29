@@ -1,5 +1,5 @@
 @Library('buildit')
-def LOADED = env.USE_GLOBAL_LIB
+def LOADED = true
 
 node {
   withEnv(["PATH+NODE=${tool name: 'latest', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'}/bin"]) {
@@ -17,7 +17,7 @@ node {
 
         sh "curl -L https://dl.bintray.com/buildit/maven/jenkins-pipeline-libraries-${env.PIPELINE_LIBS_VERSION}.zip -o lib.zip && echo 'A' | unzip lib.zip"
 
-        if (LOADED) {
+        if (env.USE_GLOBAL_LIB) {
           ecrInst = new ecr()
           gitInst = new git()
           npmInst = new npm()
