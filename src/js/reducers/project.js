@@ -16,7 +16,7 @@ import {
   UPDATE_PROJECTION,
 } from 'actions/actions';
 
-export const initialState = blankProject;
+export const initialState = blankProject.create();
 
 // Some helpers
 const moveListItem = (formData, section, list, index, steps) => {
@@ -56,12 +56,10 @@ export const project = (state = initialState, action) => {
     return fetchedProject;
   }
   case RESET_PROJECT: {
-    const resetProject = blankProject;
-    resetProject.new = true;
-    return resetProject;
+    return blankProject.create();
   }
   case UPDATE_FORM_DATA: {
-    const newFormData = state;
+    const newFormData = Object.assign({}, state);
     newFormData.id = state.id ? state.id.toString() : '';
     switch (action.section) {
     case 'header': {

@@ -31,10 +31,6 @@ class NewProjectList extends Component {
       }
     };
 
-    if (this.props.xhr) {
-      return <div>Fetching starter projects list...</div>;
-    }
-
     return (
       <div>
         <Button
