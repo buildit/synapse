@@ -14,14 +14,13 @@ import blankProject from 'helpers/blankProject';
 export const getStarterList = state => state.projects.starterProjectList;
 
 export function* initializeNewProject(action) {
-  const initializedProject = blankProject;
+  const initializedProject = blankProject.create();
   initializedProject.new = true;
 
   if (action.harvestId) {
     const starters = yield(select(getStarterList));
     starters.forEach(projectFromList => {
       if (projectFromList.name === action.harvestId) {
-        initializedProject.new = false;
         for (const key of Object.keys(projectFromList)) {
           initializedProject[key] = projectFromList[key];
         }

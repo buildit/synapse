@@ -17,7 +17,7 @@ describe('project reducer', () => {
   it('should update the projection', () => {
     const newProjection = {};
     const action = updateProjection(newProjection);
-    const finalState = initialState;
+    const finalState = Object.assign({}, initialState);
     finalState.projection = newProjection;
 
     expect(reducer(undefined, action)).to.deep.equal(finalState);

@@ -18,11 +18,11 @@ const expect = require('chai').expect;
 describe('New project initializer', () => {
   const harvestName = 'bar';
   const harvestAction = { harvestId: harvestName };
-  const starterHarvestProject = { name: harvestName, prop1: 'baz' };
+  const starterHarvestProject = { name: harvestName, prop1: 'baz', new: true };
   const notHarvestName = 'baz';
   const notHarvestAction = { harvestId: notHarvestName };
   const starterList = [
-    { name: 'foo', prop1: 'baz' },
+    { name: 'foo', prop1: 'baz', new: true },
     starterHarvestProject,
   ];
 
@@ -31,7 +31,7 @@ describe('New project initializer', () => {
   const notHarvestGenerator = initializeNewProject(notHarvestAction);
 
   it('deals with not having a harvest id', () => {
-    const noHarvestProject = blankProject;
+    const noHarvestProject = blankProject.create();
     noHarvestProject.new = true;
 
     const actual = generator.next(starterList).value;
@@ -46,16 +46,17 @@ describe('New project initializer', () => {
   });
 
   it('deals with having a harvest id', () => {
-    const harvestProject = Object.assign({}, blankProject, starterHarvestProject);
-    harvestProject.new = false;
+    const harvestProject = Object.assign({}, blankProject.create(), starterHarvestProject);
     const harvestCorrect = put(fetchProjectSuccess(harvestProject));
 
-    const noHarvestProject = blankProject;
+    const noHarvestProject = blankProject.create();
     noHarvestProject.new = true;
     const noHarvestCorrect = put(fetchProjectSuccess(noHarvestProject));
 
-    expect(harvestGenerator.next(starterList).value).to.deep.equal(harvestCorrect);
-    expect(notHarvestGenerator.next(starterList).value).to.deep.equal(noHarvestCorrect);
+    const harvestActual = harvestGenerator.next(starterList).value;
+    const noHarvestActual = notHarvestGenerator.next(starterList).value;
+    expect(harvestActual).to.deep.equal(harvestCorrect);
+    expect(noHarvestActual).to.deep.equal(noHarvestCorrect);
   });
 
   it('finishes', () => {

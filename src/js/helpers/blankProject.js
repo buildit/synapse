@@ -10,6 +10,14 @@ const blankProject = {
   effort: {
     role: [],
   },
+  new: true,
 };
 
-export default blankProject;
+class BlankProjectGenerator {
+  create() {
+    return Object.assign({}, blankProject);
+  }
+}
+const generator = new BlankProjectGenerator();
+
+export default generator;
