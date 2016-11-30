@@ -52,7 +52,8 @@ export const project = (state = initialState, action) => {
   case FETCH_PROJECT_SUCCESS: {
     const fetchedProject = normalizeProject(action.project);
     fetchedProject.new = ('new' in fetchedProject) ? fetchedProject.new : false;
-    fetchedProject.projection = action.project.projection;
+    // fetchedProject.projection = action.project.projection;
+    console.log(fetchedProject);
     return fetchedProject;
   }
   case RESET_PROJECT: {

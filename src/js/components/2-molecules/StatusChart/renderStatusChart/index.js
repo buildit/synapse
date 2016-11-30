@@ -18,7 +18,7 @@ const renderYAxisLabel = require('./renderYAxisLabel');
 const renderStackedAreaChart = require('./renderStackedAreaChart');
 const renderProjection = require('./renderProjection');
 const renderProjectionAlarm = require('./renderProjectionAlarm');
-const isProjectionVisible = require('./isProjectionVisible');
+const getIsProjectionVisible = require('./getIsProjectionVisible');
 import dateScaleCreator from './dateScaleCreator';
 import yScaleCreator from './yScaleCreator';
 import getChartableDates from './getChartableDates';
@@ -43,9 +43,7 @@ import {
   INDIVIDUAL_CHART_HEIGHT,
 } from './config';
 
-const isDataChartable = (data) => (
-  data.length > 0
-);
+const isDataChartable = data => data.length > 0;
 
 module.exports = (props, containerElement) => {
   const {
@@ -57,6 +55,7 @@ module.exports = (props, containerElement) => {
     defectCategories,
     effortCategories,
    } = props;
+  const isProjectionVisible = getIsProjectionVisible(projection);
   const done = demandCategories[demandCategories.length - 1];
   const notDone = demandCategories.filter((category, index, array) => (
     index < array.length - 1
@@ -208,7 +207,7 @@ module.exports = (props, containerElement) => {
         EFFORT_Y_OFFSET,
         INDIVIDUAL_CHART_HEIGHT);
     }
-    if (isProjectionVisible(projection)) {
+    if (isProjectionVisible) {
       renderProjection({
         data: projection,
         yScale: demandYScale,

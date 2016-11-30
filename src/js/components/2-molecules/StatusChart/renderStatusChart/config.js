@@ -2,7 +2,7 @@ const bodyWidth = document.body.clientWidth;
 const smallScreenMode = bodyWidth < 800;
 
 export const CHART_OFFSET_LEFT = smallScreenMode ? 10 : 250;
-export const WIDTH = smallScreenMode ? 450 : 840;
+export const WIDTH = smallScreenMode ? 450 : 800;
 
 export const PADDING = { top: 50, right: 200, bottom: 0, left: 55 };
 export const HEIGHT = 1200;

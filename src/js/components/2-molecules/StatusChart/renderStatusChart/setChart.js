@@ -1,7 +1,8 @@
 const d3 = require('d3');
 
 module.exports = (containerElement, width, height, padding) => {
-  const totalWidth = width + padding.left + padding.right;
+  const containerPadding = 100;
+  const totalWidth = width + padding.left + padding.right + containerPadding;
   const totalHeight = height + padding.top + padding.bottom;
   const chart = d3.select(containerElement).append('svg')
     .attr('class', 'chart-container')

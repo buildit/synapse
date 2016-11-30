@@ -18,7 +18,7 @@ module.exports = (containerElement, data, categories, yScale, chartHeight) => {
     .enter()
     .append('circle')
       .attr('r', 5)
-      .attr('cx', 5)
+      .attr('cx', 35)
       .attr('cy', (d, i) => i * 14)
       .attr('stroke', 'none')
       .attr('fill', (d, i) => d3.schemeCategory20[i]);
@@ -28,7 +28,7 @@ module.exports = (containerElement, data, categories, yScale, chartHeight) => {
     .enter()
     .append('text')
       .attr('class', 'legend-item')
-      .attr('x', 40)
+      .attr('x', 45)
       .attr('y', (d, i) => 4 + i * 14)
       .text(d => d.key);
 
@@ -38,6 +38,7 @@ module.exports = (containerElement, data, categories, yScale, chartHeight) => {
     .enter()
     .append('text')
     .attr('class', 'legend-count')
+    .attr('text-anchor', 'end')
     .attr('class', d => {
       /* eslint-disable no-underscore-dangle */
       const datasetId = containerElement._groups[0][0].id;
@@ -45,7 +46,7 @@ module.exports = (containerElement, data, categories, yScale, chartHeight) => {
       const categoryIdentifier = d.key.split(' ').join('-');
       return `${datasetId}-${categoryIdentifier}`;
     })
-    .attr('x', 15)
+    .attr('x', 25)
     .attr('y', (d, i) => 4 + i * 14)
     .text('');
 };

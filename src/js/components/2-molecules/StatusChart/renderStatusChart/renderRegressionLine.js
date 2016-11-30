@@ -93,7 +93,6 @@ module.exports = ({ statusData, dateScale, xOffset, yScale, done, notDone }) => 
     .datum(notDonePoints)
     .attr('d', line)
     .attr('transform', `translate(${xOffset}, 0)`);
-  console.log(forecastEndDate.format('MMM DD, YYYY'));
   if (forecastEndDate.isAfter(doneStartDate)) {
     return forecastEndDate;
   }
