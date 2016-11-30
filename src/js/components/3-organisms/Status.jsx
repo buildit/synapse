@@ -7,7 +7,6 @@ import { fetchAllStatusData } from 'actions';
 import StatusChart from 'components/2-molecules/StatusChart';
 import transformStatusData from 'helpers/transformStatusData';
 import Spinner from 'components/1-atoms/Spinner';
-import getForecastedCompletionDate from 'helpers/getForecastedCompletionDate';
 
 class Status extends Component {
   componentDidMount() {
@@ -81,8 +80,6 @@ const mapStateToProps = state => {
     };
   }
 
-  const forecastedCompletionDate = getForecastedCompletionDate(demandStatus);
-
   return {
     project: state.project,
     demandStatus,
@@ -93,7 +90,6 @@ const mapStateToProps = state => {
     effortCategories,
     projection,
     xhr: state.xhr,
-    forecastedCompletionDate,
   };
 };
 

@@ -57,13 +57,10 @@ module.exports = (props, containerElement) => {
     defectCategories,
     effortCategories,
    } = props;
-  console.log(demandCategories);
   const done = demandCategories[demandCategories.length - 1];
-  console.log(done);
   const notDone = demandCategories.filter((category, index, array) => (
     index < array.length - 1
   ));
-  console.log(notDone);
 
   const chartOffsets = findStatusChartOffset([
     demandStatus, defectStatus, effortStatus,
