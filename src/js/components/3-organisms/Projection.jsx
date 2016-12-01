@@ -12,6 +12,17 @@ import Spinner from 'components/1-atoms/Spinner';
 import DateInput from 'components/1-atoms/DateInput';
 import moment from 'moment';
 import makePoints from 'helpers/makePoints';
+const defaultProjection = {
+  startDate: '1',
+  iterationLength: '1',
+  backlogSize: '1',
+  velocityMiddle: '1',
+  darkMatter: '1',
+  periodStart: '1',
+  velocityStart: '1',
+  periodEnd: '1',
+  velocityEnd: '1',
+};
 
 class Projection extends Component {
   componentDidMount() {
@@ -154,17 +165,20 @@ class Projection extends Component {
 }
 
 function mapStateToProps(state) {
-  const projection = {
-    startDate: state.project.projection.startDate,
-    iterationLength: state.project.projection.iterationLength,
-    backlogSize: state.project.projection.backlogSize,
-    velocityMiddle: state.project.projection.targetVelocity,
-    darkMatter: state.project.projection.darkMatterPercentage,
-    periodStart: state.project.projection.startIterations,
-    velocityStart: state.project.projection.startVelocity,
-    periodEnd: state.project.projection.endIterations,
-    velocityEnd: state.project.projection.endVelocity,
-  };
+  let projection = defaultProjection;
+  if (state.project.projection) {
+    projection = {
+      startDate: state.project.projection.startDate,
+      iterationLength: state.project.projection.iterationLength,
+      backlogSize: state.project.projection.backlogSize,
+      velocityMiddle: state.project.projection.targetVelocity,
+      darkMatter: state.project.projection.darkMatterPercentage,
+      periodStart: state.project.projection.startIterations,
+      velocityStart: state.project.projection.startVelocity,
+      periodEnd: state.project.projection.endIterations,
+      velocityEnd: state.project.projection.endVelocity,
+    };
+  }
 
   const startDate = moment(projection.startDate, 'YYYY MM DD').format('DD-MMM-YY');
   const points = makePoints(projection, startDate, projection.iterationLength);

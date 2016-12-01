@@ -53,7 +53,6 @@ export const project = (state = initialState, action) => {
     const fetchedProject = normalizeProject(action.project);
     fetchedProject.new = ('new' in fetchedProject) ? fetchedProject.new : false;
     // fetchedProject.projection = action.project.projection;
-    console.log(fetchedProject);
     return fetchedProject;
   }
   case RESET_PROJECT: {
