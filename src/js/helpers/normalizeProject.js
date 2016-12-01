@@ -1,6 +1,6 @@
 import normalizeDate from './normalizeDate';
 import Ajv from 'ajv';
-const ajv = new Ajv(); // TODO: Look at available options
+const ajv = new Ajv();
 const schema = {
   $schema: 'http://json-schema.org/draft-04/schema#',
   type: 'object',
@@ -44,11 +44,16 @@ const normalizeProject = project => {
 
   const isProjectionValid = validate(project.projection);
   if (!isProjectionValid) {
-    console.log('ERRORS with projection as received from API:');
+    /* eslint-disable no-console */
+    // TODO: Show this message to the user instead of logging to the console.
+    console.error(
+    `The projection as received from the API for the project named ${project.name}
+    does not match the projection schema. Synapse will ignore this projection.
+    The validation errors are:`);
     validate.errors.forEach(error => {
-      console.log(error.message);
+      console.error(error.message);
     });
-    console.log('Deleting projection from project.');
+    /* eslint-enable no-console */
     delete normalizedProject.projection;
   }
 

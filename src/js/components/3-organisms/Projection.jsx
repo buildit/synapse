@@ -13,15 +13,15 @@ import DateInput from 'components/1-atoms/DateInput';
 import moment from 'moment';
 import makePoints from 'helpers/makePoints';
 const defaultProjection = {
-  startDate: '1',
-  iterationLength: '1',
-  backlogSize: '1',
-  velocityMiddle: '1',
-  darkMatter: '1',
-  periodStart: '1',
-  velocityStart: '1',
-  periodEnd: '1',
-  velocityEnd: '1',
+  startDate: '1900-01-31',
+  iterationLength: 1,
+  backlogSize: 1,
+  velocityMiddle: 1,
+  darkMatter: 1,
+  periodStart: 1,
+  velocityStart: 1,
+  periodEnd: 1,
+  velocityEnd: 1,
 };
 
 class Projection extends Component {
