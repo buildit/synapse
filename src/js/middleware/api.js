@@ -13,6 +13,15 @@ export function* fetchProject(name) {
   return project;
 }
 
+export function* deleteProject(name) {
+  try {
+    yield call(Api.deleteProject, name);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 /*
  * Mini saga for retrieving demand data
  */

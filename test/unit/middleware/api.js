@@ -2,6 +2,7 @@ import { call } from 'redux-saga/effects';
 
 import {
   fetchProject,
+  deleteProject,
   fetchProjectDemandData,
   fetchProjectDefectData,
   fetchProjectEffortData,
@@ -27,6 +28,28 @@ describe('fetcher for individual project data', () => {
     errorGenerator.next();
     const final = errorGenerator.throw('').value;
     expect(final).to.deep.equal({});
+  });
+});
+
+describe('individual project deleter', () => {
+  const name = 'name';
+  const generator = deleteProject(name);
+  const errorGenerator = deleteProject(name);
+
+  it('deletes a project', () => {
+    const correct = call(Api.deleteProject, name);
+    expect(generator.next().value).to.deep.equal(correct);
+    expect(generator.next().value).to.equal(true);
+  });
+
+  it('notifies on failure', () => {
+    errorGenerator.next();
+    expect(errorGenerator.throw(new Error()).value).to.equal(false);
+  });
+
+  it('completes', () => {
+    expect(generator.next().done).to.equal(true);
+    expect(errorGenerator.next().done).to.equal(true);
   });
 });
 

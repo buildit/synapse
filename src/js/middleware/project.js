@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router';
 import getRagStatus from 'helpers/getRagStatus';
 
 import {
+  DELETE_PROJECT,
   FETCH_PROJECTS,
   FETCH_PROJECTION_REQUEST,
   FETCH_STARTER_PROJECTS_REQUEST,
@@ -13,6 +14,7 @@ import {
   SAVE_PROJECT_REQUEST,
 } from 'actions/actions';
 import {
+  deleteProjectSuccess,
   receiveProjects,
   receiveStarterProjects,
   fetchProjectSuccess,
@@ -24,6 +26,7 @@ import {
 } from 'actions';
 import { trimFormInputs } from 'helpers/trimFormInputs';
 import {
+  deleteProject,
   fetchProject,
   fetchProjectDemandData,
 } from 'middleware/api';
@@ -49,6 +52,24 @@ export function* watchFetchProjectRequest() {
 }
 export function* watchFetchProjectionRequest() {
   yield call(takeEvery, FETCH_PROJECTION_REQUEST, fetchProjectRequest);
+}
+
+/*
+ * Middleware for DELETE_PROJECT
+ */
+export function* deleteProjectRequest(action) {
+  try {
+    if (yield call(deleteProject, action)) {
+      yield put(deleteProjectSuccess(action.name));
+      yield put(setMessage(`Project ${action.name} deleted.`));
+    }
+  } catch (err) {
+    yield put(setErrorMessage(err));
+  }
+}
+
+export function* watchDeleteProject() {
+  yield call(takeEvery, DELETE_PROJECT, deleteProjectRequest);
 }
 
 /*

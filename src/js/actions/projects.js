@@ -35,6 +35,15 @@ export const updateProject = project => ({
 
 export const resetProject = () => ({ type: types.RESET_PROJECT });
 
+export const deleteProject = name => ({
+  type: types.DELETE_PROJECT,
+  name,
+});
+export const deleteProjectSuccess = name => ({
+  type: types.DELETE_PROJECT_SUCCESS,
+  name,
+});
+
 export const setIsNewProject = value => ({
   type: types.SET_IS_NEW_PROJECT,
   value,

@@ -233,6 +233,24 @@ describe('Redux actions', () => {
     expect(functions.updateProject(project)).to.deep.equal(correct);
   });
 
+  it('deleteProject', () => {
+    const name = 'a project';
+    const correct = {
+      type: actions.DELETE_PROJECT,
+      name,
+    };
+    expect(functions.deleteProject(name)).to.deep.equal(correct);
+  });
+
+  it('deleteProjectSuccess', () => {
+    const name = 'a project';
+    const correct = {
+      type: actions.DELETE_PROJECT_SUCCESS,
+      name,
+    };
+    expect(functions.deleteProjectSuccess(name)).to.deep.equal(correct);
+  });
+
   it('dismissMessage', () => {
     const correct = {
       type: actions.SET_MESSAGE,

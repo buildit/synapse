@@ -1,4 +1,4 @@
-const isLogging = false;
+const isLogging = true;
 
 import createSagaMiddleware from 'redux-saga';
 import reducers from 'reducers';
@@ -16,6 +16,7 @@ import {
   watchSaveProjectionRequest,
   watchUpdateProjectRequest,
   watchSaveProjectRequest,
+  watchDeleteProject,
 } from 'middleware/project';
 import {
   watchFetchDemandStatusData,
@@ -47,6 +48,7 @@ module.exports = (initialState) => {
   sagaMiddleware.run(watchUpdateProjectRequest);
   sagaMiddleware.run(watchSaveProjectRequest);
   sagaMiddleware.run(watchInitializeNewProject);
+  sagaMiddleware.run(watchDeleteProject);
 
   return store;
 };

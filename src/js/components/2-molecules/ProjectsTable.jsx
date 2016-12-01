@@ -4,7 +4,7 @@ import TableCell from 'components/1-atoms/TableCell';
 import RAGStatusTableCell from 'components/1-atoms/RAGStatusTableCell';
 import TableHeaderCell from 'components/1-atoms/TableHeaderCell';
 
-const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
+const ProjectsTable = ({ tableData, visibleColumns, rowKey, deleteProject }) => {
   const headerRow = [];
   const bodyRows = [];
 
@@ -61,6 +61,15 @@ const ProjectsTable = ({ tableData, visibleColumns, rowKey }) => {
       </td>
     );
 
+    bodyRow.push(
+      <td
+        key={`delete-${projectId}`}
+        onClick={() => deleteProject(projectId)}
+      >
+        <span className="delete-project-control fa fa-trash"></span>
+      </td>
+    );
+
     bodyRows.push(<tr
       id={tableData[i][rowKey]}
       key={tableData[i][rowKey]}
@@ -88,4 +97,5 @@ ProjectsTable.propTypes = {
   tableData: React.PropTypes.array.isRequired,
   visibleColumns: React.PropTypes.array.isRequired,
   rowKey: React.PropTypes.string.isRequired,
+  deleteProject: React.PropTypes.func.isRequired,
 };
