@@ -14,8 +14,9 @@ export const errorHelper = thing => {
     } catch (err) {
       innerThing = thing.body;
     }
-    if (innerThing.error.message) return innerThing.error.message;
-    if (innerThing.error.statusCode) return innerThing.error.statusCode;
+    if (innerThing.error && innerThing.error.message) return innerThing.error.message;
+    if (innerThing.error && innerThing.error.statusCode) return innerThing.error.statusCode;
+    return stockErrorMessage;
   }
 
   if (thing && thing.statusText) {
