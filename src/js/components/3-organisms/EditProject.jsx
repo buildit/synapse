@@ -16,9 +16,17 @@ class EditProject extends Component {
   }
 
   render() {
+    const resetProject = this.props.resetProject;
+    const goHome = () => {
+      browserHistory.push('/'); // Should this be handled in a redux action?
+      resetProject();
+    };
+
     const onInputChange = this.props.onInputChange;
     const project = this.props.project;
-    const saveFormData = this.props.saveFormData;
+    const saveFormData = projectToSave => {
+      this.props.saveFormData(projectToSave, '/');
+    };
     const onListItemRemove = this.props.onListItemRemove;
     const addItemToDemandFlowList = this.props.addItemToDemandFlowList;
     const addItemToRoleList = this.props.addItemToRoleList;
@@ -27,12 +35,6 @@ class EditProject extends Component {
     const moveListItemDown = this.props.moveListItemDown;
     const isNewProject = this.props.isNewProject;
     const updateProject = this.props.updateProject;
-    const resetProject = this.props.resetProject;
-
-    const goHome = () => {
-      browserHistory.push('/'); // Should this be handled in a redux action?
-      resetProject();
-    };
 
     return (
       <div className="edit-project">

@@ -49,8 +49,13 @@ describe('Redux actions', () => {
     const correct = {
       type: actions.SAVE_PROJECT_REQUEST,
       project,
+      destination: undefined,
     };
+    const correct2 = Object.assign({}, correct);
+    correct2.destination = '/';
+
     expect(functions.saveFormData(project)).to.deep.equal(correct);
+    expect(functions.saveFormData(project, '/')).to.deep.equal(correct2);
   });
 
   it('initializeNewProject', () => {

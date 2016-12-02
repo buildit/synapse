@@ -43,6 +43,14 @@ describe('Project saving', () => {
   it('clears the message', () => {
     expect(generator.next().value).to.deep.equal(put(clearMessage()));
   });
+  it('sends you to the next destination', () => {
+    // TODO:  Figure out how to test this.  browserHistory is undefined here because there's no
+    // browser environment, and jsdom doesn't seem to be fixing it.
+    // expect(generator.next().value).to.deep.equal(call(browserHistory.push, action.destination));
+  });
+  it('sets a success message', () => {
+    expect(generator.next().value).to.deep.equal(put(setMessage(`${project.name} saved`)));
+  });
 
   it('displays an error message', () => {
     errorGenerator.next();

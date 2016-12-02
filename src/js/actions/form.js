@@ -1,8 +1,11 @@
 import * as types from 'actions/actions';
 
-export const saveFormData = project => ({
+// Destination is kind of hacky.  Basically, if you send a second arg, the saga will
+// send you somewhere else after the save is completed.
+export const saveFormData = (project, destination) => ({
   type: types.SAVE_PROJECT_REQUEST,
   project,
+  destination,
 });
 
 export const onInputChange = (section, key, value) => ({

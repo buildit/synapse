@@ -1,5 +1,6 @@
 import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
+import { browserHistory } from 'react-router';
 import getRagStatus from 'helpers/getRagStatus';
 
 import {
@@ -185,6 +186,10 @@ export function* saveProjectRequest(action) {
     yield put(setMessage(`Saving ${project.name}`));
     yield call(Api.saveProject, whitelistProjectFields(project));
     yield put(clearMessage());
+    if (action.destination) {
+      yield call(browserHistory.push, action.destination);
+    }
+    yield put(setMessage(`${project.name} saved`));
   } catch (err) {
     yield put(setErrorMessage(err));
   } finally {
