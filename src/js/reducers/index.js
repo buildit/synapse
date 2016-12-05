@@ -4,6 +4,7 @@ import { projects } from './projects';
 import { status } from './status';
 import { xhr } from './xhr';
 import { messages } from './messages';
+import { auth } from './auth';
 
 const reducers = {
   project,
@@ -11,6 +12,7 @@ const reducers = {
   status,
   xhr,
   messages,
+  auth,
 };
 
 const combinedReducers = combineReducers(reducers);

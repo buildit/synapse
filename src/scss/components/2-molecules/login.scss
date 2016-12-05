@@ -1,0 +1,38 @@
+.login {
+  position: fixed;
+  top: 5px;
+  right: 100px;
+
+  .login-form {
+    padding: 30px;
+    background: #333;
+    color: white;
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .button {
+    padding: 5px;
+    &:hover {
+      color: $button-info-colour;
+    }
+  }
+
+  .message {
+    &.active {
+      color: white;
+      text-transform: uppercase;
+      background: $danger-colour;
+      padding: 5px;
+    }
+  }
+
+  .greeting {
+    margin-right: 1rem;
+    color: grey;
+  }
+
+}

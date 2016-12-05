@@ -8,6 +8,7 @@ export default class HomePage {
       app: By.css('#app'),
       table: By.css('.table'),
       button: By.css('button'),
+      login: By.css('.login'),
       projectWithName: (name) => By.css(`a[href="${name}"]`),
     };
     this.driver = driver;
@@ -35,6 +36,10 @@ export default class HomePage {
 
   hasButton() {
     return this.driver.findElement(this.elements.button).isDisplayed();
+  }
+
+  hasLogin() {
+    return this.driver.findElement(this.elements.login).isDisplayed();
   }
 
   selectProject(name) {

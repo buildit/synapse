@@ -19,26 +19,33 @@ class Project extends Component {
 
   render() {
     if (this.props.xhr) return <Spinner />;
+    const { project, isAuthenticated } = this.props;
 
-    const { project } = this.props;
+    let buttons;
+    if (isAuthenticated) {
+      buttons = (
+        <div className="buttons">
+          <RouteLink
+            route={`${project.name}/edit`}
+            label="Edit"
+            classNames="btn btn-primary"
+          />
+          <RouteLink
+            route={`${project.name}/projection`}
+            label="Projection"
+            classNames="btn btn-primary"
+          />
+          <RouteLink
+            route={`${project.name}/status`}
+            label="Status"
+            classNames="btn btn-primary"
+          />
+        </div>);
+    }
+
     return (
       <div className="project">
-        <RouteLink
-          route={`${project.name}/edit`}
-          label="Edit"
-          classNames="btn btn-primary"
-        />
-        <RouteLink
-          route={`${project.name}/projection`}
-          label="Projection"
-          classNames="btn btn-primary"
-        />
-        <RouteLink
-          route={`${project.name}/status`}
-          label="Status"
-          classNames="btn btn-primary"
-        />
-
+        {buttons}
         <div className="main">
           <Text label="Name" content={project.name} />
           <Text label="Description" content={project.description} />
@@ -154,11 +161,13 @@ Project.propTypes = {
   fetchProject: PropTypes.func.isRequired,
   params: PropTypes.object.isRequired,
   xhr: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   project: normalizeProject(state.project),
   xhr: state.xhr,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, actionCreators)(Project);

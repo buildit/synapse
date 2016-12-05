@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actions';
 import MessageBar from 'components/2-molecules/MessageBar';
+import Login from 'components/2-molecules/Login';
 import Header from 'whippersnapper/build/Header';
 import Footer from 'whippersnapper/build/Footer';
 require('zzzss/dist/css/zzzss.css');
@@ -17,8 +18,20 @@ const App = ({
   dismissMessage,
   projectName,
   children,
+  login,
+  logout,
+  isAuthenticated,
+  user,
+  authMessage,
  }) => (
   <div className="container">
+    <Login
+      onLoginClick={login}
+      onLogoutClick={logout}
+      isAuthenticated={isAuthenticated}
+      user={user}
+      message={authMessage}
+    />
     <Header
       logotype="Synapse"
       pageName={projectName}
@@ -48,6 +61,11 @@ App.propTypes = {
   projectName: PropTypes.string,
   updateProject: PropTypes.func.isRequired,
   children: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  user: PropTypes.object,
+  authMessage: PropTypes.string,
 };
 
 function mapStateToProps(state) {
@@ -56,6 +74,9 @@ function mapStateToProps(state) {
     message: state.messages,
     appData: state.appData,
     projectName,
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user,
+    authMessage: state.auth.message,
   };
 }
 

@@ -26,3 +26,5 @@ export const UPDATE_PROJECT_REQUEST = 'UPDATE_PROJECT_REQUEST';
 export const UPDATE_PROJECTION = 'UPDATE_PROJECTION';
 export const XHR_START = 'XHR_START';
 export const XHR_END = 'XHR_END';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';

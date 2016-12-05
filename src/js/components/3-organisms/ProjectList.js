@@ -15,17 +15,24 @@ class ProjectList extends Component {
   }
 
   render() {
-    if (this.props.xhr) return <Spinner />;
-
-    return (
-      <div className="project-list">
+    const { xhr, isAuthenticated } = this.props;
+    let newButton;
+    if (isAuthenticated) {
+      newButton = (
         <Button
           label="New"
           cssClasses="button btn btn-primary"
           onClick={() => {
             browserHistory.push('/new');
           }}
-        />
+        />);
+    }
+
+    if (xhr) return <Spinner />;
+
+    return (
+      <div className="project-list">
+        {newButton}
         <div className="main">
           <ProjectsTable
             tableData={this.props.projectList || []}
@@ -49,12 +56,14 @@ ProjectList.propTypes = {
   fetchProject: PropTypes.func,
   projectList: PropTypes.array,
   xhr: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => (
   {
     projectList: state.projects.projectList,
     xhr: state.xhr,
+    isAuthenticated: state.auth.isAuthenticated,
   }
 );
 

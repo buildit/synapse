@@ -14,7 +14,7 @@ describe('Home Page', () => {
     expect(yield driver.getTitle()).to.equal('Synapse');
     expect(yield homePage.hasApp()).to.be.true;
     expect(yield homePage.hasTable()).to.be.true;
-    expect(yield homePage.hasButton()).to.be.true;
+    expect(yield homePage.hasLogin()).to.be.true;
   });
 
   it('Can navigate to the Project View page', function* foo() {
