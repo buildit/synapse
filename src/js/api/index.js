@@ -33,6 +33,8 @@ const saveProject = (projectToSave) => {
   );
 };
 
+const loginRequest = (user) => post(`${config.loginUrl}`, user);
+
 export default {
   projects,
   project,
@@ -43,4 +45,5 @@ export default {
   saveProjection,
   updateProject,
   saveProject,
+  loginRequest,
 };

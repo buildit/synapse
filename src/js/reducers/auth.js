@@ -1,36 +1,35 @@
 import {
-  LOGIN,
-  LOGOUT,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGOUT_SUCCESS,
 } from 'actions/actions';
-
-const userIsAuthenticated = user => (user && user.name === 'Paul');
 
 export const initialState = {
   isAuthenticated: false,
   message: '',
   user: {
     name: '',
-    password: '',
   },
 };
 
 export const auth = (state = initialState, action) => {
   switch (action.type) {
 
-  case LOGIN: {
-    if (userIsAuthenticated(action.user)) {
-      return {
-        isAuthenticated: true,
-        user: action.user,
-      };
-    }
+  case LOGIN_SUCCESS: {
     return {
-      isAuthenticated: false,
-      message: 'Login failed',
+      isAuthenticated: true,
+      user: action.user,
     };
   }
 
-  case LOGOUT: {
+  case LOGIN_FAILURE: {
+    return {
+      isAuthenticated: false,
+      message: 'Wrong email or password',
+    };
+  }
+
+  case LOGOUT_SUCCESS: {
     return initialState;
   }
 

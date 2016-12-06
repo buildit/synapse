@@ -18,18 +18,18 @@ const App = ({
   dismissMessage,
   projectName,
   children,
-  login,
-  logout,
+  loginRequest,
+  logoutRequest,
   isAuthenticated,
   user,
   authMessage,
  }) => (
   <div className="container">
     <Login
-      onLoginClick={login}
-      onLogoutClick={logout}
+      onLoginClick={loginRequest}
+      onLogoutClick={logoutRequest}
       isAuthenticated={isAuthenticated}
-      user={user}
+      userName={user ? user.name : 'No name'}
       message={authMessage}
     />
     <Header
@@ -61,8 +61,8 @@ App.propTypes = {
   projectName: PropTypes.string,
   updateProject: PropTypes.func.isRequired,
   children: PropTypes.object.isRequired,
-  login: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
+  loginRequest: PropTypes.func.isRequired,
+  logoutRequest: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   user: PropTypes.object,
   authMessage: PropTypes.string,

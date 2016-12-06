@@ -2,7 +2,6 @@ import { call } from 'redux-saga/effects';
 
 import Api from 'api';
 
-
 export function* fetchProject(name) {
   let project;
   try {
@@ -51,4 +50,8 @@ export function* fetchProjectEffortData(name) {
     effort = [];
   }
   return effort;
+}
+
+export function* postLoginRequest(user) {
+  return yield call(Api.loginRequest, user);
 }

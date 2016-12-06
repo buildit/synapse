@@ -2,8 +2,14 @@ import React, { PropTypes } from 'react';
 
 const defaultValue = '';
 
-const LoginInput = ({ label, property, onInputChange, initialValue = defaultValue,
-  disabled = false }) => {
+const LoginInput = ({
+  label,
+  property,
+  onInputChange,
+  initialValue = defaultValue,
+  disabled = false,
+  type = 'text',
+}) => {
   let input;
   return (
     <div className="form-group">
@@ -11,7 +17,7 @@ const LoginInput = ({ label, property, onInputChange, initialValue = defaultValu
       <input
         disabled={disabled}
         className="form-control"
-        type="text"
+        type={type}
         id={`${property}`}
         placeholder={label}
         ref={node => {

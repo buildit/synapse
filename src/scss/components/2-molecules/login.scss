@@ -30,9 +30,11 @@
     }
   }
 
-  .greeting {
+  .user-name {
+    display: inline-block;
+    padding-right: 1rem;
+    border-right: 3px solid $light-gray;
     margin-right: 1rem;
-    color: grey;
   }
 
 }

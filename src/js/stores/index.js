@@ -1,4 +1,4 @@
-const isLogging = false;
+const isLogging = true;
 
 import createSagaMiddleware from 'redux-saga';
 import reducers from 'reducers';
@@ -20,6 +20,10 @@ import {
 import {
   watchFetchDemandStatusData,
 } from 'middleware/status';
+import {
+  watchLoginRequest,
+  watchLogoutRequest,
+} from 'middleware/auth';
 
 const redux = require('redux');
 
@@ -47,6 +51,8 @@ module.exports = (initialState) => {
   sagaMiddleware.run(watchUpdateProjectRequest);
   sagaMiddleware.run(watchSaveProjectRequest);
   sagaMiddleware.run(watchInitializeNewProject);
+  sagaMiddleware.run(watchLoginRequest);
+  sagaMiddleware.run(watchLogoutRequest);
 
   return store;
 };

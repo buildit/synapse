@@ -6,7 +6,7 @@ class Login extends Component {
     super();
     this.state = {
       user: {
-        name: '',
+        email: '',
         password: '',
       },
       active: false,
@@ -36,21 +36,23 @@ class Login extends Component {
       onLoginClick,
       onLogoutClick,
       isAuthenticated,
-      user,
       message,
+      userName,
     } = this.props;
 
     if (isAuthenticated) {
       return (
         <div
           className="login"
-          onClick={() => {
-            closeLogin();
-            onLogoutClick();
-          }}
         >
-          <span className="greeting">Hi, {user.name}</span>
-          <span className="button">Logout</span>
+          <span className="user-name">{userName}</span>
+          <span
+            className="button"
+            onClick={() => {
+              closeLogin();
+              onLogoutClick();
+            }}
+          >Logout</span>
         </div>);
     }
 
@@ -64,13 +66,15 @@ class Login extends Component {
           </div>
           <div className="login-form">
             <LoginInput
-              label="Name"
-              property="name"
+              label="Email"
+              property="email"
+              type="email"
               onInputChange={onInputChange}
             />
             <LoginInput
               label="Password"
               property="password"
+              type="password"
               onInputChange={onInputChange}
             />
             <div className="buttons">
@@ -103,6 +107,6 @@ Login.propTypes = {
   onLoginClick: React.PropTypes.func.isRequired,
   onLogoutClick: React.PropTypes.func.isRequired,
   isAuthenticated: React.PropTypes.bool.isRequired,
-  user: React.PropTypes.object,
+  userName: React.PropTypes.string,
   message: React.PropTypes.string,
 };

@@ -50,12 +50,24 @@ export class Config {
     return this.computedBaseUrl;
   }
 
+  authUrl() {
+    if (this.environment === STAGING || this.environment === DEVELOPMENT) {
+      return 'http://twig-api.staging.riglet/';
+      // return 'https://runkit.io/billyzac/5848387e51a98e00145131e9/branches/master/';
+    }
+    return 'http://twig-api.riglet/';
+  }
+
   get apiBaseUrl() {
     return this.baseUrl();
   }
 
   get starterProjectsBaseApiUrl() {
     return this.baseUrl();
+  }
+
+  get loginUrl() {
+    return `${this.authUrl()}login`;
   }
 }
 
