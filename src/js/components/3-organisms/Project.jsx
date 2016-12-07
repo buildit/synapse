@@ -22,6 +22,21 @@ class Project extends Component {
     const { project, isAuthenticated } = this.props;
 
     let buttons;
+    const hiddenAuthPolicy = (
+      <div>
+        <Text
+          label="Auth policy"
+          content="●●●●●●●●"
+        />
+        <Text
+          label="Auth Data"
+          content="●●●●●●●●"
+        />
+      </div>
+    );
+    let demandAuthPolicy = hiddenAuthPolicy;
+    let defectAuthPolicy = hiddenAuthPolicy;
+    let effortAuthPolicy = hiddenAuthPolicy;
     if (isAuthenticated) {
       buttons = (
         <div className="buttons">
@@ -41,6 +56,44 @@ class Project extends Component {
             classNames="btn btn-primary"
           />
         </div>);
+
+      demandAuthPolicy = (
+        <div>
+          <Text
+            label="Auth policy"
+            content={project.demand.authPolicy}
+          />
+          <Text
+            label="Auth Data"
+            content={project.demand.userData}
+          />
+        </div>
+      );
+
+      defectAuthPolicy = (
+        <div>
+          <Text
+            label="Auth policy"
+            content={project.defect.authPolicy}
+          />
+          <Text
+            label="Auth Data"
+            content={project.defect.userData}
+          />
+        </div>
+      );
+      effortAuthPolicy = (
+        <div>
+          <Text
+            label="Auth policy"
+            content={project.effort.authPolicy}
+          />
+          <Text
+            label="Auth Data"
+            content={project.effort.userData}
+          />
+        </div>
+      );
     }
 
     return (
@@ -69,14 +122,7 @@ class Project extends Component {
               content={project.demand.project}
             />
             <h3>Auth</h3>
-            <Text
-              label="Auth policy"
-              content={project.demand.authPolicy}
-            />
-            <Text
-              label="Auth Data"
-              content={project.demand.userData}
-            />
+            {demandAuthPolicy}
 
             <h3>Flow</h3>
             <Table
@@ -101,14 +147,7 @@ class Project extends Component {
               content={project.defect.project}
             />
             <h3>Auth</h3>
-            <Text
-              label="Auth policy"
-              content={project.defect.authPolicy}
-            />
-            <Text
-              label="Auth Data"
-              content={project.defect.userData}
-            />
+            {defectAuthPolicy}
 
             <h3>Severity</h3>
             <Table
@@ -133,14 +172,7 @@ class Project extends Component {
               content={project.effort.project}
             />
             <h3>Auth</h3>
-            <Text
-              label="Auth policy"
-              content={project.effort.authPolicy}
-            />
-            <Text
-              label="Auth Data"
-              content={project.effort.userData}
-            />
+            {effortAuthPolicy}
 
             <h3>Roles</h3>
             <Table

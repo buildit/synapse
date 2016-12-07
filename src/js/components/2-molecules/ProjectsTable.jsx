@@ -4,7 +4,13 @@ import TableCell from 'components/1-atoms/TableCell';
 import RAGStatusTableCell from 'components/1-atoms/RAGStatusTableCell';
 import TableHeaderCell from 'components/1-atoms/TableHeaderCell';
 
-const ProjectsTable = ({ tableData, visibleColumns, rowKey, deleteProject }) => {
+const ProjectsTable = ({
+  tableData,
+  visibleColumns,
+  rowKey,
+  deleteProject,
+  isAuthenticated,
+}) => {
   const headerRow = [];
   const bodyRows = [];
 
@@ -61,14 +67,16 @@ const ProjectsTable = ({ tableData, visibleColumns, rowKey, deleteProject }) => 
       </td>
     );
 
-    bodyRow.push(
-      <td
-        key={`delete-${projectId}`}
-        onClick={() => deleteProject(projectId)}
-      >
-        <span className="delete-project-control fa fa-trash"></span>
-      </td>
-    );
+    if (isAuthenticated) {
+      bodyRow.push(
+        <td
+          key={`delete-${projectId}`}
+          onClick={() => deleteProject(projectId)}
+        >
+          <span className="delete-project-control fa fa-trash"></span>
+        </td>
+      );
+    }
 
     bodyRows.push(<tr
       id={tableData[i][rowKey]}
@@ -98,4 +106,5 @@ ProjectsTable.propTypes = {
   visibleColumns: React.PropTypes.array.isRequired,
   rowKey: React.PropTypes.string.isRequired,
   deleteProject: React.PropTypes.func.isRequired,
+  isAuthenticated: React.PropTypes.bool.isRequired,
 };

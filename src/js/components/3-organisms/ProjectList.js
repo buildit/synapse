@@ -45,6 +45,7 @@ class ProjectList extends Component {
             ]}
             rowKey={'name'}
             deleteProject={this.props.deleteProject}
+            isAuthenticated={isAuthenticated}
           />
         </div>
       </div>
