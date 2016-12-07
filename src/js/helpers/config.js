@@ -52,8 +52,7 @@ export class Config {
 
   authUrl() {
     if (this.environment === STAGING || this.environment === DEVELOPMENT) {
-      return 'http://twig-api.staging.riglet/';
-      // return 'https://runkit.io/billyzac/5848387e51a98e00145131e9/branches/master/';
+      return 'http://staging.twig-api.riglet/';
     }
     return 'http://twig-api.riglet/';
   }
