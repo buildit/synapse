@@ -14,6 +14,7 @@ import {
   RESET_PROJECT,
   UPDATE_FORM_DATA,
   UPDATE_PROJECTION,
+  FETCH_EVENT_HISTORY_SUCCESS,
 } from 'actions/actions';
 
 export const initialState = blankProject.create();
@@ -117,6 +118,12 @@ export const project = (state = initialState, action) => {
   case ADD_SEVERITY_LIST_ITEM: {
     const newItem = { name: action.name, groupWith: action.groupWith };
     return addListItem(state, 'defect', 'severity', newItem);
+  }
+  case FETCH_EVENT_HISTORY_SUCCESS: {
+    return {
+      ...state,
+      events: action.events,
+    };
   }
   default: return state;
   }

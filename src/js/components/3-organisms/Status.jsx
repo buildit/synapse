@@ -7,6 +7,7 @@ import { fetchAllStatusData } from 'actions';
 import StatusChart from 'components/2-molecules/StatusChart';
 import transformStatusData from 'helpers/transformStatusData';
 import Spinner from 'components/1-atoms/Spinner';
+import EventHistory from 'components/2-molecules/EventHistory';
 
 class Status extends Component {
   componentDidMount() {
@@ -21,16 +22,20 @@ class Status extends Component {
 
     if (!this.props.xhr && this.props.project.name) {
       component = (
-        <StatusChart
-          demandStatus={this.props.demandStatus}
-          defectStatus={this.props.defectStatus}
-          effortStatus={this.props.effortStatus}
-          demandCategories={this.props.demandCategories}
-          defectCategories={this.props.defectCategories}
-          effortCategories={this.props.effortCategories}
-          projection={this.props.projection}
-          forecastedCompletionDate={this.props.forecastedCompletionDate}
-        />
+        <div className="status">
+          <StatusChart
+            demandStatus={this.props.demandStatus}
+            defectStatus={this.props.defectStatus}
+            effortStatus={this.props.effortStatus}
+            events={this.props.project.events}
+            demandCategories={this.props.demandCategories}
+            defectCategories={this.props.defectCategories}
+            effortCategories={this.props.effortCategories}
+            projection={this.props.projection}
+            forecastedCompletionDate={this.props.forecastedCompletionDate}
+          />
+          <EventHistory events={this.props.events} />
+        </div>
     );
     }
 
@@ -45,6 +50,7 @@ Status.propTypes = {
   demandStatus: PropTypes.array.isRequired,
   defectStatus: PropTypes.array.isRequired,
   effortStatus: PropTypes.array.isRequired,
+  events: PropTypes.array,
   demandCategories: PropTypes.array.isRequired,
   defectCategories: PropTypes.array.isRequired,
   effortCategories: PropTypes.array.isRequired,
@@ -57,6 +63,8 @@ const mapStateToProps = state => {
   const demandStatus = transformStatusData(state.status.demand, 'status');
   const defectStatus = transformStatusData(state.status.defect, 'severity');
   const effortStatus = transformStatusData(state.status.effort, 'activity');
+
+  const events = state.project.events;
 
   const demandCategories = state.project.demand.flow ?
     state.project.demand.flow.map(item => (item.name)) : [];
@@ -89,6 +97,7 @@ const mapStateToProps = state => {
     defectCategories,
     effortCategories,
     projection,
+    events,
     xhr: state.xhr,
   };
 };
