@@ -1,5 +1,5 @@
 import config from 'helpers/config';
-import { fetch, put, post } from './xhr';
+import { fetch, put, post, erase } from './xhr';
 
 const projects = () => fetch(`${config.apiBaseUrl}v1/project/`);
 
@@ -34,6 +34,11 @@ const saveProject = (projectToSave) => {
 };
 
 const loginRequest = (user) => post(`${config.loginUrl}`, user);
+const deleteProject = (projectToDelete) => {
+  erase(
+    `${config.apiBaseUrl}v1/project/${projectToDelete.name}`
+  );
+};
 
 export default {
   projects,
@@ -46,4 +51,5 @@ export default {
   updateProject,
   saveProject,
   loginRequest,
+  deleteProject,
 };

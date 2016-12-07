@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { fetchProjects } from 'actions/projects';
+import { fetchProjects, deleteProject } from 'actions/projects';
 import Button from 'components/1-atoms/Button';
 import Spinner from 'components/1-atoms/Spinner';
 import ProjectsTable from 'components/2-molecules/ProjectsTable';
@@ -44,6 +44,7 @@ class ProjectList extends Component {
               'description',
             ]}
             rowKey={'name'}
+            deleteProject={this.props.deleteProject}
           />
         </div>
       </div>
@@ -54,6 +55,7 @@ class ProjectList extends Component {
 ProjectList.propTypes = {
   fetchProjects: PropTypes.func,
   fetchProject: PropTypes.func,
+  deleteProject: PropTypes.func,
   projectList: PropTypes.array,
   xhr: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
@@ -67,4 +69,4 @@ const mapStateToProps = state => (
   }
 );
 
-export default connect(mapStateToProps, { fetchProjects })(ProjectList);
+export default connect(mapStateToProps, { fetchProjects, deleteProject })(ProjectList);

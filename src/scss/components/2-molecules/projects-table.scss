@@ -4,4 +4,8 @@
   @media (min-width: $screen-md-min) {
     font-size: 1.4rem;
   }
+
+  .delete-project-control {
+    cursor: pointer;
+  }
 }

@@ -152,4 +152,11 @@ describe('API', () => {
     expect(theRequest.url.match(`/project/${projectName}$`)).to.not.equal(null);
     expect(theRequest.requestBody).to.equal(JSON.stringify(projectData));
   });
+
+  it('runs the project deleter', () => {
+    Api.deleteProject(projectData);
+    const theRequest = pendingRequests[0];
+    expect(theRequest.method).to.equal('DELETE');
+    expect(theRequest.url.match(`/project/${projectName}$`)).to.not.equal(null);
+  });
 });

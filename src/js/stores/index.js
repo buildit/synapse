@@ -16,6 +16,7 @@ import {
   watchSaveProjectionRequest,
   watchUpdateProjectRequest,
   watchSaveProjectRequest,
+  watchDeleteProject,
 } from 'middleware/project';
 import {
   watchFetchDemandStatusData,
@@ -53,6 +54,7 @@ module.exports = (initialState) => {
   sagaMiddleware.run(watchInitializeNewProject);
   sagaMiddleware.run(watchLoginRequest);
   sagaMiddleware.run(watchLogoutRequest);
+  sagaMiddleware.run(watchDeleteProject);
 
   return store;
 };

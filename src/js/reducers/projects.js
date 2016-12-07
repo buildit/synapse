@@ -1,4 +1,5 @@
 import {
+  DELETE_PROJECT_SUCCESS,
   FETCH_PROJECTS_RECEIVE,
   FETCH_STARTER_PROJECTS_RECEIVE,
 } from 'actions/actions';
@@ -20,6 +21,18 @@ export const projects = (state = initialState, action) => {
     return {
       ...state,
       starterProjectList: action.response,
+    };
+  }
+  case DELETE_PROJECT_SUCCESS: {
+    const updatedList = [];
+    state.projectList.forEach((iteritem) => {
+      if (iteritem.name !== action.name) {
+        updatedList.push(iteritem);
+      }
+    });
+    return {
+      ...state,
+      projectList: updatedList,
     };
   }
   default: return state;
