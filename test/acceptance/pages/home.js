@@ -1,51 +1,50 @@
-import { By, until } from 'selenium-webdriver';
-import { url } from '../global';
+import { By } from 'selenium-webdriver';
+import PageBase from '../pageBase';
 
-export default class HomePage {
+export default class HomePage extends PageBase {
   constructor(driver) {
-    this.url = `${url}/`;
+    super(driver);
+    this.url = `${this.baseUrl}/`;
     this.elements = {
       app: By.css('#app'),
       table: By.css('.table'),
       button: By.css('button'),
       login: By.css('.login'),
       projectWithName: (name) => By.css(`a[href="${name}"]`),
+      projectTrashcan: (name) => By.css(`[data-project="${name}"]`),
     };
-    this.driver = driver;
-  }
 
-  waitUntilReady() {
-    return this.driver.wait(until.elementLocated(this.elements.app));
-  }
-
-  navigate() {
-    /* eslint-disable no-console */
-    console.log('this.url:', this.url);
-    /* eslint-enable no-console */
-    this.driver.navigate().to(this.url);
-    return this.waitUntilReady();
+    this.readyElement = this.elements.app;
   }
 
   hasApp() {
-    return this.driver.findElement(this.elements.app).isDisplayed();
+    return this.hasElement(this.elements.app);
   }
 
   hasTable() {
-    return this.driver.findElement(this.elements.table).isDisplayed();
+    return this.hasElement(this.elements.table);
   }
 
   hasButton() {
-    return this.driver.findElement(this.elements.button).isDisplayed();
+    return this.hasElement(this.elements.button);
   }
 
   hasLogin() {
-    return this.driver.findElement(this.elements.login).isDisplayed();
+    return this.hasElement(this.elements.login);
+  }
+
+  hasProjectTrashcan(name) {
+    return this.hasElement(this.elements.projectTrashcan(name));
   }
 
   selectProject(name) {
     const encodedName = encodeURIComponent(name);
-    const namedProject = this.driver.wait(
-      until.elementLocated(this.elements.projectWithName(encodedName)), 10000);
+    const namedProject = this.locateElement(this.elements.projectWithName(encodedName));
+    return namedProject.click();
+  }
+
+  deleteProject(name) {
+    const namedProject = this.locateElement(this.elements.projectTrashcan(name));
     return namedProject.click();
   }
 }

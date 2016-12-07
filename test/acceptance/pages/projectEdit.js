@@ -1,30 +1,34 @@
-import { By, until } from 'selenium-webdriver';
-import { url } from '../global';
+import { By } from 'selenium-webdriver';
+import PageBase from '../pageBase';
 
-export default class ProjectEdit {
+export default class ProjectEdit extends PageBase {
   constructor(driver) {
+    super(driver);
     const projectName = encodeURIComponent('Test Project 1');
-    this.url = `${url}/${projectName}/edit`;
+    this.url = `${this.baseUrl}/${projectName}/edit`;
     this.elements = {
       component: By.css('.edit-project'),
+      nameField: By.css('#headername'),
+      saveButton: By.css('#top-save-button'),
     };
-    driver.manage().timeouts().implicitlyWait(10000);
-    this.driver = driver;
-  }
 
-  waitUntilReady() {
-    return this.driver.wait(until.elementLocated(this.elements.component), 10000);
-  }
-
-  navigate() {
-    /* eslint-disable no-console */
-    console.log('this.url:', this.url);
-    /* eslint-enable no-console */
-    this.driver.navigate().to(this.url);
-    return this.waitUntilReady();
+    this.readyElement = this.elements.component;
   }
 
   hasProjectEdit() {
-    return this.driver.findElement(this.elements.component).isDisplayed();
+    return this.hasElement(this.elements.component);
+  }
+
+  fillInName(value) {
+    return this.driver.findElement(this.elements.nameField).sendKeys(value);
+  }
+
+  nameValue() {
+    return this.driver.findElement(this.elements.nameField).getAttribute('value');
+  }
+
+  saveProject() {
+    const manualButton = this.locateElement(this.elements.saveButton);
+    return manualButton.click();
   }
 }

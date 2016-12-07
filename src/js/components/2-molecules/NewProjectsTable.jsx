@@ -40,7 +40,7 @@ const NewProjectsTable = ({ tableData, visibleColumns, rowKey, onProjectCreateCl
   }
 
   return (
-    <table className="table">
+    <table className="table" id="newProjectsTable">
       <thead>
         <tr className="tableHeaderRow">
           {headerRow}

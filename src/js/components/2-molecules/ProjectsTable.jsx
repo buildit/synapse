@@ -73,7 +73,10 @@ const ProjectsTable = ({
           key={`delete-${projectId}`}
           onClick={() => deleteProject(projectId)}
         >
-          <span className="delete-project-control fa fa-trash"></span>
+          <span
+            className="delete-project-control fa fa-trash"
+            data-project={`${projectId}`}
+          ></span>
         </td>
       );
     }

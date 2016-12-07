@@ -41,6 +41,7 @@ class EditProject extends Component {
         <Button
           label="Save"
           cssClasses="button btn btn-primary"
+          id="top-save-button"
           onClick={() => {
             if (isNewProject) {
               saveFormData(project);
