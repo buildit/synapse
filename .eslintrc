@@ -13,7 +13,7 @@
     "api": false,
     "starterProjectsApi": false,
     "beforeEach": false,
-    "after": fasle,
+    "after": false,
     "afterEach": false,
   },
   "parserOptions": {
