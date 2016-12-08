@@ -1,4 +1,4 @@
-import normalizeProject from 'helpers/normalizeProject';
+import normalizeProject from 'reducers/fixerUppers/normalizers/normalizeProject';
 import { expect } from 'chai';
 
 describe('normalizeProject helper', () => {

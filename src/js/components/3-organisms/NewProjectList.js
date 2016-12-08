@@ -8,8 +8,6 @@ import * as actionCreators from 'actions';
 import Button from 'components/1-atoms/Button';
 import Spinner from 'components/1-atoms/Spinner';
 import NewProjectsTable from 'components/2-molecules/NewProjectsTable';
-import normalizeProject from 'helpers/normalizeProject';
-// import filterListByIds from 'helpers/filterListByIds';
 
 class NewProjectList extends Component {
   componentWillMount() {
@@ -72,17 +70,9 @@ NewProjectList.propTypes = {
   xhr: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => {
-  // Normalize the raw Harvest project data
-  const starterProjectList =
-    state.projects.starterProjectList.map(_project => (normalizeProject(_project)));
-
-  return (
-  {
-    starterProjectList,
-    xhr: state.xhr,
-  }
-  );
-};
+const mapStateToProps = state => ({
+  starterProjectList: state.projects.starterProjectList,
+  xhr: state.xhr,
+});
 
 export default connect(mapStateToProps, actionCreators)(NewProjectList);

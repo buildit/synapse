@@ -1,5 +1,5 @@
 import blankProject from 'helpers/blankProject';
-import normalizeProject from 'helpers/normalizeProject';
+import fixerUpper from 'reducers/fixerUppers/project';
 
 import {
   ADD_DEFECT_FLOW_LIST_ITEM,
@@ -51,9 +51,8 @@ export const project = (state = initialState, action) => {
     };
   }
   case FETCH_PROJECT_SUCCESS: {
-    const fetchedProject = normalizeProject(action.project);
+    const fetchedProject = fixerUpper(action.project);
     fetchedProject.new = ('new' in fetchedProject) ? fetchedProject.new : false;
-    // fetchedProject.projection = action.project.projection;
     return fetchedProject;
   }
   case RESET_PROJECT: {

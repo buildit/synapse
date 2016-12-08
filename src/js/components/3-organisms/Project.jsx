@@ -9,7 +9,6 @@ import Text from 'whippersnapper/build/Text';
 import Spinner from 'components/1-atoms/Spinner';
 import Table from 'components/2-molecules/Table';
 import formatDate from 'helpers/formatDate';
-import normalizeProject from 'helpers/normalizeProject';
 
 class Project extends Component {
   componentDidMount() {
@@ -197,7 +196,7 @@ Project.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  project: normalizeProject(state.project),
+  project: state.project,
   xhr: state.xhr,
   isAuthenticated: state.auth.isAuthenticated,
 });

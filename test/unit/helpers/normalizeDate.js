@@ -1,4 +1,4 @@
-import normalizeDate from 'helpers/normalizeDate';
+import normalizeDate from 'reducers/fixerUppers/normalizers/normalizeProject/normalizeDate';
 import { expect } from 'chai';
 
 describe('date normalizer', () => {

@@ -3,6 +3,7 @@ import {
   FETCH_PROJECTS_RECEIVE,
   FETCH_STARTER_PROJECTS_RECEIVE,
 } from 'actions/actions';
+import fixerUpper from 'reducers/fixerUppers/project';
 
 export const initialState = {
   projectList: [],
@@ -18,9 +19,11 @@ export const projects = (state = initialState, action) => {
     };
   }
   case FETCH_STARTER_PROJECTS_RECEIVE: {
+    const starterProjectList =
+      action.response.map(_project => (fixerUpper(_project)));
     return {
       ...state,
-      starterProjectList: action.response,
+      starterProjectList,
     };
   }
   case DELETE_PROJECT_SUCCESS: {
