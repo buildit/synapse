@@ -1,4 +1,5 @@
 export * from 'actions/auth';
+export * from 'actions/eventHistory';
 export * from 'actions/fetchAllStatusData';
 export * from 'actions/messages';
 export * from 'actions/projects';

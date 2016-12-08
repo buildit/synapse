@@ -6,6 +6,7 @@ import {
   fetchProjectDemandData,
   fetchProjectDefectData,
   fetchProjectEffortData,
+  fetchEventHistoryData,
 } from 'middleware/api';
 
 import Api from 'api';
@@ -108,5 +109,24 @@ describe('fetcher for project effort data', () => {
     errorGenerator.next();
     const final = errorGenerator.throw('').value;
     expect(final).to.deep.equal([]);
+  });
+});
+
+describe('fetcher for event history', () => {
+  const eventsCorrect = ['one', 'two', 'three'];
+  const defaultValue = [];
+  const name = 'name';
+  const generator = fetchEventHistoryData(name);
+  const errorGenerator = fetchEventHistoryData(name);
+
+  it('fetches event history', () => {
+    const correct = call(Api.projectEventHistory, name);
+    expect(generator.next().value).to.deep.equal(correct);
+    expect(generator.next(eventsCorrect).value).to.deep.equal(eventsCorrect);
+  });
+  it('returns an empty array on failure', () => {
+    errorGenerator.next();
+    const final = errorGenerator.throw('').value;
+    expect(final).to.deep.equal(defaultValue);
   });
 });

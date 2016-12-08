@@ -10,6 +10,7 @@ const blankProject = {
   effort: {
     role: [],
   },
+  events: [],
   new: true,
 };
 

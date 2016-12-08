@@ -64,3 +64,16 @@ export function* fetchProjectEffortData(name) {
 export function* postLoginRequest(user) {
   return yield call(Api.loginRequest, user);
 }
+
+/*
+ * Mini saga for retrieving event history data
+ */
+export function* fetchEventHistoryData(name) {
+  let events;
+  try {
+    events = yield call(Api.projectEventHistory, name);
+  } catch (err) {
+    events = [];
+  }
+  return events;
+}

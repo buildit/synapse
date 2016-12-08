@@ -9,6 +9,7 @@ import { FETCH_PROJECT_STATUS_DATA } from 'actions/actions';
 import {
   fetchProjectSuccess,
   fetchStatusSuccess,
+  fetchEventHistorySuccess,
   setErrorMessage,
   startXHR,
   endXHR,
@@ -18,6 +19,7 @@ import {
   fetchProjectDemandData,
   fetchProjectDefectData,
   fetchProjectEffortData,
+  fetchEventHistoryData,
 } from 'middleware/api';
 
 export function createStatusErrorMessage(demand, defect, effort, project) {
@@ -47,10 +49,11 @@ export function* fetchAllStatusData(action) {
 
   yield put(startXHR());
 
-  const [demand, defect, effort, project] = yield[
+  const [demand, defect, effort, events, project] = yield[
     call(fetchProjectDemandData, name),
     call(fetchProjectDefectData, name),
     call(fetchProjectEffortData, name),
+    call(fetchEventHistoryData, name),
     call(fetchProject, name),
   ];
 
@@ -60,6 +63,7 @@ export function* fetchAllStatusData(action) {
     effort,
   }));
   yield put(fetchProjectSuccess(project));
+  yield put(fetchEventHistorySuccess(events));
 
   const errorMessage = yield call(createStatusErrorMessage, demand, defect, effort, project);
   if (errorMessage.length) {

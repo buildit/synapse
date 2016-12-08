@@ -11,9 +11,11 @@ import {
   fetchProjectDemandData,
   fetchProjectDefectData,
   fetchProjectEffortData,
+  fetchEventHistoryData,
 } from 'middleware/api';
 import {
   fetchProjectSuccess,
+  fetchEventHistorySuccess,
   setErrorMessage,
   startXHR,
   endXHR,
@@ -67,6 +69,7 @@ describe('All status for project fetcher', () => {
   const demand = { this: 'that' };
   const defect = { near: 'far' };
   const effort = { we: 'they' };
+  const events = ['one', 'two', 'three'];
   const project = { project: 'Yes, this is a project' };
   project.projection = {
     pretendKey: 'Just for the test.',
@@ -81,18 +84,20 @@ describe('All status for project fetcher', () => {
     const demandCorrect = call(fetchProjectDemandData, name);
     const defectCorrect = call(fetchProjectDefectData, name);
     const effortCorrect = call(fetchProjectEffortData, name);
+    const eventsCorrect = call(fetchEventHistoryData, name);
 
     const correct = [
       demandCorrect,
       defectCorrect,
       effortCorrect,
+      eventsCorrect,
       projectCorrect,
     ];
     expect(generator.next().value).to.deep.equal(correct);
   });
 
   it('updates the status', () => {
-    const next = generator.next([demand, defect, effort, project]).value;
+    const next = generator.next([demand, defect, effort, events, project]).value;
     const statusSuccessCorrect = put(fetchStatusSuccess({
       demand, defect, effort,
     }));
@@ -103,6 +108,10 @@ describe('All status for project fetcher', () => {
     expect(generator.next().value).to.deep.equal(put(fetchProjectSuccess(project)));
   });
 
+  it('updates the event history', () => {
+    expect(generator.next().value).to.deep.equal(put(fetchEventHistorySuccess(events)));
+  });
+
   it('attempts to construct an error message', () => {
     const correct = call(createStatusErrorMessage, demand, defect, effort, project);
     expect(generator.next().value).to.deep.equal(correct);
@@ -111,7 +120,8 @@ describe('All status for project fetcher', () => {
   it('sends a message when there is an error message', () => {
     errorGenerator.next();
     errorGenerator.next();
-    errorGenerator.next([demand, defect, effort, project]);
+    errorGenerator.next([demand, defect, effort, events, project]);
+    errorGenerator.next();
     errorGenerator.next();
     errorGenerator.next();
     expect(errorGenerator.next(['foo']).value).to.deep.equal(put(setErrorMessage('foo')));

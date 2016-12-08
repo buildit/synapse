@@ -1,4 +1,4 @@
-const isLogging = true;
+const isLogging = false;
 
 import createSagaMiddleware from 'redux-saga';
 import reducers from 'reducers';

@@ -159,4 +159,11 @@ describe('API', () => {
     expect(theRequest.method).to.equal('DELETE');
     expect(theRequest.url.match(`/project/${projectName}$`)).to.not.equal(null);
   });
+
+  it('runs the event history request', () => {
+    Api.projectEventHistory(projectName);
+    const theRequest = pendingRequests[0];
+    expect(theRequest.method).to.equal('GET');
+    expect(theRequest.url.match(`/project/${projectName}/events`)).to.not.equal(null);
+  });
 });
