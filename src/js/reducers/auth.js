@@ -4,12 +4,20 @@ import {
   LOGOUT_SUCCESS,
 } from 'actions/actions';
 
+const user = JSON.parse(localStorage.getItem('user'));
+
+const isAuthenticated = !!user;
+
 export const initialState = {
+  isAuthenticated,
+  message: '',
+  user,
+};
+
+const loggedOutState = {
   isAuthenticated: false,
   message: '',
-  user: {
-    name: '',
-  },
+  user: undefined,
 };
 
 export const auth = (state = initialState, action) => {
@@ -30,7 +38,7 @@ export const auth = (state = initialState, action) => {
   }
 
   case LOGOUT_SUCCESS: {
-    return initialState;
+    return loggedOutState;
   }
 
   default: return state;
