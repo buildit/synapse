@@ -164,6 +164,6 @@ describe('API', () => {
     Api.projectEventHistory(projectName);
     const theRequest = pendingRequests[0];
     expect(theRequest.method).to.equal('GET');
-    expect(theRequest.url.match(`/project/${projectName}/events`)).to.not.equal(null);
+    expect(theRequest.url.match(`/project/${projectName}/event`)).to.not.equal(null);
   });
 });
