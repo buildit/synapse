@@ -24,7 +24,6 @@ class Status extends Component {
     if (!this.props.xhr && this.props.project.name) {
       component = (
         <div className="status">
-          <EventHistory events={this.props.events} />
           <StatusChart
             demandStatus={this.props.demandStatus}
             defectStatus={this.props.defectStatus}
@@ -36,6 +35,7 @@ class Status extends Component {
             projection={this.props.projection}
             forecastedCompletionDate={this.props.forecastedCompletionDate}
           />
+          <EventHistory events={this.props.events} />
         </div>
     );
     }
