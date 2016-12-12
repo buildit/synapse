@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { fetchAllStatusData } from 'actions';
 import StatusChart from 'components/2-molecules/StatusChart';
 import transformStatusData from 'helpers/transformStatusData';
+import sortEvents from 'helpers/sortEvents';
 import Spinner from 'components/1-atoms/Spinner';
 import EventHistory from 'components/2-molecules/EventHistory';
 
@@ -23,6 +24,7 @@ class Status extends Component {
     if (!this.props.xhr && this.props.project.name) {
       component = (
         <div className="status">
+          <EventHistory events={this.props.events} />
           <StatusChart
             demandStatus={this.props.demandStatus}
             defectStatus={this.props.defectStatus}
@@ -34,7 +36,6 @@ class Status extends Component {
             projection={this.props.projection}
             forecastedCompletionDate={this.props.forecastedCompletionDate}
           />
-          <EventHistory events={this.props.events} />
         </div>
     );
     }
@@ -64,7 +65,7 @@ const mapStateToProps = state => {
   const defectStatus = transformStatusData(state.status.defect, 'severity');
   const effortStatus = transformStatusData(state.status.effort, 'activity');
 
-  const events = state.project.events;
+  const events = sortEvents(state.project.events);
 
   const demandCategories = state.project.demand.flow ?
     state.project.demand.flow.map(item => (item.name)) : [];
