@@ -35,7 +35,7 @@ class EventHistoryItem extends Component {
       >
         <EventHistoryItemHeader
           label={eventItem.type}
-          date={eventItem.endTime}
+          date={eventItem.startTime}
           status={eventItem.status}
         />
         <div className="event-body">
