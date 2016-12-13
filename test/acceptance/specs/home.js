@@ -9,7 +9,6 @@ describe('Home Page', () => {
 
   beforeEach(() => homePage.navigate());
 
-  /* eslint-disable no-unused-expressions */
   it('Shows the home screen', function* foo() {
     expect(yield driver.getTitle()).to.equal('Synapse');
     expect(yield homePage.hasApp()).to.be.true;
@@ -27,5 +26,4 @@ describe('Home Page', () => {
     // assert
     expect(yield projectPage.hasProjectView()).to.be.true;
   });
-  /* eslint-enable no-unused-expressions */
 });

@@ -13,7 +13,6 @@ describe('Project Creation Process', () => {
   const projectPage = new ProjectNew(driver);
   const projectEdit = new ProjectEdit(driver);
 
-  /* eslint-disable no-unused-expressions */
   it('Shows the new project list screen', function* foo() {
     projectPage.navigate();
     expect(yield projectPage.hasProjectList()).to.be.true;
@@ -43,6 +42,4 @@ describe('Project Creation Process', () => {
     homePage.deleteProject(testProjectName);
     expect(yield homePage.hasProjectTrashcan(testProjectName)).to.be.false;
   });
-
-  /* eslint-enable no-unused-expressions */
 });
