@@ -145,6 +145,14 @@ class Project extends Component {
               label="Project"
               content={project.defect.project}
             />
+            <Text
+              label="Entry State"
+              content={project.defect.entryState}
+            />
+            <Text
+              label="Exit State"
+              content={project.defect.exitState}
+            />
             <h3>Auth</h3>
             {defectAuthPolicy}
 

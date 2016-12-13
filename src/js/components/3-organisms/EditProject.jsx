@@ -192,7 +192,7 @@ class EditProject extends Component {
           <Input
             label="Entry State"
             section="defect"
-            property="entryStata"
+            property="entryState"
             onInputChange={onInputChange}
             initialValue={project.defect.entryState}
           />
