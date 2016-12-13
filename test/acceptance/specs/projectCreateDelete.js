@@ -42,4 +42,9 @@ describe('Project Creation Process', () => {
     homePage.deleteProject(testProjectName);
     expect(yield homePage.hasProjectTrashcan(testProjectName)).to.be.false;
   });
+
+  it('Messages about the deletion properly', function* foo() {
+    const correct = `Project ${testProjectName} deleted.`;
+    expect(yield homePage.messageContent()).to.equal(correct);
+  });
 });

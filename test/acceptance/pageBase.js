@@ -1,4 +1,4 @@
-import { until } from 'selenium-webdriver';
+import { By, until } from 'selenium-webdriver';
 import { url } from './global';
 
 export default class PageBase {
@@ -45,6 +45,16 @@ export default class PageBase {
 
   locateElement(element, delay = 10000) {
     return this.driver.wait(until.elementLocated(element), delay);
+  }
+
+  messageContent() {
+    return this.driver.findElement(By.css('.message-bar .message-text')).getText();
+  }
+  messageState() {
+    const messageBar = this.driver.findElement(By.css('.message-bar'));
+    return messageBar.getAttribute('class').then(
+      (classes) => (classes.match('error') ? 'error' : 'success')
+    );
   }
 
 
