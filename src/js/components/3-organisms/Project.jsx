@@ -146,12 +146,12 @@ class Project extends Component {
               content={project.defect.project}
             />
             <Text
-              label="Entry State"
-              content={project.defect.entryState}
+              label="Initial Status"
+              content={project.defect.initialStatus}
             />
             <Text
-              label="Exit State"
-              content={project.defect.exitState}
+              label="Resolved Status"
+              content={project.defect.resolvedStatus}
             />
             <h3>Auth</h3>
             {defectAuthPolicy}

@@ -191,18 +191,18 @@ class EditProject extends Component {
             initialValue={project.defect.userData}
           />
           <Input
-            label="Entry State"
+            label="Initial Status"
             section="defect"
-            property="entryState"
+            property="initialStatus"
             onInputChange={onInputChange}
-            initialValue={project.defect.entryState}
+            initialValue={project.defect.initialStatus}
           />
           <Input
-            label="Exit State"
+            label="Resolved Status"
             section="defect"
-            property="exitState"
+            property="resolvedStatus"
             onInputChange={onInputChange}
-            initialValue={project.defect.exitState}
+            initialValue={project.defect.resolvedStatus}
           />
           <h3>Defect severity</h3>
           <EditableArrayTable
