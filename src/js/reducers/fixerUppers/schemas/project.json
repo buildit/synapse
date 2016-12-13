@@ -66,6 +66,7 @@
         "flow"
       ]
     },
+
     "defect": {
       "type": "object",
       "properties": {
@@ -81,10 +82,10 @@
         "userData": {
           "type": "string"
         },
-        "entryState": {
+        "initialStatus": {
           "type": "string"
         },
-        "exitState": {
+        "resolvedStatus": {
           "type": "string"
         },
         "severity": {
@@ -111,11 +112,12 @@
         "project",
         "authPolicy",
         "userData",
-        "entryState",
-        "exitState",
+        "initialStatus",
+        "resolvedStatus",
         "severity"
       ]
     },
+
     "effort": {
       "type": "object",
       "properties": {
