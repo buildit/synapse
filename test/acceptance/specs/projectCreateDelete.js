@@ -11,7 +11,7 @@ describe('Project Creation Process', () => {
 
   const homePage = new HomePage(driver);
   const projectPage = new ProjectNew(driver);
-  const projectEdit = new ProjectEdit(driver);
+  const projectEdit = new ProjectEdit(driver, 'new-project');
 
   it('Shows the new project list screen', function* foo() {
     projectPage.navigate();
@@ -29,6 +29,16 @@ describe('Project Creation Process', () => {
     projectEdit.fillInName(testProjectName);
     expect(yield projectEdit.nameValue()).to.equal(testProjectName);
     yield projectEdit.saveProject();
+  });
+
+  it('Will not accept a second submission of the same project', function* foo() {
+    const correctMessage = `Project ${testProjectName} already exists. Duplicates not permitted`;
+    projectEdit.navigate();
+    projectEdit.fillInName(testProjectName);
+    yield projectEdit.saveProject();
+
+    expect(yield projectEdit.messageContent()).to.equal(correctMessage);
+    expect(yield projectEdit.messageState()).to.equal('error');
   });
 
   it('Finds the new project in the homepage', function* foo() {

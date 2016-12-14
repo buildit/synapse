@@ -2,9 +2,9 @@ import { By } from 'selenium-webdriver';
 import PageBase from '../pageBase';
 
 export default class ProjectEdit extends PageBase {
-  constructor(driver) {
+  constructor(driver, rawProjectName = 'Test Project 1') {
     super(driver);
-    const projectName = encodeURIComponent('Test Project 1');
+    const projectName = encodeURIComponent(rawProjectName);
     this.url = `${this.baseUrl}/${projectName}/edit`;
     this.elements = {
       component: By.css('.edit-project'),
