@@ -7,7 +7,7 @@ import * as actionCreators from 'actions';
 import ProjectionChart from 'components/2-molecules/ProjectionChart';
 import ProjectionSlider from 'components/1-atoms/ProjectionSlider';
 import ProjectionIntegerInput from 'components/1-atoms/ProjectionIntegerInput';
-import Button from 'components/1-atoms/Button';
+import Button from 'whippersnapper/build/Button.js';
 import Spinner from 'components/1-atoms/Spinner';
 import DateInput from 'components/1-atoms/DateInput';
 import moment from 'moment';

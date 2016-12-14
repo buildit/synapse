@@ -42,17 +42,17 @@ class Project extends Component {
           <RouteLink
             route={`${project.name}/edit`}
             label="Edit"
-            classNames="btn btn-primary"
+            classNames="button-style"
           />
           <RouteLink
             route={`${project.name}/projection`}
             label="Projection"
-            classNames="btn btn-primary"
+            classNames="button-style"
           />
           <RouteLink
             route={`${project.name}/status`}
             label="Status"
-            classNames="btn btn-primary"
+            classNames="button-style"
           />
         </div>);
 

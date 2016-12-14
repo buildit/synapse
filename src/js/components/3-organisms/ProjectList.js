@@ -5,7 +5,7 @@ import React, {
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { fetchProjects, deleteProject } from 'actions/projects';
-import Button from 'components/1-atoms/Button';
+import Button from 'whippersnapper/build/Button.js';
 import Spinner from 'components/1-atoms/Spinner';
 import ProjectsTable from 'components/2-molecules/ProjectsTable';
 
@@ -21,7 +21,7 @@ class ProjectList extends Component {
       newButton = (
         <Button
           label="New"
-          cssClasses="button btn btn-primary"
+          cssClasses="normal"
           onClick={() => {
             browserHistory.push('/new');
           }}

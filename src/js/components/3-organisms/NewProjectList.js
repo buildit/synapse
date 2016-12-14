@@ -5,7 +5,7 @@ import React, {
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actions';
-import Button from 'components/1-atoms/Button';
+import Button from 'whippersnapper/build/Button.js';
 import Spinner from 'components/1-atoms/Spinner';
 import NewProjectsTable from 'components/2-molecules/NewProjectsTable';
 
@@ -33,7 +33,7 @@ class NewProjectList extends Component {
       <div>
         <Button
           label="Create manually"
-          cssClasses="button btn btn-primary"
+          cssClasses="normal"
           id="createManually"
           onClick={() => {
             onProjectCreateClick(null);
@@ -42,7 +42,7 @@ class NewProjectList extends Component {
         />
         <Button
           label="Cancel"
-          cssClasses="button btn btn-secondary"
+          cssClasses="normal"
           id="cancelCreate"
           onClick={() => {
             browserHistory.push('/');

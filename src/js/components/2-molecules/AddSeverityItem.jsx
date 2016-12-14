@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import Button from 'components/1-atoms/Button';
+import Button from 'whippersnapper/build/Button.js';
 
 class AddSeverityItem extends Component {
   constructor() {

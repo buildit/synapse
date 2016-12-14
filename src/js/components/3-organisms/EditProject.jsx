@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import * as actionCreators from 'actions';
 import Input from 'components/1-atoms/Input';
 import ProjectDateInput from 'components/1-atoms/ProjectDateInput';
-import Button from 'components/1-atoms/Button';
+import Button from 'whippersnapper/build/Button.js';
 import EditableArrayTable from 'components/2-molecules/EditableArrayTable';
 import AddFlowItem from 'components/2-molecules/AddFlowItem';
 import AddRoleItem from 'components/2-molecules/AddRoleItem';
