@@ -15,33 +15,26 @@ const starterProjects = () => fetch(
   `${config.starterProjectsBaseApiUrl}v1/project?status=available`
 );
 
-const saveProjection = (projection, name) => {
-  put(
-    `${config.apiBaseUrl}v1/project/${name}/projection`,
-    projection
-  );
-};
+const saveProjection = (projection, name) => put(
+  `${config.apiBaseUrl}v1/project/${name}/projection`,
+  projection
+);
 
-const updateProject = (projectToUpdate) => {
-  put(
-    `${config.apiBaseUrl}v1/project/${projectToUpdate.name}`,
-    projectToUpdate
-  );
-};
+const updateProject = (projectToUpdate) => put(
+  `${config.apiBaseUrl}v1/project/${projectToUpdate.name}`,
+  projectToUpdate
+);
 
-const saveProject = (projectToSave) => {
-  post(
-    `${config.apiBaseUrl}v1/project/${projectToSave.name}`,
-    projectToSave
-  );
-};
+const saveProject = (projectToSave) => post(
+  `${config.apiBaseUrl}v1/project/${projectToSave.name}`,
+  projectToSave
+);
 
 const loginRequest = (user) => post(`${config.loginUrl}`, user);
-const deleteProject = (projectToDelete) => {
-  erase(
-    `${config.apiBaseUrl}v1/project/${projectToDelete.name}`
-  );
-};
+
+const deleteProject = (projectToDelete) => erase(
+  `${config.apiBaseUrl}v1/project/${projectToDelete.name}`
+);
 
 export default {
   projects,

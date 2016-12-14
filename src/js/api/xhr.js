@@ -29,6 +29,8 @@ const makeRequest = (uri, method = 'GET', body = undefined) => new Promise((reso
     }
     resolve(output);
   });
+
+  return xhr;
 });
 /* eslint-enable consistent-return */
 
