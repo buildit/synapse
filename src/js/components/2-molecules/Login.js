@@ -47,7 +47,7 @@ class Login extends Component {
         >
           <span className="user-name">{userName}</span>
           <span
-            className="button"
+            className="link"
             onClick={() => {
               closeLogin();
               onLogoutClick();
@@ -94,7 +94,7 @@ class Login extends Component {
     return (
       <div className="login">
         <span
-          className="button"
+          className="link"
           onClick={openLogin}
         >Login</span>
       </div>);
