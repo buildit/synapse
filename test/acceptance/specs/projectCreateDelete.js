@@ -8,7 +8,10 @@ import randomstring from 'randomstring';
 
 
 describe('Project Creation Process', () => {
-  const testProjectName = randomstring.generate();
+  const testProjectName = randomstring.generate({
+    length: 12,
+    charset: 'alphabetic',
+  });
 
   const homePage = new HomePage(driver);
   const projectPage = new ProjectNew(driver);
