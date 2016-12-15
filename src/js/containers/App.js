@@ -29,7 +29,7 @@ const App = ({
       onLoginClick={loginRequest}
       onLogoutClick={logoutRequest}
       isAuthenticated={isAuthenticated}
-      userName={user ? user.name : 'No name'}
+      userName={user ? user.name : ''}
       message={authMessage}
     />
     <Header
