@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import HomePage from '../pages/home';
 import ProjectNew from '../pages/projectNew';
 import ProjectEdit from '../pages/projectEdit';
+import ProjectionPage from '../pages/projection';
 import { driver } from '../global';
 import randomstring from 'randomstring';
 
@@ -12,6 +13,7 @@ describe('Project Creation Process', () => {
   const homePage = new HomePage(driver);
   const projectPage = new ProjectNew(driver);
   const projectEdit = new ProjectEdit(driver, 'new-project');
+  const projectionPage = new ProjectionPage(driver, testProjectName);
 
   it('Shows the new project list screen', function* foo() {
     projectPage.navigate();
@@ -39,6 +41,13 @@ describe('Project Creation Process', () => {
 
     expect(yield projectEdit.messageContent()).to.equal(correctMessage);
     expect(yield projectEdit.messageState()).to.equal('error');
+  });
+
+  it('Displays a new projection message on the projection page', function* foo() {
+    projectionPage.navigate();
+
+    const correctMessage = 'You are creating a new projection';
+    expect(yield projectionPage.messageContent()).to.equal(correctMessage);
   });
 
   it('Finds the new project in the homepage', function* foo() {
