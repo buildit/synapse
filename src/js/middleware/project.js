@@ -41,6 +41,13 @@ export function* fetchProjectRequest(action) {
     yield put(startXHR());
     const project = yield call(fetchProject, action.name);
     yield put(fetchProjectSuccess(project));
+    // TODO:  This is not the best place for this.  I'm conflating business logic with an
+    // xhr request.  This is working under the assumption that we are only calling
+    // projection_request when we're on the projection page.  Which is TRUE, but irrelevant.
+    // We should have this broken out better.  But that's for a later rethink.
+    if (action.type === FETCH_PROJECTION_REQUEST && !project.projection) {
+      yield put(setMessage('You are creating a new projection'));
+    }
   } catch (err) {
     yield put(setErrorMessage('We could not fetch the project.'));
   } finally {

@@ -9,6 +9,7 @@ import {
 import { fetchProject } from 'middleware/api';
 import {
   fetchProjectSuccess,
+  setMessage,
   setErrorMessage,
   startXHR,
   endXHR,
@@ -22,7 +23,9 @@ const expect = require('chai').expect;
 describe('Single project fetcher', () => {
   const project = 'test';
   const action = { name: project };
+  const projectionAction = Object.assign({}, action, { type: FETCH_PROJECTION_REQUEST });
   const generator = fetchProjectRequest(action);
+  const projectionGenerator = fetchProjectRequest(projectionAction);
   const errorGenerator = fetchProjectRequest(action);
   const errorMessage = new Promise((response, reject) => { reject('error message'); });
   const displayedErrorMessage = 'We could not fetch the project.';
@@ -37,6 +40,16 @@ describe('Single project fetcher', () => {
 
   it('calls a success action', () => {
     expect(generator.next(project).value).to.deep.equal(put(fetchProjectSuccess(project)));
+  });
+
+  it('sets a message when requesting a projection and there isn\'t one yet.', () => {
+    const correct = put(setMessage('You are creating a new projection'));
+
+    projectionGenerator.next();
+    projectionGenerator.next();
+    projectionGenerator.next(project);
+
+    expect(projectionGenerator.next().value).to.deep.equal(correct);
   });
 
   it('sets a message on error', () => {
