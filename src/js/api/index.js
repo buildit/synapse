@@ -30,7 +30,21 @@ const saveProject = (projectToSave) => post(
   projectToSave
 );
 
-const loginRequest = (user) => post(`${config.loginUrl}`, user);
+// TODO: uuuuuuuuuuuuuuuuuuuuuuuuuuuuuugh
+const loginRequest = user => {
+  if (process.env.NODE_ENV === 'development') {
+    return new Promise((resolve) => {
+      resolve({
+        user: {
+          id: user.email,
+          name: user.email,
+        },
+      });
+    });
+  }
+  return post(`${config.loginUrl}`, user);
+};
+// const loginRequest = (user) => post(`${config.loginUrl}`, user);
 
 const deleteProject = (projectToDelete) => erase(
   `${config.apiBaseUrl}v1/project/${projectToDelete.name}`
