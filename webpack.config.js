@@ -4,9 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const SassLintPlugin = require('sasslint-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 const version = require('./package.json').version;
 
-module.exports = {
+const webpackConfig = {
   entry: [
     './src/js/index.js',
     './src/scss/main.scss',
@@ -101,3 +102,9 @@ module.exports = {
     }],
   },
 };
+
+if (process.env.NODE_ENV === 'development') {
+  webpackConfig.plugins.push(new DashboardPlugin());
+}
+
+module.exports = webpackConfig;
