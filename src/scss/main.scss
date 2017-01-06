@@ -1,6 +1,8 @@
 @import 'bootstrap';
 
-@import './node_modules/zzzss/scss/colors.scss';
+@import './node_modules/zzzss/scss/colors.scss'; // Colors from our "brand"
+@import 'colors.scss'; // Colors specific to Synapse
+
 @import './variables';
 @import './globals/global';
 
