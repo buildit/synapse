@@ -11,7 +11,6 @@ const webpackConfig = {
   entry: [
     './src/js/index.js',
     './src/scss/main.scss',
-    // './node_modules/whippersnapper/build/Text.jsx ',
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
