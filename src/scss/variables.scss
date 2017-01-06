@@ -1,25 +1,3 @@
-$brand-colour-black: #1c1f22;
-$brand-colour-yellow: #fcff00;
-$brand-colour-white: #ffffff;
-$brand-colour-blue: steelblue;
-$brand-colour-red: #dd6241;
-
-$brand-primary-colour: $brand-colour-black;
-$brand-secondary-colour: $brand-colour-blue;
-$brand-colour-header: $brand-primary-colour;
-
-$danger-colour: #d9534f;
-
-$button-info-colour: #5bc0de;
-$button-success-colour: #5cb85c;
-$button-danger-colour: #d9534f;
-$button-warning-colour: #f0ad4e;
-$nav-list-item-primary-colour: #dcdcdc;
-$nav-list-item-secondary-colour: $brand-primary-colour;
-$nav-list-item-hover-colour: #ffffff;
-$nav-list-item-active-colour: $brand-colour-yellow;
-$nav-toggle-icon-colour: #ffffff;
-
 $body-font-family-primary: 'Open Sans', sans-serif;
 $body-font-family-secondary: 'Open Sans', sans-serif;
 $logo-font-family: 'Open Sans', sans-serif;
@@ -30,23 +8,6 @@ $transition-delay: 0.5s;
 
 $view-margin: 2rem 0;
 $event-history-item-margin: 0 0 1rem 0;
-
-/**
-  Carry over from colors.less
-**/
-$completed: #c9ebb2;
-$backlog: $brand-colour-red;
-$dark-matter: #4ba395;
-$gray: #777777;
-$light-gray: #eeeeee;
-$highlight: DarkTurquoise;
-$done: #ffbb78;
-$backlog: #1f77b4;
-
-/** RAG status **/
-$red: #e84925;
-$amber: #ff9800;
-$green: #bedb39;
 
 /**
   Screen breakpoints

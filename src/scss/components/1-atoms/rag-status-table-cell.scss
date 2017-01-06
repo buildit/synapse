@@ -1,5 +1,3 @@
-// @import '../../variables'
-
 .rag-status-table-cell {
   .indicator {
     width: 1.3rem;
@@ -8,10 +6,10 @@
     border-radius: 50%;
   }
 
-  .blank { background-color: gray; }
-  .red { background-color: $red; }
-  .amber { background-color: $amber; }
-  .green { background-color: $green; }
+  .blank { background-color: $light-gray; }
+  .red { background-color: $brand-colour-red; }
+  .amber { background-color: $brand-colour-yellow; }
+  .green { background-color: $brand-colour-green; }
 
   @media (min-width: $screen-md-min) {
     .indicator {
