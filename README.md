@@ -136,4 +136,4 @@ This project is currently an internal Buildit project and is not open to externa
 @digitalrigh
 
 ### License
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](http://doge.mit-license.org)
+[![Apache 2](http://img.shields.io/badge/license-Apache%202-red.svg)](http://www.apache.org/licenses/LICENSE-2.0)
