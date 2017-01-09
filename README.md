@@ -1,16 +1,14 @@
 # Synapse
 
-[![Build Status](http://jenkins.riglet:9000/jenkins/buildStatus/icon?job=synapse-staging-pipeline)](http://jenkins.riglet:9000/jenkins/job/synapse-staging-pipeline/)
-
 ## Quick Start
 ```
 npm install
 npm start
 ```
-Visit [the app](http://localhost:3000/).
+This builds the app and runs it on a dev server at [localhost:3000](http://localhost:3000/).
 
 ## What is Synapse?
-Synapse is a Management Information (MI) dashboard that provides visualizations of metrics pertaining to the development and delivery of software projects.  Projects exist within the context of Programs (a related grouping of projects) and Portfolios (a related grouping of Programs).  Thus Synapse is able to provide overviews across any particular level or grouping.
+Synapse is a Management Information (MI) dashboard that provides visualizations of metrics pertaining to the development and delivery of software projects. Projects exist within the context of Programs (a related grouping of projects) and Portfolios (a related grouping of Programs). Thus Synapse is able to provide overviews across any particular level or grouping.
 
 Synapse provides:
 
@@ -31,6 +29,7 @@ The Defect data specifies the severity that a defect item might be in, and how t
 The Effort data specifies the roles that various people fill while working on the project.    Effort role types that exists in the source system but is not listed will be ignored.  Additionally the user can decide to group one or more roles together on the graph.
 
 #### Deployments
+Synapse is currently deployed only on Buildit's VPN. If you have access to the VPN, visit Synapse at:
 Staging Environment: [Synapse Staging](http://synapse.staging.buildit.tools)
 
 Production Environment: [Synapse Production](http://synapse.buildit.tools)
@@ -83,7 +82,7 @@ npm run test
 ```
 
 ##### Acceptance Test
-You need to first have the Synapse app running and that app needs to be appropriately connected to a valid MI REST API service.
+You need to first have the Synapse app running and that app needs to be appropriately connected to a valid MI REST API service, such as Eolas. See "Configure for Deployments" below.
 ```
 npm run test:acceptance
 ```
@@ -110,12 +109,6 @@ We're using a Jenkins pipeline to deploy to production.
 - Hover over the middle stage -- "Write docker-compose". You'll be prompted to choose a "tag". This allows you to choose which version of the build to send out into the world. Generally, you should use "latest". Click "Proceed".
 - Watch for the build to succeed. If it does, you'll see the solid green dot at Jenkins. If not, check the Console Output on Jenkins and debug!
 
-#### Run Locally
-Start a local dev server:
-```
-npm start
-```
-
 ## User Notes
 
 ### Configure for Deployments
@@ -127,25 +120,16 @@ We are using Code Guide's [style guide](http://codeguide.co/#html).
 #### CSS
 We are using Code Guide's [style guide](http://codeguide.co/#css).
 #### JavaScript
-We are using Airbnb's [coding standards](https://github.com/airbnb/javascript) and [linting rules](https://www.npmjs.com/package/eslint-config-airbnb).
+Our Javascript standards are based on Airbnb's [coding standards](https://github.com/airbnb/javascript) and [linting rules](https://www.npmjs.com/package/eslint-config-airbnb). Our custom rules, which overwrite and extend Airbnb's rules, can be found in `/.eslintrc`.
 
-#### Rule Changes
-```
-indent: error, 2
-no-class-assign: warn
-ecmaFeatures: experimentalObjectRestSpread: true
-```
 
 ### How to Contribute
 This project is currently an internal Buildit project and is not open to external resources. If you are an internal resource, please contact @digitalrigh to gain access to this project.
 
-### Change Log
-Still to come after proper integration with JIRA.
-
 ### Team
 @spotted_dog
 
-@ZacSmith777
+[Zac Smith](https://github.com/BillyZac)
 
 @jorgesanchez2387
 
