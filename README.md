@@ -115,11 +115,9 @@ We're using a Jenkins pipeline to deploy to production.
 To run this app, you need access to the management information REST API (code name Eolas). Configuration of the base URL for the REST API is already handled in the deployment pipeline for staging and production. Running this app in a local development environment assumes the REST API service is running on localhost:6565.
 
 ### Coding Standards
-#### HTML
-We are using Code Guide's [style guide](http://codeguide.co/#html).
-#### CSS
-We are using Code Guide's [style guide](http://codeguide.co/#css).
-#### JavaScript
+Our coding standards are enforced by automated linters. (See the linting scripts in package.json and the "
+Analysis" stage in our Jenkins pipeline.) We are using Code Guide's style guides for [HTML](http://codeguide.co/#html) and [CSS](http://codeguide.co/#css).
+
 Our Javascript standards are based on Airbnb's [coding standards](https://github.com/airbnb/javascript) and [linting rules](https://www.npmjs.com/package/eslint-config-airbnb). Our custom rules, which overwrite and extend Airbnb's rules, can be found in `/.eslintrc`.
 
 
