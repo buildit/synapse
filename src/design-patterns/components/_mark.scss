@@ -1,0 +1,10 @@
+/**
+ * Add the correct background and color in IE 9-.
+ */
+
+mark {
+  $mark-background-color: #ff0 !default;
+  $mark-color: #000 !default;
+  background-color: $mark-background-color;
+  color: $mark-color;
+}

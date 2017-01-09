@@ -1,0 +1,12 @@
+/**
+ * Change the border, margin, and padding in all browsers (opinionated).
+ */
+
+fieldset {
+  $fieldset-border: 1px solid #c0c0c0 !default;
+  $fieldset-margin: 0 2px !default;
+  $fieldset-padding: .35em .625em .75em !default;
+  border: $fieldset-border;
+  margin: $fieldset-margin;
+  padding: $fieldset-padding;
+}

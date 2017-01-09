@@ -55,110 +55,107 @@ class Projection extends Component {
 
     return (
       <div className="projection">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-9">
-              <ProjectionChart
-                projection={this.props.projection}
-                points={this.props.points}
-              />
-            </div>
 
-            <div className="sliders col-md-3">
-
-              <ProjectionIntegerInput
-                label="Backlog"
-                unit="stories"
-                legendClass="backlog"
-                initialValue={this.props.projection.backlogSize}
-                onInputChange={value => handleInputChange(value, 'backlogSize')}
-              />
-
-              <ProjectionSlider
-                label="Dark matter"
-                unit="%"
-                legendClass="dark-matter"
-                initialValue={this.props.projection.darkMatter}
-                min={0}
-                max={100}
-                onInputChange={value => handleInputChange(value, 'darkMatter')}
-              />
-
-              <hr />
-
-              <ProjectionIntegerInput
-                label="Target velocity"
-                unit="stories per iteration"
-                initialValue={this.props.projection.velocityMiddle}
-                onInputChange={value => handleInputChange(value, 'velocityMiddle')}
-              />
-
-              <ProjectionSlider
-                label="Iteration length"
-                unit="week(s)"
-                initialValue={this.props.projection.iterationLength}
-                min={1}
-                max={8}
-                onInputChange={value => handleInputChange(value, 'iterationLength')}
-              />
-
-              <hr />
-
-              <ProjectionIntegerInput
-                label="Velocity start"
-                unit="stories per iteration"
-                initialValue={this.props.projection.velocityStart}
-                onInputChange={value => handleInputChange(value, 'velocityStart')}
-              />
-
-              <ProjectionSlider
-                label="Ramp up period"
-                unit="iterations"
-                initialValue={this.props.projection.periodStart}
-                min={0}
-                max={30}
-                onInputChange={value => handleInputChange(value, 'periodStart')}
-              />
-
-              <hr />
-
-              <ProjectionIntegerInput
-                label="Velocity end"
-                unit="stories per iteration"
-                initialValue={this.props.projection.velocityEnd}
-                onInputChange={value => handleInputChange(value, 'velocityEnd')}
-              />
-
-              <ProjectionSlider
-                label="Ramp down period"
-                unit="iterations"
-                initialValue={this.props.projection.periodEnd}
-                min={0}
-                max={30}
-                onInputChange={value => handleInputChange(value, 'periodEnd')}
-              />
-
-              <DateInput
-                label="Start date"
-                initialValue={this.props.projection.startDate}
-                onInputChange={value => handleInputChange(value, 'startDate')}
-              />
-
-              <Button
-                label="Save"
-                cssClasses="button btn btn-primary"
-                onClick={() => {
-                  const projectionToSave = Object.assign({}, this.props.projection);
-                  projectionToSave.endDate = moment(projectionToSave.endDate, 'DD-MMM-YY')
-                    .format('YYYY-MM-DD');
-                  this.props.saveProjection(projectionToSave, projectId);
-                }}
-              />
-
-            </div>
-
-          </div>
+        <div className="projection-view">
+          <ProjectionChart
+            projection={this.props.projection}
+            points={this.props.points}
+          />
         </div>
+
+        <div className="sliders">
+
+          <ProjectionIntegerInput
+            label="Backlog"
+            unit="stories"
+            legendClass="backlog"
+            initialValue={this.props.projection.backlogSize}
+            onInputChange={value => handleInputChange(value, 'backlogSize')}
+          />
+
+          <ProjectionSlider
+            label="Dark matter"
+            unit="%"
+            legendClass="dark-matter"
+            initialValue={this.props.projection.darkMatter}
+            min={0}
+            max={100}
+            onInputChange={value => handleInputChange(value, 'darkMatter')}
+          />
+
+          <hr />
+
+          <ProjectionIntegerInput
+            label="Target velocity"
+            unit="stories per iteration"
+            initialValue={this.props.projection.velocityMiddle}
+            onInputChange={value => handleInputChange(value, 'velocityMiddle')}
+          />
+
+          <ProjectionSlider
+            label="Iteration length"
+            unit="week(s)"
+            initialValue={this.props.projection.iterationLength}
+            min={1}
+            max={8}
+            onInputChange={value => handleInputChange(value, 'iterationLength')}
+          />
+
+          <hr />
+
+          <ProjectionIntegerInput
+            label="Velocity start"
+            unit="stories per iteration"
+            initialValue={this.props.projection.velocityStart}
+            onInputChange={value => handleInputChange(value, 'velocityStart')}
+          />
+
+          <ProjectionSlider
+            label="Ramp up period"
+            unit="iterations"
+            initialValue={this.props.projection.periodStart}
+            min={0}
+            max={30}
+            onInputChange={value => handleInputChange(value, 'periodStart')}
+          />
+
+          <hr />
+
+          <ProjectionIntegerInput
+            label="Velocity end"
+            unit="stories per iteration"
+            initialValue={this.props.projection.velocityEnd}
+            onInputChange={value => handleInputChange(value, 'velocityEnd')}
+          />
+
+          <ProjectionSlider
+            label="Ramp down period"
+            unit="iterations"
+            initialValue={this.props.projection.periodEnd}
+            min={0}
+            max={30}
+            onInputChange={value => handleInputChange(value, 'periodEnd')}
+          />
+
+          <DateInput
+            label="Start date"
+            initialValue={this.props.projection.startDate}
+            onInputChange={value => handleInputChange(value, 'startDate')}
+          />
+
+          <Button
+            label="Save"
+            cssClasses="button btn btn-primary"
+            onClick={() => {
+              const projectionToSave = Object.assign({}, this.props.projection);
+              projectionToSave.endDate = moment(projectionToSave.endDate, 'DD-MMM-YY')
+                .format('YYYY-MM-DD');
+              this.props.saveProjection(projectionToSave, projectId);
+            }}
+          />
+
+        </div>
+
       </div>
     );
   }

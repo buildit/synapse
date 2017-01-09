@@ -1,0 +1,35 @@
+$base-font-family: sans-serif;
+$base-font-color: #000;
+$base-line-height: 1.5;
+
+$typography-line-height: 1.5;
+
+$base-font-size: 16px;
+$small-font-size: modular-scale(-1);
+$h1-font-size: 1rem;
+$h2-font-size: 1rem;
+$h3-font-size: 1rem;
+$h4-font-size: 1rem;
+$h5-font-size: 1rem;
+$h6-font-size: 1rem;
+
+$base-table-padding: .5rem;
+
+$form-font-family: $base-font-family;
+$form-line-height: $base-line-height;
+$form-font-size: 100%;
+
+$fieldset-border: 1px solid #c0c0c0;
+$fieldset-margin: 0 2px;
+$fieldset-padding: .35em .625em .75em;
+
+$small-font-size: 80%;
+
+$sub-font-size: 75%;
+$sub-bottom-offset: -.25em;
+
+$sup-font-size: 75%;
+$sup-top-offset: -.5em;
+
+$medium-screen: 600px;
+$large-screen: 900px;

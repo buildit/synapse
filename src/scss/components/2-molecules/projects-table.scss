@@ -1,8 +1,8 @@
 .projectsTable {
-  font-size: 1rem;
+  font-size: $small-font-size;
 
   @media (min-width: $screen-md-min) {
-    font-size: 1.4rem;
+    font-size: $base-font-size;
   }
 
   .delete-project-control {
