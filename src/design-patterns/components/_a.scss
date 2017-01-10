@@ -4,8 +4,24 @@
  */
 
 a {
+  $base-link-color: rgb(0, 0, 238);
+  $base-link-active-color: rgb(255, 0, 0);
+  $base-link-hover-color: $base-link-color;
+  $base-link-visited-color: rgb(85, 26, 139);
   background-color: transparent; /* 1 */
   -webkit-text-decoration-skip: objects; /* 2 */
+
+  color: $base-link-color;
+
+  &:active {
+    color: $base-link-active-color;
+  }
+  &:hover {
+    color: $base-link-hover-color;
+  }
+  &:visited {
+    color: $base-link-visited-color;
+  }
 }
 
 /**

@@ -1,10 +1,8 @@
-// @import './bootstrap';
 
 @import '../design-patterns/bootstrap';
-
 $base-font-size: 14px;
-
 @import '../design-patterns/base';
+@import '../design-patterns/sane-defaults';
 
 @import './node_modules/zzzss/scss/colors.scss'; // Colors from our "brand"
 @import 'colors.scss'; // Colors specific to Synapse

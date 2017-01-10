@@ -4,6 +4,11 @@
  */
 
 code {
+  $code-background-color: #ddd !default;
+  $code-color: #000 !default;
   font-family: monospace, monospace; /* 1 */
   font-size: 1em; /* 2 */
+
+  background-color: $code-background-color;
+  color: $code-color;
 }

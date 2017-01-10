@@ -1,6 +1,6 @@
 th {
   text-align: left;
 
-  $base-table-padding: .5rem;
+  $base-table-padding: .5rem !default;
   padding: $base-table-padding;
 }

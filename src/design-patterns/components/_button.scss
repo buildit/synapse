@@ -9,12 +9,21 @@ button {
   $form-font-family: sans-serif !default; /* 1 */
   $form-font-size: 100% !default; /* 1 */
   $form-line-height: 1.15 !default; /* 1 */
+  $base-button-background-color: #ccc !default;
+  $base-button-color: #000 !default;
+  $base-button-border: 1px solid #aaa !default;
+  $base-button-border-radius: 3px !default;
   font-family: $form-font-family;
   font-size: $form-font-size; /* 1 */
   line-height: $form-line-height; /* 1 */
   margin: 0; /* 2 */
   overflow: visible; /* 3 */
   text-transform: none; /* 4 */
+
+  background-color: $base-button-background-color;
+  color: $base-button-color;
+  border: $base-button-border;
+  border-radius: $base-button-border-radius;
 }
 
 /**
