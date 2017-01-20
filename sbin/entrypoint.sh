@@ -10,4 +10,4 @@ fi
 
 set -e
 
-sed -i "s/SERVER_CONF/$SERVER_CONF/" /usr/src/app/index.html && nginx
+sed -i "s~SERVER_CONF~$SERVER_CONF~" /usr/src/app/index.html && nginx
