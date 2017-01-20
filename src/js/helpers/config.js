@@ -1,4 +1,5 @@
 const hostname = typeof window === 'undefined' ? 'localhost' : window.location.hostname;
+const serverConfig = typeof window === 'undefined' ? null : window.SERVER_CONF;
 /* eslint-disable no-console */
 console.log('hostname:', hostname);
 /* eslint-enable no-console */
@@ -34,13 +35,20 @@ export class Config {
     try {
       if (!this.computedBaseUrl) {
         let url;
-        const eolasDomain = process.env.EOLAS_DOMAIN;
-        if (this.environment === STAGING) {
-          url = `${STAGING_PREFIX}${eolasDomain}/`;
-        } else if (this.environment === DEVELOPMENT) {
-          url = process.env.TEST_API || DEVELOPMENT_ENDPOINT;
+        const serverConf = this.getServerConfig();
+        if (serverConf && serverConf.eolasUrl) {
+          url = serverConf.eolasUrl;
         } else {
-          url = `${PRODUCTION_PREFIX}${eolasDomain}/`;
+          // server config is not provided, falling back to ancient black magic
+
+          const eolasDomain = process.env.EOLAS_DOMAIN;
+          if (this.environment === STAGING) {
+            url = `${STAGING_PREFIX}${eolasDomain}/`;
+          } else if (this.environment === DEVELOPMENT) {
+            url = process.env.TEST_API || DEVELOPMENT_ENDPOINT;
+          } else {
+            url = `${PRODUCTION_PREFIX}${eolasDomain}/`;
+          }
         }
         this.computedBaseUrl = url;
       }
@@ -50,7 +58,15 @@ export class Config {
     return this.computedBaseUrl;
   }
 
+  getServerConfig() {
+    return serverConfig;
+  }
+
   authUrl() {
+    const serverConf = this.getServerConfig();
+    if (serverConf && serverConf.twigApiUrl) {
+      return serverConf.twigApiUrl;
+    }
     if (this.environment === STAGING || this.environment === DEVELOPMENT) {
       return 'http://staging.twig-api.riglet/';
     }
@@ -71,4 +87,9 @@ export class Config {
 }
 
 const config = new Config(hostname);
+
+/* eslint-disable no-console */
+console.log('server config', config.getServerConfig());
+/* eslint-enable no-console */
+
 export default config;
