@@ -45,6 +45,7 @@ export default class HomePage extends PageBase {
 
   deleteProject(name) {
     const namedProject = this.locateElement(this.elements.projectTrashcan(name));
-    return namedProject.click();
+    namedProject.click();
+    this.hasNoElement(this.elements.projectTrashcan(name));
   }
 }

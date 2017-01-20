@@ -43,6 +43,11 @@ export default class PageBase {
       .catch(() => false);
   }
 
+  hasNoElement(element) {
+    return this.driver.wait(
+      () => this.driver.findElements(element).then(arr => arr.length === 0));
+  }
+
   locateElement(element, delay = 10000) {
     return this.driver.wait(until.elementLocated(element), delay);
   }
