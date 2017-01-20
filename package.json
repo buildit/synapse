@@ -118,6 +118,6 @@
     "underscore": "^1.8.3",
     "whippersnapper": "<1.0.0",
     "xhr": "^2.2.2",
-    "zzzss": "<1.0.0"
+    "zzzss": "0.1.1"
   }
 }
