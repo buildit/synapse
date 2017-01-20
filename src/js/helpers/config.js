@@ -35,7 +35,7 @@ export class Config {
     try {
       if (!this.computedBaseUrl) {
         let url;
-        const serverConf = this.getServerConfig();
+        const serverConf = this.serverConfig;
         if (serverConf && serverConf.eolasUrl) {
           url = serverConf.eolasUrl;
         } else {
@@ -58,12 +58,16 @@ export class Config {
     return this.computedBaseUrl;
   }
 
-  getServerConfig() {
+  get serverConfig() {
     return serverConfig;
   }
 
+  get noauth() {
+    return !(serverConfig && serverConfig.noauth);
+  }
+
   authUrl() {
-    const serverConf = this.getServerConfig();
+    const serverConf = this.serverConfig;
     if (serverConf && serverConf.twigApiUrl) {
       return serverConf.twigApiUrl;
     }
@@ -89,7 +93,7 @@ export class Config {
 const config = new Config(hostname);
 
 /* eslint-disable no-console */
-console.log('server config', config.getServerConfig());
+console.log('server config', config.serverConfig);
 /* eslint-enable no-console */
 
 export default config;
