@@ -10,6 +10,8 @@ This builds the app and runs it on a dev server at [localhost:3000](http://local
 ## What is Synapse?
 Synapse is a Management Information (MI) dashboard that provides visualizations of metrics pertaining to the development and delivery of software projects. Projects exist within the context of Programs (a related grouping of projects) and Portfolios (a related grouping of Programs). Thus Synapse is able to provide overviews across any particular level or grouping.
 
+[Video demo](https://youtu.be/jXXl9Gezxug)
+
 Synapse provides:
 
 - **Project List** - List of the projects currently being tracked. This allows you to select a particular project for viewing.  The *New* button also allows you to add a project to the list.
