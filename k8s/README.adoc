@@ -6,17 +6,22 @@ podTemplate(label: 'nodeapp',
                 containerTemplate(name: 'docker', image: 'docker:1.11', ttyEnabled: true, command: 'cat'),
                 containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl', ttyEnabled: true, command: 'cat')],
             volumes: [
-                hostPathVolume(mountPath: '/var/gitrepo', hostPath: '/Users/romansafronov/dev/projects/digitalrig-acceptance-tests'),
-                hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')]) {
+                hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
+                hostPathVolume(mountPath: '/var/cache', hostPath: '/tmp')
+                ]) {
     node('nodeapp') {
-
         def nextVersion = new Date().time as String
         container('nodejs-builder') {
             stage('Checkout') {
-                git(url: 'https://github.com/buildit/synapse.git')
+                git(url: 'https://github.com/electroma/synapse.git', branch: 'k8s')
             }
             stage("Install") {
+                //sh 'npm set registry http://sinopia/'
+                sh 'mkdir -p /var/cache/synapse-build/_cache'
+                //sh 'ln -s /var/cache/synapse-build `pwd`/node_modules'
+                sh 'cp -r /var/cache/synapse-build/* .'
                 sh "npm install"
+                sh "rm -rf /var/cache/synapse-build/* && cp -r node_modules /var/cache/synapse-build/"
               }
 
               stage("Test") {
@@ -33,7 +38,7 @@ podTemplate(label: 'nodeapp',
               }
 
               stage("Build") {
-                sh "npm run build"
+                sh "NODE_ENV=r3 npm run build"
               }
         }
 
@@ -44,7 +49,7 @@ podTemplate(label: 'nodeapp',
         }
         container('kubectl') {
             stage('Deploy') {
-                sh "kubectl set image deployment/synapse-deployment builditdigital/synapse:$nextVersion"
+                sh "kubectl set image deployment/synapse-deployment synapse=builditdigital/synapse:$nextVersion"
                 sh 'kubectl rollout status deployment/synapse-deployment'
             }
         }
@@ -54,7 +59,7 @@ podTemplate(label: 'nodeapp',
                 sh "mkdir /tmp/wscopy && cd . && ls -1 | xargs -I '{}'  ln -s `pwd`/{} /tmp/wscopy/{}"
 
                 try {
-                  sh "cd /tmp/wscopy && URL=http://synapse-svc# xvfb-run -d -s '-screen 0 1280x1024x16' npm run test:acceptance:ci"
+                  sh "cd /tmp/wscopy && URL=http://synapse-svc xvfb-run -s '-screen 0 1280x1024x16' npm run test:acceptance:ci"
                 }
                 finally {
                   archiveArtifacts allowEmptyArchive: true, artifacts: 'screenshots/*.png'
