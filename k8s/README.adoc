@@ -1,0 +1,69 @@
+== Example job for minikube
+----
+podTemplate(label: 'nodeapp',
+            containers: [
+                containerTemplate(name: 'nodejs-builder', image: 'builditdigital/node-builder', ttyEnabled: true, command: 'cat', privileged: true),
+                containerTemplate(name: 'docker', image: 'docker:1.11', ttyEnabled: true, command: 'cat'),
+                containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl', ttyEnabled: true, command: 'cat')],
+            volumes: [
+                hostPathVolume(mountPath: '/var/gitrepo', hostPath: '/Users/romansafronov/dev/projects/digitalrig-acceptance-tests'),
+                hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')]) {
+    node('nodeapp') {
+
+        def nextVersion = new Date().time as String
+        container('nodejs-builder') {
+            stage('Checkout') {
+                git(url: 'https://github.com/buildit/synapse.git')
+            }
+            stage("Install") {
+                sh "npm install"
+              }
+
+              stage("Test") {
+                try {
+                  sh "npm run test:ci"
+                }
+                finally {
+                  junit 'reports/test-results.xml'
+                }
+              }
+
+              stage("Analysis") {
+                sh "npm run lint"
+              }
+
+              stage("Build") {
+                sh "npm run build"
+              }
+        }
+
+        container('docker') {
+            stage('Package') {
+                sh "docker build -t builditdigital/synapse:${nextVersion} ."
+            }
+        }
+        container('kubectl') {
+            stage('Deploy') {
+                sh "kubectl set image deployment/synapse-deployment builditdigital/synapse:$nextVersion"
+                sh 'kubectl rollout status deployment/synapse-deployment'
+            }
+        }
+        container('nodejs-builder') {
+            stage('e2e test') {
+                //nasty workaround for temporary chrome socket issue (can't use remote mount for it)
+                sh "mkdir /tmp/wscopy && cd . && ls -1 | xargs -I '{}'  ln -s `pwd`/{} /tmp/wscopy/{}"
+
+                try {
+                  sh "cd /tmp/wscopy && URL=http://synapse-svc# xvfb-run -d -s '-screen 0 1280x1024x16' npm run test:acceptance:ci"
+                }
+                finally {
+                  archiveArtifacts allowEmptyArchive: true, artifacts: 'screenshots/*.png'
+                  junit 'reports/acceptance-test-results.xml'
+                }
+            }
+        }
+
+  }
+}
+----
+
