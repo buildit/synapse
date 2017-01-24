@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: builditdigital/synapse
-  tag: "1484951047086"
+  tag: "latest"
   pullPolicy: IfNotPresent
 service:
   hostName: synapse.kube.local
