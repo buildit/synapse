@@ -26,6 +26,8 @@ spec:
               - name: NODE_ENV
                 value: development
               - name: SERVER_CONF
+                # use internal service name for now, public name does not exist in minikube env
+                # todo: find the way to switch to the balancer?
                 value: '{eolasUrl: "http://eolas-svc/", noauth: true}'
 ---
 apiVersion: v1

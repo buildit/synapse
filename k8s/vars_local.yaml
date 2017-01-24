@@ -1,0 +1,10 @@
+replicaCount: 1
+image:
+  repository: builditdigital/synapse
+  tag: "1484951047086"
+  pullPolicy: IfNotPresent
+service:
+  hostName: synapse.kube.local
+app:
+  eolasUrl: http://eolas.kube.local:32123/
+  noauth: true
