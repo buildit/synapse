@@ -48,6 +48,10 @@ export default class PageBase {
       () => this.driver.findElements(element).then(arr => arr.length === 0));
   }
 
+  waitForCondition(condition) {
+    return this.driver.wait(condition);
+  }
+
   locateElement(element, delay = 10000) {
     return this.driver.wait(until.elementLocated(element), delay);
   }
