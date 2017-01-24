@@ -8,7 +8,7 @@ podTemplate(label: 'nodeapp',
   volumes: [
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
     hostPathVolume(mountPath: '/var/cache', hostPath: '/tmp'),
-    hostPathVolume(mountPath: '/var/projects', hostPath: '/Users/XXX/dev/projects')
+    hostPathVolume(mountPath: '/var/projects', hostPath: '/Users/romansafronov/dev/projects')
   ]) {
   node('nodeapp') {
 
@@ -32,7 +32,8 @@ podTemplate(label: 'nodeapp',
       }
       container('nodejs-builder') {
         stage('Checkout') {
-          git(url: '/var/projects/synapse', branch: 'k8s')
+          checkout scm
+          //git(url: '/var/projects/synapse', branch: 'k8s')
           //'https://github.com/buildit/synapse.git') // fixme: checkout scm
 
           shortCommitHash = gitInst.getShortCommit()
