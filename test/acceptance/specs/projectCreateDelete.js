@@ -42,8 +42,9 @@ describe('Project Creation Process', () => {
     projectEdit.fillInName(testProjectName);
     yield projectEdit.saveProject();
 
-    expect(yield projectEdit.messageContent()).to.equal(correctMessage);
-    expect(yield projectEdit.messageState()).to.equal('error');
+    yield projectPage.waitForCondition(projectEdit.messageContent()
+      .then(caption => caption === correctMessage));
+    yield projectPage.waitForCondition(projectEdit.messageState().then(state => state === 'error'));
   });
 
   it('Displays a new projection message on the projection page', function* foo() {
@@ -61,7 +62,7 @@ describe('Project Creation Process', () => {
   });
 
   it('Deletes the new project', function* foo() {
-    homePage.deleteProject(testProjectName);
+    yield homePage.deleteProject(testProjectName);
     expect(yield homePage.hasProjectTrashcan(testProjectName)).to.be.false;
   });
 
