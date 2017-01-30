@@ -4,7 +4,7 @@
   "description": "Management information dashboard.",
   "main": "dev-server.js",
   "scripts": {
-    "build": "echo 'Checking for outdated dependencies...' && npm outdated && npm run bundle",
+    "build": "echo 'Checking for outdated dependencies...' && (npm outdated || true) && npm run bundle",
     "bundle": "./node_modules/webpack/bin/webpack.js --config webpack.config.js",
     "lint": "npm run lint:js && npm run lint:scss && npm run lint:html",
     "lint:js": "eslint 'src/js/**/*.js' 'src/js/**/*.jsx' 'test/**/*'",
