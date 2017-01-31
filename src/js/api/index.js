@@ -42,7 +42,8 @@ const loginRequest = user => {
       });
     });
   }
-  return post(`${config.loginUrl}`, user);
+  const userReq = { username: user.email, password: user.password };
+  return post(`${config.loginUrl}`, userReq);
 };
 // const loginRequest = (user) => post(`${config.loginUrl}`, user);
 
