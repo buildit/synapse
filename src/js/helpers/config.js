@@ -66,10 +66,10 @@ export class Config {
     return !(serverConfig && serverConfig.noauth);
   }
 
-  authUrl() {
+  get authUrl() {
     const serverConf = this.serverConfig;
-    if (serverConf && serverConf.twigApiUrl) {
-      return serverConf.twigApiUrl;
+    if (serverConf && serverConf.authUrl) {
+      return serverConf.authUrl;
     }
     if (this.environment === STAGING || this.environment === DEVELOPMENT) {
       return 'http://staging.twig-api.riglet/';
@@ -83,10 +83,6 @@ export class Config {
 
   get starterProjectsBaseApiUrl() {
     return this.baseUrl();
-  }
-
-  get loginUrl() {
-    return `${this.authUrl()}login`;
   }
 }
 

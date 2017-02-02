@@ -7,7 +7,7 @@ import { LOGIN_REQUEST, LOGOUT_REQUEST } from 'actions/actions';
 import { loginSuccess, loginFailure, logoutSuccess, setMessage } from 'actions';
 
 const getUser = response => {
-  if (response.user && response.user.id) return { name: response.user.id };
+  if (response.displayName) return { name: response.displayName };
   return false;
 };
 
