@@ -8,6 +8,7 @@ const makeRequest = (uri, method = 'GET', body = undefined) => new Promise((reso
     uri,
     method,
     timeout: 30000,
+    withCredentials: true,
   };
   if (body) {
     options.json = body;
