@@ -65,6 +65,10 @@ export function* postLoginRequest(user) {
   return yield call(Api.loginRequest, user);
 }
 
+export function* fetchLogoutRequest(user) {
+  return yield call(Api.logoutRequest, user);
+}
+
 /*
  * Mini saga for retrieving event history data
  */

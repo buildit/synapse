@@ -1,7 +1,7 @@
 import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
-import { postLoginRequest } from 'middleware/api';
+import { postLoginRequest, fetchLogoutRequest } from 'middleware/api';
 
 import { LOGIN_REQUEST, LOGOUT_REQUEST } from 'actions/actions';
 import { loginSuccess, loginFailure, logoutSuccess, setMessage } from 'actions';
@@ -31,6 +31,7 @@ export function* watchLoginRequest() {
 }
 
 export function* logoutRequest() {
+  yield call(fetchLogoutRequest);
   localStorage.removeItem('user');
   yield put(logoutSuccess());
   yield put(setMessage('You are logged out'));

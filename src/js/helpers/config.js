@@ -63,7 +63,7 @@ export class Config {
   }
 
   get noauth() {
-    return !(serverConfig && serverConfig.noauth);
+    return (serverConfig && serverConfig.noauth) || process.env.NODE_ENV === 'development';
   }
 
   get authUrl() {
@@ -75,6 +75,14 @@ export class Config {
       return 'http://staging.twig-api.riglet/';
     }
     return 'http://twig-api.riglet/';
+  }
+
+  get loginUrl() {
+    return `${this.authUrl}auth/local`;
+  }
+
+  get logoutUrl() {
+    return `${this.authUrl}logout`;
   }
 
   get apiBaseUrl() {

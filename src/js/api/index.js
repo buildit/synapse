@@ -32,7 +32,7 @@ const saveProject = (projectToSave) => post(
 
 // TODO: uuuuuuuuuuuuuuuuuuuuuuuuuuuuuugh
 const loginRequest = user => {
-  if (process.env.NODE_ENV === 'development' || config.serverConfig.noauth) {
+  if (config.noauth) {
     return new Promise((resolve) => {
       resolve({
         user: {
@@ -46,6 +46,15 @@ const loginRequest = user => {
   return post(`${config.loginUrl}`, userReq);
 };
 // const loginRequest = (user) => post(`${config.loginUrl}`, user);
+
+const logoutRequest = () => {
+  if (config.noauth) {
+    return new Promise((resolve) => {
+      resolve();
+    });
+  }
+  return fetch(config.logoutUrl);
+};
 
 const deleteProject = (projectToDelete) => erase(
   `${config.apiBaseUrl}v1/project/${projectToDelete.name}`
@@ -62,6 +71,7 @@ export default {
   updateProject,
   saveProject,
   loginRequest,
+  logoutRequest,
   deleteProject,
   projectEventHistory,
 };
