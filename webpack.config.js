@@ -6,6 +6,23 @@ const SassLintPlugin = require('sasslint-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
 const version = require('./package.json').version;
+const devServerHost = process.env.SYNAPSE_DEV_HOST || '127.0.0.1'
+const devServerPort = process.env.SYNAPSE_DEV_PORT || '3000'
+
+let defineReplace = {
+  'process.env.EOLAS_DOMAIN': JSON.stringify(process.env.EOLAS_DOMAIN),
+  'process.env.TEST_API': JSON.stringify(process.env.TEST_API),
+  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+  'process.env.VERSION': JSON.stringify(version),
+};
+
+// todo: add option to specify those options in dev mode
+/*
+defineReplace['window.SERVER_CONF'] = JSON.stringify({
+  eolasUrl: 'http://eolas.stage.local/',
+  authUrl: '/login/auth/local',
+});
+*/
 
 const webpackConfig = {
   entry: [
@@ -18,7 +35,8 @@ const webpackConfig = {
   },
   devtool: 'source-map',
   devServer: {
-    port: 3000,
+    host: devServerHost,
+    port: devServerPort,
     historyApiFallback: true,
   },
   plugins: [
@@ -27,12 +45,7 @@ const webpackConfig = {
       template: './src/index.html',
     }),
     new ExtractTextPlugin('/css/main.[hash].css'),
-    new webpack.DefinePlugin({
-      'process.env.EOLAS_DOMAIN': JSON.stringify(process.env.EOLAS_DOMAIN),
-      'process.env.TEST_API': JSON.stringify(process.env.TEST_API),
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      'process.env.VERSION': JSON.stringify(version),
-    }),
+    new webpack.DefinePlugin(defineReplace),
     new SassLintPlugin({
       glob: 'src/scss/**/*.s?(a|c)ss',
       ignorePlugins: ['extract-text-webpack-plugin'],
