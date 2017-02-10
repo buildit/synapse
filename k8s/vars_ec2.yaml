@@ -6,5 +6,5 @@ service:
   hostName: synapse.riglet
 app:
   eolasUrl: http://eolas.riglet/
-  noauth: true
+  noauth: false
 
