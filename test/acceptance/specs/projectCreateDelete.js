@@ -19,7 +19,7 @@ describe('Project Creation Process', () => {
   const projectionPage = new ProjectionPage(driver, testProjectName);
 
 
-  before(() => homePage.logout());
+  before(() => homePage.login());
   after(() => homePage.logout());
 
   it('Shows the new project list screen', function* foo() {
@@ -29,7 +29,6 @@ describe('Project Creation Process', () => {
 
   it('Navigates to the manual creation screen', function* foo() {
     projectPage.selectManual();
-
     const currentUrl = yield projectPage.driver.getCurrentUrl();
     expect(currentUrl.endsWith('/new-project/edit')).to.equal(true);
   });
@@ -59,8 +58,6 @@ describe('Project Creation Process', () => {
   });
 
   it('Finds the new project in the homepage', function* foo() {
-    homePage.navigate();
-    yield homePage.login();
     homePage.navigate();
     expect(yield homePage.hasProjectTrashcan(testProjectName)).to.be.true;
   });
