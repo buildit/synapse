@@ -4,7 +4,15 @@ import { url } from './global';
 export default class PageBase {
   constructor(driver) {
     this.baseUrl = url;
+    // fixme: make it configurable
+    // (it's ok unless we're going to change/disable local auth strategy)
+    this.testUser = 'testuser@test.com';
+    this.testPass = 'testpass';
 
+    this.elements = {
+      login: By.css('.login .link'),
+      loginForm: By.css('.login-form'),
+    };
     driver.manage().timeouts().implicitlyWait(10000);
     this.driver = driver;
   }
@@ -24,17 +32,40 @@ export default class PageBase {
     );
   }
 
+  hasLogin() {
+    return this.hasElement(this.elements.login);
+  }
+
+  isLoggedIn() {
+    return this.hasLogin() && this.driver
+      .findElement(this.elements.login).getText()
+      .then(text => text === 'Logout');
+  }
+
   navigate() {
-    /* eslint-disable no-console */
-    console.log('this.url:', this.url);
-    /* eslint-enable no-console */
     this.driver.navigate().to(this.url);
     return this.waitUntilReady();
   }
 
   login() {
-    const data = JSON.stringify({ name: 'foo@bar.com' });
-    return this.driver.executeScript(`window.localStorage.setItem('user','${data}');`);
+    if (!this.hasLogin()) {
+      throw new Error('no login button');
+    }
+    this.driver.findElement(this.elements.login).click();
+    const form = this.locateElement(this.elements.loginForm);
+    return form.findElement(By.id('email')).sendKeys(this.testUser)
+      .then(form.findElement(By.id('password')).sendKeys(this.testPass))
+      .then(form.findElement(By.xpath('//span[contains(.,\'Login\')]')).click())
+      .then(this.hasNoElement(this.elements.loginForm));
+  }
+
+  logout() {
+    this.isLoggedIn().then(loggedIn => {
+      if (loggedIn) {
+        this.driver.findElement(this.elements.login).click();
+        this.waitForCondition(() => !this.isLoggedIn());
+      }
+    });
   }
 
   hasElement(element) {

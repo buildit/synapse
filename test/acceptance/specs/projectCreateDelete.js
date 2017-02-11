@@ -18,6 +18,10 @@ describe('Project Creation Process', () => {
   const projectEdit = new ProjectEdit(driver, 'new-project');
   const projectionPage = new ProjectionPage(driver, testProjectName);
 
+
+  before(() => homePage.logout());
+  after(() => homePage.logout());
+
   it('Shows the new project list screen', function* foo() {
     projectPage.navigate();
     expect(yield projectPage.hasProjectList()).to.be.true;
@@ -56,7 +60,7 @@ describe('Project Creation Process', () => {
 
   it('Finds the new project in the homepage', function* foo() {
     homePage.navigate();
-    homePage.login();
+    yield homePage.login();
     homePage.navigate();
     expect(yield homePage.hasProjectTrashcan(testProjectName)).to.be.true;
   });

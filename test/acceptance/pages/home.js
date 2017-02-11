@@ -5,14 +5,13 @@ export default class HomePage extends PageBase {
   constructor(driver) {
     super(driver);
     this.url = `${this.baseUrl}/`;
-    this.elements = {
+    Object.assign(this.elements, {
       app: By.css('#app'),
       table: By.css('.table'),
       button: By.css('button'),
-      login: By.css('.login'),
       projectWithName: (name) => By.css(`a[href="${name}"]`),
       projectTrashcan: (name) => By.css(`[data-project="${name}"]`),
-    };
+    });
 
     this.readyElement = this.elements.app;
   }
@@ -29,9 +28,6 @@ export default class HomePage extends PageBase {
     return this.hasElement(this.elements.button);
   }
 
-  hasLogin() {
-    return this.hasElement(this.elements.login);
-  }
 
   hasProjectTrashcan(name) {
     return this.hasElement(this.elements.projectTrashcan(name));
