@@ -32,8 +32,8 @@ podTemplate(label: 'nodeapp',
       }
       container('nodejs-builder') {
         stage('Checkout') {
-          //checkout scm
-          git(url: 'https://github.com/electroma/synapse.git', branch: 'k8s')
+          checkout scm
+          //git(url: 'https://github.com/electroma/synapse.git', branch: 'spike/security_perimeter')
 
           shortCommitHash = gitInst.getShortCommit()
           commitMessage = gitInst.getCommitMessage()

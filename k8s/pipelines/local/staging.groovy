@@ -33,8 +33,7 @@ podTemplate(label: 'nodeapp',
       container('nodejs-builder') {
         stage('Checkout') {
           checkout scm
-          //git(url: '/var/projects/synapse', branch: 'k8s')
-          //'https://github.com/buildit/synapse.git') // fixme: checkout scm
+          //git(url: '/var/projects/synapse', branch: 'spike/security_perimeter')
 
           shortCommitHash = gitInst.getShortCommit()
           commitMessage = gitInst.getCommitMessage()
@@ -83,7 +82,7 @@ podTemplate(label: 'nodeapp',
 
       container('kubectl') {
         stage('Deploy To K8S') {
-          // fixme: need to create deployment if it does not exist
+          sh "helm ls -q | grep $deployment || helm install ./k8s/synapse -f ./k8s/vars_local.yaml -n $deployment"
           sh "cd k8s && helm upgrade $deployment ./synapse -f vars_local.yaml --set image.tag=$tag"
           sh "kubectl rollout status deployment/$deployment-synapse"
         }
@@ -95,7 +94,7 @@ podTemplate(label: 'nodeapp',
           sh "mkdir /tmp/wscopy && cd . && ls -1 | xargs -I '{}'  ln -s `pwd`/{} /tmp/wscopy/{}"
 
           try {
-            // nasty workaround for local env
+            // nasty workaround for local env (in case you haven't installed dnsmasq)
             sh "echo '192.168.99.100 eolas.kube.local' > /etc/hosts"
             sh "cd /tmp/wscopy && URL=http://$deployment-synapse xvfb-run -s '-screen 0 1280x1024x16' npm run test:acceptance:ci"
           }
@@ -108,10 +107,6 @@ podTemplate(label: 'nodeapp',
 
       container('docker') {
         stage('Promote Build to latest') {
-          // fixme
-          /*docker.withRegistry(registry) {
-          image.push("latest")
-      }*/
           sh "docker tag $image:$tag $image:latest"
           if (sendNotifications) slackInst.notify("Deployed to Staging", "Commit <${gitUrl}/commits/${shortCommitHash}|${shortCommitHash}> has been deployed to <${appUrl}|${appUrl}>\n\n${commitMessage}", "good", "http://i3.kym-cdn.com/entries/icons/square/000/002/230/42.png", slackChannel)
         }
