@@ -95,8 +95,8 @@ podTemplate(label: 'nodeapp',
 
           try {
             // nasty workaround for local env (in case you haven't installed dnsmasq)
-            sh "echo '192.168.99.100 eolas.kube.local' > /etc/hosts"
-            sh "cd /tmp/wscopy && URL=http://$deployment-synapse xvfb-run -s '-screen 0 1280x1024x16' npm run test:acceptance:ci"
+            sh "echo '192.168.99.100 synapse.kube.local eolas.kube.local heimdall.kube.local' > /etc/hosts"
+            sh "cd /tmp/wscopy && URL=http://synapse.kube.local xvfb-run -s '-screen 0 1280x1024x16' npm run test:acceptance:ci"
           }
           finally {
             archiveArtifacts allowEmptyArchive: true, artifacts: 'screenshots/*.png'
