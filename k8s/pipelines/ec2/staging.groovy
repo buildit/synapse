@@ -2,7 +2,8 @@
 def LOADED = true
 podTemplate(label: 'nodeapp',
   containers: [
-    containerTemplate(name: 'nodejs-builder', image: 'builditdigital/node-builder', ttyEnabled: true, command: 'cat', privileged: true),
+    containerTemplate(name: 'nodejs-builder', image: 'builditdigital/node-builder', ttyEnabled: true, command: 'cat',
+      privileged: true, resourceRequestCpu: "0.5", resourceRequestMemory: "512m"),
     containerTemplate(name: 'aws', image: 'cgswong/aws', ttyEnabled: true, command: 'cat'),
     containerTemplate(name: 'docker', image: 'docker:1.11', ttyEnabled: true, command: 'cat'),
     containerTemplate(name: 'kubectl', image: 'builditdigital/kube-utils', ttyEnabled: true, command: 'cat')],
@@ -98,7 +99,7 @@ podTemplate(label: 'nodeapp',
             sh "cd /tmp/wscopy && URL=http://synapse.stage.riglet xvfb-run -s '-screen 0 1280x1024x16' npm run test:acceptance:ci"
           }
           finally {
-            archiveArtifacts allowEmptyArchive: true, artifacts: 'screenshots/*.png'
+            archiveArtifacts allowEmptyArchive: true, artifacts: '**/screenshots/*.png'
             junit 'reports/acceptance-test-results.xml'
           }
         }
