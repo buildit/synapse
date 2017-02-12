@@ -37,6 +37,7 @@ describe('Project Creation Process', () => {
     projectEdit.fillInName(testProjectName);
     expect(yield projectEdit.nameValue()).to.equal(testProjectName);
     yield projectEdit.saveProject();
+    yield projectEdit.waitForCondition(homePage.hasProjectTrashcan(testProjectName));
   });
 
   it('Will not accept a second submission of the same project', function* foo() {
