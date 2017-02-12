@@ -95,7 +95,7 @@ podTemplate(label: 'nodeapp',
           sh "mkdir /tmp/wscopy && cd . && ls -1 | xargs -I '{}'  ln -s `pwd`/{} /tmp/wscopy/{}"
 
           try {
-            sh "cd /tmp/wscopy && URL=http://$deployment-synapse xvfb-run -s '-screen 0 1280x1024x16' npm run test:acceptance:ci"
+            sh "cd /tmp/wscopy && URL=http://synapse.stage.riglet xvfb-run -s '-screen 0 1280x1024x16' npm run test:acceptance:ci"
           }
           finally {
             archiveArtifacts allowEmptyArchive: true, artifacts: 'screenshots/*.png'

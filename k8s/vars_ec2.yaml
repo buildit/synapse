@@ -5,7 +5,7 @@ image:
 service:
   hostName: synapse.riglet
 app:
-  eolasUrl: http://eolas.riglet/
-  authUrl: http://heimdall.riglet/
+  eolasUrl: http://eolas.stage.riglet/
+  authUrl: http://heimdall.stage.riglet/
   noauth: false
 
