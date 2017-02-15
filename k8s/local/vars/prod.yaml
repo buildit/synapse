@@ -1,0 +1,11 @@
+replicaCount: 1
+image:
+  repository: builditdigital/synapse
+  tag: "latest"
+  pullPolicy: IfNotPresent
+service:
+  hostName: synapse.prod.kube.local
+app:
+  eolasUrl: http://eolas.prod.kube.local/
+  authUrl: http://heimdall.prod.kube.local/
+  noauth: false

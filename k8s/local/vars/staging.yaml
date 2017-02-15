@@ -7,6 +7,6 @@ service:
   hostName: synapse.kube.local
   authUrl: http://heimdall-staging-heimdal.default.svc.cluster.local/valid?unauthCode=200
 app:
-  eolasUrl: http://eolas.kube.local/
-  authUrl: http://heimdall.kube.local/
+  eolasUrl: http://eolas.stage.kube.local/
+  authUrl: http://heimdall.stage.kube.local/
   noauth: false
