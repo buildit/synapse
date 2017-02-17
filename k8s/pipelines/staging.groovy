@@ -22,7 +22,8 @@ if (envz.HOST_PROJECT_PATH) {
   extraMounts << hostPathVolume(mountPath: '/var/projects', hostPath: envz.HOST_PROJECT_PATH)
 }
 
-k8s.build([containerTemplate(name: 'nodejs-builder', image: 'builditdigital/node-builder', ttyEnabled: true, command: 'cat', privileged: true)],
+k8s.build([containerTemplate(name: 'nodejs-builder', image: 'builditdigital/node-builder', ttyEnabled: true, command: 'cat',
+  privileged: true, resourceRequestCpu: '0.5', resourceRequestMemory: '512m')],
   extraMounts) {
 
   try {
