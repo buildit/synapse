@@ -4,8 +4,7 @@ image:
   tag: "latest"
   pullPolicy: IfNotPresent
 service:
-  hostName: synapse.kube.local
-  authUrl: http://heimdall-staging-heimdal.default.svc.cluster.local/valid?unauthCode=200
+  hostName: synapse.stage.kube.local
 app:
   eolasUrl: http://eolas.stage.kube.local/
   authUrl: http://heimdall.stage.kube.local/
