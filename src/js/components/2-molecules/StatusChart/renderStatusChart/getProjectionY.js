@@ -51,20 +51,17 @@ module.exports = (targetDate, projection, dateScale, yScale) => {
   let p2;
 
   switch (region) {
-  case RAMP_UP_PERIOD: {
+  case RAMP_UP_PERIOD:
     p1 = projectionPoints[0];
     p2 = projectionPoints[1];
-  }
     break;
-  case TARGET_PERIOD: {
+  case TARGET_PERIOD:
     p1 = projectionPoints[1];
     p2 = projectionPoints[2];
-  }
     break;
-  case RAMP_DOWN_PERIOD: {
+  case RAMP_DOWN_PERIOD:
     p1 = projectionPoints[2];
     p2 = projectionPoints[3];
-  }
     break;
   default: return undefined;
   }
