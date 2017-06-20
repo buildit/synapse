@@ -72,9 +72,9 @@ export class Config {
       return serverConf.twigApiUrl;
     }
     if (this.environment === STAGING || this.environment === DEVELOPMENT) {
-      return 'http://staging.twig-api.riglet/';
+      return 'https://staging-twig-api.buildit.tools/';
     }
-    return 'http://twig-api.riglet/';
+    return 'https://twig-api.buildit.tools/';
   }
 
   get apiBaseUrl() {
