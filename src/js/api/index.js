@@ -32,7 +32,7 @@ const saveProject = (projectToSave) => post(
 
 // TODO: uuuuuuuuuuuuuuuuuuuuuuuuuuuuuugh
 const loginRequest = user => {
-  if (process.env.NODE_ENV === 'development' || config.serverConfig.noauth) {
+  if (process.env.NODE_ENV === 'development' || config.noauth) {
     return new Promise((resolve) => {
       resolve({
         user: {
