@@ -63,7 +63,7 @@ export class Config {
   }
 
   get noauth() {
-    return !(serverConfig && serverConfig.noauth);
+    return serverConfig && serverConfig.noauth;
   }
 
   authUrl() {
