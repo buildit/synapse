@@ -33,7 +33,7 @@ const ProjectsTable = ({
       // Hide description on small screens
       const classes = (key === 'description') ? `${key} hidden-sm hidden-xs` : key;
 
-      if (key === 'status') {
+      if (key === 'ragStatus') {
         bodyRow.push(<RAGStatusTableCell key={i + key} status={cellValue} />);
       } else {
         bodyRow.push(<TableCell key={i + key} cellValue={cellValue} classes={classes} />);

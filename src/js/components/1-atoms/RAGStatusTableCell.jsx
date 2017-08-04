@@ -1,24 +1,9 @@
 import React from 'react';
-import * as ragStatus from 'helpers/ragStatusConstants';
 
 const RAGStatusTableCell = ({ status, id }) => {
-  let ragClass = '';
-  switch (status) {
-  case ragStatus.RED: {
-    ragClass = 'red';
-    break;
-  }
-  case ragStatus.AMBER: {
-    ragClass = 'amber';
-    break;
-  }
-  case ragStatus.GREEN: {
-    ragClass = 'green';
-    break;
-  }
-  default: {
-    ragClass = 'blank';
-  }
+  let ragClass = 'blank';
+  if (status) {
+    ragClass = status;
   }
   return (
     <td className="rag-status-table-cell" id={id}>

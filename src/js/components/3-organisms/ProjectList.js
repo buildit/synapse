@@ -40,7 +40,7 @@ class ProjectList extends Component {
               'name',
               'portfolio',
               'program',
-              'status',
+              'ragStatus',
               'description',
             ]}
             rowKey={'name'}
