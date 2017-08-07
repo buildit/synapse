@@ -61,6 +61,19 @@ export function* fetchProjectEffortData(name) {
   return effort;
 }
 
+/*
+ * Mini saga for retrieving rag status data
+ */
+export function* fetchProjectRagStatusData(name) {
+  let ragStatus;
+  try {
+    ragStatus = yield call(Api.projectRagStatusSummary, name);
+  } catch (err) {
+    ragStatus = [];
+  }
+  return ragStatus;
+}
+
 export function* postLoginRequest(user) {
   return yield call(Api.loginRequest, user);
 }

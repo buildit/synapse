@@ -19,6 +19,7 @@ import {
   fetchProjectDemandData,
   fetchProjectDefectData,
   fetchProjectEffortData,
+  fetchProjectRagStatusData,
   fetchEventHistoryData,
 } from 'middleware/api';
 
@@ -49,10 +50,11 @@ export function* fetchAllStatusData(action) {
 
   yield put(startXHR());
 
-  const [demand, defect, effort, events, project] = yield[
+  const [demand, defect, effort, ragStatus, events, project] = yield[
     call(fetchProjectDemandData, name),
     call(fetchProjectDefectData, name),
     call(fetchProjectEffortData, name),
+    call(fetchProjectRagStatusData, name),
     call(fetchEventHistoryData, name),
     call(fetchProject, name),
   ];
@@ -61,6 +63,7 @@ export function* fetchAllStatusData(action) {
     demand,
     defect,
     effort,
+    ragStatus,
   }));
   yield put(fetchProjectSuccess(project));
   yield put(fetchEventHistorySuccess(events));

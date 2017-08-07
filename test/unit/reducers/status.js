@@ -13,6 +13,7 @@ describe('status reducer', () => {
       demand: 'demand',
       defect: 'defect',
       effort: 'effort',
+      ragStatus: 'ragStatus',
     };
     const action = fetchStatusSuccess(newStatus);
 

@@ -7,6 +7,8 @@ const project = name => fetch(`${config.apiBaseUrl}v1/project/${name}`);
 const projectDemandSummary = name => fetch(`${config.apiBaseUrl}v1/project/${name}/demand/summary`);
 const projectDefectSummary = name => fetch(`${config.apiBaseUrl}v1/project/${name}/defect/summary`);
 const projectEffortSummary = name => fetch(`${config.apiBaseUrl}v1/project/${name}/effort/summary`);
+const projectRagStatusSummary = name =>
+  fetch(`${config.apiBaseUrl}v1/project/${name}/ragStatus/summary`);
 const projectEventHistory = name => fetch(`${config.apiBaseUrl}v1/project/${name}/event`);
 // const projectEventHistory =
 //   () => fetch('https://runkit.io/billyzac/5848387e51a98e00145131e9/branches/master');
@@ -56,6 +58,7 @@ export default {
   projectDemandSummary,
   projectDefectSummary,
   projectEffortSummary,
+  projectRagStatusSummary,
   starterProjects,
   saveProjection,
   updateProject,

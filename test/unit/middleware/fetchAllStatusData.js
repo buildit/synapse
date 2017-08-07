@@ -11,6 +11,7 @@ import {
   fetchProjectDemandData,
   fetchProjectDefectData,
   fetchProjectEffortData,
+  fetchProjectRagStatusData,
   fetchEventHistoryData,
 } from 'middleware/api';
 import {
@@ -70,6 +71,7 @@ describe('All status for project fetcher', () => {
   const defect = { near: 'far' };
   const effort = { we: 'they' };
   const events = ['one', 'two', 'three'];
+  const ragStatus = ['red', 'amber', 'green'];
   const project = { project: 'Yes, this is a project' };
   project.projection = {
     pretendKey: 'Just for the test.',
@@ -84,12 +86,14 @@ describe('All status for project fetcher', () => {
     const demandCorrect = call(fetchProjectDemandData, name);
     const defectCorrect = call(fetchProjectDefectData, name);
     const effortCorrect = call(fetchProjectEffortData, name);
+    const ragStatusCorrect = call(fetchProjectRagStatusData, name);
     const eventsCorrect = call(fetchEventHistoryData, name);
 
     const correct = [
       demandCorrect,
       defectCorrect,
       effortCorrect,
+      ragStatusCorrect,
       eventsCorrect,
       projectCorrect,
     ];
@@ -97,9 +101,9 @@ describe('All status for project fetcher', () => {
   });
 
   it('updates the status', () => {
-    const next = generator.next([demand, defect, effort, events, project]).value;
+    const next = generator.next([demand, defect, effort, ragStatus, events, project]).value;
     const statusSuccessCorrect = put(fetchStatusSuccess({
-      demand, defect, effort,
+      demand, defect, effort, ragStatus,
     }));
     expect(next).to.deep.equal(statusSuccessCorrect);
   });

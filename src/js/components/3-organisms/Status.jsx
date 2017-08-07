@@ -9,6 +9,7 @@ import transformStatusData from 'helpers/transformStatusData';
 import sortEvents from 'helpers/sortEvents';
 import Spinner from 'components/1-atoms/Spinner';
 import EventHistory from 'components/2-molecules/EventHistory';
+import RagStatusTable from 'components/2-molecules/RagStatusTable';
 
 class Status extends Component {
   componentDidMount() {
@@ -24,6 +25,17 @@ class Status extends Component {
     if (!this.props.xhr && this.props.project.name) {
       component = (
         <div className="status">
+          <h3>Rag Statuses</h3>
+          <RagStatusTable
+            ragStatuses={this.props.ragStatus}
+            visibleColumns={[
+              'name',
+              'expected',
+              'actual',
+              'ragStatus',
+            ]}
+          />
+          <hr />
           <StatusChart
             demandStatus={this.props.demandStatus}
             defectStatus={this.props.defectStatus}
@@ -51,6 +63,7 @@ Status.propTypes = {
   demandStatus: PropTypes.array.isRequired,
   defectStatus: PropTypes.array.isRequired,
   effortStatus: PropTypes.array.isRequired,
+  ragStatus: PropTypes.array.isRequired,
   events: PropTypes.array,
   demandCategories: PropTypes.array.isRequired,
   defectCategories: PropTypes.array.isRequired,
@@ -64,6 +77,7 @@ const mapStateToProps = state => {
   const demandStatus = transformStatusData(state.status.demand, 'status');
   const defectStatus = transformStatusData(state.status.defect, 'severity');
   const effortStatus = transformStatusData(state.status.effort, 'activity');
+  const ragStatus = state.status.ragStatus;
 
   const events = sortEvents(state.project.events);
 
@@ -94,6 +108,7 @@ const mapStateToProps = state => {
     demandStatus,
     defectStatus,
     effortStatus,
+    ragStatus,
     demandCategories,
     defectCategories,
     effortCategories,
