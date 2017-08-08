@@ -21,7 +21,7 @@ const y = (f, date) => {
 
 const getDataInRange = ({ statusData, startDate, endDate }) => statusData.filter(datapoint => {
   const parsedDatapointDate = moment(datapoint.date, 'DD-MMM-YY');
-  return parsedDatapointDate.isAfter(startDate) &&
+  return parsedDatapointDate.isSameOrAfter(startDate) &&
     parsedDatapointDate.isBefore(endDate);
 });
 
