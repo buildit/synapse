@@ -5,9 +5,10 @@
 import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
-import { FETCH_PROJECT_STATUS_DATA } from 'actions/actions';
+import { FETCH_PROJECT_STATUS_DATA, FETCH_PROJECT_RAGSTATUS_DATA } from 'actions/actions';
 import {
   fetchProjectSuccess,
+  fetchRagStatusSuccess,
   fetchStatusSuccess,
   fetchEventHistorySuccess,
   setErrorMessage,
@@ -40,6 +41,23 @@ export function createStatusErrorMessage(demand, defect, effort, project) {
   }
 
   return errorMessage;
+}
+
+/*
+ * Saga for FETCH_PROJECT_RAGSTATUS_DATA
+ */
+export function* fetchRagStatusData(action) {
+  const name = action.name;
+
+  const [statuses] = yield[
+    call(fetchProjectRagStatusData, name),
+  ];
+
+  yield put(startXHR());
+
+  yield put(fetchRagStatusSuccess(statuses));
+
+  yield put(endXHR());
 }
 
 /*
@@ -78,4 +96,8 @@ export function* fetchAllStatusData(action) {
 
 export function* watchFetchDemandStatusData() {
   yield call(takeEvery, FETCH_PROJECT_STATUS_DATA, fetchAllStatusData);
+}
+
+export function* watchFetchRagStatusData() {
+  yield call(takeEvery, FETCH_PROJECT_RAGSTATUS_DATA, fetchRagStatusData);
 }

@@ -29,7 +29,6 @@ class ProjectList extends Component {
     }
 
     if (xhr) return <Spinner />;
-
     return (
       <div className="project-list">
         {newButton}
@@ -40,12 +39,13 @@ class ProjectList extends Component {
               'name',
               'portfolio',
               'program',
-              'ragStatus',
+              'status',
               'description',
             ]}
             rowKey={'name'}
             deleteProject={this.props.deleteProject}
             isAuthenticated={isAuthenticated}
+            statuses={this.props.statuses}
           />
         </div>
       </div>
@@ -60,14 +60,14 @@ ProjectList.propTypes = {
   projectList: PropTypes.array,
   xhr: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  statuses: PropTypes.array,
 };
 
-const mapStateToProps = state => (
-  {
-    projectList: state.projects.projectList,
-    xhr: state.xhr,
-    isAuthenticated: state.auth.isAuthenticated,
-  }
-);
+const mapStateToProps = state => ({
+  projectList: state.projects.projectList,
+  xhr: state.xhr,
+  isAuthenticated: state.auth.isAuthenticated,
+  statuses: state.statuses.statuses,
+});
 
 export default connect(mapStateToProps, { fetchProjects, deleteProject })(ProjectList);

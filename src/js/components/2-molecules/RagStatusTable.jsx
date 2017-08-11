@@ -1,57 +1,73 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchRagStatusData } from 'actions';
 import TableCell from 'components/1-atoms/TableCell';
 import RAGStatusTableCell from 'components/1-atoms/RAGStatusTableCell';
 import TableHeaderCell from 'components/1-atoms/TableHeaderCell';
 
-const RagStatusTable = ({
-  ragStatuses,
-  visibleColumns,
-}) => {
-  const headerRow = [];
-  const bodyRows = [];
+let currentProject = '';
 
-  for (const headerValue of visibleColumns) {
-    headerRow.push(
-      <TableHeaderCell key={headerValue} headerValue={headerValue} />);
+class RagStatusTable extends Component {
+  componentDidMount() {
+    if (currentProject !== this.props.projectId) {
+      currentProject = this.props.projectId;
+      this.props.fetchRagStatusData(this.props.projectId);
+    }
   }
 
-  ragStatuses.forEach((ragStatus, i) => {
-    const bodyRow = [];
+  render() {
+    const headerRow = [];
+    const bodyRows = [];
 
-    visibleColumns.forEach(key => {
-      const cellValue = ragStatus[key];
+    for (const headerValue of this.props.visibleColumns) {
+      headerRow.push(
+        <TableHeaderCell key={headerValue} headerValue={headerValue} />);
+    }
 
-      if (key === 'ragStatus') {
-        bodyRow.push(<RAGStatusTableCell key={i + key} status={cellValue} />);
-      } else {
-        bodyRow.push(<TableCell key={i + key} cellValue={`${cellValue}`} />);
-      }
+    this.props.statuses.forEach((ragStatus, i) => {
+      const bodyRow = [];
+
+      this.props.visibleColumns.forEach(key => {
+        const cellValue = ragStatus[key];
+        if (key === 'status') {
+          bodyRow.push(<RAGStatusTableCell key={i + key} status={cellValue} />);
+        } else {
+          bodyRow.push(<TableCell key={i + key} cellValue={`${cellValue}`} />);
+        }
+      });
+
+      bodyRows.push(
+        <tr
+          key={ragStatus.name}
+          className="tableBodyRow"
+        >{bodyRow}</tr>);
     });
 
-    bodyRows.push(
-      <tr
-        key={ragStatus.name}
-        className="tableBodyRow"
-      >{bodyRow}</tr>);
-  });
-
-  return (
-    <table className="table projectsTable">
-      <thead>
-        <tr className="tableHeaderRow">
-          {headerRow}
-        </tr>
-      </thead>
-      <tbody>
-        {bodyRows}
-      </tbody>
-    </table>
-  );
-};
-
-export default RagStatusTable;
+    return (
+      <table className="table projectsTable">
+        <thead>
+          <tr className="tableHeaderRow">
+            {headerRow}
+          </tr>
+        </thead>
+        <tbody>
+          {bodyRows}
+        </tbody>
+      </table>
+    );
+  }
+}
 
 RagStatusTable.propTypes = {
-  ragStatuses: React.PropTypes.array.isRequired,
+  fetchRagStatusData: React.PropTypes.func.isRequired,
+  projectId: React.PropTypes.string.isRequired,
+  statuses: React.PropTypes.array.isRequired,
   visibleColumns: React.PropTypes.array.isRequired,
 };
+
+const mapStateToProps = state => {
+  const statuses = state.statuses.statuses;
+  return { statuses };
+};
+
+export default connect(mapStateToProps, { fetchRagStatusData })(RagStatusTable);

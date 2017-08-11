@@ -8,7 +8,7 @@ const projectDemandSummary = name => fetch(`${config.apiBaseUrl}v1/project/${nam
 const projectDefectSummary = name => fetch(`${config.apiBaseUrl}v1/project/${name}/defect/summary`);
 const projectEffortSummary = name => fetch(`${config.apiBaseUrl}v1/project/${name}/effort/summary`);
 const projectRagStatusSummary = name =>
-  fetch(`${config.apiBaseUrl}v1/project/${name}/ragStatus/summary`);
+  fetch(`${config.apiBaseUrl}v1/project/${name}/status`);
 const projectEventHistory = name => fetch(`${config.apiBaseUrl}v1/project/${name}/event`);
 // const projectEventHistory =
 //   () => fetch('https://runkit.io/billyzac/5848387e51a98e00145131e9/branches/master');

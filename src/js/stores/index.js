@@ -20,6 +20,7 @@ import {
 } from 'middleware/project';
 import {
   watchFetchDemandStatusData,
+  watchFetchRagStatusData,
 } from 'middleware/status';
 import {
   watchLoginRequest,
@@ -45,6 +46,7 @@ module.exports = (initialState) => {
 
   sagaMiddleware.run(watchFetchProjectionRequest);
   sagaMiddleware.run(watchFetchDemandStatusData);
+  sagaMiddleware.run(watchFetchRagStatusData);
   sagaMiddleware.run(watchFetchProjects);
   sagaMiddleware.run(watchFetchStarterProjectsRequest);
   sagaMiddleware.run(watchFetchProjectRequest);

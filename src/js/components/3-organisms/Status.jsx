@@ -9,7 +9,6 @@ import transformStatusData from 'helpers/transformStatusData';
 import sortEvents from 'helpers/sortEvents';
 import Spinner from 'components/1-atoms/Spinner';
 import EventHistory from 'components/2-molecules/EventHistory';
-import RagStatusTable from 'components/2-molecules/RagStatusTable';
 
 class Status extends Component {
   componentDidMount() {
@@ -25,17 +24,6 @@ class Status extends Component {
     if (!this.props.xhr && this.props.project.name) {
       component = (
         <div className="status">
-          <h3>Rag Statuses</h3>
-          <RagStatusTable
-            ragStatuses={this.props.ragStatus}
-            visibleColumns={[
-              'name',
-              'expected',
-              'actual',
-              'ragStatus',
-            ]}
-          />
-          <hr />
           <StatusChart
             demandStatus={this.props.demandStatus}
             defectStatus={this.props.defectStatus}
