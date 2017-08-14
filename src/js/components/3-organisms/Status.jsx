@@ -3,7 +3,7 @@ import React, {
   PropTypes,
 } from 'react';
 import { connect } from 'react-redux';
-import { fetchAllStatusData } from 'actions';
+import { fetchAllStatusData, fetchRagStatusData } from 'actions';
 import StatusChart from 'components/2-molecules/StatusChart';
 import transformStatusData from 'helpers/transformStatusData';
 import sortEvents from 'helpers/sortEvents';
@@ -14,6 +14,7 @@ class Status extends Component {
   componentDidMount() {
     const { projectId } = this.props.params;
     this.props.fetchAllStatusData(projectId);
+    this.props.fetchRagStatusData(projectId);
   }
 
   render() {
@@ -46,6 +47,7 @@ class Status extends Component {
 
 Status.propTypes = {
   fetchAllStatusData: PropTypes.func.isRequired,
+  fetchRagStatusData: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,
   projection: PropTypes.object.isRequired,
   demandStatus: PropTypes.array.isRequired,
@@ -106,4 +108,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { fetchAllStatusData })(Status);
+export default connect(mapStateToProps, { fetchAllStatusData, fetchRagStatusData })(Status);

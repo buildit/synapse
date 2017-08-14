@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from 'actions';
 import MessageBar from 'components/2-molecules/MessageBar';
 import Login from 'components/2-molecules/Login';
-import Header from 'whippersnapper/build/Header';
+import Header from 'components/2-molecules/Header';
 import Footer from 'whippersnapper/build/Footer';
 require('zzzss/dist/css/zzzss.css');
 
@@ -18,11 +18,14 @@ const App = ({
   dismissMessage,
   projectName,
   children,
+  status,
+  statuses,
   loginRequest,
   logoutRequest,
   isAuthenticated,
   user,
   authMessage,
+  location,
  }) => (
   <div className="container">
     <Login
@@ -33,8 +36,7 @@ const App = ({
       message={authMessage}
     />
     <Header
-      logotype="Synapse"
-      pageName={projectName}
+      projectName={projectName}
       onLogoClick={() => {
         // Navigate to home screen. Should this be first or last?
         browserHistory.push('/');
@@ -45,6 +47,9 @@ const App = ({
         // reset the message.
         dismissMessage();
       }}
+      status={status}
+      statuses={statuses}
+      location={location}
     />
     <MessageBar message={message} />
     {children}
@@ -59,6 +64,8 @@ App.propTypes = {
   resetProject: PropTypes.func.isRequired,
   dismissMessage: PropTypes.func.isRequired,
   projectName: PropTypes.string,
+  status: PropTypes.string,
+  statuses: PropTypes.array,
   updateProject: PropTypes.func.isRequired,
   children: PropTypes.object.isRequired,
   loginRequest: PropTypes.func.isRequired,
@@ -66,6 +73,7 @@ App.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   user: PropTypes.object,
   authMessage: PropTypes.string,
+  location: PropTypes.object,
 };
 
 function mapStateToProps(state) {
@@ -74,6 +82,8 @@ function mapStateToProps(state) {
     message: state.messages,
     appData: state.appData,
     projectName,
+    status: state.project.status,
+    statuses: state.statuses.statuses,
     isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
     authMessage: state.auth.message,

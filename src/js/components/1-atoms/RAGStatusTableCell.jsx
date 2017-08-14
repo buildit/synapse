@@ -12,7 +12,6 @@ const RAGStatusTableCell = ({ status, id, dataFor }) => {
   );
 };
 
-
 export default RAGStatusTableCell;
 
 RAGStatusTableCell.propTypes = {
