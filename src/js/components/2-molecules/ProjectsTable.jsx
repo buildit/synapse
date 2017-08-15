@@ -60,6 +60,7 @@ const ProjectsTable = ({
                 'name',
                 'projected',
                 'actual',
+                'source',
                 'status',
               ]}
               statuses={statuses}

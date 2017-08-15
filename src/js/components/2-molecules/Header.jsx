@@ -32,6 +32,7 @@ const Header = ({ projectName, onLogoClick, status, statuses, location }) => {
                     'name',
                     'projected',
                     'actual',
+                    'source',
                     'status',
                   ]}
                   statuses={statuses}
