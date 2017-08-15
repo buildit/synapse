@@ -5,9 +5,10 @@
 import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
-import { FETCH_PROJECT_STATUS_DATA } from 'actions/actions';
+import { FETCH_PROJECT_STATUS_DATA, FETCH_PROJECT_RAGSTATUS_DATA } from 'actions/actions';
 import {
   fetchProjectSuccess,
+  fetchRagStatusSuccess,
   fetchStatusSuccess,
   fetchEventHistorySuccess,
   setErrorMessage,
@@ -19,6 +20,7 @@ import {
   fetchProjectDemandData,
   fetchProjectDefectData,
   fetchProjectEffortData,
+  fetchProjectRagStatusData,
   fetchEventHistoryData,
 } from 'middleware/api';
 
@@ -42,6 +44,23 @@ export function createStatusErrorMessage(demand, defect, effort, project) {
 }
 
 /*
+ * Saga for FETCH_PROJECT_RAGSTATUS_DATA
+ */
+export function* fetchRagStatusData(action) {
+  const name = action.name;
+
+  const [statuses] = yield[
+    call(fetchProjectRagStatusData, name),
+  ];
+
+  yield put(startXHR());
+
+  yield put(fetchRagStatusSuccess(statuses));
+
+  yield put(endXHR());
+}
+
+/*
  * Saga for FETCH_PROJECT_STATUS_DATA
  */
 export function* fetchAllStatusData(action) {
@@ -49,10 +68,11 @@ export function* fetchAllStatusData(action) {
 
   yield put(startXHR());
 
-  const [demand, defect, effort, events, project] = yield[
+  const [demand, defect, effort, ragStatus, events, project] = yield[
     call(fetchProjectDemandData, name),
     call(fetchProjectDefectData, name),
     call(fetchProjectEffortData, name),
+    call(fetchProjectRagStatusData, name),
     call(fetchEventHistoryData, name),
     call(fetchProject, name),
   ];
@@ -61,6 +81,7 @@ export function* fetchAllStatusData(action) {
     demand,
     defect,
     effort,
+    ragStatus,
   }));
   yield put(fetchProjectSuccess(project));
   yield put(fetchEventHistorySuccess(events));
@@ -75,4 +96,8 @@ export function* fetchAllStatusData(action) {
 
 export function* watchFetchDemandStatusData() {
   yield call(takeEvery, FETCH_PROJECT_STATUS_DATA, fetchAllStatusData);
+}
+
+export function* watchFetchRagStatusData() {
+  yield call(takeEvery, FETCH_PROJECT_RAGSTATUS_DATA, fetchRagStatusData);
 }

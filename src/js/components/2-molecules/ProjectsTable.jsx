@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {
+} from 'react';
+import ReactTooltip from 'react-tooltip';
 import RouteLink from 'components/1-atoms/RouteLink';
 import TableCell from 'components/1-atoms/TableCell';
+import RagStatusTable from './RagStatusTable';
 import RAGStatusTableCell from 'components/1-atoms/RAGStatusTableCell';
 import TableHeaderCell from 'components/1-atoms/TableHeaderCell';
 
@@ -10,6 +13,7 @@ const ProjectsTable = ({
   rowKey,
   deleteProject,
   isAuthenticated,
+  statuses,
 }) => {
   const headerRow = [];
   const bodyRows = [];
@@ -23,18 +27,45 @@ const ProjectsTable = ({
       <TableHeaderCell key={headerValue} headerValue={headerValue} classes={classes} />);
   }
 
+  const tooltips = [];
+
   for (let i = 0; i < tableData.length; i++) {
     const projectId = tableData[i][rowKey];
     const bodyRow = [];
 
     for (const key of visibleColumns) {
       const cellValue = tableData[i][key];
-
       // Hide description on small screens
       const classes = (key === 'description') ? `${key} hidden-sm hidden-xs` : key;
 
       if (key === 'status') {
-        bodyRow.push(<RAGStatusTableCell key={i + key} status={cellValue} />);
+        bodyRow.push(
+          <RAGStatusTableCell
+            key={i + key}
+            status={cellValue}
+            dataTip
+            dataFor={`${projectId}-tooltip`}
+          />
+        );
+        tooltips.push(
+          <ReactTooltip
+            id={`${projectId}-tooltip`}
+            key={`${i} ${key} tooltip`}
+            aria-haspopup="true"
+          >
+            <RagStatusTable
+              key={projectId}
+              projectId={projectId}
+              visibleColumns={[
+                'name',
+                'projected',
+                'actual',
+                'status',
+              ]}
+              statuses={statuses}
+            />
+          </ReactTooltip>
+        );
       } else {
         bodyRow.push(<TableCell key={i + key} cellValue={cellValue} classes={classes} />);
       }
@@ -89,16 +120,19 @@ const ProjectsTable = ({
   }
 
   return (
-    <table className="table projectsTable">
-      <thead>
-        <tr className="tableHeaderRow">
-          {headerRow}
-        </tr>
-      </thead>
-      <tbody>
-        {bodyRows}
-      </tbody>
-    </table>
+    <div>
+      <table className="table projectsTable">
+        <thead>
+          <tr className="tableHeaderRow">
+            {headerRow}
+          </tr>
+        </thead>
+        <tbody>
+          {bodyRows}
+        </tbody>
+      </table>
+      {tooltips}
+    </div>
   );
 };
 
@@ -110,4 +144,5 @@ ProjectsTable.propTypes = {
   rowKey: React.PropTypes.string.isRequired,
   deleteProject: React.PropTypes.func.isRequired,
   isAuthenticated: React.PropTypes.bool.isRequired,
+  statuses: React.PropTypes.array,
 };

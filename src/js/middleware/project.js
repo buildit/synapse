@@ -1,7 +1,6 @@
 import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 import { browserHistory } from 'react-router';
-import getRagStatus from 'helpers/getRagStatus';
 
 import {
   DELETE_PROJECT,
@@ -28,7 +27,6 @@ import { trimFormInputs } from 'helpers/trimFormInputs';
 import {
   deleteProject,
   fetchProject,
-  fetchProjectDemandData,
 } from 'middleware/api';
 
 import Api from 'api';
@@ -87,17 +85,6 @@ export function* fetchProjects() {
   try {
     yield put(startXHR());
     projectSummary = yield call(Api.projects);
-    const length = projectSummary.length;
-    for (let i = 0; i < length; i++) {
-      const name = projectSummary[i].name;
-      const project = yield call(fetchProject, name);
-      try {
-        const demand = yield call(fetchProjectDemandData, name);
-        projectSummary[i].status = yield call(getRagStatus, project.projection, demand);
-      } catch (err) {
-        yield put(setErrorMessage(err));
-      }
-    }
     yield put(receiveProjects(projectSummary));
   } catch (err) {
     yield put(setErrorMessage(err));

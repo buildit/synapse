@@ -3,6 +3,7 @@ export const initialState = {
   demand: [],
   defect: [],
   effort: [],
+  ragStatus: [],
 };
 
 export const status = (state = initialState, action) => {
@@ -13,6 +14,7 @@ export const status = (state = initialState, action) => {
       demand: action.status.demand,
       defect: action.status.defect,
       effort: action.status.effort,
+      ragStatus: action.status.ragStatus,
     };
   }
   default: return state;

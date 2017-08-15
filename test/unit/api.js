@@ -166,4 +166,11 @@ describe('API', () => {
     expect(theRequest.method).to.equal('GET');
     expect(theRequest.url.match(`/project/${projectName}/event`)).to.not.equal(null);
   });
+
+  it('runs the rag status request', () => {
+    Api.projectRagStatusSummary(projectName);
+    const theRequest = pendingRequests[0];
+    expect(theRequest.method).to.equal('GET');
+    expect(theRequest.url.match(`/project/${projectName}/status`)).to.not.equal(null);
+  });
 });

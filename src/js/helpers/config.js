@@ -1,7 +1,6 @@
 const hostname = typeof window === 'undefined' ? 'localhost' : window.location.hostname;
 const serverConfig = typeof window === 'undefined' ? null : window.SERVER_CONF;
 /* eslint-disable no-console */
-console.log('hostname:', hostname);
 /* eslint-enable no-console */
 
 export const STAGING = 'staging';

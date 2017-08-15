@@ -297,4 +297,22 @@ describe('Redux actions', () => {
     const correct = { type: actions.FETCH_PROJECTS };
     expect(functions.fetchProjects()).to.deep.equal(correct);
   });
+
+  it('fetchRagStatusSuccess', () => {
+    const statuses = ['test'];
+    const correct = {
+      type: actions.FETCH_RAGSTATUS_SUCCESS,
+      statuses,
+    };
+    expect(functions.fetchRagStatusSuccess(statuses)).to.deep.equal(correct);
+  });
+
+  it('fetchRagStatusData', () => {
+    const name = 'test';
+    const correct = {
+      type: actions.FETCH_PROJECT_RAGSTATUS_DATA,
+      name,
+    };
+    expect(functions.fetchRagStatusData(name)).to.deep.equal(correct);
+  });
 });
