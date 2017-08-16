@@ -42,19 +42,21 @@ class RagStatusTable extends Component {
           className="tableBodyRow"
         >{bodyRow}</tr>);
     });
-
-    return (
-      <table className="table projectsTable">
-        <thead>
-          <tr className="tableHeaderRow">
-            {headerRow}
-          </tr>
-        </thead>
-        <tbody>
-          {bodyRows}
-        </tbody>
-      </table>
-    );
+    if (bodyRows.length) {
+      return (
+        <table className="table projectsTable">
+          <thead>
+            <tr className="tableHeaderRow">
+              {headerRow}
+            </tr>
+          </thead>
+          <tbody>
+            {bodyRows}
+          </tbody>
+        </table>
+      );
+    }
+    return <h5>No Data Available</h5>;
   }
 }
 
