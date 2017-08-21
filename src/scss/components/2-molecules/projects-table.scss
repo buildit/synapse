@@ -8,4 +8,16 @@
   .delete-project-control {
     cursor: pointer;
   }
+
+  .projectsHeader {
+    cursor: pointer;
+  }
+
+  i {
+    padding-left: 3px;
+  }
+
+  th {
+    white-space: nowrap;
+  }
 }

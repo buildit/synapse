@@ -10,8 +10,49 @@ import Spinner from 'components/1-atoms/Spinner';
 import ProjectsTable from 'components/2-molecules/ProjectsTable';
 
 class ProjectList extends Component {
+  constructor(props) {
+    super(props);
+    this.onSort = this.onSort.bind(this);
+    this.state = {
+      sortedColumn: '',
+      sortAscending: true,
+    };
+  }
+
   componentDidMount() {
     this.props.fetchProjects();
+  }
+
+  onSort(sortBy) {
+    let newSort = false;
+    if (this.state.sortedColumn !== sortBy) {
+      newSort = true;
+    }
+    this.props.projectList.sort((a, b) => {
+      let aValue = 'undefined';
+      let bValue = 'undefined';
+      if (a[sortBy]) {
+        aValue = a[sortBy];
+      }
+      if (b[sortBy]) {
+        bValue = b[sortBy];
+      }
+      if (this.state.sortAscending || newSort) {
+        return aValue.localeCompare(bValue);
+      }
+      return -aValue.localeCompare(bValue);
+    });
+    if (!newSort) {
+      this.setState({
+        sortAscending: !this.state.sortAscending,
+      });
+    }
+    if (newSort) {
+      this.setState({
+        sortedColumn: sortBy,
+        sortAscending: false,
+      });
+    }
   }
 
   render() {
@@ -46,6 +87,9 @@ class ProjectList extends Component {
             deleteProject={this.props.deleteProject}
             isAuthenticated={isAuthenticated}
             statuses={this.props.statuses}
+            sortProjects={this.onSort}
+            sortedColumn={this.state.sortedColumn}
+            sortAscending={this.state.sortAscending}
           />
         </div>
       </div>
