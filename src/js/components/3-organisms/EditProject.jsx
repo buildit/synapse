@@ -6,12 +6,15 @@ import Input from 'components/1-atoms/Input';
 import ProjectDateInput from 'components/1-atoms/ProjectDateInput';
 import Button from 'whippersnapper/build/Button.js';
 import EditableArrayTable from 'components/2-molecules/EditableArrayTable';
+import ValidationTable from 'components/2-molecules/ValidationTable';
 import AddFlowItem from 'components/2-molecules/AddFlowItem';
 import AddRoleItem from 'components/2-molecules/AddRoleItem';
 import AddSeverityItem from 'components/2-molecules/AddSeverityItem';
+import api from 'api';
 
 class EditProject extends Component {
   componentWillMount() {
+    this.setState({ validation: {} });
     this.props.initializeFormData(this.props.project);
   }
 
@@ -26,6 +29,13 @@ class EditProject extends Component {
     const project = this.props.project;
     const saveFormData = projectToSave => {
       this.props.saveFormData(projectToSave, '/');
+    };
+    const validateThisProject = (projectToValidate) => {
+      this.setState({ validation: null });
+      api.validateProject(projectToValidate)
+      .then(validation => {
+        this.setState({ validation });
+      });
     };
     const onListItemRemove = this.props.onListItemRemove;
     const addItemToDemandFlowList = this.props.addItemToDemandFlowList;
@@ -290,6 +300,9 @@ class EditProject extends Component {
             }}
           />
         </form>
+        <ValidationTable
+          validationResult={this.state.validation}
+        />
         <Button
           label="Save"
           cssClasses="button btn btn-primary"
@@ -299,6 +312,13 @@ class EditProject extends Component {
             } else {
               updateProject(project);
             }
+          }}
+        />
+        <Button
+          label="Validate Project"
+          cssClasses="button btn btn-primary"
+          onClick={() => {
+            validateThisProject(project);
           }}
         />
         <Button
@@ -315,6 +335,7 @@ class EditProject extends Component {
 }
 
 EditProject.propTypes = {
+  fetchRagStatusData: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,
   saveFormData: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
