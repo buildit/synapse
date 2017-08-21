@@ -9,7 +9,9 @@ const makeRequest = (uri, method = 'GET', body = undefined) => new Promise((reso
     method,
     timeout: 30000,
   };
-  if (body) {
+  if (method === 'GET' && body) {
+    options.uri = `${options.uri}?payload=${JSON.stringify(body)}`;
+  } else if (body) {
     options.json = body;
   }
   xhr(options, (error, response) => {
@@ -34,7 +36,7 @@ const makeRequest = (uri, method = 'GET', body = undefined) => new Promise((reso
 });
 /* eslint-enable consistent-return */
 
-export const fetch = uri => makeRequest(uri);
+export const fetch = (uri, body) => makeRequest(uri, 'GET', body);
 export const put = (uri, body) => makeRequest(uri, 'PUT', body);
 export const post = (uri, body) => makeRequest(uri, 'POST', body);
 export const erase = uri => makeRequest(uri, 'DELETE');

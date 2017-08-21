@@ -11,6 +11,7 @@ import {
   SAVE_PROJECTION_REQUEST,
   UPDATE_PROJECT_REQUEST,
   SAVE_PROJECT_REQUEST,
+  VALIDATE_PROJECT_REQUEST,
 } from 'actions/actions';
 import {
   deleteProjectSuccess,
@@ -213,4 +214,28 @@ export function* saveProjectRequest(action) {
 }
 export function* watchSaveProjectRequest() {
   yield call(takeEvery, SAVE_PROJECT_REQUEST, saveProjectRequest);
+}
+
+/*
+ * Middleware for VALIDATE_PROJECT_REQUEST
+ */
+export function* validateProjectRequest(action) {
+  try {
+    yield put(startXHR());
+    const project = yield(call(trimFormInputs, action.project));
+    yield put(setMessage(`Validating ${project.name}`));
+    yield call(Api.saveProject, whitelistProjectFields(project));
+    yield put(clearMessage());
+    if (action.destination) {
+      yield call(browserHistory.push, action.destination);
+    }
+    yield put(setMessage(`${project.name} validation returned`));
+  } catch (err) {
+    yield put(setErrorMessage(err));
+  } finally {
+    yield put(endXHR());
+  }
+}
+export function* watchValidateProjectRequest() {
+  yield call(takeEvery, VALIDATE_PROJECT_REQUEST, validateProjectRequest);
 }

@@ -32,6 +32,11 @@ const saveProject = (projectToSave) => post(
   projectToSave
 );
 
+const validateProject = (projectToValidate) => fetch(
+  `${config.apiBaseUrl}v1/validateProject/`,
+  projectToValidate
+);
+
 // TODO: uuuuuuuuuuuuuuuuuuuuuuuuuuuuuugh
 const loginRequest = user => {
   if (process.env.NODE_ENV === 'development' || config.noauth) {
@@ -66,4 +71,5 @@ export default {
   loginRequest,
   deleteProject,
   projectEventHistory,
+  validateProject,
 };
