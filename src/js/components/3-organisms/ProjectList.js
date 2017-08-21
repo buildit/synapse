@@ -29,14 +29,8 @@ class ProjectList extends Component {
       newSort = true;
     }
     this.props.projectList.sort((a, b) => {
-      let aValue = 'undefined';
-      let bValue = 'undefined';
-      if (a[sortBy]) {
-        aValue = a[sortBy];
-      }
-      if (b[sortBy]) {
-        bValue = b[sortBy];
-      }
+      const aValue = a[sortBy] || 'undefined';
+      const bValue = b[sortBy] || 'undefined';
       if (this.state.sortAscending || newSort) {
         return aValue.localeCompare(bValue);
       }
