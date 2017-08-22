@@ -5,6 +5,7 @@ import React, {
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { fetchProjects, deleteProject } from 'actions/projects';
+import { fetchRagStatusData } from 'actions';
 import Button from 'whippersnapper/build/Button.js';
 import Spinner from 'components/1-atoms/Spinner';
 import ProjectsTable from 'components/2-molecules/ProjectsTable';
@@ -84,6 +85,7 @@ class ProjectList extends Component {
             sortProjects={this.onSort}
             sortedColumn={this.state.sortedColumn}
             sortAscending={this.state.sortAscending}
+            fetchRagStatusData={this.props.fetchRagStatusData}
           />
         </div>
       </div>
@@ -99,6 +101,7 @@ ProjectList.propTypes = {
   xhr: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   statuses: PropTypes.array,
+  fetchRagStatusData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -108,4 +111,8 @@ const mapStateToProps = state => ({
   statuses: state.statuses.statuses,
 });
 
-export default connect(mapStateToProps, { fetchProjects, deleteProject })(ProjectList);
+export default connect(mapStateToProps, {
+  fetchProjects,
+  deleteProject,
+  fetchRagStatusData,
+})(ProjectList);

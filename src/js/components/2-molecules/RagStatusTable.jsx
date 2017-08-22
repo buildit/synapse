@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchRagStatusData } from 'actions';
 import TableCell from 'components/1-atoms/TableCell';
 import RAGStatusTableCell from 'components/1-atoms/RAGStatusTableCell';
 import TableHeaderCell from 'components/1-atoms/TableHeaderCell';
@@ -60,16 +58,11 @@ class RagStatusTable extends Component {
   }
 }
 
+export default RagStatusTable;
+
 RagStatusTable.propTypes = {
   fetchRagStatusData: React.PropTypes.func.isRequired,
   projectId: React.PropTypes.string.isRequired,
   statuses: React.PropTypes.array.isRequired,
   visibleColumns: React.PropTypes.array.isRequired,
 };
-
-const mapStateToProps = state => {
-  const statuses = state.statuses.statuses;
-  return { statuses };
-};
-
-export default connect(mapStateToProps, { fetchRagStatusData })(RagStatusTable);

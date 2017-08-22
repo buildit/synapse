@@ -70,6 +70,7 @@ class ProjectsTable extends Component {
                   'status',
                 ]}
                 statuses={this.props.statuses}
+                fetchRagStatusData={this.props.fetchRagStatusData}
               />
             </ReactTooltip>
           );
@@ -155,4 +156,5 @@ ProjectsTable.propTypes = {
   sortProjects: React.PropTypes.func.isRequired,
   sortedColumn: React.PropTypes.string,
   sortAscending: React.PropTypes.bool,
+  fetchRagStatusData: React.PropTypes.func.isRequired,
 };
