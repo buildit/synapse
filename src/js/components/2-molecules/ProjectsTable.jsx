@@ -61,7 +61,6 @@ class ProjectsTable extends Component {
             >
               <RagStatusTable
                 key={projectId}
-                projectId={projectId}
                 visibleColumns={[
                   'name',
                   'projected',
@@ -70,7 +69,6 @@ class ProjectsTable extends Component {
                   'status',
                 ]}
                 statuses={this.props.statuses}
-                fetchRagStatusData={this.props.fetchRagStatusData}
               />
             </ReactTooltip>
           );
@@ -124,6 +122,7 @@ class ProjectsTable extends Component {
         id={this.props.tableData[i][this.props.rowKey]}
         key={this.props.tableData[i][this.props.rowKey]}
         className="tableBodyRow"
+        onMouseEnter={() => this.props.fetchRagStatusData(projectId)}
       >{bodyRow}</tr>);
     }
     return (
