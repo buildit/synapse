@@ -17,7 +17,7 @@ import {
 import { expect } from 'chai';
 
 describe('All projects fetcher', () => {
-  const errorMessage = 'an error message';
+  const errorMessage = 'There was an error fetching the projects.';
   const project1 = { name: 'P001', projection: {} };
   const projects = [project1];
   const generator = fetchProjects();

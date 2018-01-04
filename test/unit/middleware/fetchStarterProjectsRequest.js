@@ -16,7 +16,7 @@ import {
 const expect = require('chai').expect;
 
 describe('Starter projects fetcher', () => {
-  const errorMessage = 'an error message';
+  const errorMessage = 'We could not fetch the projects.';
   const starterProjects = 'a project';
   const generator = fetchStarterProjects();
   const errorGenerator = fetchStarterProjects();

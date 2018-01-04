@@ -18,7 +18,7 @@ import {
 const expect = require('chai').expect;
 
 describe('Project saving', () => {
-  const errorMessage = 'an error message';
+  const errorMessage = 'We could not save the project.';
   const projectName = 'a project';
   const project = { name: projectName };
   const weirdProject = { name: projectName, foo: 'bar', baz: 'narf' };

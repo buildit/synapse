@@ -70,7 +70,7 @@ export function* deleteProjectRequest(action) {
       yield put(setMessage(`Project ${action.name} deleted.`));
     }
   } catch (err) {
-    yield put(setErrorMessage(err));
+    yield put(setErrorMessage('We could not delete the project.'));
   }
 }
 
@@ -88,7 +88,7 @@ export function* fetchProjects() {
     projectSummary = yield call(Api.projects);
     yield put(receiveProjects(projectSummary));
   } catch (err) {
-    yield put(setErrorMessage(err));
+    yield put(setErrorMessage('There was an error fetching the projects.'));
   } finally {
     yield put(endXHR());
   }
@@ -107,7 +107,7 @@ export function* fetchStarterProjects() {
     const starterProjects = yield call(Api.starterProjects);
     yield put(receiveStarterProjects(starterProjects));
   } catch (err) {
-    yield put(setErrorMessage(err));
+    yield put(setErrorMessage('We could not fetch the projects.'));
   } finally {
     yield put(endXHR());
   }
@@ -207,7 +207,7 @@ export function* saveProjectRequest(action) {
     }
     yield put(setMessage(`${project.name} saved`));
   } catch (err) {
-    yield put(setErrorMessage(err));
+    yield put(setErrorMessage('We could not save the project.'));
   } finally {
     yield put(endXHR());
   }
@@ -231,7 +231,7 @@ export function* validateProjectRequest(action) {
     }
     yield put(setMessage(`${project.name} validation returned`));
   } catch (err) {
-    yield put(setErrorMessage(err));
+    yield put(setErrorMessage('We could not validate the project.'));
   } finally {
     yield put(endXHR());
   }

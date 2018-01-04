@@ -177,6 +177,24 @@ describe('Redux actions', () => {
     expect(functions.setMessage(message)).to.deep.equal(correct);
   });
 
+  it('creates the correct action for setErrorMessage', () => {
+    const message = 'test';
+    const correct = {
+      type: actions.SET_MESSAGE,
+      messageType: 'ERROR',
+      message,
+    };
+    expect(functions.setErrorMessage(message)).to.deep.equal(correct);
+  });
+
+  it('throws an error when setErrorMessage receives an error object', () => {
+    const message = new Error('Oops, not how you do it.');
+    function tryToSetErrorMessage() {
+      functions.setErrorMessage(message);
+    }
+    expect(tryToSetErrorMessage).to.throw();
+  });
+
   it('clearMessage', () => {
     const message = '';
     const correct = {

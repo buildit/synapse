@@ -18,7 +18,7 @@ import {
 import { expect } from 'chai';
 
 describe('Project deleter middleware', () => {
-  const errorMessage = 'an error message';
+  const errorMessage = 'We could not delete the project.';
   const project = { name: 'P001', projection: {} };
   const generator = deleteProjectRequest(project);
   const errorGenerator = deleteProjectRequest(project);

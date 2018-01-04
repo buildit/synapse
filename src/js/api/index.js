@@ -10,8 +10,6 @@ const projectEffortSummary = name => fetch(`${config.apiBaseUrl}v1/project/${nam
 const projectRagStatusSummary = name =>
   fetch(`${config.apiBaseUrl}v1/project/${name}/status`);
 const projectEventHistory = name => fetch(`${config.apiBaseUrl}v1/project/${name}/event`);
-// const projectEventHistory =
-//   () => fetch('https://runkit.io/billyzac/5848387e51a98e00145131e9/branches/master');
 
 const starterProjects = () => fetch(
   `${config.starterProjectsBaseApiUrl}v1/project?status=available`
